@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Devbhoomi Foundation — Internship Program 2026–27</title>
+<style>
+  :root {
+    --navy: #1B3A6B;
+    --gold: #C8941A;
+    --green: #2E7D32;
+    --cream: #F8F6F0;
+    --light-gold: #F5E6C0;
+    --light-navy: #EEF2F8;
+    --white: #FFFFFF;
+    --text: #1A1A2E;
+    --gray: #666;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:var(--cream); color:var(--text); }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #0d2545 100%);
+    color:white; padding:0;
+    border-bottom: 5px solid var(--gold);
+  }
+  .header-inner {
+    max-width:1200px; margin:0 auto;
+    display:flex; align-items:center; gap:30px;
+    padding:25px 40px;
+  }
+  .header-inner img { width:110px; height:110px; border-radius:50%; border:3px solid var(--gold); object-fit:cover; }
+  .logo-placeholder {
+    width:110px; height:110px; border-radius:50%;
+    border:3px solid var(--gold);
+    background:linear-gradient(135deg,#0d2545,#1B3A6B);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--gold); text-align:center; font-weight:700; padding:8px;
+    flex-shrink:0;
+  }
+  .org-name h1 { font-size:28px; font-weight:800; letter-spacing:1px; color:var(--white); }
+  .org-name h1 span { color:var(--gold); }
+  .org-name p { font-size:13px; color:#aac4e8; margin-top:4px; letter-spacing:2px; text-transform:uppercase; }
+  .org-name h2 { font-size:15px; font-weight:400; color:#c8d8f0; margin-top:8px; }
+
+  .header-badge {
+    margin-left:auto; text-align:center;
+    background:rgba(200,148,26,0.15); border:1px solid var(--gold);
+    padding:12px 20px; border-radius:10px; flex-shrink:0;
+  }
+  .header-badge .year { font-size:24px; font-weight:800; color:var(--gold); }
+  .header-badge p { font-size:11px; color:#aac4e8; margin-top:4px; }
+
+  /* NAV BAR */
+  .tagline-bar {
+    background:var(--gold);
+    text-align:center; padding:10px;
+    font-size:13px; font-weight:700; color:var(--navy); letter-spacing:2px; text-transform:uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(180deg, var(--light-navy) 0%, var(--cream) 100%);
+    text-align:center; padding:60px 40px;
+  }
+  .hero h2 { font-size:34px; color:var(--navy); font-weight:800; margin-bottom:10px; }
+  .hero h2 span { color:var(--gold); }
+  .hero p { font-size:16px; color:var(--gray); max-width:700px; margin:0 auto 30px; line-height:1.7; }
+  .hero-stats { display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin-top:20px; }
+  .stat-box {
+    background:white; border-radius:12px; padding:20px 30px;
+    box-shadow:0 4px 15px rgba(27,58,107,0.1);
+    border-top:4px solid var(--gold);
+    min-width:140px;
+  }
+  .stat-box .num { font-size:32px; font-weight:800; color:var(--navy); }
+  .stat-box p { font-size:12px; color:var(--gray); margin-top:4px; }
+
+  /* DOMAINS GRID */
+  .section { max-width:1200px; margin:0 auto; padding:50px 40px; }
+  .section-title {
+    font-size:26px; font-weight:800; color:var(--navy);
+    border-left:5px solid var(--gold); padding-left:15px;
+    margin-bottom:30px;
+  }
+
+  .domains-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:24px; }
+  .domain-card {
+    background:white; border-radius:14px;
+    padding:28px; box-shadow:0 4px 20px rgba(27,58,107,0.08);
+    transition:transform 0.2s, box-shadow 0.2s;
+    text-decoration:none; color:inherit;
+    border-top:5px solid var(--navy);
+    display:block;
+  }
+  .domain-card:hover { transform:translateY(-5px); box-shadow:0 10px 30px rgba(27,58,107,0.18); }
+  .domain-card .domain-icon { font-size:38px; margin-bottom:12px; }
+  .domain-card h3 { font-size:18px; color:var(--navy); font-weight:700; margin-bottom:8px; }
+  .domain-card p { font-size:13px; color:var(--gray); line-height:1.6; margin-bottom:14px; }
+  .domain-card .tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .tag { font-size:11px; background:var(--light-gold); color:var(--navy); padding:3px 10px; border-radius:20px; font-weight:600; }
+  .domain-card .card-footer {
+    margin-top:18px; padding-top:14px;
+    border-top:1px solid #eee;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .domain-card .card-footer span { font-size:12px; color:var(--gray); }
+  .domain-card .open-btn {
+    background:var(--navy); color:white;
+    padding:6px 16px; border-radius:20px; font-size:12px; font-weight:700;
+    text-decoration:none;
+  }
+  .domain-card:nth-child(2) { border-top-color:#0077b6; }
+  .domain-card:nth-child(3) { border-top-color:#c1121f; }
+  .domain-card:nth-child(4) { border-top-color:#7b2d8b; }
+  .domain-card:nth-child(5) { border-top-color:#e85d04; }
+  .domain-card:nth-child(6) { border-top-color:#00796b; }
+  .domain-card:nth-child(7) { border-top-color:#558b2f; }
+  .domain-card:nth-child(8) { border-top-color:#1565c0; }
+  .domain-card:nth-child(9) { border-top-color:#6d4c41; }
+
+  /* DURATION TABLE */
+  .duration-section { background:var(--navy); color:white; padding:50px 40px; }
+  .duration-inner { max-width:1200px; margin:0 auto; }
+  .duration-inner .section-title { color:white; border-color:var(--gold); }
+  .duration-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .dur-card { background:rgba(255,255,255,0.08); border:1px solid rgba(200,148,26,0.4); border-radius:12px; padding:28px; text-align:center; }
+  .dur-card h3 { font-size:22px; color:var(--gold); margin-bottom:8px; }
+  .dur-card p { font-size:13px; color:#aac4e8; line-height:1.7; }
+  .dur-card ul { list-style:none; margin-top:14px; text-align:left; }
+  .dur-card ul li { font-size:13px; color:#c8d8f0; padding:4px 0; padding-left:20px; position:relative; }
+  .dur-card ul li::before { content:"✓"; position:absolute; left:0; color:var(--gold); font-weight:700; }
+
+  /* PROGRAMS */
+  .programs-section { background:var(--light-navy); padding:50px 40px; }
+  .programs-inner { max-width:1200px; margin:0 auto; }
+  .prog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px; }
+  .prog-card { background:white; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.07); }
+  .prog-card .prog-abbr { font-size:28px; font-weight:800; color:var(--navy); }
+  .prog-card p { font-size:12px; color:var(--gray); margin-top:6px; }
+
+  /* FOOTER */
+  footer {
+    background:#0d2545; color:#8aa4c8;
+    text-align:center; padding:30px 40px;
+    font-size:13px;
+  }
+  footer strong { color:var(--gold); }
+  footer p { margin-top:6px; }
+
+  @media(max-width:768px){
+    .header-inner { flex-direction:column; text-align:center; padding:20px; }
+    .header-badge { margin-left:0; }
+    .duration-grid { grid-template-columns:1fr; }
+    .hero h2 { font-size:24px; }
+    .section { padding:30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <img src="logo.png" alt="NextGen Devbhoomi Foundation Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="logo-placeholder" style="display:none;">NEXTGEN<br>DEVBHOOMI<br>FOUNDATION</div>
+    <div class="org-name">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future</p>
+      <h2>Industry-Oriented IT Internship Program &nbsp;|&nbsp; 2026 – 2027</h2>
+    </div>
+    <div class="header-badge">
+      <div class="year">2026–27</div>
+      <p>Internship Program</p>
+      <p style="margin-top:6px;font-size:10px;color:var(--gold);">9 Domains · 3 Levels</p>
+    </div>
+  </div>
+</header>
+
+<div class="tagline-bar">
+  ★ Transforming Students into Industry-Ready Professionals ★
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <h2>Comprehensive <span>IT Internship</span> Syllabus</h2>
+  <p>A structured, hands-on, industry-aligned internship program for BCA · MCA · B.Tech · M.Tech · Diploma IT · Computer Engineering students. Learn from practitioners, build real projects, and launch your career.</p>
+  <div class="hero-stats">
+    <div class="stat-box"><div class="num">9</div><p>Domains</p></div>
+    <div class="stat-box"><div class="num">3</div><p>Skill Levels</p></div>
+    <div class="stat-box"><div class="num">27+</div><p>Industry Projects</p></div>
+    <div class="stat-box"><div class="num">6</div><p>Program Duration Options (Months)</p></div>
+    <div class="stat-box"><div class="num">60%</div><p>Practical Learning</p></div>
+  </div>
+</section>
+
+<!-- ELIGIBLE PROGRAMS -->
+<section class="programs-section">
+  <div class="programs-inner">
+    <div class="section-title">Eligible Academic Programs</div>
+    <div class="prog-grid">
+      <div class="prog-card"><div class="prog-abbr">BCA</div><p>Bachelor of Computer Applications</p></div>
+      <div class="prog-card"><div class="prog-abbr">MCA</div><p>Master of Computer Applications</p></div>
+      <div class="prog-card"><div class="prog-abbr">B.Tech</div><p>CSE / IT / Computer Engineering</p></div>
+      <div class="prog-card"><div class="prog-abbr">M.Tech</div><p>Computer Science & Engineering</p></div>
+      <div class="prog-card"><div class="prog-abbr">Diploma</div><p>IT / Computer Science</p></div>
+      <div class="prog-card"><div class="prog-abbr">B.E.</div><p>Computer / IT Engineering</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOMAINS -->
+<section class="section">
+  <div class="section-title">Internship Domains</div>
+  <div class="domains-grid">
+
+    <a class="domain-card" href="01_Software_Development.html">
+      <div class="domain-icon">💻</div>
+      <h3>Software Development</h3>
+      <p>Frontend, Backend, Full Stack, Mobile App Development, and API Development with modern frameworks.</p>
+      <div class="tags">
+        <span class="tag">React.js</span><span class="tag">Node.js</span><span class="tag">React Native</span><span class="tag">REST API</span>
+      </div>
+      <div class="card-footer">
+        <span>5 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="02_DevOps_Cloud_Engineering.html">
+      <div class="domain-icon">☁️</div>
+      <h3>DevOps & Cloud Engineering</h3>
+      <p>Linux, AWS Cloud, Docker, Kubernetes, CI/CD pipelines, Terraform, and full-stack observability.</p>
+      <div class="tags">
+        <span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Terraform</span>
+      </div>
+      <div class="card-footer">
+        <span>8 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="03_Cyber_Security.html">
+      <div class="domain-icon">🔐</div>
+      <h3>Cyber Security</h3>
+      <p>Security fundamentals, network security, web application pentesting, SOC operations, and cloud security.</p>
+      <div class="tags">
+        <span class="tag">Kali Linux</span><span class="tag">Burp Suite</span><span class="tag">OWASP</span><span class="tag">SIEM</span>
+      </div>
+      <div class="card-footer">
+        <span>6 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="04_Data_Science_AI.html">
+      <div class="domain-icon">🤖</div>
+      <h3>Data Science & AI</h3>
+      <p>Python, ML, Deep Learning, Generative AI, LLMs, Prompt Engineering, and AI Agent Development.</p>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">LangChain</span><span class="tag">GenAI</span>
+      </div>
+      <div class="card-footer">
+        <span>7 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="05_UI_UX_Graphic_Design.html">
+      <div class="domain-icon">🎨</div>
+      <h3>UI/UX & Graphic Design</h3>
+      <p>Design principles, Figma, Adobe Photoshop, Illustrator, wireframing, prototyping, and design systems.</p>
+      <div class="tags">
+        <span class="tag">Figma</span><span class="tag">Photoshop</span><span class="tag">Illustrator</span><span class="tag">UX Research</span>
+      </div>
+      <div class="card-footer">
+        <span>7 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="06_Digital_Marketing.html">
+      <div class="domain-icon">📣</div>
+      <h3>Digital Marketing</h3>
+      <p>SEO, SEM (Google Ads), Social Media, Content Marketing, Email Marketing, and Analytics.</p>
+      <div class="tags">
+        <span class="tag">SEO</span><span class="tag">Google Ads</span><span class="tag">GA4</span><span class="tag">Meta Ads</span>
+      </div>
+      <div class="card-footer">
+        <span>6 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="07_Software_Testing_QA.html">
+      <div class="domain-icon">🧪</div>
+      <h3>Software Testing & QA</h3>
+      <p>Manual Testing, Selenium Automation, API Testing, Performance Testing, and Security Testing.</p>
+      <div class="tags">
+        <span class="tag">Selenium</span><span class="tag">Postman</span><span class="tag">JMeter</span><span class="tag">Playwright</span>
+      </div>
+      <div class="card-footer">
+        <span>5 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="08_Database_Administration.html">
+      <div class="domain-icon">🗄️</div>
+      <h3>Database Administration</h3>
+      <p>MySQL, PostgreSQL, MongoDB, database optimization, backup & recovery, and cloud databases.</p>
+      <div class="tags">
+        <span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Redis</span>
+      </div>
+      <div class="card-footer">
+        <span>5 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+    <a class="domain-card" href="09_Business_Analysis_PM.html">
+      <div class="domain-icon">📊</div>
+      <h3>Business Analysis & PM</h3>
+      <p>Requirement gathering, Agile & Scrum methodology, JIRA, documentation, and stakeholder management.</p>
+      <div class="tags">
+        <span class="tag">Agile</span><span class="tag">Scrum</span><span class="tag">JIRA</span><span class="tag">BPMN</span>
+      </div>
+      <div class="card-footer">
+        <span>5 Sub-Domains · 3 Levels</span>
+        <span class="open-btn">View Syllabus →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- DURATION -->
+<section class="duration-section">
+  <div class="duration-inner">
+    <div class="section-title">Program Duration Options</div>
+    <div class="duration-grid">
+      <div class="dur-card">
+        <h3>1 Month</h3>
+        <p>Intensive foundational program for summer/winter short internships.</p>
+        <ul>
+          <li>4 weeks structured curriculum</li>
+          <li>30–35 hrs/week</li>
+          <li>1 mini project</li>
+          <li>Beginner level certification</li>
+          <li>Ideal for Diploma & 1st year students</li>
+        </ul>
+      </div>
+      <div class="dur-card">
+        <h3>3 Months</h3>
+        <p>Semester internship for intermediate skill development and project building.</p>
+        <ul>
+          <li>12 weeks structured curriculum</li>
+          <li>25–30 hrs/week</li>
+          <li>2 projects (mini + capstone)</li>
+          <li>Intermediate certification</li>
+          <li>Ideal for BCA/B.Tech 3rd year</li>
+        </ul>
+      </div>
+      <div class="dur-card">
+        <h3>6 Months</h3>
+        <p>Full industrial training for advanced, job-ready skill development.</p>
+        <ul>
+          <li>24 weeks structured curriculum</li>
+          <li>20–25 hrs/week</li>
+          <li>3 projects + enterprise capstone</li>
+          <li>Advanced certification + placement</li>
+          <li>Ideal for MCA/M.Tech final year</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>NextGen Devbhoomi Foundation</strong> &nbsp;|&nbsp; Building a Resilient Future<br>
+  <p>Internship & Industrial Training Program &nbsp;·&nbsp; 2026–2027 &nbsp;·&nbsp; All Rights Reserved</p>
+  <p style="margin-top:10px;font-size:11px;color:#5a7a9a;">Aligned with NASSCOM & Industry Standards &nbsp;|&nbsp; Suitable for Internship · Industrial Training · Apprenticeship</p>
+</footer>
+
+</body>
+</html>
+

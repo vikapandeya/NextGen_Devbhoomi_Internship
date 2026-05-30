@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Database Administration — NextGen Devbhoomi Foundation</title>
+<link rel="stylesheet" href="shared_styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <img src="logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="logo-placeholder">NEXTGEN<br>DEVBHOOMI</div>
+    <div class="org-info">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <div class="tagline">Building a Resilient Future</div>
+      <div class="domain-title">🗄️ Database Administration</div>
+      <div class="domain-sub">MySQL · PostgreSQL · MongoDB · Database Optimization · Backup & Recovery</div>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="back-btn">← Back to Index</a>
+      <div class="level-badges">
+        <span class="badge beg">Beginner</span>
+        <span class="badge int">Intermediate</span>
+        <span class="badge adv">Advanced</span>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="tagline-bar">Domain 8 of 9 &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Industry-Oriented Internship Syllabus 2026–27</div>
+
+<div class="page-wrap">
+
+  <div class="sec-title">Program Overview</div>
+  <div class="info-grid">
+    <div class="info-card"><h4>Duration Options</h4><ul><li>1 Month — SQL & DB Fundamentals Track</li><li>3 Months — DBA Engineering Track</li><li>6 Months — Database Architect Track</li></ul></div>
+    <div class="info-card"><h4>Sub-Domains</h4><ul><li>MySQL Administration</li><li>PostgreSQL Advanced</li><li>MongoDB & NoSQL</li><li>Database Optimization</li><li>Backup & Recovery</li><li>Cloud Databases (AWS RDS/Atlas)</li></ul></div>
+    <div class="info-card"><h4>Lab Environment</h4><ul><li>MySQL 8.x (local + RDS)</li><li>PostgreSQL 15.x (local + RDS)</li><li>MongoDB Atlas (cloud)</li><li>Redis 7.x</li><li>DBeaver / pgAdmin 4</li></ul></div>
+    <div class="info-card"><h4>Target Certifications</h4><ul><li>Oracle MySQL OCA</li><li>MongoDB Certified Associate</li><li>AWS Database Specialty</li><li>PostgreSQL Professional</li></ul></div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="sec-title">Tools & Technologies</div>
+  <div class="tools-grid">
+    <div class="tool-cat"><h5>RDBMS</h5><ul><li>MySQL 8.x</li><li>PostgreSQL 15.x</li><li>MariaDB</li><li>SQLite (dev)</li></ul></div>
+    <div class="tool-cat"><h5>NoSQL</h5><ul><li>MongoDB 7.x</li><li>Redis 7.x</li><li>Cassandra (advanced)</li><li>DynamoDB (AWS)</li></ul></div>
+    <div class="tool-cat"><h5>GUI Tools</h5><ul><li>MySQL Workbench</li><li>pgAdmin 4</li><li>MongoDB Compass</li><li>DBeaver (universal)</li></ul></div>
+    <div class="tool-cat"><h5>CLI Tools</h5><ul><li>mysql client</li><li>psql</li><li>mongosh</li><li>redis-cli</li></ul></div>
+    <div class="tool-cat"><h5>Monitoring</h5><ul><li>Percona Monitoring (PMM)</li><li>pg_stat_statements</li><li>MySQL Performance Schema</li><li>Grafana + Prometheus</li></ul></div>
+    <div class="tool-cat"><h5>Backup</h5><ul><li>mysqldump</li><li>pg_dump / pg_restore</li><li>pgBackRest</li><li>Percona XtraBackup</li></ul></div>
+    <div class="tool-cat"><h5>Replication</h5><ul><li>MySQL Replication (GTID)</li><li>PostgreSQL Streaming Replication</li><li>MongoDB Replica Sets</li></ul></div>
+    <div class="tool-cat"><h5>Cloud DB</h5><ul><li>AWS RDS</li><li>AWS Aurora</li><li>MongoDB Atlas</li><li>Google Cloud SQL</li></ul></div>
+  </div>
+
+  <!-- BEGINNER -->
+  <div class="level-header">
+    <div class="level-icon">🌱</div>
+    <div><h2>Beginner Level — 1 Month (4 Weeks)</h2><p>SQL Fundamentals · MySQL · Joins · MongoDB Basics · ER Diagrams · Schema Design</p></div>
+    <span class="level-tag beg">Beginner</span>
+  </div>
+
+  <div class="sec-title" style="font-size:16px;">Learning Objectives</div>
+  <div class="objectives"><ul>
+    <li>Write SQL queries for all CRUD operations</li>
+    <li>Design normalized relational database schemas (1NF, 2NF, 3NF)</li>
+    <li>Use JOINs and subqueries to answer complex business questions</li>
+    <li>Perform CRUD operations in MongoDB with the aggregation pipeline</li>
+    <li>Create ER diagrams for real-world entities</li>
+    <li>Administer a MySQL instance (users, permissions, backups)</li>
+  </ul></div>
+
+  <div class="sec-title" style="font-size:16px;">Weekly Curriculum</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Week</th><th>Topics</th><th>Hands-on Lab</th><th>Assignment</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Week 1</strong></td>
+        <td>RDBMS concepts: tables, rows, columns, data types (INT, VARCHAR, DATE, DECIMAL, BOOLEAN, TEXT, JSON); DDL (CREATE, ALTER, DROP, TRUNCATE); DML (INSERT, UPDATE, DELETE); DQL (SELECT, WHERE, ORDER BY, LIMIT, DISTINCT); MySQL installation and MySQL Workbench setup</td>
+        <td>Create a school database schema + insert 50 sample records + 15 SELECT queries</td>
+        <td>20 SQL queries on a provided sales dataset (aggregations, filtering, sorting)</td>
+      </tr>
+      <tr>
+        <td><strong>Week 2</strong></td>
+        <td>Aggregate functions (SUM, AVG, MIN, MAX, COUNT); GROUP BY + HAVING; JOINs (INNER, LEFT, RIGHT, FULL OUTER, CROSS, SELF); subqueries (WHERE, FROM, SELECT subqueries); CTEs (WITH clause); UNION vs UNION ALL; constraints (PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, DEFAULT, CHECK)</td>
+        <td>Multi-table e-commerce query set: revenue by category, top customers, low stock products</td>
+        <td>15 JOIN queries + 5 CTE queries on a provided hospital database</td>
+      </tr>
+      <tr>
+        <td><strong>Week 3</strong></td>
+        <td>ER diagram creation (entities, attributes, relationships, cardinality 1:1/1:N/M:N); database normalization (1NF: atomic values, 2NF: full functional dependency, 3NF: no transitive dependency); schema design for real-world systems; MySQL user management (CREATE USER, GRANT, REVOKE, SHOW GRANTS); basic backup with mysqldump</td>
+        <td>Design and implement a library management system database from scratch</td>
+        <td>ER diagram + normalized schema for an online food ordering system (6+ entities)</td>
+      </tr>
+      <tr>
+        <td><strong>Week 4</strong></td>
+        <td>MongoDB fundamentals: document model, BSON types; mongosh CRUD (insertOne/Many, find with projection, updateOne/$set, deleteOne); query operators ($eq, $ne, $gt, $lt, $in, $and, $or, $exists, $regex); aggregation pipeline basics ($match, $group, $sort, $project, $limit, $skip); MongoDB Compass GUI</td>
+        <td>Blog database in MongoDB: insert 100 posts + 10 aggregation queries for analytics</td>
+        <td>MongoDB CRUD + aggregation assignment: product catalog with sales analytics</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <!-- INTERMEDIATE -->
+  <div class="level-header">
+    <div class="level-icon">⚡</div>
+    <div><h2>Intermediate Level — 3 Months (12 Weeks)</h2><p>Advanced SQL · Indexing · Stored Procedures · Replication · Redis · Backup & AWS RDS</p></div>
+    <span class="level-tag int">Intermediate</span>
+  </div>
+
+  <div class="sec-title" style="font-size:16px;">Month 1 — Advanced SQL & Database Internals</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Week</th><th>Topics</th><th>Lab</th><th>Assignment</th></tr></thead>
+    <tbody>
+      <tr><td>W1</td><td>Window functions: ROW_NUMBER(), RANK(), DENSE_RANK(), NTILE(), LEAD(), LAG(), FIRST_VALUE(), LAST_VALUE(); PARTITION BY; OVER clause; running totals, moving averages with window functions</td><td>Sales leaderboard, running revenue total, month-over-month growth using window functions</td><td>10 complex window function queries on a provided e-commerce dataset</td></tr>
+      <tr><td>W2</td><td>Indexes: B-tree (default), Hash, Full-text, Spatial; composite indexes (column order matters); covering indexes; index cardinality; EXPLAIN and EXPLAIN ANALYZE; slow query log; index selectivity; when NOT to index</td><td>Add indexes to a slow-query dataset, compare EXPLAIN before/after</td><td>Index optimization report: 5 slow queries improved with index strategy</td></tr>
+      <tr><td>W3</td><td>Stored procedures, functions (deterministic vs non-deterministic), cursors, triggers (BEFORE/AFTER INSERT/UPDATE/DELETE), events (MySQL Event Scheduler); views (simple vs complex, updatable views, materialized views in PostgreSQL)</td><td>Stored proc for invoice generation + audit trigger for employee salary changes</td><td>Full stored procedure + trigger suite for a banking application</td></tr>
+      <tr><td>W4</td><td>Transactions: ACID properties deep dive; COMMIT, ROLLBACK, SAVEPOINT; isolation levels (READ UNCOMMITTED → SERIALIZABLE); dirty reads, non-repeatable reads, phantom reads; deadlock detection and resolution; locking (row-level, table-level, gap locks)</td><td>Simulate and resolve a deadlock scenario in MySQL</td><td>Transaction isolation level comparison lab with documented observations</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="sec-title" style="font-size:16px;">Month 2 — PostgreSQL Advanced & MongoDB Advanced</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Week</th><th>Topics</th><th>Lab</th><th>Assignment</th></tr></thead>
+    <tbody>
+      <tr><td>W5</td><td>PostgreSQL-specific features: JSONB (store, index, query JSON data), array types, hstore; full-text search (tsvector, tsquery, GIN index); table partitioning (range, list, hash); pg_stat_statements; VACUUM and ANALYZE; autovacuum tuning</td><td>JSONB product catalog with GIN index + full-text search implementation</td><td>Performance comparison: JSONB query with/without GIN index (EXPLAIN ANALYZE)</td></tr>
+      <tr><td>W6</td><td>PostgreSQL replication: streaming replication setup (primary/replica), WAL shipping, replication slots; logical replication; pg_basebackup; promote a replica to primary; read-replica for reporting workloads</td><td>Set up PostgreSQL streaming replication (primary + 1 replica) in Docker</td><td>Failover simulation: promote replica, update app connection, document RTO</td></tr>
+      <tr><td>W7</td><td>MongoDB advanced: $lookup (join collections), $facet (multi-faceted aggregation), $unwind, $addFields; Atlas Search (full-text, fuzzy, autocomplete); text indexes; geospatial queries ($near, $geoWithin, 2dsphere index); schema validation ($jsonSchema)</td><td>E-commerce product search with Atlas Search (fuzzy + filters)</td><td>Geospatial query for nearest store locator feature using 2dsphere index</td></tr>
+      <tr><td>W8</td><td>Redis: data types (String, List, Set, Sorted Set, Hash, Stream); use cases (caching, session, rate limiting, leaderboard, pub/sub); TTL, eviction policies (LRU, LFU, noeviction); Redis Cluster vs Sentinel; Lua scripting; Redis Streams for message queuing</td><td>Implement cache-aside pattern for a slow DB query (10x speedup target)</td><td>Redis-based rate limiter + leaderboard using Sorted Sets</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="sec-title" style="font-size:16px;">Month 3 — Backup, Replication & Cloud Databases</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Week</th><th>Topics</th><th>Lab</th><th>Assignment</th></tr></thead>
+    <tbody>
+      <tr><td>W9</td><td>MySQL backup strategies: logical (mysqldump, mysqlpump), physical (Percona XtraBackup, hot backup), binary log backup; incremental backup; point-in-time recovery (PITR); backup scheduling with cron; backup verification (restore test)</td><td>Full + incremental backup schedule + PITR simulation for MySQL</td><td>Disaster recovery drill: corrupt a table, restore from backup, calculate RTO</td></tr>
+      <tr><td>W10</td><td>MySQL replication: binary log replication (statement/row/mixed), GTID-based replication setup (master/slave/multi-source); replication monitoring (SHOW SLAVE STATUS); pt-table-checksum for consistency; ProxySQL for read/write splitting</td><td>GTID replication setup + ProxySQL read/write split configuration</td><td>Replication lag monitoring setup + alerting with Prometheus + Grafana</td></tr>
+      <tr><td>W11</td><td>AWS RDS: launching MySQL/PostgreSQL instances, parameter groups, option groups, snapshots, automated backups, Multi-AZ deployment, read replicas, RDS Proxy; AWS Aurora: serverless v2, Aurora Cluster, global database, Performance Insights</td><td>RDS Multi-AZ setup + promote read replica + restore from snapshot</td><td>AWS Aurora Serverless v2 setup + query performance comparison with RDS</td></tr>
+      <tr><td>W12</td><td>Database security: encryption at rest (TDE, RDS encryption), encryption in transit (SSL/TLS), MySQL/PostgreSQL SSL enforcement; Row Level Security (PostgreSQL); audit logging; compliance requirements (GDPR data retention, right to erasure); database firewall (ProxySQL query rules)</td><td>Enable SSL on MySQL + PostgreSQL + configure row level security policies</td><td>Database security hardening checklist implementation + audit log analysis</td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- ADVANCED -->
+  <div class="level-header">
+    <div class="level-icon">🚀</div>
+    <div><h2>Advanced Level — 6 Months (24 Weeks)</h2><p>Performance Tuning · Distributed Databases · Sharding · DBA Operations · Capstone</p></div>
+    <span class="level-tag adv">Advanced</span>
+  </div>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Month</th><th>Focus</th><th>Topics</th><th>Deliverable</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Month 4</strong></td>
+        <td>Database Performance Tuning</td>
+        <td>Query execution plan deep dive (cost-based optimizer, statistics, histograms); auto_explain in PostgreSQL; slow query analysis with pt-query-digest; connection pooling (PgBouncer, ProxySQL); buffer pool tuning (innodb_buffer_pool_size); wait event analysis; index fragmentation and rebuild; table statistics maintenance</td>
+        <td>Performance tuning case study: take a slow database from 10s queries to under 100ms</td>
+      </tr>
+      <tr>
+        <td><strong>Month 5</strong></td>
+        <td>Distributed Databases & Sharding</td>
+        <td>MongoDB sharding: shard keys (hashed vs ranged), mongos, config servers, chunk balancing; PostgreSQL Citus extension for horizontal scaling; Apache Cassandra data model (partition key, clustering key, wide rows); CAP theorem, eventual consistency; NewSQL: CockroachDB, TiDB overview; database federation patterns</td>
+        <td>MongoDB sharded cluster with 3 shards + load distribution analysis</td>
+      </tr>
+      <tr>
+        <td><strong>Month 6</strong></td>
+        <td>DBA Operations & Capstone</td>
+        <td>Disaster recovery planning (RTO/RPO definition, DR runbook, tabletop exercises); database monitoring with PMM + Grafana (custom dashboards, alerting, query analytics); change management (schema migration with Flyway/Liquibase); DBA on-call responsibilities; capacity planning; capstone enterprise multi-database architecture</td>
+        <td>Enterprise multi-database architecture with full DR plan + monitoring</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <!-- PROJECTS -->
+  <div class="sec-title">Real Industry Projects</div>
+  <div class="project-grid">
+    <div class="project-card">
+      <span class="proj-level beg">Beginner Project</span>
+      <h4>Hospital Management Database System</h4>
+      <p>MySQL: patients, doctors, appointments, billing tables. ER diagram + 3NF schema + 30 SQL queries + MongoDB patient records store.</p>
+      <div class="tech-stack"><span class="tech-tag">MySQL</span><span class="tech-tag">MongoDB</span><span class="tech-tag">DBeaver</span><span class="tech-tag">ER Diagram</span></div>
+    </div>
+    <div class="project-card">
+      <span class="proj-level int">Intermediate Project</span>
+      <h4>High-Performance Analytics Database</h4>
+      <p>PostgreSQL with partitioned tables, materialized views + indexes, Redis caching layer, automated backup scripts, before/after EXPLAIN performance report.</p>
+      <div class="tech-stack"><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span><span class="tech-tag">Partitioning</span><span class="tech-tag">PMM</span><span class="tech-tag">pgBackRest</span></div>
+    </div>
+    <div class="project-card">
+      <span class="proj-level adv">Advanced Project</span>
+      <h4>Enterprise Multi-Database Architecture</h4>
+      <p>PostgreSQL (Citus sharding) + MongoDB (Atlas Search) + Redis, automated PITR, PMM + Grafana monitoring, row-level security, audit logging, DR runbook.</p>
+      <div class="tech-stack"><span class="tech-tag">PostgreSQL Citus</span><span class="tech-tag">MongoDB Atlas</span><span class="tech-tag">Redis Cluster</span><span class="tech-tag">PMM</span><span class="tech-tag">Flyway</span></div>
+    </div>
+  </div>
+
+  <!-- ASSESSMENT -->
+  <div class="sec-title">Assessment Structure</div>
+  <div class="assess-grid">
+    <div class="assess-card"><div class="weight">30%</div><h5>SQL Practical Exam</h5><p>3-hour SQL exam covering complex queries, design, and optimization scenarios.</p></div>
+    <div class="assess-card"><div class="weight">30%</div><h5>DBA Lab Tasks</h5><p>Backup, replication, and performance tuning tasks evaluated by mentor.</p></div>
+    <div class="assess-card"><div class="weight">30%</div><h5>Capstone Database</h5><p>Final multi-database architecture with documentation and live demo.</p></div>
+    <div class="assess-card"><div class="weight">10%</div><h5>Query Optimization</h5><p>Before/after EXPLAIN analysis showing measurable performance improvements.</p></div>
+  </div>
+
+  <div class="sec-title" style="font-size:17px;margin-top:30px;">Sample Viva Questions</div>
+  <div class="info-grid">
+    <div class="info-card"><h4>Beginner Viva</h4><ul><li>What is the difference between DELETE, TRUNCATE, and DROP?</li><li>Explain 1NF, 2NF, and 3NF with an example.</li><li>When would you use a LEFT JOIN vs INNER JOIN?</li><li>What is a primary key vs a foreign key?</li></ul></div>
+    <div class="info-card"><h4>Intermediate Viva</h4><ul><li>Explain the difference between clustered and non-clustered indexes.</li><li>What are ACID properties? Give an example of each.</li><li>What is the purpose of the VACUUM command in PostgreSQL?</li><li>How does Redis handle cache eviction when memory is full?</li></ul></div>
+    <div class="info-card"><h4>Advanced Viva</h4><ul><li>How do you choose a shard key for a MongoDB sharded cluster?</li><li>What is WAL (Write-Ahead Log) and why is it important for recovery?</li><li>How would you handle a production database with 0 downtime during a major schema change?</li><li>Explain the difference between RTO and RPO and how you design for them.</li></ul></div>
+  </div>
+
+  <!-- CAREER -->
+  <div class="sec-title">Career Roadmap</div>
+  <div class="career-section">
+    <h3>Job Roles & Salary Expectations — Database Administration</h3>
+    <table class="career-table">
+      <thead><tr><th>Level</th><th>Job Roles</th><th>India CTC</th><th>Global (USD/yr)</th></tr></thead>
+      <tbody>
+        <tr><td>Beginner</td><td>Junior DBA, Database Developer, SQL Developer, Data Operations Analyst</td><td>₹3–5 LPA</td><td>$50K–$65K</td></tr>
+        <tr><td>Intermediate</td><td>Database Administrator, Database Engineer, Data Engineer, MongoDB Developer</td><td>₹7–14 LPA</td><td>$75K–$105K</td></tr>
+        <tr><td>Advanced</td><td>Senior DBA, Database Architect, Principal Data Engineer, Data Infrastructure Lead</td><td>₹16–32 LPA</td><td>$110K–$160K</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <strong>NextGen Devbhoomi Foundation</strong> &nbsp;·&nbsp; Building a Resilient Future<br>
+  <p>Domain 8: Database Administration &nbsp;·&nbsp; Internship Syllabus 2026–27 &nbsp;·&nbsp; All Rights Reserved</p>
+  <div class="nav-links">
+    <a href="index.html">← Index</a>
+    <a href="07_Software_Testing_QA.html">← Software Testing</a>
+    <a href="09_Business_Analysis_PM.html">Business Analysis →</a>
+  </div>
+</footer>
+</body>
+</html>
+

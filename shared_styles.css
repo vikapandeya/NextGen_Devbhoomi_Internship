@@ -1,0 +1,208 @@
+/* NextGen Devbhoomi Foundation — Shared Stylesheet */
+:root {
+  --navy: #1B3A6B;
+  --gold: #C8941A;
+  --green: #2E7D32;
+  --cream: #F8F6F0;
+  --light-gold: #F5E6C0;
+  --light-navy: #EEF2F8;
+  --white: #FFFFFF;
+  --text: #1A1A2E;
+  --gray: #666;
+  --border: #e0d9ce;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Arial,sans-serif; background:var(--cream); color:var(--text); font-size:14px; line-height:1.6; }
+
+/* ── HEADER ─────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, #0d2545 100%);
+  color:white; border-bottom:5px solid var(--gold);
+}
+.header-inner {
+  max-width:1200px; margin:0 auto;
+  display:flex; align-items:center; gap:28px;
+  padding:22px 40px;
+}
+.header-inner img {
+  width:100px; height:100px; border-radius:50%;
+  border:3px solid var(--gold); object-fit:cover; flex-shrink:0;
+}
+.logo-placeholder {
+  width:100px; height:100px; border-radius:50%;
+  border:3px solid var(--gold);
+  background:rgba(255,255,255,0.08);
+  display:none; align-items:center; justify-content:center;
+  font-size:10px; color:var(--gold); text-align:center;
+  font-weight:700; padding:8px; flex-shrink:0;
+}
+.org-info h1 { font-size:24px; font-weight:800; color:white; letter-spacing:0.5px; }
+.org-info h1 span { color:var(--gold); }
+.org-info .tagline { font-size:11px; color:#aac4e8; letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+.org-info .domain-title { font-size:18px; font-weight:700; color:var(--gold); margin-top:8px; }
+.org-info .domain-sub { font-size:12px; color:#c8d8f0; margin-top:2px; }
+.header-right { margin-left:auto; text-align:right; flex-shrink:0; }
+.header-right .back-btn {
+  display:inline-block; background:rgba(200,148,26,0.2);
+  border:1px solid var(--gold); color:var(--gold);
+  padding:7px 16px; border-radius:20px; font-size:12px;
+  text-decoration:none; font-weight:700; margin-bottom:10px;
+}
+.level-badges { display:flex; gap:8px; justify-content:flex-end; }
+.badge {
+  font-size:11px; font-weight:700; padding:4px 12px;
+  border-radius:20px;
+}
+.badge.beg { background:#2e7d32; color:white; }
+.badge.int { background:#0077b6; color:white; }
+.badge.adv { background:#c1121f; color:white; }
+
+.tagline-bar {
+  background:var(--gold); text-align:center;
+  padding:8px; font-size:12px; font-weight:700;
+  color:var(--navy); letter-spacing:2px; text-transform:uppercase;
+}
+
+/* ── LAYOUT ─────────────────────────────────── */
+.page-wrap { max-width:1200px; margin:0 auto; padding:40px; }
+
+/* ── SECTION HEADERS ─────────────────────────── */
+.sec-title {
+  font-size:22px; font-weight:800; color:var(--navy);
+  border-left:5px solid var(--gold); padding-left:14px;
+  margin-bottom:24px; margin-top:48px;
+}
+.sec-title:first-child { margin-top:0; }
+
+.level-header {
+  background: linear-gradient(135deg, var(--navy) 0%, #0d2545 100%);
+  color:white; border-radius:12px; padding:24px 28px;
+  margin-bottom:24px; margin-top:40px;
+  display:flex; align-items:center; gap:20px;
+}
+.level-header .level-icon { font-size:36px; }
+.level-header h2 { font-size:20px; font-weight:800; }
+.level-header p { font-size:13px; color:#aac4e8; margin-top:4px; }
+.level-header .level-tag {
+  margin-left:auto; font-size:13px; font-weight:700;
+  padding:6px 18px; border-radius:20px;
+}
+.level-header .level-tag.beg { background:#2e7d32; }
+.level-header .level-tag.int { background:#0077b6; }
+.level-header .level-tag.adv { background:#c1121f; }
+
+/* ── INFO CARDS ──────────────────────────────── */
+.info-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin-bottom:30px; }
+.info-card {
+  background:white; border-radius:10px; padding:20px;
+  box-shadow:0 2px 12px rgba(27,58,107,0.08);
+  border-top:4px solid var(--gold);
+}
+.info-card h4 { font-size:13px; font-weight:700; color:var(--navy); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px; }
+.info-card ul { list-style:none; }
+.info-card ul li { font-size:13px; color:var(--text); padding:3px 0; padding-left:18px; position:relative; }
+.info-card ul li::before { content:"▸"; position:absolute; left:0; color:var(--gold); }
+
+/* ── TABLES ──────────────────────────────────── */
+.table-wrap { overflow-x:auto; margin-bottom:24px; }
+table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 12px rgba(27,58,107,0.07); }
+table thead tr { background:var(--navy); color:white; }
+table thead th { padding:12px 16px; text-align:left; font-size:13px; font-weight:700; letter-spacing:0.3px; }
+table tbody tr { border-bottom:1px solid #f0ece4; }
+table tbody tr:hover { background:var(--light-gold); }
+table tbody td { padding:11px 16px; font-size:13px; vertical-align:top; }
+table tbody tr:nth-child(even) { background:#fafaf8; }
+table tbody tr:nth-child(even):hover { background:var(--light-gold); }
+
+/* ── WEEK CARD ───────────────────────────────── */
+.week-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:20px; margin-bottom:30px; }
+.week-card {
+  background:white; border-radius:12px; padding:22px;
+  box-shadow:0 2px 14px rgba(27,58,107,0.08);
+  border-left:5px solid var(--navy);
+}
+.week-card h4 { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:12px; }
+.week-card .topic-tag { display:inline-block; font-size:11px; background:var(--light-navy); color:var(--navy); padding:2px 10px; border-radius:12px; margin:2px; }
+.week-card .lab-box { background:var(--light-gold); border-radius:6px; padding:8px 12px; margin-top:10px; font-size:12px; }
+.week-card .lab-box strong { color:var(--navy); }
+.week-card .assign-box { background:#f0faf0; border-radius:6px; padding:8px 12px; margin-top:8px; font-size:12px; }
+.week-card .assign-box strong { color:var(--green); }
+
+/* ── PROJECT CARDS ───────────────────────────── */
+.project-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; margin-bottom:30px; }
+.project-card {
+  background:white; border-radius:12px; padding:24px;
+  box-shadow:0 2px 14px rgba(27,58,107,0.09);
+  border-top:5px solid var(--gold);
+}
+.project-card .proj-level { font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px; display:inline-block; margin-bottom:10px; }
+.project-card .proj-level.beg { background:#e8f5e9; color:#2e7d32; }
+.project-card .proj-level.int { background:#e3f2fd; color:#0077b6; }
+.project-card .proj-level.adv { background:#fce4ec; color:#c1121f; }
+.project-card h4 { font-size:16px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+.project-card p { font-size:13px; color:var(--gray); margin-bottom:12px; }
+.project-card .tech-stack { display:flex; flex-wrap:wrap; gap:6px; }
+.tech-tag { font-size:11px; background:var(--light-gold); color:var(--navy); padding:3px 10px; border-radius:15px; font-weight:600; }
+
+/* ── TOOLS GRID ──────────────────────────────── */
+.tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-bottom:30px; }
+.tool-cat {
+  background:white; border-radius:10px; padding:16px;
+  box-shadow:0 2px 10px rgba(27,58,107,0.07);
+}
+.tool-cat h5 { font-size:12px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid var(--gold); }
+.tool-cat ul { list-style:none; }
+.tool-cat ul li { font-size:12px; color:var(--text); padding:2px 0; padding-left:14px; position:relative; }
+.tool-cat ul li::before { content:"·"; position:absolute; left:0; color:var(--gold); font-size:18px; line-height:1; top:-1px; }
+
+/* ── ASSESSMENT ──────────────────────────────── */
+.assess-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; margin-bottom:30px; }
+.assess-card {
+  background:white; border-radius:10px; padding:20px;
+  box-shadow:0 2px 12px rgba(27,58,107,0.07);
+  text-align:center;
+}
+.assess-card .weight { font-size:36px; font-weight:800; color:var(--gold); }
+.assess-card h5 { font-size:14px; font-weight:700; color:var(--navy); margin:6px 0; }
+.assess-card p { font-size:12px; color:var(--gray); }
+
+/* ── CAREER TABLE ────────────────────────────── */
+.career-section { background:var(--navy); color:white; padding:40px; border-radius:14px; margin-top:20px; }
+.career-section h3 { font-size:20px; font-weight:800; color:var(--gold); margin-bottom:20px; }
+.career-table { width:100%; border-collapse:collapse; }
+.career-table th { background:rgba(200,148,26,0.2); color:var(--gold); padding:10px 14px; text-align:left; font-size:12px; }
+.career-table td { padding:10px 14px; font-size:13px; color:#c8d8f0; border-bottom:1px solid rgba(255,255,255,0.08); }
+.career-table tr:hover td { background:rgba(255,255,255,0.05); }
+
+/* ── OBJECTIVES LIST ─────────────────────────── */
+.objectives {
+  background:white; border-radius:12px; padding:24px;
+  box-shadow:0 2px 12px rgba(27,58,107,0.08);
+  margin-bottom:28px;
+}
+.objectives ul { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:8px; list-style:none; }
+.objectives ul li { font-size:13px; padding:6px 12px 6px 24px; position:relative; background:var(--light-navy); border-radius:6px; }
+.objectives ul li::before { content:"✓"; position:absolute; left:8px; color:var(--green); font-weight:800; }
+
+/* ── FOOTER ──────────────────────────────────── */
+footer {
+  background:#0d2545; color:#8aa4c8;
+  text-align:center; padding:28px 40px;
+  font-size:13px; margin-top:60px;
+}
+footer strong { color:var(--gold); }
+footer p { margin-top:5px; font-size:12px; }
+footer .nav-links { margin-top:14px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+footer .nav-links a { color:var(--gold); text-decoration:none; font-size:12px; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media(max-width:768px){
+  .header-inner { flex-direction:column; text-align:center; padding:20px; }
+  .header-right { margin-left:0; text-align:center; }
+  .level-badges { justify-content:center; }
+  .page-wrap { padding:20px; }
+  .week-grid, .project-grid { grid-template-columns:1fr; }
+  .level-header { flex-direction:column; text-align:center; }
+  .level-header .level-tag { margin-left:0; }
+}
