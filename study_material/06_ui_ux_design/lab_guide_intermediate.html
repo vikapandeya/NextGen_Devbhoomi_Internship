@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Guide — Intermediate | UI/UX Design | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">🔬 Lab Guide — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Labs</a>
+    <a href="lab_guide_advanced.html">Advanced Labs</a>
+    <a href="concept_notes_intermediate.html">Concept Notes</a>
+    <a href="project_briefs.html">Projects</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Intermediate Level</h2>
+      <p>Hands-on practice with Figma components, design systems, interactive prototyping, and moderated usability testing.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">Figma Components</span>
+      <span class="pill">Design Systems</span>
+      <span class="pill">Prototyping</span>
+      <span class="pill">Usability Testing</span>
+    </div>
+  </div>
+
+  <!-- W5 -->
+  <div class="week-block int" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <span class="week-num wn-int">Week 5</span>
+      <h3>Figma Components &amp; Variants</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Build reusable Figma components with multiple states using the Variants system so you can design consistently at scale.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Create Figma account &amp; new file</strong><br>
+            Sign up at figma.com (free plan is sufficient). Click <em>New design file</em> and name it <em>My Design System</em>. Rename the default page to <em>Components</em>.
+          </li>
+          <li>
+            <strong>Create a Button master component</strong><br>
+            Go to <em>View &gt; Rulers</em> to enable snapping. Draw a rectangle: <strong>160 × 44 px</strong>. Add a text layer inside it with the text <em>Label</em>. Select both layers, apply Auto Layout (<strong>Shift+A</strong>). Set horizontal padding to <strong>0 24 px</strong>, align centre. Set fill colour to <strong>#1B3A6B</strong>, corner radius to <strong>8 px</strong>. Select the frame, press <strong>Ctrl+Alt+K</strong> (Windows) to turn it into a Component. Name it <em>Button</em>.
+          </li>
+          <li>
+            <strong>Add 4 Variants for the Button</strong><br>
+            With the component selected, click <em>Add variant</em> four times in the right panel. This creates a Variant Set. Open the <em>Variant Properties</em> panel and rename the property to <em>State</em>. Name each variant:
+            <ul>
+              <li><strong>Default</strong> — fill #1B3A6B, text white, opacity 100%</li>
+              <li><strong>Hover</strong> — fill #14305A (darker), subtle drop shadow</li>
+              <li><strong>Disabled</strong> — fill #9EB0C8, text #6B8099, cursor not-allowed</li>
+              <li><strong>Loading</strong> — fill #1B3A6B, replace label text with a spinner icon (use ⟳ or a circular shape with a 90° rotation)</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Create an Input component</strong><br>
+            Draw a rectangle <strong>280 × 44 px</strong>, stroke #C4C9D4 (1 px), corner radius 6, no fill. Add placeholder text in light grey (#9EA8B3). Apply Auto Layout. Create a Component, then add 4 variants with State property:
+            <ul>
+              <li><strong>Empty</strong> — placeholder text visible, default border</li>
+              <li><strong>Filled</strong> — real text in #1A1A2E, border #1B3A6B</li>
+              <li><strong>Error</strong> — border #E76F51 (red), error icon on right, helper text below in red</li>
+              <li><strong>Focused</strong> — border #1B3A6B (2 px), subtle glow effect</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Create a Card component</strong><br>
+            Draw a frame <strong>320 × 380 px</strong>, fill white, corner radius 12, drop shadow (0 4px 16px rgba(0,0,0,0.1)). Add three child layers:
+            <ul>
+              <li>Image slot: rectangle at top, <strong>320 × 160 px</strong>, fill #E8ECF0 (placeholder)</li>
+              <li>Title text: H3 style, bold, 16px</li>
+              <li>Body text: 14px, #4A5568, 2 lines</li>
+              <li>CTA Button: drag an instance of your Button component into the card</li>
+            </ul>
+            Apply Auto Layout to the content area (below image) with 16 px gap. Convert to Component.
+          </li>
+          <li>
+            <strong>Organise on the Components page</strong><br>
+            Lay out all component sets neatly with labels above each group. Add a section frame for <em>Buttons</em>, <em>Inputs</em>, <em>Cards</em>. Group related variants visually.
+          </li>
+          <li>
+            <strong>Create a Playground page</strong><br>
+            Add a new page named <em>Playground</em>. Drag instances of all your components onto this page. In the right panel, practice swapping the <em>State</em> variant on your Button — change from <em>Default</em> to <em>Hover</em> to <em>Disabled</em> without breaking the layout. This demonstrates the power of components: one change updates all instances.
+          </li>
+        </ol>
+      </div>
+      <div class="sm-sec">
+        <h4>Deliverable Check</h4>
+        <ul>
+          <li>Button component with 4 states (variants)</li>
+          <li>Input component with 4 states</li>
+          <li>Card component using a Button instance</li>
+          <li>Playground page showing instances with swapped variants</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- W6 -->
+  <div class="week-block int" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <span class="week-num wn-int">Week 6</span>
+      <h3>Building a Mini Design System</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Create a shareable, documented design system in Figma that another designer or developer can pick up without asking you questions.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Create a Brand page with Color Styles</strong><br>
+            Add a new page named <em>Brand</em>. Create 6 colour swatches (rectangles 80×80 px) with labels below each:
+            <ul>
+              <li>Navy — <code>#1B3A6B</code> (Primary)</li>
+              <li>Gold — <code>#C8941A</code> (Accent)</li>
+              <li>Cream — <code>#F8F6F0</code> (Background)</li>
+              <li>Success — <code>#2A9D8F</code></li>
+              <li>Warning — <code>#E9C46A</code></li>
+              <li>Error — <code>#E76F51</code></li>
+            </ul>
+            For each swatch: select it, click the <em>Style</em> icon (4 dots) next to Fill in the right panel, click +, name the style (e.g. <em>Primary/Navy</em>). These are now shared Colour Styles across your file.
+          </li>
+          <li>
+            <strong>Create Text Styles</strong><br>
+            On the same Brand page, create text samples and save as Text Styles:
+            <ul>
+              <li>H1 — 32px / Bold (700) / Line height 40px</li>
+              <li>H2 — 24px / SemiBold (600) / Line height 32px</li>
+              <li>H3 — 18px / SemiBold (600) / Line height 28px</li>
+              <li>Body — 14px / Regular (400) / Line height 22px</li>
+              <li>Caption — 12px / Regular (400) / Line height 18px</li>
+              <li>Button — 14px / Bold (700) / Letter spacing 0.5px</li>
+            </ul>
+            Save each as a Text Style using the same Style panel method.
+          </li>
+          <li>
+            <strong>Build 8 core components</strong><br>
+            Add a <em>Components</em> page. Create the following, each using your saved Colour and Text Styles:
+            <ol type="a">
+              <li><strong>Button</strong> — 3 types (Primary / Secondary / Ghost) × 3 sizes (SM/MD/LG) × 4 states (Default/Hover/Disabled/Loading) = 36 variants</li>
+              <li><strong>Input</strong> — with label, placeholder, helper text, error state</li>
+              <li><strong>Card</strong> — image, title, body, CTA</li>
+              <li><strong>Badge</strong> — 3 statuses: Success (green), Warning (yellow), Error (red)</li>
+              <li><strong>Avatar</strong> — 3 sizes: SM (24px), MD (40px), LG (64px); with image + initials fallback</li>
+              <li><strong>Navbar</strong> — logo left, links centre/right, hamburger for mobile</li>
+              <li><strong>Modal Dialog</strong> — overlay, title, body text, confirm/cancel buttons</li>
+              <li><strong>Toast Notification</strong> — 3 types: success, error, info; icon + message + dismiss X</li>
+            </ol>
+          </li>
+          <li>
+            <strong>Create a Documentation page</strong><br>
+            Add a page named <em>Docs</em>. For each component, create a documentation block with:
+            <ul>
+              <li><strong>Usage:</strong> When should you use this component?</li>
+              <li><strong>Do</strong> (green tick frame): show the correct usage</li>
+              <li><strong>Don't</strong> (red cross frame): show a common misuse</li>
+            </ul>
+            Example for Button: Do — use a primary button for the main action per screen. Don't — use 3 primary buttons side-by-side (creates visual confusion).
+          </li>
+          <li>
+            <strong>Handoff test</strong><br>
+            Share the Figma file link with a classmate. Ask them to build a simple login form using only your components. If they ask more than 2 questions, your documentation needs more detail. Update accordingly.
+          </li>
+        </ol>
+      </div>
+      <div class="sm-sec">
+        <h4>Deliverable Check</h4>
+        <ul>
+          <li>Brand page with 6 Colour Styles + 6 Text Styles saved</li>
+          <li>8 components on Components page, using Styles consistently</li>
+          <li>Documentation page with Do/Don't for each component</li>
+          <li>File shared with a classmate for handoff test</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- W7 -->
+  <div class="week-block int" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <span class="week-num wn-int">Week 7</span>
+      <h3>Interactive Prototype — Mobile Checkout Flow</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Build a fully interactive Figma prototype covering a 6-screen mobile checkout flow, then test it with real users to find friction points.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Design a 6-screen checkout flow</strong><br>
+            Create 6 frames sized <strong>390 × 844 px</strong> (iPhone 14 Pro). Name them:
+            <ol type="a">
+              <li>Cart</li>
+              <li>Delivery Address</li>
+              <li>Payment Method</li>
+              <li>Order Review</li>
+              <li>Processing</li>
+              <li>Confirmation</li>
+            </ol>
+          </li>
+          <li>
+            <strong>Screen 1 — Cart</strong><br>
+            Design a vertical list of cart items (2–3 product rows). Each row: product image (48×48), name + variant text, quantity controls (– / 2 / +), price. Below the list: subtotal, delivery fee, total. At the bottom: a sticky "Checkout" CTA button spanning full width. Use your Button component (Primary / LG state).
+          </li>
+          <li>
+            <strong>Screen 2 — Delivery Address</strong><br>
+            Form with 5 Input fields: Full Name, Phone Number, Street Address, City, PIN Code. Above the form: a row showing saved addresses as chips (tap to pre-fill form). Use your Input component. Bottom CTA: "Continue to Payment".
+          </li>
+          <li>
+            <strong>Screen 3 — Payment Method</strong><br>
+            Three radio-style payment options: Credit / Debit Card, UPI, Cash on Delivery. When "Credit / Debit Card" is selected (use Variants/State to show selected radio), show a card input sub-form: card number, name on card, expiry, CVV. UPI shows a UPI ID input. COD shows a confirmation message. Bottom CTA: "Review Order".
+          </li>
+          <li>
+            <strong>Screen 4 — Order Review</strong><br>
+            Full order summary: items list (condensed), delivery address block with "Edit" link, payment method with "Edit" link, total amount. Bottom CTA: "Place Order" (use a distinct, high-contrast button here — this is the final commitment action).
+          </li>
+          <li>
+            <strong>Screen 5 — Processing</strong><br>
+            Centre-aligned spinner animation (circular arc with rotation). Below it: "Placing your order..." in Body text style. Minimal screen — no navigation. This screen should auto-advance.
+          </li>
+          <li>
+            <strong>Screen 6 — Confirmation</strong><br>
+            Large success checkmark (circle + tick, use your Success colour #2A9D8F). Heading: "Order Placed!" Sub-text: "Your order #ND2024-0042 has been confirmed." Two buttons: "Track Order" (Primary) and "Continue Shopping" (Ghost/Secondary).
+          </li>
+          <li>
+            <strong>Wire up the prototype</strong><br>
+            Switch to Prototype mode in Figma (top-right panel). Connect each screen:
+            <ul>
+              <li>Cart → Delivery Address: on tap "Checkout" button, Navigate To, Slide Left, Spring easing</li>
+              <li>Delivery Address → Payment: on tap "Continue to Payment", Slide Left</li>
+              <li>Payment → Review: on tap "Review Order", Slide Left</li>
+              <li>Review → Processing: on tap "Place Order", Dissolve</li>
+              <li>Processing → Confirmation: <strong>After Delay 1500ms</strong>, Navigate To Confirmation, Dissolve</li>
+              <li>Confirmation "Continue Shopping" → Cart: Slide Right (reset flow)</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Add Smart Animate transitions</strong><br>
+            For the Payment screen: create two variants of the payment section — one with card form hidden, one with it visible. Connect the "Credit Card" radio tap to swap variant using Smart Animate, Spring easing (this smoothly animates the form appearing).
+          </li>
+          <li>
+            <strong>Test with classmates</strong><br>
+            Share the prototype link (Figma → Present mode → Copy link). Give it to 2 classmates. Watch where they hesitate:
+            <ul>
+              <li>Do they know the CVV field means?</li>
+              <li>Is "Review Order" button label clear?</li>
+              <li>Does the Processing screen cause anxiety (no progress feedback)?</li>
+            </ul>
+            Note down every hesitation moment — these become your Week 8 usability test tasks.
+          </li>
+        </ol>
+      </div>
+      <div class="sm-sec">
+        <h4>Deliverable Check</h4>
+        <ul>
+          <li>6 screens designed at 390×844 px, using your design system components</li>
+          <li>Prototype wired with Slide Left + After Delay transition on Processing screen</li>
+          <li>Smart Animate on payment method selection</li>
+          <li>Shared with 2 classmates, hesitation moments noted</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- W8 -->
+  <div class="week-block int" id="w8">
+    <div class="week-header" onclick="toggleWeek('w8')">
+      <span class="week-num wn-int">Week 8</span>
+      <h3>Moderated Usability Test</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Run a structured, moderated usability test on your checkout prototype. Collect real evidence, synthesise findings, and produce a written report with prioritised recommendations.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Write the test plan</strong><br>
+            Document the following before testing:
+            <ul>
+              <li><strong>Goal:</strong> Identify usability issues in the checkout flow prototype</li>
+              <li><strong>Participants:</strong> 3 classmates who have not seen your design</li>
+              <li><strong>Session length:</strong> 20 minutes each</li>
+              <li><strong>3 Tasks:</strong>
+                <ol>
+                  <li>"Add 2 items to your cart and proceed to checkout"</li>
+                  <li>"Change the delivery address after you have entered payment method"</li>
+                  <li>"Find your order confirmation number after placing the order"</li>
+                </ol>
+              </li>
+              <li><strong>Success criteria:</strong> Task completed without help = pass, completed with hint = partial, could not complete = fail</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Create a consent statement</strong><br>
+            For classroom context, a verbal statement is sufficient: "I am testing the design, not you. There are no wrong answers. Please think aloud — say whatever comes to mind. I may take notes but will not interrupt you." Ask each participant to verbally agree before starting.
+          </li>
+          <li>
+            <strong>Set up recording</strong><br>
+            Use Zoom or Google Meet (free). Share your screen showing the Figma prototype in Present mode. Ask the participant to unmute and speak. Enable recording (inform participant). Alternatively, have a second person observe and take notes while you facilitate.
+          </li>
+          <li>
+            <strong>Run 3 sessions (20 minutes each)</strong><br>
+            Script for each session:
+            <ul>
+              <li><strong>Introduction (2 min):</strong> Explain purpose, get verbal consent, remind them to think aloud</li>
+              <li><strong>Task 1 (5 min):</strong> Read task aloud, start timer, observe + note</li>
+              <li><strong>Task 2 (5 min):</strong> Same procedure</li>
+              <li><strong>Task 3 (5 min):</strong> Same procedure</li>
+              <li><strong>Debrief (3 min):</strong> Ask: "What was most confusing?" "What did you expect to happen on the payment screen?" "Would you use this app?"</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Record observations</strong><br>
+            For each participant and each task, capture:
+            <ul>
+              <li>Task completion: ✅ Yes / ⚠️ Partial / ❌ No</li>
+              <li>Time on task (use phone stopwatch)</li>
+              <li>Errors observed (wrong taps, confusion moments)</li>
+              <li>Think-aloud quotes (write verbatim, e.g. "I expected the back button to be here")</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Create an Affinity Map</strong><br>
+            After all 3 sessions: write each observation / quote on a separate sticky note (use Figma FigJam, Google Jamboard, or physical post-its). Group them into themes. Common themes will emerge: navigation confusion, label clarity, form anxiety, success state reassurance.
+          </li>
+          <li>
+            <strong>Write a Usability Test Report (500–700 words)</strong><br>
+            Structure:
+            <ul>
+              <li><strong>Methodology:</strong> Who, when, how — 3 participants, moderated remote, 3 tasks</li>
+              <li><strong>Participants:</strong> Brief description (no names — P1, P2, P3), tech comfort level</li>
+              <li><strong>Findings:</strong> Top 3 issues with severity rating (Critical / Moderate / Minor) and supporting quotes + task completion data</li>
+              <li><strong>Recommendations:</strong> One specific design change per issue</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Prioritise fixes with a 2×2 Matrix</strong><br>
+            Draw a 2×2 grid: X axis = Effort (Low → High), Y axis = Impact (Low → High). Plot each recommended fix. Items in the <em>High Impact / Low Effort</em> quadrant (top-left) must be fixed first. Items in <em>High Impact / High Effort</em> go on the backlog.
+          </li>
+        </ol>
+      </div>
+      <div class="sm-sec">
+        <h4>Deliverable Check</h4>
+        <ul>
+          <li>Written test plan with 3 tasks and success criteria</li>
+          <li>Data from 3 participant sessions (task completion + time + quotes)</li>
+          <li>Affinity map with grouped themes</li>
+          <li>Usability test report (methodology → findings → recommendations)</li>
+          <li>2×2 prioritisation matrix</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w5');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

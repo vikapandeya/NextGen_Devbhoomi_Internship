@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps & Cloud — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .analogy-box{background:linear-gradient(135deg,#EBF5FB,#D6EAF8);border:1px solid #AED6F1;border-left:4px solid var(--blue);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+  .analogy-box strong{color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner ↗</a>
+    <a href="concept_notes_advanced.html">Advanced ↗</a>
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">⚡</div>
+    <h1>Intermediate Level — Concept Notes</h1>
+    <p class="lh-sub">Weeks 5–8: Docker containerization, CI/CD pipelines, AWS core services, and Infrastructure as Code with Terraform basics.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 5–8</span>
+      <span class="lh-pill">Docker · CI/CD · AWS · Terraform</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Linux basics done</li>
+        <li>Git fluency</li>
+        <li>Node.js installed</li>
+        <li>AWS account ready</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>New Tools</h4>
+      <ul>
+        <li>Docker Desktop</li>
+        <li>GitHub Actions</li>
+        <li>AWS CLI</li>
+        <li>Terraform</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Key Concepts</h4>
+      <ul>
+        <li>Containers vs VMs</li>
+        <li>Pipeline automation</li>
+        <li>Cloud deployment</li>
+        <li>Infrastructure as Code</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>End Goal</h4>
+      <ul>
+        <li>Dockerized app</li>
+        <li>CI/CD pipeline live</li>
+        <li>AWS EC2 deployed</li>
+        <li>Terraform script</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="sm-sec">Week 5 — Docker Fundamentals</div>
+  <div class="week-block open" id="w5">
+    <div class="week-head" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <div class="week-head-text"><h3>Docker — Containers · Images · Dockerfile · docker-compose</h3><p>Containerize your first application</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> Docker containers are like shipping containers — standardized boxes that work the same on any ship (server). Before containers, "works on my machine" was a real problem. With Docker, your app and all its dependencies are packed together so it runs identically everywhere: your laptop, the CI server, and production.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why Docker?</h4>
+          <ul>
+            <li>Consistency across all environments</li>
+            <li>Isolation — apps don't interfere with each other</li>
+            <li>Lightweight compared to full VMs</li>
+            <li>Microservices-ready by design</li>
+            <li>93% of companies now use containers</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Dockerfile Instructions</h4>
+          <ul>
+            <li><code>FROM</code> — base image (e.g. node:20-alpine)</li>
+            <li><code>WORKDIR</code> — set working directory</li>
+            <li><code>COPY</code> — copy files into image</li>
+            <li><code>RUN</code> — run command during build</li>
+            <li><code>EXPOSE</code> — document port number</li>
+            <li><code>CMD</code> — default command to run</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Docker CLI Commands</h4>
+          <ul>
+            <li><code>docker build -t name:tag .</code></li>
+            <li><code>docker run -d -p 3000:3000 name</code></li>
+            <li><code>docker ps</code> — list running containers</li>
+            <li><code>docker stop name</code> — stop a container</li>
+            <li><code>docker rm name</code> — remove a container</li>
+            <li><code>docker images</code> — list all images</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>docker-compose</h4>
+          <ul>
+            <li>Manages multi-container applications</li>
+            <li>Define services in one YAML file</li>
+            <li>Volumes: persist data between restarts</li>
+            <li>Networks: containers talk by service name</li>
+            <li><code>depends_on</code>: control startup order</li>
+            <li><code>docker-compose up -d</code> to start</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># Dockerfile for a Node.js Express app</span>
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --production
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]
+
+<span class="comment"># docker-compose.yml — app + MySQL together</span>
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: secret
+    depends_on:
+      - db
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: myapp
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:</pre>
+      <div class="key-takeaway">
+        <h4>Week 5 Key Takeaways</h4>
+        <ul>
+          <li>Always use <code>.dockerignore</code> — exclude node_modules and .env to keep images small</li>
+          <li>Use alpine images (node:20-alpine) — they are 5× smaller than full images</li>
+          <li>Never run containers as root — add <code>USER node</code> before CMD in your Dockerfile</li>
+          <li>Use docker-compose for local dev with multiple services — it saves hours of manual wiring</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="sm-sec">Week 6 — CI/CD with GitHub Actions</div>
+  <div class="week-block" id="w6">
+    <div class="week-head" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <div class="week-head-text"><h3>CI/CD — Pipeline · Triggers · Jobs · Deploy</h3><p>Automate every push: test, build, ship</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> CI/CD is like a factory assembly line. Every time code is pushed, an automatic conveyor belt runs: it tests the code, builds it, packages it, and deploys it — all without human intervention. Bad parts are rejected before they reach customers.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>CI vs CD</h4>
+          <ul>
+            <li><strong>CI</strong>: auto-test on every push to any branch</li>
+            <li><strong>CD</strong>: auto-deploy when CI passes on main</li>
+            <li>CI catches bugs early — before code review</li>
+            <li>CD removes the manual deploy step entirely</li>
+            <li>Together: code is always deployable</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>GitHub Actions Concepts</h4>
+          <ul>
+            <li>Workflow: YAML file in .github/workflows/</li>
+            <li><code>on:</code> — triggers (push, PR, schedule)</li>
+            <li>Jobs: independent units of work</li>
+            <li>Steps: sequential commands within a job</li>
+            <li>Secrets: encrypted env vars for credentials</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Pipeline Stages</h4>
+          <ul>
+            <li>lint → test → build → docker build</li>
+            <li>→ push image to registry (ECR)</li>
+            <li>→ deploy to EC2 via SSH</li>
+            <li>Failed test = pipeline stops, no deploy</li>
+            <li>All stages visible in GitHub UI</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>AWS ECR (Container Registry)</h4>
+          <ul>
+            <li>Elastic Container Registry — store Docker images</li>
+            <li>Private registry inside your AWS account</li>
+            <li>EC2 can pull images without public access</li>
+            <li>Tag images: latest, v1.0, git-SHA</li>
+            <li>Enable image scanning for vulnerabilities</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># .github/workflows/deploy.yml</span>
+name: Build and Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/myapp:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/myapp:$IMAGE_TAG
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            docker pull ${{ steps.login-ecr.outputs.registry }}/myapp:${{ github.sha }}
+            docker stop myapp || true
+            docker run -d --name myapp -p 80:3000 \
+              ${{ steps.login-ecr.outputs.registry }}/myapp:${{ github.sha }}</pre>
+      <div class="key-takeaway">
+        <h4>Week 6 Key Takeaways</h4>
+        <ul>
+          <li>Store secrets in GitHub Secrets — never write credentials directly in YAML files</li>
+          <li>Use environment-specific workflows — staging deploys on every push, prod deploys on release tags</li>
+          <li>Always run tests before deploy — a failed test must block the pipeline</li>
+          <li>Failed deploys should auto-rollback — use <code>docker stop || true</code> + restart old container on failure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="sm-sec">Week 7 — AWS Core Services</div>
+  <div class="week-block" id="w7">
+    <div class="week-head" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <div class="week-head-text"><h3>AWS — EC2 · S3 · RDS · IAM · Security Groups</h3><p>Build real cloud infrastructure on AWS</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> AWS is like a city you can build in minutes. EC2 = land to build on. S3 = warehouses for your goods. RDS = bank vaults for your data. IAM = the city's permits system — decides who can enter where. VPC = the city walls and districts that keep things separated.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>EC2 — Compute</h4>
+          <ul>
+            <li>Instance types: t2.micro (free tier), t3.small (dev)</li>
+            <li>AMIs: Amazon Machine Images — pre-built OS</li>
+            <li>Key pairs: SSH access without passwords</li>
+            <li>Security Groups: virtual firewall for the instance</li>
+            <li>Elastic IP: static public IP address</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>S3 — Object Storage</h4>
+          <ul>
+            <li>Buckets hold any type of file at any scale</li>
+            <li>Bucket policies: control public/private access</li>
+            <li>Static website hosting from S3 directly</li>
+            <li>Lifecycle rules: archive/delete old files</li>
+            <li>Versioning: keep history of every object</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>RDS — Managed Database</h4>
+          <ul>
+            <li>Multi-AZ deployment for high availability</li>
+            <li>Automated daily backups, point-in-time restore</li>
+            <li>Parameter groups: tune database settings</li>
+            <li>Supports MySQL, PostgreSQL, Aurora</li>
+            <li>AWS handles patching and failover</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>IAM — Access Management</h4>
+          <ul>
+            <li>Least privilege: grant only what's needed</li>
+            <li>Roles (for services) vs Users (for humans)</li>
+            <li>Policies written as JSON documents</li>
+            <li>MFA: enable on root and admin accounts</li>
+            <li>Never use root account for daily work</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># AWS CLI — create S3 bucket</span>
+aws s3 mb s3://devbhoomi-myapp-prod --region ap-south-1
+aws s3 cp ./dist s3://devbhoomi-myapp-prod/ --recursive
+
+<span class="comment"># Launch EC2 instance</span>
+aws ec2 run-instances \
+  --image-id ami-0f58b397bc5c1f2e8 \
+  --instance-type t2.micro \
+  --key-name my-keypair \
+  --security-group-ids sg-0abc123 \
+  --subnet-id subnet-0def456 \
+  --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=devbhoomi-app}]'
+
+<span class="comment"># Configure Security Group — allow SSH + HTTP</span>
+aws ec2 authorize-security-group-ingress \
+  --group-id sg-0abc123 \
+  --protocol tcp --port 22 --cidr 203.0.113.0/32
+
+aws ec2 authorize-security-group-ingress \
+  --group-id sg-0abc123 \
+  --protocol tcp --port 80 --cidr 0.0.0.0/0</pre>
+      <div class="key-takeaway">
+        <h4>Week 7 Key Takeaways</h4>
+        <ul>
+          <li>Security Groups are stateful firewalls — always restrict inbound traffic to only what's necessary</li>
+          <li>Keep EC2 instances in private subnets — only your load balancer needs a public IP</li>
+          <li>Use IAM roles not access keys for EC2-to-AWS communication — no credentials stored on the server</li>
+          <li>Enable MFA on your AWS root account immediately — this is the single most important security step</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="sm-sec">Week 8 — Terraform Introduction</div>
+  <div class="week-block" id="w8">
+    <div class="week-head" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <div class="week-head-text"><h3>Terraform — IaC · Providers · Resources · State</h3><p>Write code that builds cloud infrastructure</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> Terraform is like a recipe for your infrastructure. Instead of clicking through the AWS console (which you can't version control or repeat), you write code that says "I want 2 EC2 instances, 1 RDS, 1 S3 bucket" — and Terraform makes it happen, repeatedly and consistently, every single time.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why Infrastructure as Code?</h4>
+          <ul>
+            <li>Reproducible: spin up identical environments</li>
+            <li>Version controlled: track every change in Git</li>
+            <li>No manual mistakes from clicking the console</li>
+            <li>Drift detection: know when reality differs from code</li>
+            <li>Review infra changes just like code changes</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Terraform Workflow</h4>
+          <ul>
+            <li><code>terraform init</code> — download provider plugins</li>
+            <li><code>terraform plan</code> — preview what will change</li>
+            <li><code>terraform apply</code> — create/update resources</li>
+            <li><code>terraform destroy</code> — delete all resources</li>
+            <li>Always run plan before apply — review every change</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>HCL Syntax Basics</h4>
+          <ul>
+            <li><code>provider</code>: configure AWS, GCP, etc.</li>
+            <li><code>resource</code>: declare infrastructure to create</li>
+            <li><code>variable</code>: parameterize your config</li>
+            <li><code>output</code>: print values after apply</li>
+            <li><code>data</code>: read existing AWS resources</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>State File</h4>
+          <ul>
+            <li><code>terraform.tfstate</code> — tracks what exists</li>
+            <li>Never delete the state file manually</li>
+            <li>Store in S3 with DynamoDB locking for teams</li>
+            <li>Contains actual resource IDs from AWS</li>
+            <li>Can contain secrets — keep it private</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># main.tf — create S3 bucket and EC2 instance</span>
+terraform {
+  required_providers {
+    aws = { source = "hashicorp/aws", version = "~> 5.0" }
+  }
+}
+
+provider "aws" {
+  region = var.region
+}
+
+resource "aws_s3_bucket" "app_bucket" {
+  bucket = var.bucket_name
+  tags = {
+    Project     = "devbhoomi"
+    Environment = var.environment
+    Owner       = "batch-2026-27"
+  }
+}
+
+resource "aws_instance" "app_server" {
+  ami           = "ami-0f58b397bc5c1f2e8"
+  instance_type = "t2.micro"
+  key_name      = var.key_name
+  tags = {
+    Name        = "devbhoomi-app"
+    Environment = var.environment
+  }
+}
+
+<span class="comment"># variables.tf</span>
+variable "region"      { default = "ap-south-1" }
+variable "bucket_name" { description = "Globally unique S3 bucket name" }
+variable "environment" { default = "dev" }
+variable "key_name"    { description = "EC2 key pair name" }
+
+<span class="comment"># outputs.tf</span>
+output "bucket_arn"    { value = aws_s3_bucket.app_bucket.arn }
+output "instance_ip"   { value = aws_instance.app_server.public_ip }</pre>
+      <div class="key-takeaway">
+        <h4>Week 8 Key Takeaways</h4>
+        <ul>
+          <li>Never delete <code>terraform.tfstate</code> manually — it is Terraform's source of truth for what exists</li>
+          <li>Run <code>terraform plan</code> before every apply — always review what will be created, changed, or destroyed</li>
+          <li>Store state in S3 with DynamoDB locking for team use — local state breaks in teams</li>
+          <li>Tag all resources with project/env/owner — makes cost tracking and cleanup much easier</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+      <a href="concept_notes_advanced.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w5');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

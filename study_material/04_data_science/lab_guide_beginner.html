@@ -1,0 +1,660 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">🔬 Lab Guide — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; LAB GUIDE — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Beginner Notes</a>
+    <a href="lab_guide_intermediate.html">🔬 Intermediate Labs</a>
+    <a href="quizzes.html">🧩 Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Beginner Track</h2>
+      <p>5 hands-on labs for Weeks 1–4. Each lab builds on the previous. Use Google Colab or a local Jupyter Notebook to follow along.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">Beginner</span>
+      <span class="lh-badge">5 Labs</span>
+      <span class="lh-badge">W1–W4</span>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="lab-block" id="lab1">
+    <div class="lab-header">
+      <div class="lab-num">Lab 1</div>
+      <div class="lab-title">
+        <h3>Setting Up Your Data Science Environment</h3>
+        <div class="lab-meta"><span class="tag-week">Week 1</span> <span class="tag-time">45 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Get your Python data science environment running, install the core libraries, and make your first contact with real data.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Choose Your Environment</div>
+        <p><strong>Option A — Google Colab (Recommended for beginners, no installation)</strong></p>
+        <ol class="numbered-list">
+          <li>Open your browser and go to <strong>colab.research.google.com</strong></li>
+          <li>Sign in with your Google account</li>
+          <li>Click <strong>New Notebook</strong> — this creates a .ipynb file in your Google Drive</li>
+          <li>All major DS libraries (pandas, NumPy, matplotlib, seaborn, scikit-learn) are pre-installed</li>
+          <li>Click on a code cell and press <strong>Ctrl+Enter</strong> to run it</li>
+        </ol>
+        <p><strong>Option B — Anaconda (Local installation)</strong></p>
+        <ol class="numbered-list">
+          <li>Go to <strong>anaconda.com/download</strong> and download the installer for your OS</li>
+          <li>Run the installer with default settings</li>
+          <li>Open Anaconda Navigator → Launch Jupyter Notebook</li>
+          <li>Or open a terminal and type: <code>jupyter notebook</code></li>
+        </ol>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Install Required Libraries</div>
+        <p>Run this in a notebook cell to verify or install the libraries you'll need:</p>
+        <pre><code># Run this cell to install libraries (skip if on Colab — already installed)
+# !pip install pandas numpy matplotlib seaborn scikit-learn
+
+# Verify installations — these should all print version numbers
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sklearn
+
+print(f"pandas:     {pd.__version__}")
+print(f"numpy:      {np.__version__}")
+print(f"matplotlib: {plt.matplotlib.__version__}")
+print(f"seaborn:    {sns.__version__}")
+print(f"sklearn:    {sklearn.__version__}")
+print("\nAll libraries loaded successfully!")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Hello Data Science — Your First Dataset</div>
+        <p>Load a real dataset directly from the internet (no download needed):</p>
+        <pre><code>>import pandas as pd
+
+# Load the famous Titanic dataset via seaborn
+import seaborn as sns
+df = sns.load_dataset('titanic')
+
+# Basic inspection
+print("Shape:", df.shape)            # (rows, columns)
+print("\nFirst 5 rows:")
+print(df.head())
+
+print("\nColumn names:", df.columns.tolist())
+
+print("\nData types:")
+print(df.dtypes)
+
+print("\nBasic statistics:")
+print(df.describe())
+
+print("\nMissing values:")
+print(df.isnull().sum())</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Load from a URL with pd.read_csv()</div>
+        <pre><code>>import pandas as pd
+
+# Load CSV directly from a URL
+url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+df = pd.read_csv(url)
+
+print("Dataset loaded from URL!")
+print(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
+print(df.head(3))</code></pre>
+        <div class="lab-note">If you're offline, use sns.load_dataset('titanic') instead — same data, no internet required.</div>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Save Your Notebook</div>
+        <ul class="content-list">
+          <li><strong>Colab</strong>: File → Save (Ctrl+S). It auto-saves to Google Drive. To download: File → Download → .ipynb</li>
+          <li><strong>Jupyter</strong>: File → Save and Checkpoint (Ctrl+S). The .ipynb file is saved in your working directory.</li>
+          <li>Add a Markdown cell at the top with your name, date, and "Lab 1 — Environment Setup"</li>
+        </ul>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> A Jupyter notebook that loads the Titanic dataset and prints its shape, head, dtypes, describe(), and isnull().sum(). Take a screenshot and submit via the intern portal.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="lab-block" id="lab2">
+    <div class="lab-header">
+      <div class="lab-num">Lab 2</div>
+      <div class="lab-title">
+        <h3>Exploring the Titanic Dataset</h3>
+        <div class="lab-meta"><span class="tag-week">Week 2</span> <span class="tag-time">60 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Use pandas to deeply explore the Titanic dataset — understand its structure, distributions, and relationships between variables.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Load and Inspect</div>
+        <pre><code>>import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset('titanic')
+
+print("Shape:", df.shape)
+print("\nColumn names:", df.columns.tolist())
+print("\nData types:\n", df.dtypes)
+print("\nFirst 3 rows:\n", df.head(3))
+print("\nLast 3 rows:\n", df.tail(3))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Find Missing Values</div>
+        <pre><code>>missing = df.isnull().sum()
+missing_pct = (df.isnull().sum() / len(df) * 100).round(1)
+
+missing_report = pd.DataFrame({'Missing Count': missing, 'Missing %': missing_pct})
+print(missing_report[missing_report['Missing Count'] > 0])
+
+# Which columns have > 10% missing?
+print("\nColumns with > 10% missing:")
+print(missing_pct[missing_pct > 10])</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Analyze Survival by Group</div>
+        <pre><code>>import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset('titanic')
+
+# Survival rate by sex
+print("Survival rate by sex:")
+print(df.groupby('sex')['survived'].mean().round(3))
+
+# Survival rate by class
+print("\nSurvival rate by passenger class:")
+print(df.groupby('pclass')['survived'].mean().round(3))
+
+# Survival rate by sex AND class
+print("\nSurvival rate by sex and class:")
+print(df.groupby(['sex','pclass'])['survived'].mean().round(3))
+
+# Cross-tabulation
+print("\nCount: Sex vs Survived:")
+print(pd.crosstab(df['sex'], df['survived'], margins=True))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Filter the Dataset</div>
+        <pre><code>># All survivors
+survivors = df[df['survived'] == 1]
+print(f"Total survivors: {len(survivors)} out of {len(df)} passengers ({len(survivors)/len(df):.1%})")
+
+# First class passengers
+first_class = df[df['pclass'] == 1]
+print(f"\nFirst class passengers: {len(first_class)}")
+print(f"First class survival rate: {first_class['survived'].mean():.1%}")
+
+# Young first-class women (highest survival?)
+high_survival = df[(df['pclass'] == 1) & (df['sex'] == 'female')]
+print(f"\nFirst class women: {len(high_survival)}")
+print(f"Survival rate: {high_survival['survived'].mean():.1%}")
+
+# Passengers with large families (sibsp + parch > 3)
+large_family = df[(df['sibsp'] + df['parch']) > 3]
+print(f"\nPassengers in large families (>3 relatives): {len(large_family)}")
+print(f"Their survival rate: {large_family['survived'].mean():.1%}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Sort and Rank</div>
+        <pre><code>># Top 10 most expensive fares
+print("Top 10 fares paid:")
+print(df[['name','pclass','fare','survived']].sort_values('fare', ascending=False).head(10))
+
+# Youngest and oldest passengers
+print(f"\nYoungest passenger: {df['age'].min()} years")
+print(f"Oldest passenger:   {df['age'].max()} years")
+
+youngest = df.loc[df['age'].idxmin()]
+oldest   = df.loc[df['age'].idxmax()]
+print(f"\nYoungest: {youngest['name']} — Survived: {youngest['survived']}")
+print(f"Oldest:   {oldest['name']} — Survived: {oldest['survived']}")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Complete notebook with all 5 steps executed and output visible. Add a Markdown cell with 3 observations you noticed about survival patterns.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="lab-block" id="lab3">
+    <div class="lab-header">
+      <div class="lab-num">Lab 3</div>
+      <div class="lab-title">
+        <h3>Data Cleaning Pipeline</h3>
+        <div class="lab-meta"><span class="tag-week">Week 3</span> <span class="tag-time">60 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Build a complete data cleaning pipeline that transforms the raw Titanic dataset into a clean, analysis-ready CSV file.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Load Raw Data and Assess Quality</div>
+        <pre><code>>import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset('titanic')
+print("RAW DATA QUALITY REPORT")
+print("="*40)
+print(f"Rows:    {df.shape[0]}")
+print(f"Columns: {df.shape[1]}")
+print(f"\nDuplicate rows: {df.duplicated().sum()}")
+print(f"\nMissing values:")
+missing_pct = (df.isnull().sum() / len(df) * 100).round(1)
+print(missing_pct[missing_pct > 0])</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Drop High-Missing Columns</div>
+        <pre><code>>df_clean = df.copy()
+
+# Drop columns with more than 50% missing values
+threshold = len(df_clean) * 0.5
+cols_before = df_clean.shape[1]
+df_clean = df_clean.dropna(thresh=threshold, axis=1)
+cols_after = df_clean.shape[1]
+print(f"Dropped {cols_before - cols_after} columns with >50% missing")
+print(f"Remaining columns: {df_clean.columns.tolist()}")
+
+# Also drop columns that won't be useful for analysis
+cols_to_drop = ['deck', 'embark_town', 'alive', 'who', 'adult_male', 'alone', 'class']
+cols_to_drop = [c for c in cols_to_drop if c in df_clean.columns]
+df_clean = df_clean.drop(columns=cols_to_drop)
+print(f"\nAfter dropping utility columns: {df_clean.columns.tolist()}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Fill Missing Values</div>
+        <pre><code>># Fill missing 'age' with the median
+median_age = df_clean['age'].median()
+df_clean['age'] = df_clean['age'].fillna(median_age)
+print(f"Filled missing 'age' with median: {median_age:.1f} years")
+
+# Fill missing 'embarked' with the mode
+mode_embarked = df_clean['embarked'].mode()[0]
+df_clean['embarked'] = df_clean['embarked'].fillna(mode_embarked)
+print(f"Filled missing 'embarked' with mode: '{mode_embarked}'")
+
+# Fill missing 'fare' with the median by class
+for pclass in [1, 2, 3]:
+    median_fare = df_clean[df_clean['pclass'] == pclass]['fare'].median()
+    mask = (df_clean['pclass'] == pclass) & (df_clean['fare'].isnull())
+    df_clean.loc[mask, 'fare'] = median_fare
+
+# Verify no more missing values
+print("\nMissing values after cleaning:")
+print(df_clean.isnull().sum())</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Remove Duplicates &amp; Encode Categories</div>
+        <pre><code>># Remove any duplicate rows
+before = len(df_clean)
+df_clean = df_clean.drop_duplicates()
+print(f"Removed {before - len(df_clean)} duplicate rows")
+
+# Encode 'sex' as binary (male=1, female=0)
+df_clean['sex_enc'] = df_clean['sex'].map({'male': 1, 'female': 0})
+print(f"\nSex encoding: {df_clean[['sex','sex_enc']].drop_duplicates()}")
+
+# Encode 'embarked' with one-hot encoding
+df_clean = pd.get_dummies(df_clean, columns=['embarked'], prefix='emb', drop_first=True, dtype=int)
+
+# Convert pclass to integer
+df_clean['pclass'] = df_clean['pclass'].astype(int)
+
+print("\nFinal dtypes:")
+print(df_clean.dtypes)</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Export Cleaned Dataset</div>
+        <pre><code>># Preview final clean dataset
+print("CLEAN DATASET PREVIEW:")
+print(df_clean.head())
+print(f"\nShape: {df_clean.shape}")
+print(f"No missing values: {df_clean.isnull().sum().sum() == 0}")
+
+# Save to CSV
+df_clean.to_csv('titanic_clean.csv', index=False)
+print("\nSaved: titanic_clean.csv")
+
+# Verify by reloading
+df_verify = pd.read_csv('titanic_clean.csv')
+print(f"Verified — Reloaded shape: {df_verify.shape}")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Notebook with all cleaning steps + the exported <code>titanic_clean.csv</code> file. Write a markdown summary of what you changed and why.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="lab-block" id="lab4">
+    <div class="lab-header">
+      <div class="lab-num">Lab 4</div>
+      <div class="lab-title">
+        <h3>Your First Charts</h3>
+        <div class="lab-meta"><span class="tag-week">Week 3–4</span> <span class="tag-time">60 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Create 4 meaningful visualizations of the Titanic dataset using Seaborn and Matplotlib. Save all charts as PNG files.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Setup</div>
+        <pre><code>>import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Use the clean dataset from Lab 3, or reload from seaborn
+df = sns.load_dataset('titanic').dropna(subset=['age','fare','embarked'])
+df['age'] = df['age'].fillna(df['age'].median())
+
+sns.set_style('whitegrid')
+sns.set_palette('muted')
+print("Ready! Dataset shape:", df.shape)</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Chart 1 — Age Distribution (Histogram)</div>
+        <pre><code>>plt.figure(figsize=(9, 5))
+sns.histplot(df['age'].dropna(), bins=30, kde=True,
+             color='#1B3A6B', edgecolor='white', linewidth=0.5)
+plt.title('Age Distribution of Titanic Passengers', fontsize=14, fontweight='bold')
+plt.xlabel('Age (years)', fontsize=12)
+plt.ylabel('Number of Passengers', fontsize=12)
+plt.axvline(df['age'].median(), color='#C8941A', linestyle='--', linewidth=2,
+            label=f"Median: {df['age'].median():.0f} years")
+plt.legend(fontsize=11)
+plt.tight_layout()
+plt.savefig('chart1_age_distribution.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved: chart1_age_distribution.png")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Chart 2 — Survival Rate by Class (Bar Chart)</div>
+        <pre><code>>plt.figure(figsize=(8, 5))
+ax = sns.barplot(x='pclass', y='survived', data=df,
+                 palette=['#2196F3','#C8941A','#E53935'],
+                 errorbar=('ci', 95))
+plt.title('Survival Rate by Passenger Class', fontsize=14, fontweight='bold')
+plt.xlabel('Passenger Class', fontsize=12)
+plt.ylabel('Survival Rate', fontsize=12)
+plt.ylim(0, 1)
+
+# Add value labels on bars
+for patch in ax.patches:
+    ax.text(patch.get_x() + patch.get_width()/2,
+            patch.get_height() + 0.02,
+            f'{patch.get_height():.1%}',
+            ha='center', va='bottom', fontsize=11, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('chart2_survival_by_class.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved: chart2_survival_by_class.png")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Chart 3 — Fare vs Age Scatter</div>
+        <pre><code>>plt.figure(figsize=(9, 6))
+scatter = sns.scatterplot(x='age', y='fare', hue='survived', data=df,
+                          palette={0: '#E53935', 1: '#4CAF50'},
+                          alpha=0.6, s=60, edgecolor='white')
+plt.title('Fare vs Age — Colored by Survival', fontsize=14, fontweight='bold')
+plt.xlabel('Age (years)', fontsize=12)
+plt.ylabel('Fare Paid (£)', fontsize=12)
+handles, labels = scatter.get_legend_handles_labels()
+scatter.legend(handles, ['Did Not Survive', 'Survived'], title='Outcome', fontsize=10)
+plt.tight_layout()
+plt.savefig('chart3_fare_vs_age.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved: chart3_fare_vs_age.png")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Chart 4 — Correlation Heatmap</div>
+        <pre><code>># Select numeric columns for correlation
+numeric_cols = ['survived', 'pclass', 'age', 'sibsp', 'parch', 'fare']
+corr = df[numeric_cols].corr()
+
+plt.figure(figsize=(8, 6))
+mask = None  # show all cells
+sns.heatmap(corr,
+            annot=True,
+            fmt='.2f',
+            cmap='RdBu_r',
+            vmin=-1, vmax=1,
+            center=0,
+            square=True,
+            linewidths=0.5,
+            cbar_kws={'shrink': 0.8})
+plt.title('Feature Correlation Matrix', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('chart4_correlation_heatmap.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Saved: chart4_correlation_heatmap.png")
+print("\nKey finding: pclass has the strongest negative correlation with survival (-0.34)")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> 4 PNG chart files + the notebook. For each chart, write one Markdown cell explaining what the chart shows and your key observation from it.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="lab-block" id="lab5">
+    <div class="lab-header">
+      <div class="lab-num">Lab 5</div>
+      <div class="lab-title">
+        <h3>Mini EDA Report — Iris Dataset</h3>
+        <div class="lab-meta"><span class="tag-week">Week 4</span> <span class="tag-time">90 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Write a professional 5-section EDA Jupyter notebook on the Iris dataset with Markdown explanations, code, and charts. Export as an HTML report.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Section 1</span> Introduction (Markdown + Code)</div>
+        <p>Add a Markdown cell with this content, then the code cell:</p>
+        <pre><code>># Iris Dataset — Exploratory Data Analysis
+## NextGen Devbhoomi Foundation — Batch 2026–27
+
+This notebook performs a complete exploratory data analysis of the famous Iris flower dataset,
+first published by statistician Ronald Fisher in 1936. The dataset contains measurements of
+150 iris flowers from 3 species: Setosa, Versicolor, and Virginica.
+
+**Key Questions:**
+1. Are the four measurements (sepal/petal length/width) different across species?
+2. Which measurements best distinguish one species from another?
+3. Are there any strong correlations between features?</code></pre>
+        <pre><code>>from sklearn.datasets import load_iris
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+iris = load_iris(as_frame=True)
+df = iris.frame
+
+# Map species codes to names
+df['species'] = df['target'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
+df = df.drop('target', axis=1)
+
+print("Dataset loaded successfully!")
+print(f"Shape: {df.shape}")
+print(f"Species: {df['species'].unique()}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Section 2</span> Data Overview</div>
+        <pre><code>>print("=== DATA OVERVIEW ===")
+print(f"\nShape: {df.shape} — {df.shape[0]} flowers, {df.shape[1]} columns")
+print(f"\nColumns: {df.columns.tolist()}")
+print(f"\nData types:\n{df.dtypes}")
+print(f"\nMissing values: {df.isnull().sum().sum()} (none!)")
+print(f"\nSpecies count:\n{df['species'].value_counts()}")
+print(f"\nDescriptive statistics:")
+print(df.describe().round(2))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Section 3</span> Univariate Analysis</div>
+        <pre><code>>feature_cols = ['sepal length (cm)', 'sepal width (cm)',
+                'petal length (cm)', 'petal width (cm)']
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+fig.suptitle('Univariate Distributions — All Features', fontsize=14, fontweight='bold')
+
+for ax, col in zip(axes.flat, feature_cols):
+    sns.histplot(df[col], kde=True, ax=ax, color='#1B3A6B',
+                 edgecolor='white', linewidth=0.5)
+    ax.set_title(col, fontsize=11)
+    ax.set_xlabel('')
+    ax.axvline(df[col].mean(), color='#C8941A', linestyle='--', linewidth=1.5,
+               label=f'Mean: {df[col].mean():.2f}')
+    ax.legend(fontsize=9)
+
+plt.tight_layout()
+plt.savefig('iris_univariate.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Section 4</span> Bivariate Analysis</div>
+        <pre><code>>colors = {'setosa': '#4CAF50', 'versicolor': '#2196F3', 'virginica': '#9C27B0'}
+
+# Pairplot — all feature pairs, colored by species
+pairplot = sns.pairplot(df, hue='species', palette=colors,
+                         plot_kws={'alpha': 0.7, 's': 60},
+                         diag_kind='hist')
+pairplot.fig.suptitle('Pairplot — Iris Feature Relationships by Species',
+                       y=1.02, fontsize=13, fontweight='bold')
+plt.savefig('iris_pairplot.png', dpi=120, bbox_inches='tight')
+plt.show()
+
+# Correlation heatmap (numeric only)
+plt.figure(figsize=(7, 5))
+sns.heatmap(df[feature_cols].corr(), annot=True, fmt='.2f',
+            cmap='coolwarm', vmin=-1, vmax=1, square=True)
+plt.title('Feature Correlation Matrix', fontsize=12, fontweight='bold')
+plt.tight_layout()
+plt.savefig('iris_correlation.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Section 5</span> Conclusions &amp; Export</div>
+        <p>Add this as a Markdown cell:</p>
+        <pre><code>>## Key Findings — Iris EDA
+
+1. **Petal dimensions are the strongest separators**: Setosa has much smaller petal length
+   (mean 1.46 cm) vs Versicolor (4.26 cm) and Virginica (5.55 cm).
+
+2. **Petal length and petal width are highly correlated** (r = 0.96) — plants with longer
+   petals also tend to have wider petals.
+
+3. **Setosa is easily separable** from the other two species in all feature combinations.
+   Versicolor and Virginica overlap in sepal dimensions but are separable by petal size.
+
+4. **Sepal width is the least discriminatory feature** — all three species have similar
+   sepal width distributions with significant overlap.
+
+5. **No missing values** — This is an unusually clean dataset, making it ideal for
+   learning ML algorithms.</code></pre>
+        <pre><code>># Export notebook as HTML
+# In a Jupyter terminal (not in Colab):
+# jupyter nbconvert --to html Lab5_Iris_EDA.ipynb
+
+# In Colab, use Files → Download to get the .ipynb,
+# then run the above command locally.
+
+# Or generate an HTML summary from within the notebook:
+from IPython.display import display, HTML
+summary_html = """
+<div style='background:#1B3A6B;color:white;padding:16px;border-radius:8px;'>
+  <h3>EDA Complete!</h3>
+  <p>Charts generated: iris_univariate.png, iris_pairplot.png, iris_correlation.png</p>
+  <p>Notebook: Lab5_Iris_EDA.ipynb — export with: jupyter nbconvert --to html</p>
+</div>
+"""
+display(HTML(summary_html))
+print("EDA Report Complete!")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> A complete 5-section Jupyter notebook for the Iris dataset, with Markdown cells for each section, all code executed with output visible, 3 chart PNG files saved, and an exported HTML file. Push everything to a GitHub repository named <code>iris-eda-report</code>.
+      </div>
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="concept_notes_beginner.html" class="btn-secondary">← Beginner Notes</a>
+    <a href="lab_guide_intermediate.html" class="btn-primary">Next: Intermediate Labs →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Lab Guide — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile App Development — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📱 Mobile App Development</div>
+      <div class="bc-file">🔬 Lab Guide — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 5 OF 9 &nbsp;·&nbsp; MOBILE APP DEVELOPMENT &nbsp;·&nbsp; LAB GUIDE — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero beg">
+    <div class="lh-icon">🔬</div>
+    <h1>Lab Guide — Beginner</h1>
+    <p class="lh-sub">5 hands-on labs building from zero to a working notes app on your device. Each lab takes 45–90 minutes. Test every change on Expo Go before moving to the next step.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">5 Labs</span>
+      <span class="lh-pill">Expo · React Native</span>
+      <span class="lh-pill">Tested on Real Device</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="sm-sec">Lab 1 — Hello Expo (Week 1)</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Hello Expo — Your First App on Your Phone</h3>
+      <span>⏱ 45 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal"><strong>Goal:</strong> Create, run, and edit an Expo app. See hot reload working on your physical device within 10 minutes of starting.</div>
+
+      <p><strong>Step 1 — Install Node.js</strong><br>
+      Download and install Node.js LTS from nodejs.org. Verify: <code>node --version</code> should print v18 or higher.</p>
+
+      <pre>node --version    <span class="comment"># e.g. v20.11.0</span>
+npm --version     <span class="comment"># e.g. 10.2.4</span></pre>
+
+      <p><strong>Step 2 — Create your Expo project</strong></p>
+      <pre>npx create-expo-app MyFirstApp --template blank
+cd MyFirstApp
+npx expo start</pre>
+
+      <div class="lab-tip"><strong>Tip:</strong> <code>npx create-expo-app</code> downloads and runs the latest Expo CLI without a global install. You do not need to run <code>npm install -g expo-cli</code> anymore.</div>
+
+      <p><strong>Step 3 — Connect your phone</strong><br>
+      Install <strong>Expo Go</strong> from the App Store (iOS) or Play Store (Android). Open Expo Go, tap "Scan QR code", and scan the QR code shown in your terminal. Your app appears on your device.</p>
+
+      <p><strong>Step 4 — Explore the folder structure</strong></p>
+      <pre>MyFirstApp/
+├── App.js          <span class="comment"># your root component — start here</span>
+├── app.json        <span class="comment"># app name, bundle ID, icon</span>
+├── package.json    <span class="comment"># dependencies and scripts</span>
+├── assets/         <span class="comment"># icon.png, splash.png, adaptive-icon.png</span>
+└── node_modules/   <span class="comment"># never edit these files</span></pre>
+
+      <p><strong>Step 5 — Edit App.js and see hot reload</strong><br>
+      Open <code>App.js</code> in VS Code. Change the text inside <code>&lt;Text&gt;</code> to your name. Save the file. Watch your phone update within 1–2 seconds.</p>
+
+      <pre><span class="keyword">import</span> { StyleSheet, Text, View } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">export default function</span> App() {
+  <span class="keyword">return</span> (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Hello from Uttarakhand! 🏔️&lt;/Text&gt;
+      &lt;Text style={styles.subtitle}&gt;My first React Native app&lt;/Text&gt;
+      &lt;Text style={styles.small}&gt;Building the future, one line at a time.&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+<span class="keyword">const</span> styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: <span class="string">'#F8F6F0'</span>,
+    alignItems: <span class="string">'center'</span>,
+    justifyContent: <span class="string">'center'</span>,
+    padding: 24,
+  },
+  title:    { fontSize: 24, fontWeight: <span class="string">'800'</span>, color: <span class="string">'#1B3A6B'</span>, textAlign: <span class="string">'center'</span>, marginBottom: 8 },
+  subtitle: { fontSize: 16, color: <span class="string">'#C8941A'</span>, fontWeight: <span class="string">'600'</span>, marginBottom: 16 },
+  small:    { fontSize: 13, color: <span class="string">'#5A6070'</span>, textAlign: <span class="string">'center'</span>, lineHeight: 20 },
+});</pre>
+
+      <div class="lab-goal"><strong>Checkpoint:</strong> You can see your edited text on your phone without restarting the app. Hot reload is working.</div>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="sm-sec">Lab 2 — Todo App — Static (Week 2)</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Todo App — Core Components &amp; useState</h3>
+      <span>⏱ 60 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal"><strong>Goal:</strong> Build a functional todo list using View, Text, TextInput, TouchableOpacity, and FlatList. Add and delete todos with useState.</div>
+
+      <p><strong>Step 1 — Create a new project</strong></p>
+      <pre>npx create-expo-app TodoApp --template blank
+cd TodoApp
+npx expo start</pre>
+
+      <p><strong>Step 2 — Build the full App.js</strong></p>
+      <pre><span class="keyword">import</span> { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, Alert } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">export default function</span> App() {
+  <span class="keyword">const</span> [todos, setTodos] = useState([]);
+  <span class="keyword">const</span> [input, setInput]  = useState(<span class="string">''</span>);
+
+  <span class="keyword">function</span> addTodo() {
+    <span class="keyword">if</span> (!input.trim()) { Alert.alert(<span class="string">'Please type something first'</span>); <span class="keyword">return</span>; }
+    setTodos([...todos, { id: Date.now().toString(), text: input.trim() }]);
+    setInput(<span class="string">''</span>);
+  }
+
+  <span class="keyword">function</span> deleteTodo(id) {
+    setTodos(todos.filter(t =&gt; t.id !== id));
+  }
+
+  <span class="keyword">return</span> (
+    &lt;View style={styles.screen}&gt;
+      <span class="comment">{/* Header */}</span>
+      &lt;View style={styles.header}&gt;
+        &lt;Text style={styles.headerTitle}&gt;My Todos&lt;/Text&gt;
+        &lt;Text style={styles.headerCount}&gt;{todos.length} items&lt;/Text&gt;
+      &lt;/View&gt;
+
+      <span class="comment">{/* Input row */}</span>
+      &lt;View style={styles.inputRow}&gt;
+        &lt;TextInput
+          style={styles.input}
+          value={input}
+          onChangeText={setInput}
+          placeholder=<span class="string">"Add a new todo..."</span>
+          onSubmitEditing={addTodo}
+          returnKeyType=<span class="string">"done"</span>
+        /&gt;
+        &lt;TouchableOpacity style={styles.addBtn} onPress={addTodo} activeOpacity={0.8}&gt;
+          &lt;Text style={styles.addBtnText}&gt;Add&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+
+      <span class="comment">{/* List */}</span>
+      &lt;FlatList
+        data={todos}
+        keyExtractor={item =&gt; item.id}
+        contentContainerStyle={todos.length === 0 ? styles.emptyContainer : {padding: 16}}
+        ListEmptyComponent={
+          &lt;Text style={styles.emptyText}&gt;No todos yet — add one above!&lt;/Text&gt;
+        }
+        renderItem={({ item }) =&gt; (
+          &lt;View style={styles.todoCard}&gt;
+            &lt;Text style={styles.todoText}&gt;{item.text}&lt;/Text&gt;
+            &lt;TouchableOpacity onPress={() =&gt; deleteTodo(item.id)} style={styles.deleteBtn}&gt;
+              &lt;Text style={styles.deleteBtnText}&gt;✕&lt;/Text&gt;
+            &lt;/TouchableOpacity&gt;
+          &lt;/View&gt;
+        )}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+<span class="keyword">const</span> styles = StyleSheet.create({
+  screen:         { flex: 1, backgroundColor: <span class="string">'#F8F6F0'</span> },
+  header:         { backgroundColor: <span class="string">'#1B3A6B'</span>, padding: 20, paddingTop: 60,
+                    flexDirection: <span class="string">'row'</span>, justifyContent: <span class="string">'space-between'</span>, alignItems: <span class="string">'flex-end'</span> },
+  headerTitle:    { fontSize: 24, fontWeight: <span class="string">'800'</span>, color: <span class="string">'white'</span> },
+  headerCount:    { fontSize: 13, color: <span class="string">'#C8941A'</span>, fontWeight: <span class="string">'600'</span> },
+  inputRow:       { flexDirection: <span class="string">'row'</span>, margin: 16, gap: 10 },
+  input:          { flex: 1, backgroundColor: <span class="string">'white'</span>, borderRadius: 10, padding: 14,
+                    fontSize: 14, borderWidth: 1, borderColor: <span class="string">'#D8D4CC'</span> },
+  addBtn:         { backgroundColor: <span class="string">'#C8941A'</span>, borderRadius: 10, paddingHorizontal: 20,
+                    justifyContent: <span class="string">'center'</span> },
+  addBtnText:     { color: <span class="string">'white'</span>, fontWeight: <span class="string">'700'</span>, fontSize: 14 },
+  todoCard:       { backgroundColor: <span class="string">'white'</span>, borderRadius: 12, padding: 16, marginBottom: 10,
+                    flexDirection: <span class="string">'row'</span>, alignItems: <span class="string">'center'</span>,
+                    shadowColor: <span class="string">'#000'</span>, shadowOffset: {width:0,height:1},
+                    shadowOpacity: 0.06, shadowRadius: 4, elevation: 2 },
+  todoText:       { flex: 1, fontSize: 14, color: <span class="string">'#1A1A2E'</span> },
+  deleteBtn:      { backgroundColor: <span class="string">'#C62828'</span>, width: 28, height: 28, borderRadius: 6,
+                    alignItems: <span class="string">'center'</span>, justifyContent: <span class="string">'center'</span> },
+  deleteBtnText:  { color: <span class="string">'white'</span>, fontWeight: <span class="string">'700'</span>, fontSize: 12 },
+  emptyContainer: { flex: 1, justifyContent: <span class="string">'center'</span>, alignItems: <span class="string">'center'</span>, padding: 40 },
+  emptyText:      { fontSize: 14, color: <span class="string">'#9AA0AE'</span>, textAlign: <span class="string">'center'</span> },
+});</pre>
+
+      <div class="lab-goal"><strong>Checkpoint:</strong> Todos appear as cards, can be added and deleted, and the count in the header updates correctly.</div>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="sm-sec">Lab 3 — Navigation Between Screens (Week 3)</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Stack + Tab Navigation with Params</h3>
+      <span>⏱ 60 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal"><strong>Goal:</strong> Add React Navigation to your app: a bottom tab bar (Home + Profile) with a Stack navigator so tapping an item opens a Detail screen.</div>
+
+      <p><strong>Step 1 — Install navigation packages</strong></p>
+      <pre>npm install @react-navigation/native @react-navigation/native-stack @react-navigation/bottom-tabs
+npx expo install react-native-screens react-native-safe-area-context</pre>
+
+      <div class="lab-prereq"><strong>Important:</strong> Use <code>npx expo install</code> for the Expo-specific packages — it installs a version compatible with your Expo SDK, not just the latest npm version.</div>
+
+      <p><strong>Step 2 — Create screen files</strong></p>
+      <pre><span class="comment">// screens/HomeScreen.js</span>
+<span class="keyword">import</span> { View, Text, TouchableOpacity, FlatList, StyleSheet } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">const</span> ITEMS = [
+  { id: <span class="string">'1'</span>, name: <span class="string">'Kedarnath Trek'</span>, distance: <span class="string">'14 km'</span> },
+  { id: <span class="string">'2'</span>, name: <span class="string">'Valley of Flowers'</span>, distance: <span class="string">'3 km'</span> },
+  { id: <span class="string">'3'</span>, name: <span class="string">'Chopta Tungnath'</span>, distance: <span class="string">'4 km'</span> },
+];
+
+<span class="keyword">export default function</span> HomeScreen({ navigation }) {
+  <span class="keyword">return</span> (
+    &lt;View style={styles.screen}&gt;
+      &lt;FlatList
+        data={ITEMS}
+        keyExtractor={item =&gt; item.id}
+        contentContainerStyle={{ padding: 16 }}
+        renderItem={({ item }) =&gt; (
+          &lt;TouchableOpacity
+            style={styles.card}
+            onPress={() =&gt; navigation.navigate(<span class="string">'Detail'</span>, { id: item.id, name: item.name })}
+            activeOpacity={0.8}
+          &gt;
+            &lt;Text style={styles.name}&gt;{item.name}&lt;/Text&gt;
+            &lt;Text style={styles.distance}&gt;{item.distance} route&lt;/Text&gt;
+          &lt;/TouchableOpacity&gt;
+        )}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  screen:    { flex: 1, backgroundColor: <span class="string">'#F8F6F0'</span> },
+  card:      { backgroundColor: <span class="string">'white'</span>, borderRadius: 12, padding: 18, marginBottom: 12,
+               borderLeftWidth: 4, borderLeftColor: <span class="string">'#1B3A6B'</span> },
+  name:      { fontSize: 16, fontWeight: <span class="string">'700'</span>, color: <span class="string">'#1B3A6B'</span> },
+  distance:  { fontSize: 12, color: <span class="string">'#5A6070'</span>, marginTop: 4 },
+});</pre>
+
+      <pre><span class="comment">// screens/DetailScreen.js</span>
+<span class="keyword">import</span> { View, Text, StyleSheet } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">export default function</span> DetailScreen({ route }) {
+  <span class="keyword">const</span> { id, name } = route.params;
+  <span class="keyword">return</span> (
+    &lt;View style={styles.screen}&gt;
+      &lt;Text style={styles.title}&gt;{name}&lt;/Text&gt;
+      &lt;Text style={styles.id}&gt;Trail ID: {id}&lt;/Text&gt;
+      &lt;Text style={styles.body}&gt;
+        Detailed information about this Uttarakhand trail would appear here —
+        elevation, best season, permits required, nearby villages.
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: <span class="string">'#F8F6F0'</span>, padding: 24 },
+  title:  { fontSize: 26, fontWeight: <span class="string">'800'</span>, color: <span class="string">'#1B3A6B'</span>, marginBottom: 6 },
+  id:     { fontSize: 12, color: <span class="string">'#C8941A'</span>, fontWeight: <span class="string">'600'</span>, marginBottom: 16 },
+  body:   { fontSize: 14, color: <span class="string">'#3A3A50'</span>, lineHeight: 22 },
+});</pre>
+
+      <p><strong>Step 3 — Wire navigation in App.js</strong></p>
+      <pre><span class="keyword">import</span> { NavigationContainer } <span class="keyword">from</span> <span class="string">'@react-navigation/native'</span>;
+<span class="keyword">import</span> { createNativeStackNavigator } <span class="keyword">from</span> <span class="string">'@react-navigation/native-stack'</span>;
+<span class="keyword">import</span> { createBottomTabNavigator } <span class="keyword">from</span> <span class="string">'@react-navigation/bottom-tabs'</span>;
+
+<span class="keyword">const</span> Stack = createNativeStackNavigator();
+<span class="keyword">const</span> Tab   = createBottomTabNavigator();
+
+<span class="keyword">function</span> HomeTabs() {
+  <span class="keyword">return</span> (
+    &lt;Tab.Navigator screenOptions={{ tabBarActiveTintColor: <span class="string">'#1B3A6B'</span>, headerShown: false }}&gt;
+      &lt;Tab.Screen name=<span class="string">"Trails"</span> component={HomeScreen}
+        options={{ tabBarIcon: () =&gt; &lt;Text&gt;🏔️&lt;/Text&gt; }} /&gt;
+      &lt;Tab.Screen name=<span class="string">"Profile"</span> component={ProfileScreen}
+        options={{ tabBarIcon: () =&gt; &lt;Text&gt;👤&lt;/Text&gt; }} /&gt;
+    &lt;/Tab.Navigator&gt;
+  );
+}
+
+<span class="keyword">export default function</span> App() {
+  <span class="keyword">return</span> (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator&gt;
+        &lt;Stack.Screen name=<span class="string">"Main"</span> component={HomeTabs} options={{ headerShown: false }} /&gt;
+        &lt;Stack.Screen name=<span class="string">"Detail"</span> component={DetailScreen}
+          options={{ title: <span class="string">'Trail Detail'</span>, headerBackTitle: <span class="string">'Back'</span> }} /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}</pre>
+
+      <div class="lab-goal"><strong>Checkpoint:</strong> Tapping a trail opens the Detail screen with its name. The back button returns to the list. Profile tab is accessible from anywhere.</div>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="sm-sec">Lab 4 — Form with Validation (Week 4)</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Registration Form — Controlled Inputs &amp; Validation</h3>
+      <span>⏱ 60 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal"><strong>Goal:</strong> Build a registration form that validates all fields inline, disables Submit while invalid, and uses KeyboardAvoidingView so the keyboard never hides the inputs.</div>
+
+      <pre><span class="keyword">import</span> { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> {
+  View, Text, TextInput, TouchableOpacity,
+  StyleSheet, KeyboardAvoidingView, ScrollView, Platform, Alert
+} <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">export default function</span> RegisterScreen() {
+  <span class="keyword">const</span> [form, setForm] = useState({ name: <span class="string">''</span>, email: <span class="string">''</span>, password: <span class="string">''</span>, confirm: <span class="string">''</span> });
+  <span class="keyword">const</span> [errors, setErrors] = useState({});
+
+  <span class="keyword">function</span> update(field, value) {
+    setForm({ ...form, [field]: value });
+    setErrors({ ...errors, [field]: <span class="string">''</span> }); <span class="comment">// clear error on type</span>
+  }
+
+  <span class="keyword">function</span> validate() {
+    <span class="keyword">const</span> e = {};
+    <span class="keyword">if</span> (!form.name.trim())   e.name     = <span class="string">'Name is required'</span>;
+    <span class="keyword">if</span> (!/\S+@\S+\.\S+/.test(form.email)) e.email = <span class="string">'Enter a valid email address'</span>;
+    <span class="keyword">if</span> (form.password.length &lt; 8) e.password = <span class="string">'Password must be at least 8 characters'</span>;
+    <span class="keyword">if</span> (form.password !== form.confirm) e.confirm = <span class="string">'Passwords do not match'</span>;
+    setErrors(e);
+    <span class="keyword">return</span> Object.keys(e).length === 0;
+  }
+
+  <span class="keyword">function</span> handleSubmit() {
+    <span class="keyword">if</span> (validate()) Alert.alert(<span class="string">'Success'</span>, <span class="string">`Welcome, ${form.name}!`</span>);
+  }
+
+  <span class="keyword">const</span> isFormFilled = form.name &amp;&amp; form.email &amp;&amp; form.password &amp;&amp; form.confirm;
+
+  <span class="keyword">return</span> (
+    &lt;KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === <span class="string">'ios'</span> ? <span class="string">'padding'</span> : <span class="string">'height'</span>}
+    &gt;
+      &lt;ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps=<span class="string">"handled"</span>&gt;
+        &lt;Text style={styles.title}&gt;Create Account&lt;/Text&gt;
+        &lt;Text style={styles.subtitle}&gt;NextGen Devbhoomi Internship 2026–27&lt;/Text&gt;
+
+        {[
+          { key: <span class="string">'name'</span>,     label: <span class="string">'Full Name'</span>,       placeholder: <span class="string">'Priya Sharma'</span> },
+          { key: <span class="string">'email'</span>,    label: <span class="string">'Email Address'</span>,   placeholder: <span class="string">'priya@example.com'</span>, keyboard: <span class="string">'email-address'</span>, autoCapitalize: <span class="string">'none'</span> },
+          { key: <span class="string">'password'</span>, label: <span class="string">'Password'</span>,        placeholder: <span class="string">'Min 8 characters'</span>,  secure: true },
+          { key: <span class="string">'confirm'</span>,  label: <span class="string">'Confirm Password'</span>, placeholder: <span class="string">'Repeat password'</span>,   secure: true },
+        ].map(f =&gt; (
+          &lt;View key={f.key} style={styles.fieldWrap}&gt;
+            &lt;Text style={styles.label}&gt;{f.label}&lt;/Text&gt;
+            &lt;TextInput
+              style={[styles.input, errors[f.key] &amp;&amp; styles.inputError]}
+              value={form[f.key]}
+              onChangeText={v =&gt; update(f.key, v)}
+              placeholder={f.placeholder}
+              keyboardType={f.keyboard || <span class="string">'default'</span>}
+              autoCapitalize={f.autoCapitalize || <span class="string">'words'</span>}
+              secureTextEntry={!!f.secure}
+              autoCorrect={false}
+            /&gt;
+            {errors[f.key] &amp;&amp; &lt;Text style={styles.errorText}&gt;{errors[f.key]}&lt;/Text&gt;}
+          &lt;/View&gt;
+        ))}
+
+        &lt;TouchableOpacity
+          style={[styles.submitBtn, !isFormFilled &amp;&amp; styles.submitDisabled]}
+          onPress={handleSubmit}
+          disabled={!isFormFilled}
+          activeOpacity={0.8}
+        &gt;
+          &lt;Text style={styles.submitText}&gt;Create Account&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/ScrollView&gt;
+    &lt;/KeyboardAvoidingView&gt;
+  );
+}
+
+<span class="keyword">const</span> styles = StyleSheet.create({
+  container:      { flexGrow: 1, backgroundColor: <span class="string">'#F8F6F0'</span>, padding: 24, paddingTop: 60 },
+  title:          { fontSize: 28, fontWeight: <span class="string">'800'</span>, color: <span class="string">'#1B3A6B'</span>, marginBottom: 4 },
+  subtitle:       { fontSize: 13, color: <span class="string">'#5A6070'</span>, marginBottom: 32 },
+  fieldWrap:      { marginBottom: 16 },
+  label:          { fontSize: 13, fontWeight: <span class="string">'600'</span>, color: <span class="string">'#1B3A6B'</span>, marginBottom: 6 },
+  input:          { backgroundColor: <span class="string">'white'</span>, borderWidth: 1, borderColor: <span class="string">'#D8D4CC'</span>,
+                    borderRadius: 10, padding: 14, fontSize: 14 },
+  inputError:     { borderColor: <span class="string">'#C62828'</span> },
+  errorText:      { fontSize: 12, color: <span class="string">'#C62828'</span>, marginTop: 4 },
+  submitBtn:      { backgroundColor: <span class="string">'#1B3A6B'</span>, borderRadius: 12, padding: 16,
+                    alignItems: <span class="string">'center'</span>, marginTop: 8 },
+  submitDisabled: { opacity: 0.4 },
+  submitText:     { color: <span class="string">'white'</span>, fontWeight: <span class="string">'700'</span>, fontSize: 15 },
+});</pre>
+
+      <div class="lab-goal"><strong>Checkpoint:</strong> Inline errors appear on submit, the button stays greyed-out until all fields have content, and the keyboard never covers the active input.</div>
+    </div>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="sm-sec">Lab 5 — Local Storage Notes App (Week 4)</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Notes App — AsyncStorage Persistence</h3>
+      <span>⏱ 75 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal"><strong>Goal:</strong> Build a notes app that saves data to AsyncStorage. Notes survive closing and reopening the app. Shows empty state when no notes exist.</div>
+
+      <p><strong>Step 1 — Install AsyncStorage</strong></p>
+      <pre>npx expo install @react-native-async-storage/async-storage</pre>
+
+      <p><strong>Step 2 — Build the Notes App</strong></p>
+      <pre><span class="keyword">import</span> { useState, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> {
+  View, Text, TextInput, TouchableOpacity,
+  FlatList, StyleSheet, Alert, Modal
+} <span class="keyword">from</span> <span class="string">'react-native'</span>;
+<span class="keyword">import</span> AsyncStorage <span class="keyword">from</span> <span class="string">'@react-native-async-storage/async-storage'</span>;
+
+<span class="keyword">const</span> STORAGE_KEY = <span class="string">'@notes_v1'</span>;
+
+<span class="keyword">export default function</span> App() {
+  <span class="keyword">const</span> [notes, setNotes] = useState([]);
+  <span class="keyword">const</span> [modalVisible, setModalVisible] = useState(false);
+  <span class="keyword">const</span> [editNote, setEditNote] = useState(null);
+  <span class="keyword">const</span> [title, setTitle]   = useState(<span class="string">''</span>);
+  <span class="keyword">const</span> [body, setBody]     = useState(<span class="string">''</span>);
+
+  <span class="comment">// Load notes on mount</span>
+  useEffect(() =&gt; {
+    (<span class="keyword">async</span> () =&gt; {
+      <span class="keyword">const</span> raw = <span class="keyword">await</span> AsyncStorage.getItem(STORAGE_KEY);
+      <span class="keyword">if</span> (raw) setNotes(JSON.parse(raw));
+    })();
+  }, []);
+
+  <span class="comment">// Save whenever notes change</span>
+  useEffect(() =&gt; {
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  }, [notes]);
+
+  <span class="keyword">function</span> openAdd() {
+    setEditNote(null); setTitle(<span class="string">''</span>); setBody(<span class="string">''</span>); setModalVisible(true);
+  }
+
+  <span class="keyword">function</span> openEdit(note) {
+    setEditNote(note); setTitle(note.title); setBody(note.body); setModalVisible(true);
+  }
+
+  <span class="keyword">function</span> saveNote() {
+    <span class="keyword">if</span> (!title.trim()) { Alert.alert(<span class="string">'Add a title'</span>); <span class="keyword">return</span>; }
+    <span class="keyword">if</span> (editNote) {
+      setNotes(notes.map(n =&gt; n.id === editNote.id ? { ...n, title, body } : n));
+    } <span class="keyword">else</span> {
+      setNotes([{ id: Date.now().toString(), title: title.trim(), body: body.trim() }, ...notes]);
+    }
+    setModalVisible(false);
+  }
+
+  <span class="keyword">function</span> deleteNote(id) {
+    Alert.alert(<span class="string">'Delete note?'</span>, <span class="string">'This cannot be undone.'</span>, [
+      { text: <span class="string">'Cancel'</span> },
+      { text: <span class="string">'Delete'</span>, style: <span class="string">'destructive'</span>, onPress: () =&gt; setNotes(notes.filter(n =&gt; n.id !== id)) },
+    ]);
+  }
+
+  <span class="keyword">return</span> (
+    &lt;View style={styles.screen}&gt;
+      &lt;View style={styles.header}&gt;
+        &lt;Text style={styles.headerTitle}&gt;Notes&lt;/Text&gt;
+        &lt;TouchableOpacity style={styles.addBtn} onPress={openAdd}&gt;
+          &lt;Text style={styles.addBtnText}&gt;+ New&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+
+      &lt;FlatList
+        data={notes}
+        keyExtractor={n =&gt; n.id}
+        contentContainerStyle={notes.length === 0 ? styles.emptyWrap : { padding: 16 }}
+        ListEmptyComponent={&lt;Text style={styles.emptyText}&gt;No notes yet.{'\n'}Tap + New to create one.&lt;/Text&gt;}
+        renderItem={({ item }) =&gt; (
+          &lt;TouchableOpacity style={styles.noteCard} onPress={() =&gt; openEdit(item)} activeOpacity={0.85}&gt;
+            &lt;Text style={styles.noteTitle} numberOfLines={1}&gt;{item.title}&lt;/Text&gt;
+            &lt;Text style={styles.noteBody} numberOfLines={2}&gt;{item.body || <span class="string">'No body text'</span>}&lt;/Text&gt;
+            &lt;TouchableOpacity onPress={() =&gt; deleteNote(item.id)} style={styles.delBtn}&gt;
+              &lt;Text style={styles.delBtnText}&gt;Delete&lt;/Text&gt;
+            &lt;/TouchableOpacity&gt;
+          &lt;/TouchableOpacity&gt;
+        )}
+      /&gt;
+
+      <span class="comment">{/* Add/Edit Modal */}</span>
+      &lt;Modal visible={modalVisible} animationType=<span class="string">"slide"</span> presentationStyle=<span class="string">"pageSheet"</span>&gt;
+        &lt;View style={styles.modal}&gt;
+          &lt;View style={styles.modalHeader}&gt;
+            &lt;TouchableOpacity onPress={() =&gt; setModalVisible(false)}&gt;
+              &lt;Text style={styles.cancel}&gt;Cancel&lt;/Text&gt;
+            &lt;/TouchableOpacity&gt;
+            &lt;Text style={styles.modalTitle}&gt;{editNote ? <span class="string">'Edit Note'</span> : <span class="string">'New Note'</span>}&lt;/Text&gt;
+            &lt;TouchableOpacity onPress={saveNote}&gt;
+              &lt;Text style={styles.save}&gt;Save&lt;/Text&gt;
+            &lt;/TouchableOpacity&gt;
+          &lt;/View&gt;
+          &lt;TextInput style={styles.titleInput} value={title} onChangeText={setTitle} placeholder=<span class="string">"Title"</span> /&gt;
+          &lt;TextInput style={styles.bodyInput} value={body} onChangeText={setBody}
+            placeholder=<span class="string">"Write your note here..."</span> multiline /&gt;
+        &lt;/View&gt;
+      &lt;/Modal&gt;
+    &lt;/View&gt;
+  );
+}
+
+<span class="keyword">const</span> styles = StyleSheet.create({
+  screen:      { flex: 1, backgroundColor: <span class="string">'#F8F6F0'</span> },
+  header:      { backgroundColor: <span class="string">'#1B3A6B'</span>, paddingTop: 56, paddingBottom: 16, paddingHorizontal: 20,
+                 flexDirection: <span class="string">'row'</span>, justifyContent: <span class="string">'space-between'</span>, alignItems: <span class="string">'center'</span> },
+  headerTitle: { fontSize: 26, fontWeight: <span class="string">'800'</span>, color: <span class="string">'white'</span> },
+  addBtn:      { backgroundColor: <span class="string">'#C8941A'</span>, paddingHorizontal: 16, paddingVertical: 8,
+                 borderRadius: 8 },
+  addBtnText:  { color: <span class="string">'white'</span>, fontWeight: <span class="string">'700'</span>, fontSize: 13 },
+  noteCard:    { backgroundColor: <span class="string">'white'</span>, borderRadius: 12, padding: 16, marginBottom: 12,
+                 shadowColor: <span class="string">'#1B3A6B'</span>, shadowOffset: {width:0,height:2},
+                 shadowOpacity: 0.07, shadowRadius: 6, elevation: 2 },
+  noteTitle:   { fontSize: 15, fontWeight: <span class="string">'700'</span>, color: <span class="string">'#1B3A6B'</span>, marginBottom: 4 },
+  noteBody:    { fontSize: 13, color: <span class="string">'#5A6070'</span>, lineHeight: 18, marginBottom: 10 },
+  delBtn:      { alignSelf: <span class="string">'flex-end'</span> },
+  delBtnText:  { fontSize: 11, color: <span class="string">'#C62828'</span>, fontWeight: <span class="string">'600'</span> },
+  emptyWrap:   { flex: 1, justifyContent: <span class="string">'center'</span>, alignItems: <span class="string">'center'</span> },
+  emptyText:   { fontSize: 15, color: <span class="string">'#9AA0AE'</span>, textAlign: <span class="string">'center'</span>, lineHeight: 24 },
+  modal:       { flex: 1, backgroundColor: <span class="string">'#F8F6F0'</span>, padding: 20 },
+  modalHeader: { flexDirection: <span class="string">'row'</span>, justifyContent: <span class="string">'space-between'</span>, alignItems: <span class="string">'center'</span>,
+                 marginBottom: 20 },
+  modalTitle:  { fontSize: 16, fontWeight: <span class="string">'700'</span>, color: <span class="string">'#1B3A6B'</span> },
+  cancel:      { fontSize: 14, color: <span class="string">'#5A6070'</span> },
+  save:        { fontSize: 14, fontWeight: <span class="string">'700'</span>, color: <span class="string">'#1B3A6B'</span> },
+  titleInput:  { backgroundColor: <span class="string">'white'</span>, borderRadius: 10, padding: 14, fontSize: 17,
+                 fontWeight: <span class="string">'600'</span>, marginBottom: 12, borderWidth: 1, borderColor: <span class="string">'#D8D4CC'</span> },
+  bodyInput:   { backgroundColor: <span class="string">'white'</span>, borderRadius: 10, padding: 14, fontSize: 14,
+                 borderWidth: 1, borderColor: <span class="string">'#D8D4CC'</span>, minHeight: 200, textAlignVertical: <span class="string">'top'</span> },
+});</pre>
+
+      <div class="lab-goal"><strong>Checkpoint:</strong> Close and reopen the app — all notes are still there. Add, edit, and delete all work correctly. Empty state shows when no notes exist.</div>
+
+      <div class="lab-tip"><strong>Tip:</strong> To verify persistence, close the app completely (swipe it away from the app switcher), then reopen. If notes still appear, AsyncStorage is working correctly.</div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Concept Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="project_briefs.html" style="background:var(--gold);color:var(--navy);padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Project Briefs →</a>
+      <a href="lab_guide_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Intermediate Labs →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Mobile App Development &nbsp;·&nbsp; Lab Guide — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+</script>
+</body>
+</html>

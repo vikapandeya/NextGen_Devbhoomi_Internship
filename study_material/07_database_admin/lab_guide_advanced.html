@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Guide — Advanced | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">🔬 Lab Guide — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Labs</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs</a>
+    <a href="concept_notes_advanced.html">Concept Notes</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Advanced Level</h2>
+      <p>Five production-grade labs: DBA simulation, MongoDB with Node.js, Redis caching layer, database migrations, and multi-service architecture capstone.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">DBA Operations</span>
+      <span class="pill">MongoDB</span>
+      <span class="pill">Redis</span>
+      <span class="pill">Migrations</span>
+      <span class="pill">Multi-DB Architecture</span>
+    </div>
+  </div>
+
+  <!-- Lab 1 -->
+  <div class="week-block adv" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <span class="week-num wn-adv">Lab 1</span>
+      <h3>Full DB Admin Simulation (Week 10)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Simulate a real DBA's daily tasks: enable slow query logging, run a backup, manage users with least privilege, and test a restore.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Enable slow query log</strong><br>
+            <pre><code>-- In MySQL (run as root):
+SET GLOBAL slow_query_log = 1;
+SET GLOBAL long_query_time = 1;  -- log queries taking > 1 second
+-- On Linux: SET GLOBAL slow_query_log_file = '/var/log/mysql/slow.log';
+-- On Windows: SET GLOBAL slow_query_log_file = 'C:/slow-query.log';
+
+-- Verify settings
+SHOW VARIABLES LIKE 'slow_query%';
+SHOW VARIABLES LIKE 'long_query_time';</code></pre>
+          </li>
+          <li>
+            <strong>Generate intentionally slow queries</strong><br>
+            <pre><code>-- Full table scan on orders (no index)
+DROP INDEX idx_created ON orders;  -- remove index temporarily
+SELECT SQL_NO_CACHE * FROM orders WHERE YEAR(created_at) = 2024;
+
+-- Multi-table JOIN with no indexes on join columns
+DROP INDEX idx_ord_cust ON orders;
+SELECT c.name, COUNT(o.id)
+FROM customers c JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id;
+
+-- Read the slow query log (Linux) or check MySQL Workbench → Performance → Slow Queries</code></pre>
+          </li>
+          <li>
+            <strong>Run a backup</strong><br>
+            <pre><code>-- Open a terminal (NOT the MySQL prompt)
+-- MySQL logical backup
+mysqldump -u root -p it_university > C:/backups/it_university_backup.sql
+
+-- Verify the backup file exists and has content
+-- On Windows: dir C:\backups\
+-- On Linux: ls -lh ~/backups/
+
+-- Backup with timestamp in filename (Linux/Mac)
+mysqldump -u root -p it_university > ~/backups/it_university_$(date +%Y%m%d).sql</code></pre>
+          </li>
+          <li>
+            <strong>Create a read-only reporting user</strong><br>
+            <pre><code>-- In MySQL:
+CREATE USER 'reporter'@'localhost' IDENTIFIED BY 'Report@2024!';
+GRANT SELECT ON it_university.* TO 'reporter'@'localhost';
+FLUSH PRIVILEGES;
+
+-- Verify
+SHOW GRANTS FOR 'reporter'@'localhost';</code></pre>
+          </li>
+          <li>
+            <strong>Test the reporting user</strong><br>
+            <pre><code>-- Open a new MySQL connection with reporter credentials:
+-- mysql -u reporter -p it_university
+
+-- This should WORK:
+SELECT * FROM customers LIMIT 5;
+
+-- This should FAIL with access denied:
+INSERT INTO customers (name, email) VALUES ('Test', 'test@test.com');
+-- Error: INSERT command denied to user 'reporter'@'localhost'
+
+-- This should also FAIL:
+DROP TABLE customers;
+-- Error: DROP command denied</code></pre>
+          </li>
+          <li>
+            <strong>Restore from backup to a test database</strong><br>
+            <pre><code>-- Create an empty test database
+CREATE DATABASE it_university_restored;
+
+-- From terminal (not MySQL prompt):
+mysql -u root -p it_university_restored &lt; C:/backups/it_university_backup.sql
+
+-- Verify restore:
+USE it_university_restored;
+SHOW TABLES;
+SELECT COUNT(*) FROM customers;
+-- Should match original database counts</code></pre>
+          </li>
+          <li>
+            <strong>Create minimal-permission application user</strong><br>
+            <pre><code>-- App user: can read/write data but cannot change schema
+CREATE USER 'app_user'@'%' IDENTIFIED BY 'AppUser@2024!';
+GRANT SELECT, INSERT, UPDATE, DELETE ON it_university.* TO 'app_user'@'%';
+
+-- Explicitly deny dangerous operations
+-- (no GRANT OPTION, no DROP, no ALTER, no CREATE)
+
+-- Test: connect as app_user, verify ALTER TABLE fails
+-- mysql -u app_user -p it_university
+-- ALTER TABLE customers ADD COLUMN test VARCHAR(10);
+-- Error: ALTER command denied</code></pre>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 2 -->
+  <div class="week-block adv" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <span class="week-num wn-adv">Lab 2</span>
+      <h3>MongoDB — Blog with Node.js (Week 11)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Build a full CRUD blog API with Mongoose, including aggregation queries and array manipulation.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Setup</h4>
+        <pre><code>mkdir blog-api && cd blog-api
+npm init -y
+npm install mongoose express</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Complete Implementation</h4>
+        <pre><code>// blog-api/models/Post.js
+const mongoose = require('mongoose');
+
+const commentSchema = new mongoose.Schema({
+  user:      { type: String, required: true },
+  text:      { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const postSchema = new mongoose.Schema({
+  title:     { type: String, required: true, trim: true },
+  body:      { type: String, required: true },
+  author:    { type: String, required: true },
+  tags:      [String],
+  views:     { type: Number, default: 0, min: 0 },
+  createdAt: { type: Date, default: Date.now },
+  comments:  [commentSchema]
+});
+
+module.exports = mongoose.model('Post', postSchema);
+
+// blog-api/index.js
+const express  = require('express');
+const mongoose = require('mongoose');
+const Post     = require('./models/Post');
+
+const app = express();
+app.use(express.json());
+
+// Connect to MongoDB Atlas (free tier at mongodb.com/cloud/atlas)
+// Replace with your connection string:
+mongoose.connect('mongodb+srv://user:pass@cluster0.abcde.mongodb.net/blog')
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('Connection error:', err));
+
+// CREATE: new post
+app.post('/posts', async (req, res) => {
+  try {
+    const post = await Post.create(req.body);
+    res.status(201).json(post);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// READ: all posts, sorted by views desc
+app.get('/posts', async (req, res) => {
+  const posts = await Post.find().sort('-views').select('-body');
+  res.json(posts);
+});
+
+// READ: posts by tag
+app.get('/posts/tag/:tag', async (req, res) => {
+  const posts = await Post.find({ tags: req.params.tag }).sort('-views');
+  res.json(posts);
+});
+
+// READ: single post + increment view count
+app.get('/posts/:id', async (req, res) => {
+  const post = await Post.findByIdAndUpdate(
+    req.params.id,
+    { $inc: { views: 1 } },
+    { new: true }
+  );
+  if (!post) return res.status(404).json({ error: 'Not found' });
+  res.json(post);
+});
+
+// UPDATE: add a comment
+app.post('/posts/:id/comments', async (req, res) => {
+  const post = await Post.findByIdAndUpdate(
+    req.params.id,
+    { $push: { comments: { user: req.body.user, text: req.body.text } } },
+    { new: true }
+  );
+  res.json(post);
+});
+
+// DELETE: remove post
+app.delete('/posts/:id', async (req, res) => {
+  await Post.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Deleted' });
+});
+
+// AGGREGATION: top 3 authors by total views
+app.get('/analytics/top-authors', async (req, res) => {
+  const result = await Post.aggregate([
+    { $group: { _id: '$author', totalViews: { $sum: '$views' }, postCount: { $sum: 1 } } },
+    { $sort: { totalViews: -1 } },
+    { $limit: 3 },
+    { $project: { author: '$_id', totalViews: 1, postCount: 1, _id: 0 } }
+  ]);
+  res.json(result);
+});
+
+// QUERY: posts with tag 'nodejs' and views > 100
+app.get('/posts/filter/popular-nodejs', async (req, res) => {
+  const posts = await Post
+    .find({ tags: 'nodejs', views: { $gt: 100 } })
+    .sort('-views')
+    .limit(5)
+    .select('title author views tags');
+  res.json(posts);
+});
+
+app.listen(3000, () => console.log('Blog API running on port 3000'));</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Test with curl or Postman</h4>
+        <pre><code>node index.js
+
+# Create a post
+curl -X POST http://localhost:3000/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Intro to MongoDB","body":"MongoDB is a...","author":"Priya","tags":["mongodb","database"]}'
+
+# Get all posts
+curl http://localhost:3000/posts
+
+# Get top authors
+curl http://localhost:3000/analytics/top-authors</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 3 -->
+  <div class="week-block adv" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <span class="week-num wn-adv">Lab 3</span>
+      <h3>Redis Caching Layer (Week 11)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Add Redis as a caching layer to an Express API. Implement cache-aside, session storage, rate limiting, and a sorted-set leaderboard.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Setup</h4>
+        <pre><code>npm install ioredis
+
+# Start Redis with Docker (if not installed locally)
+docker run -d -p 6379:6379 --name redis redis:alpine
+# Verify: docker ps (should show redis container running)</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Complete Redis Implementation</h4>
+        <pre><code>// redis-demo/index.js
+const express = require('express');
+const Redis   = require('ioredis');
+const mysql   = require('mysql2/promise');
+
+const app   = express();
+const redis = new Redis({ host: '127.0.0.1', port: 6379 });
+app.use(express.json());
+
+// MySQL connection pool
+const pool = mysql.createPool({
+  host: 'localhost', user: 'root', password: 'your_password',
+  database: 'it_university', waitForConnections: true, connectionLimit: 10
+});
+
+// =========================================
+// Pattern 1: Cache-Aside for Product List
+// =========================================
+app.get('/products', async (req, res) => {
+  const cacheKey = 'products:all';
+  const startTime = Date.now();
+
+  // Check cache first
+  const cached = await redis.get(cacheKey);
+  if (cached) {
+    const elapsed = Date.now() - startTime;
+    return res.json({
+      source: 'cache',
+      responseTimeMs: elapsed,
+      data: JSON.parse(cached)
+    });
+  }
+
+  // Cache miss: query MySQL
+  const [rows] = await pool.query('SELECT * FROM products ORDER BY name');
+
+  // Store in cache with 5-minute TTL
+  await redis.setex(cacheKey, 300, JSON.stringify(rows));
+
+  const elapsed = Date.now() - startTime;
+  res.json({ source: 'database', responseTimeMs: elapsed, data: rows });
+});
+
+// Invalidate cache when a product is updated
+app.put('/products/:id', async (req, res) => {
+  const { id } = req.params;
+  await pool.query('UPDATE products SET ? WHERE id = ?', [req.body, id]);
+  await redis.del('products:all');  // invalidate cache
+  res.json({ message: 'Product updated, cache cleared' });
+});
+
+// =========================================
+// Pattern 2: Session Storage
+// =========================================
+app.post('/login', async (req, res) => {
+  const { userId, role } = req.body;
+  const sessionId = `sess_${Date.now()}_${Math.random().toString(36).substr(2,9)}`;
+
+  // Store session in Redis hash with 1-hour TTL
+  await redis.hset(`session:${sessionId}`,
+    'userId', userId,
+    'role',   role,
+    'loginAt', new Date().toISOString()
+  );
+  await redis.expire(`session:${sessionId}`, 3600);
+
+  res.json({ sessionId, message: 'Logged in' });
+});
+
+app.get('/me', async (req, res) => {
+  const sessionId = req.headers['x-session-id'];
+  const session = await redis.hgetall(`session:${sessionId}`);
+  if (!session || !session.userId)
+    return res.status(401).json({ error: 'Invalid or expired session' });
+  res.json(session);
+});
+
+// =========================================
+// Pattern 3: Rate Limiting
+// =========================================
+app.use('/api/', async (req, res, next) => {
+  const ip  = req.ip || '127.0.0.1';
+  const key = `rate:${ip}:${Math.floor(Date.now() / 60000)}`;  // per minute
+
+  const count = await redis.incr(key);
+  if (count === 1) await redis.expire(key, 60);  // set TTL on first request
+
+  res.setHeader('X-RateLimit-Remaining', Math.max(0, 100 - count));
+
+  if (count > 100) {
+    return res.status(429).json({ error: 'Rate limit exceeded. Try again in a minute.' });
+  }
+  next();
+});
+
+app.get('/api/data', (req, res) => {
+  res.json({ data: 'Some rate-limited API response' });
+});
+
+// =========================================
+// Pattern 4: Leaderboard with Sorted Set
+// =========================================
+app.post('/leaderboard/score', async (req, res) => {
+  const { username, score } = req.body;
+  await redis.zadd('leaderboard', score, username);
+  res.json({ message: 'Score recorded' });
+});
+
+app.get('/leaderboard/top', async (req, res) => {
+  // Top 10: ZREVRANGE returns highest scores first
+  const top10 = await redis.zrevrange('leaderboard', 0, 9, 'WITHSCORES');
+
+  // Format pairs into objects
+  const formatted = [];
+  for (let i = 0; i < top10.length; i += 2) {
+    formatted.push({ rank: i/2 + 1, username: top10[i], score: parseInt(top10[i+1]) });
+  }
+  res.json(formatted);
+});
+
+app.get('/leaderboard/rank/:username', async (req, res) => {
+  const rank  = await redis.zrevrank('leaderboard', req.params.username);
+  const score = await redis.zscore('leaderboard', req.params.username);
+  res.json({ username: req.params.username, rank: rank + 1, score: parseInt(score) });
+});
+
+// =========================================
+// Cache metrics endpoint
+// =========================================
+app.get('/cache/info', async (req, res) => {
+  const info = await redis.info('stats');
+  const hits   = info.match(/keyspace_hits:(\d+)/)?.[1] || '0';
+  const misses = info.match(/keyspace_misses:(\d+)/)?.[1] || '0';
+  const total  = parseInt(hits) + parseInt(misses);
+  res.json({
+    cacheHits:   parseInt(hits),
+    cacheMisses: parseInt(misses),
+    hitRate:     total ? ((hits/total)*100).toFixed(1) + '%' : 'N/A'
+  });
+});
+
+app.listen(3001, () => console.log('Redis demo running on port 3001'));</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 4 -->
+  <div class="week-block adv" id="w12a">
+    <div class="week-header" onclick="toggleWeek('w12a')">
+      <span class="week-num wn-adv">Lab 4</span>
+      <h3>Database Migrations (Week 12)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Implement version-controlled database migrations using raw SQL files. Simulate team collaboration where multiple developers create sequential migrations.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Migration Files</h4>
+        <pre><code>-- V1__create_users.sql
+CREATE TABLE IF NOT EXISTS users (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  name       VARCHAR(100) NOT NULL,
+  email      VARCHAR(150) NOT NULL UNIQUE,
+  password   VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+-- Undo: DROP TABLE IF EXISTS users;
+
+-- V2__create_posts.sql
+CREATE TABLE IF NOT EXISTS posts (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  title      VARCHAR(200) NOT NULL,
+  body       TEXT,
+  user_id    INT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+-- Undo: DROP TABLE IF EXISTS posts;
+
+-- V3__add_tags_column.sql
+ALTER TABLE posts ADD COLUMN IF NOT EXISTS tags JSON;
+ALTER TABLE posts ADD COLUMN IF NOT EXISTS status ENUM('draft','published') DEFAULT 'draft';
+-- Undo: ALTER TABLE posts DROP COLUMN tags; ALTER TABLE posts DROP COLUMN status;
+
+-- V4__create_comments.sql
+CREATE TABLE IF NOT EXISTS comments (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  post_id    INT NOT NULL,
+  user_id    INT NOT NULL,
+  body       TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+-- Undo: DROP TABLE IF EXISTS comments;
+
+-- V5__add_search_and_backfill.sql
+-- Step 1: Add the column (fast, no table lock)
+ALTER TABLE posts ADD COLUMN IF NOT EXISTS slug VARCHAR(250);
+
+-- Step 2: Backfill existing data in batches
+UPDATE posts SET slug = LOWER(REPLACE(REPLACE(title, ' ', '-'), '.', ''))
+WHERE slug IS NULL AND id BETWEEN 1 AND 1000;
+-- (repeat for each batch of 1000)
+
+-- Step 3: Add index
+CREATE INDEX IF NOT EXISTS idx_slug ON posts(slug);</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Simple Migration Runner (Node.js)</h4>
+        <pre><code>// migrate.js — simple migration runner
+const mysql = require('mysql2/promise');
+const fs    = require('fs');
+const path  = require('path');
+
+async function run() {
+  const conn = await mysql.createConnection({
+    host:'localhost', user:'root', password:'your_password', database:'blog_app',
+    multipleStatements: true
+  });
+
+  // Create migrations tracking table
+  await conn.execute(`
+    CREATE TABLE IF NOT EXISTS schema_migrations (
+      version    VARCHAR(50) PRIMARY KEY,
+      applied_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  // Get applied migrations
+  const [applied] = await conn.execute('SELECT version FROM schema_migrations');
+  const appliedSet = new Set(applied.map(r => r.version));
+
+  // Find migration files
+  const migrationsDir = path.join(__dirname, 'migrations');
+  const files = fs.readdirSync(migrationsDir)
+    .filter(f => f.endsWith('.sql'))
+    .sort();  // alphabetical = chronological
+
+  for (const file of files) {
+    const version = file.replace('.sql', '');
+    if (appliedSet.has(version)) {
+      console.log(`  SKIP  ${file} (already applied)`);
+      continue;
+    }
+    const sql = fs.readFileSync(path.join(migrationsDir, file), 'utf8');
+    // Remove undo comments for execution
+    const cleanSql = sql.replace(/--.*$/gm, '').trim();
+    await conn.execute(cleanSql);
+    await conn.execute('INSERT INTO schema_migrations (version) VALUES (?)', [version]);
+    console.log(`  OK    ${file}`);
+  }
+
+  await conn.end();
+  console.log('Migrations complete.');
+}
+run().catch(console.error);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 5 -->
+  <div class="week-block adv" id="w12b">
+    <div class="week-header" onclick="toggleWeek('w12b')">
+      <span class="week-num wn-adv">Lab 5</span>
+      <h3>Capstone — Multi-Service Database Architecture (Week 12)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Build the full data layer for a food delivery app using MySQL, MongoDB, and Redis — each for what it does best.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Docker Compose Setup</h4>
+        <pre><code># docker-compose.yml
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: foodapp
+    ports: ["3306:3306"]
+    volumes: ["mysql_data:/var/lib/mysql"]
+
+  mongodb:
+    image: mongo:7.0
+    ports: ["27017:27017"]
+    volumes: ["mongo_data:/data/db"]
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    command: redis-server --appendonly yes
+    volumes: ["redis_data:/data"]
+
+volumes:
+  mysql_data:
+  mongo_data:
+  redis_data:</code></pre>
+        <pre><code>docker-compose up -d
+# Verify all 3 are running:
+docker-compose ps</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>MySQL Schema (Orders, Users, Restaurants)</h4>
+        <pre><code>-- foodapp MySQL schema (run in MySQL)
+CREATE DATABASE IF NOT EXISTS foodapp; USE foodapp;
+
+CREATE TABLE users (
+  id       INT PRIMARY KEY AUTO_INCREMENT,
+  name     VARCHAR(100),
+  email    VARCHAR(150) UNIQUE,
+  phone    VARCHAR(15),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE restaurants (
+  id       INT PRIMARY KEY AUTO_INCREMENT,
+  name     VARCHAR(100) NOT NULL,
+  city     VARCHAR(50),
+  cuisine  VARCHAR(50),
+  rating   DECIMAL(3,2)
+);
+
+CREATE TABLE orders (
+  id            INT PRIMARY KEY AUTO_INCREMENT,
+  user_id       INT NOT NULL,
+  restaurant_id INT NOT NULL,
+  total         DECIMAL(10,2),
+  status        ENUM('placed','confirmed','cooking','out_for_delivery','delivered','cancelled') DEFAULT 'placed',
+  placed_at     DATETIME DEFAULT CURRENT_TIMESTAMP,
+  delivered_at  DATETIME,
+  FOREIGN KEY (user_id)       REFERENCES users(id),
+  FOREIGN KEY (restaurant_id) REFERENCES restaurants(id)
+);</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Full Order Flow API</h4>
+        <pre><code>// food-app/routes/orders.js
+const express   = require('express');
+const mysql     = require('mysql2/promise');
+const mongoose  = require('mongoose');
+const Redis     = require('ioredis');
+const router    = express.Router();
+const redis     = new Redis();
+
+const pool = mysql.createPool({
+  host:'localhost', user:'root', password:'rootpass', database:'foodapp'
+});
+
+// MongoDB Menu schema
+const menuItemSchema = new mongoose.Schema({
+  restaurantId: Number,
+  name: String,
+  price: Number,
+  category: String,
+  isAvailable: { type: Boolean, default: true }
+});
+const MenuItem = mongoose.model('MenuItem', menuItemSchema);
+
+// POST /orders — Place an order
+router.post('/', async (req, res) => {
+  const { userId, restaurantId, items } = req.body;
+  // items: [{menuItemId, quantity}]
+
+  try {
+    // Step 1: Validate menu prices from MongoDB
+    const menuIds = items.map(i => i.menuItemId);
+    const menuItems = await MenuItem.find({ _id: { $in: menuIds }, isAvailable: true });
+
+    if (menuItems.length !== items.length) {
+      return res.status(400).json({ error: 'Some items are unavailable' });
+    }
+
+    const priceMap = {};
+    menuItems.forEach(mi => { priceMap[mi._id.toString()] = mi.price; });
+
+    // Calculate total using prices from MongoDB (not client-supplied)
+    let total = 0;
+    for (const item of items) {
+      total += priceMap[item.menuItemId] * item.quantity;
+    }
+
+    // Step 2: Insert order in MySQL (ACID transaction)
+    const conn = await pool.getConnection();
+    await conn.beginTransaction();
+    try {
+      const [result] = await conn.execute(
+        'INSERT INTO orders (user_id, restaurant_id, total) VALUES (?,?,?)',
+        [userId, restaurantId, total]
+      );
+      const orderId = result.insertId;
+      await conn.commit();
+      conn.release();
+
+      // Step 3: Push delivery status to Redis (with 2-hour TTL)
+      await redis.setex(
+        `order:${orderId}:status`,
+        7200,
+        JSON.stringify({ status: 'placed', updatedAt: new Date().toISOString() })
+      );
+
+      // Step 4: Invalidate restaurant cache in Redis
+      await redis.del(`restaurant:${restaurantId}:cache`);
+
+      res.status(201).json({ orderId, total, message: 'Order placed successfully' });
+    } catch (err) {
+      await conn.rollback();
+      conn.release();
+      throw err;
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /orders/:id/status — Real-time status from Redis
+router.get('/:id/status', async (req, res) => {
+  const statusJson = await redis.get(`order:${req.params.id}:status`);
+  if (statusJson) return res.json({ source: 'cache', ...JSON.parse(statusJson) });
+
+  // Fallback to MySQL if Redis TTL expired
+  const [rows] = await pool.execute(
+    'SELECT status, placed_at FROM orders WHERE id = ?', [req.params.id]
+  );
+  if (!rows.length) return res.status(404).json({ error: 'Order not found' });
+  res.json({ source: 'database', ...rows[0] });
+});
+
+module.exports = router;</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>DBA Runbook</h4>
+        <div class="ref-card">
+          <p><strong>1. Check database health:</strong></p>
+          <pre><code>-- MySQL: check replication, threads, open tables
+SHOW STATUS LIKE 'Threads_connected';
+SHOW STATUS LIKE 'Slow_queries';
+SHOW PROCESSLIST;  -- running queries (kill long-running ones if needed)
+
+-- Redis: check memory usage
+redis-cli INFO memory | grep used_memory_human
+
+-- MongoDB: check current operations
+db.currentOp()  -- in mongo shell</code></pre>
+          <p><strong>2. Add a new index without downtime (MySQL 8):</strong></p>
+          <pre><code>-- ALGORITHM=INPLACE: builds index without full table copy (MySQL 8+)
+-- LOCK=NONE: reads and writes continue while index builds
+CREATE INDEX idx_orders_user ON orders(user_id)
+  ALGORITHM=INPLACE LOCK=NONE;</code></pre>
+          <p><strong>3. Backup all 3 databases:</strong></p>
+          <pre><code>#!/bin/bash
+DATE=$(date +%Y%m%d_%H%M%S)
+mysqldump -u root -prootpass foodapp > foodapp_${DATE}.sql
+mongodump --db foodapp --out mongo_backup_${DATE}/
+redis-cli SAVE && cp /var/lib/redis/dump.rdb redis_backup_${DATE}.rdb
+echo "All backups complete: $DATE"</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

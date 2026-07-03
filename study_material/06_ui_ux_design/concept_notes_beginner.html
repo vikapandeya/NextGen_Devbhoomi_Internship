@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI/UX Design — Concept Notes (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .heuristic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .heuristic-card { background: var(--paper); border-radius: var(--radius-sm); padding: 14px 16px; border-left: 3px solid var(--gold); }
+  .heuristic-card .h-num { font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .heuristic-card h5 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .heuristic-card p { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
+  .analogy-box { background: linear-gradient(135deg, #FDF6E3, #F5E6C0); border: 1px solid var(--gold-light); border-left: 4px solid var(--gold); border-radius: var(--radius-sm); padding: 14px 18px; margin: 14px 0; font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+  .analogy-box strong { color: var(--navy); }
+  .india-note { background: var(--orange-light); border-left: 3px solid var(--orange); border-radius: var(--radius-sm); padding: 12px 16px; margin: 12px 0; font-size: 13px; color: var(--text-mid); }
+  .india-note strong { color: var(--orange); }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">📖 Concept Notes — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; CONCEPT NOTES (BEGINNER)
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate ↗</a>
+    <a href="lab_guide_beginner.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero beg">
+    <div class="lh-icon">🎨</div>
+    <h1>Concept Notes — Beginner</h1>
+    <p class="lh-sub">4 weeks of foundational UI/UX knowledge. You will learn the difference between UX and UI, the design process, how to research real users, how to organise information, and the visual design principles that make interfaces readable and beautiful.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Weeks</span>
+      <span class="lh-pill">UX Foundations · Research · IA · Visual Design</span>
+      <span class="lh-pill">Figma Intro</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>What You Will Learn</h4>
+      <ul>
+        <li>UX vs UI — the real difference</li>
+        <li>Double Diamond process</li>
+        <li>User research methods</li>
+        <li>Nielsen's 10 heuristics</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Key Tools</h4>
+      <ul>
+        <li>Figma (free account)</li>
+        <li>FigJam (affinity mapping)</li>
+        <li>Google Forms (surveys)</li>
+        <li>Paper + pencil (sketching)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Outcomes</h4>
+      <ul>
+        <li>Run a user interview</li>
+        <li>Build a sitemap + user flow</li>
+        <li>Create lo-fi wireframes</li>
+        <li>Apply 4 visual design principles</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Assessment</h4>
+      <ul>
+        <li>Weekly quiz (W1–W4)</li>
+        <li>Lab 1–5 submissions</li>
+        <li>Project 1 — App Redesign</li>
+        <li>Heuristic evaluation</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="sm-sec">Week 1 — Foundations of UX Design</div>
+  <div class="week-block open" id="w1">
+    <div class="week-head" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <div class="week-head-text">
+        <h3>Foundations of UX Design</h3>
+        <p>UX vs UI · Double Diamond · HCD · Why UX matters in India · Nielsen's 10 Heuristics</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Explain the difference between UX and UI</li>
+          <li>Describe the four phases of the Double Diamond</li>
+          <li>Name and explain all 10 Nielsen heuristics</li>
+          <li>List 3 reasons UX matters specifically in India</li>
+          <li>Define task completion rate, SUS, and NPS</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>UX vs UI — The Core Distinction</h4>
+          <ul>
+            <li><strong>UX (User Experience):</strong> How it works — the logic, the flow, the research, the decisions behind what a product does</li>
+            <li><strong>UI (User Interface):</strong> How it looks — the visual layer of buttons, colors, typography, icons, and spacing</li>
+            <li>You can have great UI and terrible UX (beautiful app that is impossible to use)</li>
+            <li>You can have great UX and rough UI (functional app that looks dated)</li>
+            <li>The goal: both. UX strategy drives UI decisions — never the other way around</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>The Double Diamond Process</h4>
+          <ul>
+            <li><strong>Discover:</strong> Diverge — research, talk to users, gather all problems</li>
+            <li><strong>Define:</strong> Converge — synthesise research into a clear problem statement</li>
+            <li><strong>Develop:</strong> Diverge — ideate solutions, sketch concepts, prototype options</li>
+            <li><strong>Deliver:</strong> Converge — test, refine, ship the best solution</li>
+            <li>Two diamonds = two diverge/converge cycles. Problem space first, solution space second</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Human-Centered Design (HCD)</h4>
+          <ul>
+            <li>Developed by IDEO. Five stages: Empathize → Define → Ideate → Prototype → Test</li>
+            <li><strong>Empathize:</strong> Observe and interview users in their real context</li>
+            <li><strong>Define:</strong> Write a clear problem statement from your research</li>
+            <li><strong>Ideate:</strong> Generate many possible solutions (quantity before quality)</li>
+            <li><strong>Prototype:</strong> Build a rough version quickly and cheaply</li>
+            <li><strong>Test:</strong> Put the prototype in front of users — observe, don't explain</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Key UX Metrics</h4>
+          <ul>
+            <li><strong>Task Completion Rate (TCR):</strong> % of users who successfully finish a task</li>
+            <li><strong>Time on Task:</strong> How long it takes — shorter is not always better</li>
+            <li><strong>Error Rate:</strong> How many mistakes users make trying to complete a task</li>
+            <li><strong>NPS (Net Promoter Score):</strong> "Would you recommend this to a friend?" 0–10</li>
+            <li><strong>SUS (System Usability Scale):</strong> 10-question questionnaire. Score above 68 = above average</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="india-note">
+        <strong>🇮🇳 Why UX Matters in India:</strong> India has 700M+ internet users, the majority on budget Android smartphones on 2G/3G in rural areas. UX failures cost real users — low bandwidth means bloated apps time out, low literacy means icon-only navigation fails, 22 official languages means English-only interfaces exclude millions. Good UX design in India must be mobile-first, fast-loading, vernacular-ready, and work across a 5-year range of device capability.
+      </div>
+
+      <div class="sm-sec-label">Nielsen's 10 Usability Heuristics</div>
+      <div class="heuristic-grid">
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 01</div>
+          <h5>Visibility of System Status</h5>
+          <p>Always keep users informed about what is going on, through appropriate feedback within a reasonable time. Loading spinners, progress bars, success/error toasts all serve this heuristic.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 02</div>
+          <h5>Match Between System and Real World</h5>
+          <p>Use language and concepts familiar to users, not internal system terminology. A shopping cart icon works because users already know what a cart is. Avoid jargon.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 03</div>
+          <h5>User Control and Freedom</h5>
+          <p>Users often make mistakes. Give them a clearly marked "emergency exit": undo, redo, back navigation, cancel buttons. Never trap a user in a flow with no escape.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 04</div>
+          <h5>Consistency and Standards</h5>
+          <p>Users should not have to wonder whether different words, situations, or actions mean the same thing. Follow platform conventions (iOS/Android/Web). Use the same button labels throughout.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 05</div>
+          <h5>Error Prevention</h5>
+          <p>Better than good error messages: design so errors cannot happen. Disable the submit button until the form is valid. Confirm before irreversible actions like "Delete account".</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 06</div>
+          <h5>Recognition Over Recall</h5>
+          <p>Minimise the user's memory load. Show recent items, visible options, autocomplete suggestions. Users should recognise paths rather than recall them from memory.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 07</div>
+          <h5>Flexibility and Efficiency of Use</h5>
+          <p>Accelerators (keyboard shortcuts, saved addresses, quick reorder) let experienced users move faster while not interfering with novices. Design for both skill levels simultaneously.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 08</div>
+          <h5>Aesthetic and Minimalist Design</h5>
+          <p>Every additional element competes with every other element for attention. Remove anything that does not help the user complete their current task. Whitespace is not waste.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 09</div>
+          <h5>Help Users Recognize, Diagnose, Fix Errors</h5>
+          <p>Error messages must use plain language (no error codes), describe the problem precisely, and suggest a solution. "Invalid input" is useless. "Email must include an @ symbol" is helpful.</p>
+        </div>
+        <div class="heuristic-card">
+          <div class="h-num">Heuristic 10</div>
+          <h5>Help and Documentation</h5>
+          <p>Even though it is better if the system can be used without documentation, help must be easy to search, focused on the user's task, and presented at the moment it is needed.</p>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 1</h4>
+        <ul>
+          <li>UX is strategy and research; UI is the visual execution. Both matter, but UX leads.</li>
+          <li>The Double Diamond keeps you from designing solutions to the wrong problem.</li>
+          <li>Nielsen's 10 Heuristics are a free, fast way to find usability issues in any existing product.</li>
+          <li>In India, "good enough for a laptop" is not good enough — design for the constrained case first.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="sm-sec">Week 2 — User Research Methods</div>
+  <div class="week-block" id="w2">
+    <div class="week-head" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <div class="week-head-text">
+        <h3>User Research Methods</h3>
+        <p>Qualitative · Quantitative · User Interviews · Usability Testing · Affinity Diagrams</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Distinguish between qualitative and quantitative research</li>
+          <li>Write 5 open-ended user interview questions</li>
+          <li>Describe the think-aloud protocol in usability testing</li>
+          <li>Build an affinity diagram from sticky-note observations</li>
+          <li>Write a research plan with goal, method, and participant criteria</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why Research Matters</h4>
+          <ul>
+            <li>You are not the user. Your preferences, habits, and mental models are not universal</li>
+            <li>Without research, you design for yourself — a sample size of one</li>
+            <li>Research replaces assumptions with evidence — it changes arguments into decisions</li>
+            <li>Even 3 interviews reveal patterns you would never have guessed</li>
+            <li>Research prevents costly redesigns: fix it in discovery, not after launch</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Quantitative Research</h4>
+          <ul>
+            <li>Answers "how many" and "how much" — gives you numbers you can measure</li>
+            <li><strong>Surveys:</strong> Google Forms, Typeform — ask 100+ users rated questions</li>
+            <li><strong>Analytics:</strong> Google Analytics — see which pages users leave (bounce rate)</li>
+            <li><strong>Heatmaps:</strong> Hotjar, Clarity — visualise where users click, scroll, and hover</li>
+            <li><strong>A/B testing:</strong> Show two versions to different users; measure which converts better</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Qualitative Research</h4>
+          <ul>
+            <li>Answers "why" and "how" — gives you understanding, not just numbers</li>
+            <li><strong>User interviews:</strong> 1-on-1 conversations to understand motivations and frustrations</li>
+            <li><strong>Contextual inquiry:</strong> Watch users in their natural environment (home, office, field)</li>
+            <li><strong>Diary studies:</strong> Users log their own experiences over days or weeks</li>
+            <li><strong>Focus groups:</strong> Group discussion — good for exploring attitudes, poor for task observation</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Running a User Interview</h4>
+          <ul>
+            <li>Write 5–7 open-ended questions (start with "Tell me about..." or "Walk me through...")</li>
+            <li>Ask about past behaviour, not hypothetical future behaviour</li>
+            <li>Record with permission — you cannot take notes and listen at the same time</li>
+            <li>No leading questions: "Don't you find the checkout confusing?" is leading</li>
+            <li>Follow up on anything surprising: "You paused there — what were you thinking?"</li>
+            <li>Duration: 20–45 minutes. Fewer than 5 participants = too few. More than 10 = diminishing returns at early stage</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="analogy-box">
+        <strong>Jakob's Law of Usability Testing:</strong> Research by Jakob Nielsen showed that 5 users will uncover approximately 85% of a product's usability issues. Adding a 6th, 7th, and 8th user starts revealing the same issues again. Test with 5 users, fix those issues, then test 5 more. You get more learning from two rounds of 5 than one round of 10.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Usability Testing — Think-Aloud Protocol</h4>
+          <ul>
+            <li>Give the participant a real task ("Book a train ticket from Delhi to Chandigarh")</li>
+            <li>Ask them to say everything they are thinking as they do it</li>
+            <li>You observe, you do not help — even if they struggle</li>
+            <li>Record screen + audio (screen recording software or a phone propped up)</li>
+            <li>After the task: debrief ("What was most confusing? What worked well?")</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Affinity Diagrams</h4>
+          <ul>
+            <li>After research, you have hundreds of observations and quotes</li>
+            <li>Write each observation on a separate sticky note (one idea per note)</li>
+            <li>Silently group the notes by theme — let categories emerge from the data</li>
+            <li>Name each cluster with a short label ("Users distrust payment screens")</li>
+            <li>Result: 4–8 insight themes that become your design brief</li>
+            <li>Use FigJam (free) or physical sticky notes on a wall</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 2</h4>
+        <ul>
+          <li>Quantitative tells you what is happening; qualitative tells you why. Use both.</li>
+          <li>5 users find 85% of issues. Start testing early, with rough prototypes.</li>
+          <li>Affinity diagrams turn raw research into structured insights — always cluster before designing.</li>
+          <li>Never lead your participants. The moment you help them, you've contaminated your data.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="sm-sec">Week 3 — Information Architecture &amp; User Flows</div>
+  <div class="week-block" id="w3">
+    <div class="week-head" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <div class="week-head-text">
+        <h3>Information Architecture &amp; User Flows</h3>
+        <p>IA · Card Sorting · Sitemaps · User Flows · Navigation Patterns · Labeling</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Define Information Architecture and explain why it matters</li>
+          <li>Conduct an open and a closed card sort</li>
+          <li>Draw a sitemap for a 5–10 screen mobile app</li>
+          <li>Draw a user flow for a checkout task (happy path + 2 error states)</li>
+          <li>Choose the right navigation pattern for a given use case</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Information Architecture (IA)</h4>
+          <ul>
+            <li>IA is how you organise, structure, and label content so users can find what they need</li>
+            <li>Good IA = invisible. Bad IA = users are constantly lost and searching</li>
+            <li>Principles: organisation (grouping), labeling (naming), navigation (wayfinding), search</li>
+            <li>IA is decided before any visual design begins — it is the skeleton of the product</li>
+            <li>The IRCTC app is a famous example of poor IA: important functions are buried 4+ levels deep</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Card Sorting</h4>
+          <ul>
+            <li><strong>Open card sort:</strong> Users create their own category names and group cards into them — reveals users' mental models</li>
+            <li><strong>Closed card sort:</strong> Users sort cards into categories you've predefined — tests whether your structure matches users' expectations</li>
+            <li>Use for: deciding how to group navigation items, naming sections, testing menu labels</li>
+            <li>Tools: OptimalSort (online), physical index cards</li>
+            <li>Run with 15–20 participants; look for patterns in how cards cluster</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Sitemaps</h4>
+          <ul>
+            <li>A visual diagram showing every screen/page in a product and how they connect hierarchically</li>
+            <li>Use boxes for screens, lines for navigation relationships, dashed lines for conditional links</li>
+            <li>Always shows all screens — not just the happy path</li>
+            <li>Create before wireframing — forces you to think about completeness</li>
+            <li>Example: Home → Browse → Category → Product Detail → Cart → Checkout → Confirmation</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>User Flows</h4>
+          <ul>
+            <li>A flowchart showing the step-by-step path a user takes to complete one specific task</li>
+            <li>Shapes: rectangles = screens/pages, diamonds = decision points, parallelograms = user actions</li>
+            <li>Always show the happy path AND the error paths (payment fails, item out of stock)</li>
+            <li>Task analysis first: break the task into micro-steps before drawing</li>
+            <li>One user flow = one task. Don't combine multiple tasks into one diagram</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Navigation Patterns — When to Use Each</h4>
+          <ul>
+            <li><strong>Bottom tab bar:</strong> 3–5 main sections, frequently switched between. Best for mobile (thumb reach). Used by Instagram, WhatsApp, Google Maps</li>
+            <li><strong>Hamburger menu:</strong> Many secondary options that don't need constant visibility. Hides navigation — use for secondary, not primary actions</li>
+            <li><strong>Breadcrumbs:</strong> Deep hierarchical structures (e-commerce categories, documentation). Shows users where they are</li>
+            <li><strong>Mega menus:</strong> Content-rich desktop sites with many categories (Amazon, news portals). Too complex for mobile</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Labeling — Use the User's Language</h4>
+          <ul>
+            <li>Labels are what you call things in the navigation, buttons, and headings</li>
+            <li>Use the words your users use — not the words your company uses internally</li>
+            <li>Example: a bank calls it "Remittances" — users call it "Send money"</li>
+            <li>Test labels: give users a task and a label, ask if the label matches what they expected to find</li>
+            <li>Keep labels short (1–3 words), active, and consistent across the product</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 3</h4>
+        <ul>
+          <li>IA is the skeleton — it must be right before any visual design begins.</li>
+          <li>Card sorting reveals users' mental models; never assume you already know how they think.</li>
+          <li>Draw both the happy path and error paths in your user flow — the edge cases are where UX breaks.</li>
+          <li>Use the user's vocabulary, not your internal company terms.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="sm-sec">Week 4 — Visual Design Fundamentals</div>
+  <div class="week-block" id="w4">
+    <div class="week-head" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <div class="week-head-text">
+        <h3>Visual Design Fundamentals</h3>
+        <p>Gestalt Principles · Visual Hierarchy · Typography · Color Theory · Grid Systems · Accessibility</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Name and apply the 5 key Gestalt principles</li>
+          <li>Build a visual hierarchy using size, weight, and contrast</li>
+          <li>Pair two typefaces (heading + body) correctly</li>
+          <li>Build a 3-color palette using color theory</li>
+          <li>Check WCAG 2.1 AA contrast ratios in Figma using Stark</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Gestalt Principles</h4>
+          <ul>
+            <li><strong>Proximity:</strong> Elements placed near each other appear related. Price, quantity, and CTA grouped together signal they belong to the same decision</li>
+            <li><strong>Similarity:</strong> Elements that look alike appear related. Consistent card style across a product grid signals all cards are the same type of content</li>
+            <li><strong>Figure-Ground:</strong> The eye separates subjects from background. Modals use a darkened overlay to push the background into "ground"</li>
+            <li><strong>Continuity:</strong> The eye follows lines and curves. Carousels exploit this — the partly visible card signals "swipe to see more"</li>
+            <li><strong>Closure:</strong> The mind completes incomplete shapes. A partially visible item invites scrolling. Pie charts work even without segment labels</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Visual Hierarchy</h4>
+          <ul>
+            <li>Visual hierarchy tells the eye what to look at first, second, and third</li>
+            <li><strong>Size:</strong> Larger = more important. A 32px heading dominates a 14px body</li>
+            <li><strong>Weight:</strong> Bold text draws attention in a sea of regular text</li>
+            <li><strong>Color:</strong> A bright CTA on a neutral background pops — but only if used sparingly</li>
+            <li><strong>Contrast:</strong> High contrast = high importance. Low contrast = supporting information</li>
+            <li><strong>Whitespace:</strong> Isolating an element with space makes it feel more important</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Typography Fundamentals</h4>
+          <ul>
+            <li><strong>Serif fonts:</strong> Have small strokes (serifs) at the end of characters. Better for long-form reading in print. Examples: Georgia, Playfair Display, Lora</li>
+            <li><strong>Sans-serif fonts:</strong> No serifs. Cleaner on screens. Examples: Inter, DM Sans, Poppins</li>
+            <li><strong>Font pairing rule:</strong> One display/heading font (personality) + one body font (legibility). Avoid using more than 2 typefaces</li>
+            <li><strong>Line height:</strong> Set body text to 1.5–1.6× for comfortable reading</li>
+            <li><strong>Type scale:</strong> Use consistent size steps: 12, 14, 16, 20, 24, 32, 48px</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Color Theory</h4>
+          <ul>
+            <li><strong>Color wheel:</strong> Primary (red, blue, yellow) → Secondary (orange, green, purple) → Tertiary</li>
+            <li><strong>Complementary:</strong> Colors opposite on the wheel — high contrast, high energy</li>
+            <li><strong>Analogous:</strong> Colors next to each other — harmonious, calm</li>
+            <li><strong>Color associations in India:</strong> Saffron = energy/courage, green = growth/prosperity, blue = trust, white = peace/purity</li>
+            <li><strong>60-30-10 rule:</strong> 60% dominant (neutral), 30% secondary, 10% accent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Grid Systems</h4>
+          <ul>
+            <li><strong>8pt grid:</strong> All spacing values are multiples of 8: 8, 16, 24, 32, 48, 64px. Creates consistent rhythm</li>
+            <li><strong>12-column grid:</strong> Standard for web. Gives you flexibility: 12 columns = 1 full width, 6+6 = two halves, 4+4+4 = thirds</li>
+            <li><strong>Margin and gutter:</strong> Margin = space from screen edge. Gutter = space between columns. Mobile: 16px margin, 8px gutter</li>
+            <li>Grids create alignment. Alignment creates professionalism</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Contrast &amp; Accessibility (WCAG 2.1)</h4>
+          <ul>
+            <li><strong>Normal text (below 18px):</strong> Minimum 4.5:1 contrast ratio between text and background</li>
+            <li><strong>Large text (18px+ or 14px+ bold):</strong> Minimum 3:1 contrast ratio</li>
+            <li>Why it matters: 8% of men have some form of color blindness. 285 million people worldwide have low vision</li>
+            <li>Tool: Stark plugin in Figma — checks contrast in one click</li>
+            <li><strong>Never rely on color alone</strong> to convey information — always add an icon or label</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 4</h4>
+        <ul>
+          <li>Gestalt principles explain why some layouts feel organized and others feel chaotic.</li>
+          <li>Visual hierarchy is designed, not accidental — every element's size and weight is a decision.</li>
+          <li>Stick to 2 typefaces: one for personality (headings), one for readability (body).</li>
+          <li>4.5:1 contrast ratio is not a suggestion — it is the minimum for AA compliance. Check it every time.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sm-page -->
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Concept Notes (Beginner) &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id) {
+  const b = document.getElementById(id);
+  b.classList.toggle('open');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  const w = document.getElementById('w1');
+  if (w) w.classList.add('open');
+});
+</script>
+</body>
+</html>

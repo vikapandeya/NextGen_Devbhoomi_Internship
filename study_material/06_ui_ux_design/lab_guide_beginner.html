@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI/UX Design — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .lab-checklist { list-style: none; margin: 12px 0; }
+  .lab-checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border-light); font-size: 13px; color: var(--text-mid); }
+  .lab-checklist li:last-child { border-bottom: none; }
+  .lab-checklist li::before { content: '☐'; font-size: 14px; color: var(--gold); flex-shrink: 0; line-height: 1; }
+  .deliverable-box { background: var(--blue-light); border-left: 3px solid var(--blue); border-radius: var(--radius-sm); padding: 14px 16px; margin: 12px 0; }
+  .deliverable-box h5 { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .deliverable-box ul { padding-left: 18px; }
+  .deliverable-box ul li { font-size: 13px; color: var(--text-mid); padding: 2px 0; }
+  .time-badge { display: inline-block; background: var(--navy); color: var(--gold-light); font-size: 10px; font-weight: 700; font-family: var(--mono); padding: 3px 10px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+  .interview-q { background: var(--paper); border-radius: var(--radius-sm); padding: 10px 14px; margin: 6px 0; font-size: 13px; color: var(--text-mid); border-left: 2px solid var(--gold); font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">🔬 Lab Guide — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; LAB GUIDE (BEGINNER)
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs ↗</a>
+    <a href="project_briefs.html">Projects ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero beg">
+    <div class="lh-icon">🔬</div>
+    <h1>Lab Guide — Beginner</h1>
+    <p class="lh-sub">5 hands-on labs covering user research, information architecture, wireframing, visual design, and heuristic evaluation. Each lab takes 2–4 hours. Labs build on each other — complete them in order.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">5 Labs</span>
+      <span class="lh-pill">Weeks 1–4</span>
+      <span class="lh-pill">Figma · FigJam · Paper</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="sm-sec">Lab 1 — User Research: Interview &amp; Affinity Mapping</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>User Research — Interview &amp; Affinity Mapping</h3>
+      <span>Weeks 1–2 · 3–4 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Goal:</strong> Experience the full research cycle — from writing questions to grouping insights — on a real problem you know: ordering food on Swiggy or Zomato as a first-time user.
+      </div>
+      <div class="lab-prereq">
+        <strong>What You Need:</strong> 3 classmates willing to be interviewed (20 min each) · Physical sticky notes or FigJam free account · A phone to record audio (with participant permission) · Notebook for observer notes
+      </div>
+
+      <p><strong>Step 1 — Choose Your Problem</strong><br>Problem statement: "Ordering food on Swiggy or Zomato is confusing for first-time users in Tier 2 cities." This is the problem you will research. Do not change it — keep the scope tight for your first research project.</p>
+
+      <p><strong>Step 2 — Write Your Interview Questions</strong><br>Write exactly 6 questions. Rules: open-ended (no yes/no questions), about past behaviour (not hypothetical), no leading questions (don't imply a correct answer). Sample questions to inspire yours:</p>
+
+      <div class="interview-q">"Tell me about the first time you ordered food from a delivery app. Walk me through what happened from opening the app to receiving your food."</div>
+      <div class="interview-q">"Was there a moment in the app where you were unsure what to do next? What did you do?"</div>
+      <div class="interview-q">"How did you decide which restaurant to order from? Walk me through your thinking."</div>
+      <div class="interview-q">"Tell me about a time when an order didn't go the way you expected. What happened?"</div>
+      <div class="interview-q">"What, if anything, made you feel unsure about placing your order?"</div>
+      <div class="interview-q">"If you were showing this app to a family member for the first time, what would you warn them about?"</div>
+
+      <div class="lab-warn">
+        <strong>Common Mistake:</strong> Avoid questions like "Do you find the checkout process confusing?" — this tells the participant what answer you're expecting. Ask about their actual experience; let confusion (or clarity) emerge naturally.
+      </div>
+
+      <p><strong>Step 3 — Conduct 3 Interviews</strong><br>Interview 3 classmates one at a time. Each session: 5 minutes introduction + 15 minutes questions + 5 minutes debrief = 25 minutes total. Record audio with their permission. Take minimal notes — listen fully.</p>
+
+      <p><strong>Step 4 — Write Observations on Sticky Notes</strong><br>After each interview, immediately transfer what you heard to sticky notes (one observation per note). Use FigJam or physical sticky notes. Write in the third person: "User didn't notice the filter button", "User expected a progress bar during checkout". Aim for 15–20 observations per interview = 45–60 notes total.</p>
+
+      <p><strong>Step 5 — Build an Affinity Diagram</strong><br>Lay all your notes out. Silently move similar notes together without talking to your group. Let clusters form naturally — don't force notes into predetermined categories. Once the clusters stabilise, name each one with a short theme label. Aim for 4–6 themes.</p>
+
+      <p><strong>Step 6 — Write Your Research Summary</strong><br>Write one paragraph (4–6 sentences) using this structure: "We interviewed 3 first-time food delivery app users. We found that users struggle with _____ because _____. A second key finding was _____. Users expressed frustration with _____ but appreciated _____. This research suggests that a redesign should prioritise _____."</p>
+
+      <div class="deliverable-box">
+        <h5>Deliverables to Submit</h5>
+        <ul>
+          <li>6 written interview questions (printed or in Figma/FigJam)</li>
+          <li>Affinity diagram showing all sticky notes grouped by theme (FigJam screenshot or photo of physical board)</li>
+          <li>4–6 named insight themes with 1-sentence description each</li>
+          <li>1-paragraph research summary</li>
+        </ul>
+      </div>
+
+      <div class="lab-checklist">
+        <li>Interview questions written (6, open-ended, no leading)</li>
+        <li>3 interviews conducted and recorded</li>
+        <li>45+ observation sticky notes created</li>
+        <li>Affinity diagram built with 4–6 named themes</li>
+        <li>Research summary paragraph written</li>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="sm-sec">Lab 2 — Sitemap &amp; User Flow in Figma</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Sitemap &amp; User Flow in Figma</h3>
+      <span>Week 3 · 2–3 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Goal:</strong> Design the information architecture for a new problem — a local vegetable vendor's mobile ordering app — before any visual design begins.
+      </div>
+      <div class="lab-prereq">
+        <strong>What You Need:</strong> Figma free account (figma.com) · Create a new file titled "Vegetable Vendor App — IA" · Concept Notes Week 3 reviewed
+      </div>
+
+      <p><strong>Step 1 — Create Your Figma Account</strong><br>Go to figma.com → Sign up with your email → Choose Starter (free). Create a new Design file. Name it "Vegetable Vendor App — Batch 2026-27 — [Your Name]". Create two pages: "Sitemap" and "User Flow".</p>
+
+      <p><strong>Step 2 — Draw the Sitemap</strong><br>On the Sitemap page, draw the complete hierarchy of screens using rectangles and lines. Your sitemap must include at minimum:</p>
+      <ul style="padding-left:20px; margin: 10px 0; font-size: 13px; color: var(--text-mid); line-height: 2;">
+        <li>Home (featured items, today's specials)</li>
+        <li>Browse (grid of all vegetables, search bar, filter by category)</li>
+        <li>Product Detail (name, price per kg, weight selector, Add to Cart CTA)</li>
+        <li>Cart (items added, quantities, total price, Proceed to Checkout)</li>
+        <li>Checkout (delivery address, time slot, payment method, Order Confirmation)</li>
+        <li>Order Confirmation (order ID, estimated delivery, track order)</li>
+        <li>My Orders (order history)</li>
+        <li>Profile (name, address, saved payment methods)</li>
+      </ul>
+      <p>Use Figma shapes (R for rectangle) and connectors (Shift+X to enter connection mode, drag from one shape to another). Group related screens visually.</p>
+
+      <p><strong>Step 3 — Add a Legend</strong><br>In the bottom-right corner of your sitemap frame, add a legend box explaining your symbols: Rectangle = Screen/Page · Arrow = Navigation Link · Dashed Arrow = Conditional Link (only appears in certain states)</p>
+
+      <p><strong>Step 4 — Draw the User Flow</strong><br>On the User Flow page, draw the complete flow for one task: "Buy 1kg tomatoes and complete checkout." Show: the happy path (user completes purchase successfully) + two edge cases: (1) item is out of stock, (2) payment fails. Use: Rectangles for screens, Diamonds for decision points ("Is item in stock?"), Parallelograms for user actions ("User enters address").</p>
+
+      <div class="lab-warn">
+        <strong>Common Mistake:</strong> Many beginners draw a sitemap for the happy path only. A sitemap must be comprehensive — include account creation, error screens, and empty states. Missing screens now = missing designs later.
+      </div>
+
+      <div class="deliverable-box">
+        <h5>Deliverables to Submit</h5>
+        <ul>
+          <li>Figma file link (set to "Anyone with link can view")</li>
+          <li>Sitemap with 8+ screens, all connected, with a legend</li>
+          <li>User flow for "buy tomatoes" task — happy path + 2 error paths</li>
+        </ul>
+      </div>
+
+      <div class="lab-checklist">
+        <li>Figma account created, file named correctly</li>
+        <li>Sitemap includes 8+ screens with clear hierarchy</li>
+        <li>Legend added to sitemap</li>
+        <li>User flow includes happy path</li>
+        <li>User flow includes 2 edge cases (out of stock + payment fails)</li>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="sm-sec">Lab 3 — Lo-Fi Wireframes in Figma</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Lo-Fi Wireframes — Vegetable Vendor App</h3>
+      <span>Weeks 3–4 · 3–4 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Goal:</strong> Translate your sitemap and user flow into a set of lo-fi wireframes that a classmate can navigate without your guidance. Test with a real person — this is your first usability test.
+      </div>
+      <div class="lab-prereq">
+        <strong>What You Need:</strong> Lab 2 complete · Figma file from Lab 2 · Add a new page titled "Lo-Fi Wireframes" · No colours, no images — grey rectangles and lines only
+      </div>
+
+      <p><strong>Step 1 — Set Up Your Frame Size</strong><br>In Figma, press F to create a frame. In the right panel, choose "Android Compact" (360×800px) — a common budget Android phone size used by a large segment of Indian users. Create 5 frames, each 360×800px. Name them: Home, Browse, Product Detail, Cart, Checkout.</p>
+
+      <p><strong>Step 2 — Wireframe Rules</strong><br>Lo-fi wireframes must follow these constraints: No colour — use grey (#E0E0E0) for placeholders. Images = grey rectangle with an X drawn diagonally. Text = short black lines (rectangles at 14px height for body, 24px for headings). Interactive elements = grey rectangles with a visible label ("ADD TO CART"). Icons = circles or simple shapes.</p>
+
+      <p><strong>Step 3 — Draw All 5 Screens</strong></p>
+      <ul style="padding-left:20px; margin: 10px 0; font-size: 13px; color: var(--text-mid); line-height: 2;">
+        <li><strong>Home:</strong> Top bar (logo + search icon + cart badge), hero banner placeholder, "Today's Specials" row of product cards, category pills (Leafy/Root/Seasonal), bottom tab bar (Home/Browse/Orders/Profile)</li>
+        <li><strong>Browse:</strong> Search bar at top, filter chips, 2-column grid of product cards (each: image placeholder + name + price + "Add" button)</li>
+        <li><strong>Product Detail:</strong> Product image placeholder, product name (large text), price per kg, weight selector (+/-), freshness badge, "Add to Cart" CTA (full width, bottom of screen)</li>
+        <li><strong>Cart:</strong> List of items with image/name/qty/price per row, subtotal, delivery fee, order total, "Proceed to Checkout" CTA</li>
+        <li><strong>Checkout:</strong> Delivery address block (name + address + edit link), time slot selector (morning/evening), payment method selector (UPI/COD), "Place Order ₹___" CTA</li>
+      </ul>
+
+      <p><strong>Step 4 — Label All Interactive Elements</strong><br>Every button, link, icon, and input must have a text label in your wireframe explaining its function. This makes the wireframe self-documenting — a developer or teammate can understand what every element does without asking you.</p>
+
+      <p><strong>Step 5 — Usability Test Your Wireframes</strong><br>Ask one classmate who has not seen your work to "buy 1kg tomatoes" using your wireframes in Figma's Presentation mode (press Ctrl+P). Do NOT explain how to do it. Observe in silence. Note: where do they hesitate? Where do they tap correctly? Where do they tap incorrectly? Write 3 observations.</p>
+
+      <div class="lab-tip">
+        <strong>Design Tip:</strong> At lo-fi stage, spending time on visual polish is wasted effort. Your wireframes will change significantly after testing. Keep them rough and fast — the value is in the structure and flow, not the appearance.
+      </div>
+
+      <div class="deliverable-box">
+        <h5>Deliverables to Submit</h5>
+        <ul>
+          <li>5 wireframe screens in Figma (Home, Browse, Product Detail, Cart, Checkout)</li>
+          <li>All interactive elements labeled with their function</li>
+          <li>3 written observations from your classmate usability test</li>
+        </ul>
+      </div>
+
+      <div class="lab-checklist">
+        <li>5 wireframe screens created at 360×800px</li>
+        <li>Lo-fi constraints followed (no colour, grey placeholders)</li>
+        <li>All interactive elements labeled</li>
+        <li>Usability test conducted with 1 classmate</li>
+        <li>3 observations from the test written down</li>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="sm-sec">Lab 4 — Visual Design: Apply the 4 Principles</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Visual Design — Apply Contrast, Repetition, Alignment &amp; Proximity</h3>
+      <span>Week 4 · 2–3 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Goal:</strong> Transform one lo-fi wireframe (the Product Detail screen) into a hi-fi design by deliberately applying the 4 visual design principles. Create a before/after comparison.
+      </div>
+      <div class="lab-prereq">
+        <strong>What You Need:</strong> Lab 3 complete · Figma file from Lab 3 · Add a new page titled "Hi-Fi — Product Detail" · Choose 2 fonts from Google Fonts (free for commercial use)
+      </div>
+
+      <p><strong>Step 1 — Choose Your Color Palette</strong><br>Choose 2–3 colors only. Suggested palette for a vegetable vendor app: a fresh green (primary, for CTAs and accents), a warm white or cream (background), a dark charcoal (text). Avoid using more than 3 colors at beginner level. Name your colors and create Figma Color Styles for each one.</p>
+
+      <p><strong>Step 2 — Choose Your Fonts</strong><br>Choose 1 heading font and 1 body font. Good Indian market options: <em>Poppins</em> (geometric, modern, excellent for headings) + <em>Inter</em> (clean, highly legible for body text). Or <em>Noto Sans</em> + <em>DM Sans</em>. Create Figma Text Styles: Heading/Large (24px, Semi-Bold), Heading/Small (18px, Semi-Bold), Body (15px, Regular), Caption (12px, Regular).</p>
+
+      <p><strong>Step 3 — Apply the 4 Principles to the Product Detail Screen</strong></p>
+      <ul style="padding-left:20px; margin: 10px 0; font-size: 13px; color: var(--text-mid); line-height: 2.2;">
+        <li><strong>Contrast:</strong> Make the "Add to Cart" button stand out unmistakably. Use your primary color (the green). Make the button large (56px height, full width), bold label, and ensure it visually dominates the screen</li>
+        <li><strong>Repetition:</strong> The product weight option buttons (+/- selector) should all have the same style. The price tag format should match between screens. Create a consistent style for all "badge" elements (freshness, organic, seasonal)</li>
+        <li><strong>Alignment:</strong> Left-align all text. Product name, price, freshness label, description — all start at the same left margin (16px from edge). Nothing should appear to float randomly</li>
+        <li><strong>Proximity:</strong> Group the price, weight selector, and CTA button together at the bottom of the screen. These three belong to the "purchase decision zone" — keep them close so the user's eye connects them naturally</li>
+      </ul>
+
+      <p><strong>Step 4 — Create a Before/After Comparison</strong><br>Duplicate your lo-fi wireframe (the grey version). Place it side by side with your new hi-fi design on the same Figma frame. Label: "BEFORE" (lo-fi) and "AFTER" (with 4 principles applied).</p>
+
+      <p><strong>Step 5 — Write Your Rationale</strong><br>For each of the 4 principles, write exactly 2 sentences explaining your decision. Example: "I used a #2E7D32 green for the CTA button because fresh vegetables are associated with green in Indian retail contexts. Placing it at the bottom of the screen follows the thumb zone — most right-handed users can reach the bottom-center of a 360px wide phone with their thumb."</p>
+
+      <div class="deliverable-box">
+        <h5>Deliverables to Submit</h5>
+        <ul>
+          <li>Hi-fi Product Detail screen in Figma</li>
+          <li>Before/after comparison side by side</li>
+          <li>4 × 2-sentence design rationale (one for each principle)</li>
+          <li>Figma Color Styles and Text Styles created</li>
+        </ul>
+      </div>
+
+      <div class="lab-checklist">
+        <li>Color palette chosen (2–3 colors), Color Styles created in Figma</li>
+        <li>Font pairing chosen, Text Styles created</li>
+        <li>Contrast applied — CTA button dominates visually</li>
+        <li>Repetition applied — consistent badge and button styles</li>
+        <li>Alignment applied — all text left-aligned to consistent margin</li>
+        <li>Proximity applied — price/weight/CTA grouped in purchase zone</li>
+        <li>Before/after comparison created</li>
+        <li>4 × 2-sentence rationale written</li>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="sm-sec">Lab 5 — Heuristic Evaluation</div>
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Heuristic Evaluation — Real Indian App</h3>
+      <span>Week 4 · 2–3 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Goal:</strong> Apply Nielsen's 10 Usability Heuristics to an existing Indian app to find and document real UX problems with evidence.
+      </div>
+      <div class="lab-prereq">
+        <strong>What You Need:</strong> Choose one app: Ola (book a ride), IRCTC (book a train ticket), or BigBasket (grocery shopping) · Phone or browser · Nielsen's 10 heuristics (Concept Notes W1) · Google Sheets or Figma for documentation
+      </div>
+
+      <p><strong>Step 1 — Choose Your App &amp; Task</strong><br>Choose one: Ola (task: book a ride from your current location to a destination), IRCTC (task: check availability and price for a train on a specific date), or BigBasket (task: add 3 items to cart and proceed to checkout). Write down your chosen app and task before starting.</p>
+
+      <p><strong>Step 2 — Complete the Evaluation Table</strong><br>For each of Nielsen's 10 Heuristics, evaluate the chosen app. For each heuristic, document: the issue you found (or "No issue found"), a severity rating (0–4), and your suggested fix. Use this severity scale:</p>
+      <ul style="padding-left:20px; margin: 10px 0; font-size: 13px; color: var(--text-mid); line-height: 2;">
+        <li><strong>0 — Not a problem:</strong> This heuristic is well handled</li>
+        <li><strong>1 — Cosmetic only:</strong> Fix only if time permits</li>
+        <li><strong>2 — Minor:</strong> Low priority fix — causes some confusion</li>
+        <li><strong>3 — Major:</strong> Important to fix — causes significant task difficulty</li>
+        <li><strong>4 — Usability catastrophe:</strong> Must fix before launch — blocks users from completing tasks</li>
+      </ul>
+
+      <p><strong>Step 3 — Take Screenshots as Evidence</strong><br>For every heuristic violation you identify (severity 2+), take a screenshot. In Figma or Google Slides, annotate the screenshot with a red circle or arrow pointing to the specific problem. Do not just describe it in words — show it visually.</p>
+
+      <p><strong>Step 4 — Identify the Single Worst UX Issue</strong><br>Review your completed evaluation. Which single issue has the highest severity and most impact on the user completing their task? Write a 1-paragraph "UX Issue Report" for this one problem: what is it, why is it a problem (which heuristic does it violate and why), who does it affect, and what specific change would fix it.</p>
+
+      <p><strong>Step 5 — Present to the Class</strong><br>Prepare a 3-minute presentation showing: the app and task, your top 3 violations with annotated screenshots, and your proposed fix for the worst one. Do not read from your notes — talk through the screenshots as if explaining to a product manager.</p>
+
+      <div class="lab-warn">
+        <strong>Common Mistake:</strong> Listing "I don't like how it looks" is an aesthetic preference, not a heuristic violation. Every issue must be tied to a specific heuristic and supported by evidence that it causes user problems.
+      </div>
+
+      <div class="deliverable-box">
+        <h5>Deliverables to Submit</h5>
+        <ul>
+          <li>Completed evaluation table (10 rows, one per heuristic) with severity ratings</li>
+          <li>Annotated screenshots for all severity 2+ violations</li>
+          <li>1-paragraph UX Issue Report for the worst violation</li>
+          <li>3-minute class presentation prepared</li>
+        </ul>
+      </div>
+
+      <div class="lab-checklist">
+        <li>App and task chosen and written down before starting</li>
+        <li>All 10 heuristics evaluated</li>
+        <li>Severity ratings assigned (0–4) for all heuristics</li>
+        <li>Screenshots taken for severity 2+ violations</li>
+        <li>Screenshots annotated (circle/arrow on the specific problem)</li>
+        <li>Worst violation identified and UX Issue Report written</li>
+        <li>3-minute class presentation prepared</li>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sm-page -->
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Lab Guide (Beginner) &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

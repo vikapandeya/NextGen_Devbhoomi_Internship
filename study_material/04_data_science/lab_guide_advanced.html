@@ -1,0 +1,862 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Lab Guide (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">🔬 Lab Guide — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="lab_guide_intermediate.html">🔬 Intermediate Labs</a>
+    <a href="concept_notes_advanced.html">📖 Advanced Notes</a>
+    <a href="project_briefs.html">📋 Projects</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Advanced Track</h2>
+      <p>5 advanced labs for Weeks 9–12. XGBoost, time series forecasting, end-to-end ML pipelines, interactive dashboards, and a full capstone project.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">Advanced</span>
+      <span class="lh-badge">5 Labs</span>
+      <span class="lh-badge">W9–W12</span>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="lab-block" id="lab1">
+    <div class="lab-header">
+      <div class="lab-num">Lab 1</div>
+      <div class="lab-title">
+        <h3>XGBoost on Tabular Data — Titanic Survival</h3>
+        <div class="lab-meta"><span class="tag-week">Week 9</span> <span class="tag-time">90 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Apply advanced feature engineering and XGBoost with GridSearchCV hyperparameter tuning to the Titanic dataset. Compare XGBoost vs Logistic Regression accuracy and interpret feature importance.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Load &amp; Advanced Feature Engineering</div>
+        <pre><code>>import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report
+from xgboost import XGBClassifier
+
+# Load Titanic
+df = sns.load_dataset('titanic').dropna(subset=['survived'])
+df['age'] = df['age'].fillna(df['age'].median())
+df['fare'] = df['fare'].fillna(df['fare'].median())
+df['embarked'] = df['embarked'].fillna('S')
+
+# ---- Feature Engineering ----
+# 1. Family size
+df['FamilySize'] = df['sibsp'] + df['parch'] + 1
+df['IsAlone'] = (df['FamilySize'] == 1).astype(int)
+
+# 2. Fare per person (family might share a ticket)
+df['FarePerPerson'] = df['fare'] / df['FamilySize']
+
+# 3. Age groups
+df['AgeGroup'] = pd.cut(df['age'], bins=[0, 12, 18, 35, 60, 120],
+                          labels=[0, 1, 2, 3, 4]).astype(int)
+
+# 4. Sex encoded
+df['sex_enc'] = (df['sex'] == 'male').astype(int)
+
+# 5. Embarked encoded
+df['emb_S'] = (df['embarked'] == 'S').astype(int)
+df['emb_C'] = (df['embarked'] == 'C').astype(int)
+
+feature_cols = ['pclass', 'sex_enc', 'age', 'FamilySize', 'IsAlone',
+                'fare', 'FarePerPerson', 'AgeGroup', 'emb_S', 'emb_C']
+
+X = df[feature_cols]
+y = df['survived']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,
+                                                      random_state=42, stratify=y)
+print(f"Train: {len(X_train)} | Test: {len(X_test)}")
+print(f"Features: {feature_cols}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Baseline — Logistic Regression</div>
+        <pre><code>>scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s  = scaler.transform(X_test)
+
+lr = LogisticRegression(max_iter=1000, random_state=42)
+lr.fit(X_train_s, y_train)
+lr_pred = lr.predict(X_test_s)
+lr_acc = accuracy_score(y_test, lr_pred)
+
+print(f"Logistic Regression Accuracy: {lr_acc:.4f}")
+print(classification_report(y_test, lr_pred, target_names=['Died', 'Survived']))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> XGBoost with GridSearchCV</div>
+        <pre><code>>param_grid = {
+    'max_depth':      [3, 4, 5],
+    'learning_rate':  [0.05, 0.1, 0.2],
+    'n_estimators':   [100, 200]
+}
+
+xgb_base = XGBClassifier(eval_metric='logloss', random_state=42, verbosity=0)
+
+grid_search = GridSearchCV(
+    xgb_base, param_grid,
+    cv=5,
+    scoring='accuracy',
+    n_jobs=-1,
+    verbose=1
+)
+grid_search.fit(X_train, y_train)
+
+print("\nBest hyperparameters:")
+print(grid_search.best_params_)
+print(f"\nBest CV accuracy: {grid_search.best_score_:.4f}")
+
+# Evaluate best model on test set
+best_xgb = grid_search.best_estimator_
+xgb_pred = best_xgb.predict(X_test)
+xgb_acc  = accuracy_score(y_test, xgb_pred)
+print(f"\nXGBoost Test Accuracy: {xgb_acc:.4f}")
+print(classification_report(y_test, xgb_pred, target_names=['Died', 'Survived']))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Feature Importance Plot</div>
+        <pre><code>>importances = pd.Series(best_xgb.feature_importances_, index=feature_cols).sort_values()
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig.suptitle('XGBoost vs Logistic Regression — Titanic', fontsize=13, fontweight='bold')
+
+# Feature importance
+importances.plot(kind='barh', ax=axes[0], color='#1B3A6B', edgecolor='white')
+axes[0].set_title('XGBoost Feature Importance')
+axes[0].set_xlabel('Importance Score')
+
+# Accuracy comparison
+models = ['Logistic Regression', 'XGBoost (Tuned)']
+accs   = [lr_acc, xgb_acc]
+colors = ['#C8941A', '#1B3A6B']
+bars = axes[1].bar(models, accs, color=colors, width=0.5)
+axes[1].set_ylim(0, 1)
+axes[1].set_title('Accuracy Comparison')
+axes[1].set_ylabel('Test Accuracy')
+for bar, acc in zip(bars, accs):
+    axes[1].text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
+                 f'{acc:.3f}', ha='center', fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('xgboost_comparison.png', dpi=150, bbox_inches='tight')
+plt.show()
+print(f"\nXGBoost improvement: +{(xgb_acc - lr_acc)*100:.1f} percentage points")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Notebook with all steps + feature importance chart. Write: (1) which engineered feature helped most, (2) what the GridSearch optimal params mean intuitively, (3) in what scenario would you prefer logistic regression over XGBoost?
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="lab-block" id="lab2">
+    <div class="lab-header">
+      <div class="lab-num">Lab 2</div>
+      <div class="lab-title">
+        <h3>Time Series Forecasting — Synthetic Sales Data</h3>
+        <div class="lab-meta"><span class="tag-week">Week 10</span> <span class="tag-time">90 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Generate 3 years of synthetic sales data with trend and seasonality, decompose the series, test for stationarity, fit an ARIMA model, and forecast 30 days ahead with confidence intervals.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Generate Synthetic Sales Data</div>
+        <pre><code>>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.arima.model import ARIMA
+import warnings
+warnings.filterwarnings('ignore')
+
+np.random.seed(42)
+n_days = 365 * 3    # 3 years of daily data
+
+dates = pd.date_range(start='2023-01-01', periods=n_days, freq='D')
+
+# Components
+trend       = np.linspace(10000, 16000, n_days)           # upward trend
+yearly_seas = 2000 * np.sin(2 * np.pi * np.arange(n_days) / 365)   # annual cycle
+weekly_seas = 1000 * (np.arange(n_days) % 7 < 2).astype(float)     # weekend spike
+noise       = np.random.normal(0, 500, n_days)             # random noise
+
+sales = trend + yearly_seas + weekly_seas + noise
+sales = np.clip(sales, 5000, None)  # no negative sales
+
+ts = pd.DataFrame({'date': dates, 'sales': sales})
+ts = ts.set_index('date')
+
+print("Time series created:")
+print(ts.describe().round(0))
+
+# Plot the raw series
+plt.figure(figsize=(13, 4))
+plt.plot(ts.index, ts['sales'], color='#1B3A6B', linewidth=0.8, alpha=0.8)
+plt.title('Daily Sales — 3 Years of Data', fontsize=12, fontweight='bold')
+plt.ylabel('Sales (₹)')
+plt.tight_layout()
+plt.savefig('ts_raw.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Seasonal Decomposition</div>
+        <pre><code>># Decompose using additive model (trend + seasonality + residual)
+monthly = ts.resample('W').mean()   # weekly for cleaner decomposition
+
+result = seasonal_decompose(monthly['sales'], model='additive', period=52)
+
+fig, axes = plt.subplots(4, 1, figsize=(13, 10), sharex=True)
+fig.suptitle('Seasonal Decomposition of Weekly Sales', fontsize=13, fontweight='bold')
+
+result.observed.plot(ax=axes[0], color='#1B3A6B')
+axes[0].set_ylabel('Observed')
+
+result.trend.plot(ax=axes[1], color='#C8941A')
+axes[1].set_ylabel('Trend')
+
+result.seasonal.plot(ax=axes[2], color='#4CAF50')
+axes[2].set_ylabel('Seasonal')
+
+result.resid.plot(ax=axes[3], color='gray', alpha=0.7)
+axes[3].set_ylabel('Residual')
+
+plt.tight_layout()
+plt.savefig('ts_decomposition.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Stationarity Test (ADF)</div>
+        <pre><code>>def run_adf_test(series, name):
+    result = adfuller(series.dropna())
+    print(f"\nADF Test — {name}")
+    print(f"  ADF Statistic: {result[0]:.4f}")
+    print(f"  p-value:       {result[1]:.4f}")
+    print(f"  Critical Values: {result[4]}")
+    if result[1] < 0.05:
+        print("  → STATIONARY (p < 0.05)")
+    else:
+        print("  → NON-STATIONARY — needs differencing")
+    return result[1]
+
+p_raw = run_adf_test(monthly['sales'], 'Raw Monthly Sales')
+
+# First-order differencing to make stationary
+monthly['sales_diff'] = monthly['sales'].diff()
+p_diff = run_adf_test(monthly['sales_diff'].dropna(), '1st Order Differenced Sales')</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Fit ARIMA and Forecast</div>
+        <pre><code>># Use monthly aggregated data
+monthly_sales = ts.resample('ME').mean()['sales']
+
+train = monthly_sales[:-6]    # all except last 6 months
+test  = monthly_sales[-6:]    # last 6 months for evaluation
+
+print(f"Training: {len(train)} months ({train.index[0].date()} to {train.index[-1].date()})")
+print(f"Testing:  {len(test)} months ({test.index[0].date()} to {test.index[-1].date()})")
+
+# Fit ARIMA(2,1,2) — slightly more complex for smoother forecasts
+model  = ARIMA(train, order=(2, 1, 2))
+result = model.fit()
+print(result.summary())
+
+# Forecast 6 months ahead (cover test period)
+forecast_obj = result.get_forecast(steps=6)
+forecast     = forecast_obj.predicted_mean
+conf_int     = forecast_obj.conf_int(alpha=0.1)   # 90% confidence interval
+
+# Evaluate
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+mae  = mean_absolute_error(test, forecast)
+rmse = np.sqrt(mean_squared_error(test, forecast))
+mape = np.mean(np.abs((test.values - forecast.values) / test.values)) * 100
+print(f"\nForecast Evaluation:")
+print(f"  MAE:  ₹{mae:,.0f}")
+print(f"  RMSE: ₹{rmse:,.0f}")
+print(f"  MAPE: {mape:.1f}%")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Plot Forecast with Confidence Intervals</div>
+        <pre><code>>plt.figure(figsize=(13, 5))
+
+# Training data
+plt.plot(train.index, train.values, color='#1B3A6B', linewidth=2, label='Training Data')
+
+# Actual test values
+plt.plot(test.index, test.values, color='#4CAF50', linewidth=2.5,
+         marker='o', markersize=6, label='Actual (Test Period)')
+
+# Forecast line
+plt.plot(forecast.index, forecast.values, color='#C8941A', linewidth=2,
+         linestyle='--', marker='s', markersize=6, label='ARIMA Forecast')
+
+# Confidence interval shading
+plt.fill_between(conf_int.index,
+                 conf_int.iloc[:, 0], conf_int.iloc[:, 1],
+                 alpha=0.25, color='#C8941A', label='90% Confidence Interval')
+
+plt.title(f'ARIMA(2,1,2) Forecast — MAPE: {mape:.1f}%', fontsize=13, fontweight='bold')
+plt.xlabel('Date')
+plt.ylabel('Monthly Sales (₹)')
+plt.legend(fontsize=10)
+plt.tight_layout()
+plt.savefig('arima_forecast.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Notebook with decomposition, ADF test output, ARIMA summary, and forecast chart. Write: (1) what trend and seasonality you observed, (2) what MAPE means practically ("forecasts are off by X% on average"), (3) one business decision you could make with this forecast.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="lab-block" id="lab3">
+    <div class="lab-header">
+      <div class="lab-num">Lab 3</div>
+      <div class="lab-title">
+        <h3>End-to-End ML Pipeline — Titanic Survival Predictor</h3>
+        <div class="lab-meta"><span class="tag-week">Week 11</span> <span class="tag-time">90 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Build a complete, production-ready sklearn Pipeline with ColumnTransformer for mixed data types. Cross-validate, save with pickle, reload, and wrap in a prediction function.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Prepare Raw Data</div>
+        <pre><code>>import pandas as pd
+import numpy as np
+import seaborn as sns
+import pickle
+import warnings
+warnings.filterwarnings('ignore')
+
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import accuracy_score, classification_report
+
+df = sns.load_dataset('titanic')
+
+# Use raw columns — the pipeline will handle missing values and encoding
+feature_cols = ['pclass', 'sex', 'age', 'sibsp', 'parch', 'fare', 'embarked']
+target_col   = 'survived'
+
+X = df[feature_cols]
+y = df[target_col]
+
+# Drop rows where target is missing
+mask = y.notna()
+X = X[mask]
+y = y[mask]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"Features: {feature_cols}")
+print(f"Train: {len(X_train)} | Test: {len(X_test)}")
+print(f"Survival rate — Train: {y_train.mean():.1%} | Test: {y_test.mean():.1%}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Build ColumnTransformer + Pipeline</div>
+        <pre><code>># Define feature types
+numeric_features     = ['age', 'fare', 'sibsp', 'parch']
+categorical_features = ['sex', 'embarked']
+ordinal_features     = ['pclass']
+
+# Numeric: impute with median, then scale
+numeric_transformer = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler',  StandardScaler())
+])
+
+# Categorical: impute with most frequent, then one-hot encode
+categorical_transformer = Pipeline([
+    ('imputer', SimpleImputer(strategy='most_frequent')),
+    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+])
+
+# Ordinal: just impute (pclass is already numeric)
+ordinal_transformer = SimpleImputer(strategy='most_frequent')
+
+# Combine with ColumnTransformer
+preprocessor = ColumnTransformer([
+    ('num', numeric_transformer,     numeric_features),
+    ('cat', categorical_transformer, categorical_features),
+    ('ord', ordinal_transformer,     ordinal_features)
+])
+
+# Full pipeline: preprocessing + model
+pipeline = Pipeline([
+    ('preprocessor', preprocessor),
+    ('classifier',   RandomForestClassifier(n_estimators=200, max_depth=6,
+                                             random_state=42))
+])
+
+print("Pipeline structure:")
+print(pipeline)</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Cross-Validate &amp; Evaluate</div>
+        <pre><code>>from sklearn.model_selection import cross_val_score
+
+# 5-fold cross-validation on full dataset
+cv_scores = cross_val_score(pipeline, X, y, cv=5, scoring='accuracy')
+print("=== CROSS-VALIDATION RESULTS ===")
+print(f"Fold scores: {[f'{s:.3f}' for s in cv_scores]}")
+print(f"Mean ± Std: {cv_scores.mean():.3f} ± {cv_scores.std():.3f}")
+
+# Final training on train set, evaluate on test set
+pipeline.fit(X_train, y_train)
+y_pred = pipeline.predict(X_test)
+
+print(f"\nTest Accuracy: {accuracy_score(y_test, y_pred):.3f}")
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred, target_names=['Died', 'Survived']))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Save &amp; Reload Pipeline</div>
+        <pre><code>>pipeline_path = 'titanic_pipeline.pkl'
+
+# Save
+with open(pipeline_path, 'wb') as f:
+    pickle.dump(pipeline, f)
+print(f"Pipeline saved to: {pipeline_path}")
+
+# Verify by reloading
+with open(pipeline_path, 'rb') as f:
+    loaded_pipeline = pickle.load(f)
+
+y_pred_verify = loaded_pipeline.predict(X_test)
+print(f"Loaded pipeline accuracy: {accuracy_score(y_test, y_pred_verify):.3f}")
+print("Accuracy matches original:", accuracy_score(y_test, y_pred) == accuracy_score(y_test, y_pred_verify))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Prediction Function</div>
+        <pre><code>>def predict_survival(pclass, sex, age, sibsp, parch, fare, embarked='S'):
+    """
+    Predict Titanic survival probability.
+
+    Parameters:
+        pclass:   int (1, 2, or 3)
+        sex:      str ('male' or 'female')
+        age:      float (years)
+        sibsp:    int (number of siblings/spouses aboard)
+        parch:    int (number of parents/children aboard)
+        fare:     float (ticket price in £)
+        embarked: str ('S', 'C', or 'Q')
+
+    Returns:
+        dict with 'survived' (0 or 1) and 'probability' (0.0–1.0)
+    """
+    input_df = pd.DataFrame({
+        'pclass':   [pclass],
+        'sex':      [sex],
+        'age':      [age],
+        'sibsp':    [sibsp],
+        'parch':    [parch],
+        'fare':     [fare],
+        'embarked': [embarked]
+    })
+
+    survival = loaded_pipeline.predict(input_df)[0]
+    prob     = loaded_pipeline.predict_proba(input_df)[0][1]
+
+    return {
+        'survived':    int(survival),
+        'probability': round(float(prob), 3),
+        'verdict':     'Survived' if survival == 1 else 'Did Not Survive'
+    }
+
+# Test cases
+test_cases = [
+    {'name': 'Rose (1st class woman)',       'args': (1, 'female', 17, 1, 2, 200, 'S')},
+    {'name': 'Jack (3rd class man)',         'args': (3, 'male', 20, 0, 0, 7.5, 'S')},
+    {'name': 'Child (2nd class)',            'args': (2, 'female', 8, 0, 1, 30, 'C')},
+    {'name': 'Elderly man (1st class)',      'args': (1, 'male', 65, 0, 0, 100, 'C')},
+]
+
+print("=== SURVIVAL PREDICTIONS ===")
+for case in test_cases:
+    result = predict_survival(*case['args'])
+    print(f"\n{case['name']}:")
+    print(f"  Prediction: {result['verdict']}")
+    print(f"  Probability: {result['probability']:.1%}")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Complete notebook + saved <code>titanic_pipeline.pkl</code>. Document the prediction function with at least 5 test cases showing interesting edge cases. Push to GitHub.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="lab-block" id="lab4">
+    <div class="lab-header">
+      <div class="lab-num">Lab 4</div>
+      <div class="lab-title">
+        <h3>Interactive Dashboard with Plotly Dash</h3>
+        <div class="lab-meta"><span class="tag-week">Week 11–12</span> <span class="tag-time">120 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Build a fully interactive data dashboard using Dash and Plotly. Includes a dropdown for feature selection, scatter plot, bar chart, callback for reactivity, and a data table.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Install &amp; Setup</div>
+        <pre><code>># Install in your terminal (not in Jupyter — run this in a terminal/command prompt):
+# pip install dash plotly pandas
+
+# Create a new file: titanic_dashboard.py
+# Run with: python titanic_dashboard.py
+# Open browser at: http://localhost:8050</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Complete Dashboard App (titanic_dashboard.py)</div>
+        <pre><code>>from dash import Dash, dcc, html, Input, Output, dash_table
+import plotly.express as px
+import plotly.graph_objects as go
+import seaborn as sns
+import pandas as pd
+
+# ---- Load & Clean Data ----
+df = sns.load_dataset('titanic')
+df['age']   = df['age'].fillna(df['age'].median())
+df['fare']  = df['fare'].fillna(df['fare'].median())
+df = df.dropna(subset=['embarked', 'survived'])
+df['survived_label'] = df['survived'].map({0: 'Died', 1: 'Survived'})
+df['sex_label']      = df['sex'].str.capitalize()
+
+# ---- Color scheme ----
+COLORS = {'background': '#F8F6F0', 'navy': '#1B3A6B', 'gold': '#C8941A'}
+
+# ---- App Setup ----
+app = Dash(__name__)
+app.title = "Titanic Dashboard — NextGen Devbhoomi"
+
+numeric_cols = ['age', 'fare', 'sibsp', 'parch']
+
+app.layout = html.Div(style={'backgroundColor': COLORS['background'], 'fontFamily': 'Arial, sans-serif'}, children=[
+
+    # Header
+    html.Div([
+        html.H1("Titanic Survival Dashboard",
+                style={'color': COLORS['navy'], 'margin': '0', 'fontSize': '1.8rem'}),
+        html.P("NextGen Devbhoomi Foundation · Data Science Lab 4",
+               style={'color': '#666', 'margin': '4px 0 0 0'})
+    ], style={'background': 'white', 'padding': '20px 32px',
+              'borderBottom': f'3px solid {COLORS["gold"]}', 'marginBottom': '24px'}),
+
+    # Controls
+    html.Div([
+        html.Div([
+            html.Label("X-Axis Feature:", style={'fontWeight': 'bold', 'color': COLORS['navy']}),
+            dcc.Dropdown(id='x-dropdown', options=[{'label': c, 'value': c} for c in numeric_cols],
+                         value='age', clearable=False)
+        ], style={'width': '22%', 'marginRight': '16px'}),
+
+        html.Div([
+            html.Label("Y-Axis Feature:", style={'fontWeight': 'bold', 'color': COLORS['navy']}),
+            dcc.Dropdown(id='y-dropdown', options=[{'label': c, 'value': c} for c in numeric_cols],
+                         value='fare', clearable=False)
+        ], style={'width': '22%', 'marginRight': '16px'}),
+
+        html.Div([
+            html.Label("Filter by Class:", style={'fontWeight': 'bold', 'color': COLORS['navy']}),
+            dcc.Checklist(id='class-filter',
+                          options=[{'label': f' Class {i}', 'value': i} for i in [1,2,3]],
+                          value=[1, 2, 3], inline=True)
+        ], style={'width': '30%'}),
+    ], style={'display': 'flex', 'alignItems': 'flex-end', 'padding': '0 32px', 'marginBottom': '24px'}),
+
+    # Charts row
+    html.Div([
+        html.Div([dcc.Graph(id='scatter-chart')], style={'width': '60%', 'marginRight': '16px'}),
+        html.Div([dcc.Graph(id='bar-chart')],     style={'width': '38%'})
+    ], style={'display': 'flex', 'padding': '0 32px', 'marginBottom': '24px'}),
+
+    # Data Table
+    html.Div([
+        html.H3("Filtered Passenger Data", style={'color': COLORS['navy'], 'marginBottom': '12px'}),
+        html.Div(id='data-table-container')
+    ], style={'padding': '0 32px 32px'})
+])
+
+# ---- Callbacks ----
+@app.callback(
+    Output('scatter-chart', 'figure'),
+    Output('bar-chart', 'figure'),
+    Output('data-table-container', 'children'),
+    Input('x-dropdown', 'value'),
+    Input('y-dropdown', 'value'),
+    Input('class-filter', 'value')
+)
+def update_charts(x_col, y_col, classes):
+    filtered = df[df['pclass'].isin(classes)] if classes else df.iloc[:0]
+
+    # Scatter chart
+    scatter = px.scatter(
+        filtered, x=x_col, y=y_col, color='survived_label',
+        color_discrete_map={'Survived': '#4CAF50', 'Died': '#E53935'},
+        opacity=0.65, title=f'{x_col.capitalize()} vs {y_col.capitalize()} by Survival',
+        template='plotly_white'
+    )
+    scatter.update_layout(
+        title_font_color=COLORS['navy'],
+        legend_title_text='Outcome',
+        paper_bgcolor=COLORS['background']
+    )
+
+    # Bar chart — survival rate by sex
+    survival_by_sex = (filtered.groupby(['sex_label', 'survived_label'])
+                       .size().reset_index(name='count'))
+    bar = px.bar(
+        survival_by_sex, x='sex_label', y='count', color='survived_label',
+        color_discrete_map={'Survived': '#4CAF50', 'Died': '#E53935'},
+        barmode='group', title='Survival Count by Sex',
+        template='plotly_white'
+    )
+    bar.update_layout(
+        title_font_color=COLORS['navy'],
+        legend_title_text='Outcome',
+        paper_bgcolor=COLORS['background']
+    )
+
+    # Data table (first 10 rows)
+    display_cols = ['pclass', 'sex', 'age', 'fare', 'survived_label']
+    table = dash_table.DataTable(
+        data=filtered[display_cols].head(10).to_dict('records'),
+        columns=[{'name': c, 'id': c} for c in display_cols],
+        style_header={'backgroundColor': COLORS['navy'], 'color': 'white', 'fontWeight': 'bold'},
+        style_cell={'textAlign': 'left', 'padding': '8px'},
+        style_data_conditional=[
+            {'if': {'filter_query': '{survived_label} = "Survived"'},
+             'backgroundColor': '#E8F5E9', 'color': '#1B5E20'}
+        ]
+    )
+    return scatter, bar, table
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8050)
+    # Open browser at http://localhost:8050</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Run and Test</div>
+        <pre><code>># Terminal commands:
+# 1. Navigate to where you saved titanic_dashboard.py
+# 2. Run: python titanic_dashboard.py
+# 3. Open browser: http://localhost:8050
+
+# Test these interactions:
+# - Change X/Y dropdowns — scatter plot updates automatically
+# - Uncheck "Class 2" — table and bar chart update
+# - Hover over scatter points — see passenger details in tooltip
+
+# To stop: Ctrl+C in terminal</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Working <code>titanic_dashboard.py</code> file + a screenshot of the running dashboard showing at least 2 different dropdown selections. Push to GitHub with a README explaining how to run it.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="lab-block" id="lab5">
+    <div class="lab-header">
+      <div class="lab-num">Lab 5</div>
+      <div class="lab-title">
+        <h3>Capstone — Complete EDA + Model + Presentation</h3>
+        <div class="lab-meta"><span class="tag-week">Week 12</span> <span class="tag-time">3–4 hours</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Complete a full data science project on a real dataset. Produce a professional notebook with EDA, feature engineering, multi-model comparison, and a 5-section executive summary. Push everything to GitHub.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Choose Your Dataset</div>
+        <p>Choose one of these recommended Kaggle datasets (or ask your mentor for others):</p>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>Heart Disease UCI</strong>
+            <p>Predict heart disease from 13 clinical features. Excellent for binary classification and medical insight. Download from Kaggle: "Heart Disease UCI" or load from sklearn.</p>
+          </div>
+          <div class="info-card">
+            <strong>Credit Card Fraud Detection</strong>
+            <p>Detect fraudulent transactions. Highly imbalanced (~0.17% fraud). Great for practicing SMOTE, AUC-ROC evaluation. Download from Kaggle: "Credit Card Fraud Detection".</p>
+          </div>
+          <div class="info-card">
+            <strong>Telco Customer Churn</strong>
+            <p>Predict which customers will cancel their telecom subscription. Business-relevant, clean, great for feature engineering. Available on Kaggle.</p>
+          </div>
+        </div>
+        <pre><code>># Example: Load Heart Disease from sklearn
+from sklearn.datasets import fetch_openml
+heart = fetch_openml(name='heart-disease', version=1, as_frame=True)
+df = heart.frame
+df['target'] = df['num'].apply(lambda x: 1 if int(x) > 0 else 0)
+print(df.shape, df['target'].value_counts())</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Required Notebook Structure</div>
+        <p>Your notebook MUST have these 5 sections as Markdown headings with code + charts in each:</p>
+        <pre><code>># SECTION 1: Problem Statement (Markdown only)
+## Dataset: [Name]
+## Business Question: [What are we predicting, and why does it matter?]
+## Success Metric: [Which metric matters most — AUC? F1? Accuracy?]
+## Dataset Source: [URL]</code></pre>
+        <pre><code>># SECTION 2: EDA — 8+ Charts Required
+# Must include:
+# 1. Target distribution (is it balanced?)
+# 2. Histogram of each numeric feature (use subplot grid)
+# 3. Correlation heatmap
+# 4. Boxplot: each feature vs target
+# 5. Pairplot or scatter matrix (top 4 features)
+# 6–8: Domain-specific charts of your choice</code></pre>
+        <pre><code>># SECTION 3: Feature Engineering
+# Must include:
+# - Handle missing values with strategy justification
+# - Encode categorical variables
+# - Create at least 2 new derived features
+# - Scale numeric features
+# - Final feature set explanation</code></pre>
+        <pre><code>># SECTION 4: Model Comparison — 3+ Models Required
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
+from sklearn.model_selection import cross_val_score
+
+models = {
+    'Logistic Regression': LogisticRegression(max_iter=1000, random_state=42),
+    'Random Forest':       RandomForestClassifier(n_estimators=200, random_state=42),
+    'Gradient Boosting':   GradientBoostingClassifier(n_estimators=200, random_state=42)
+}
+
+results = {}
+for name, model in models.items():
+    pipe = Pipeline([('scaler', StandardScaler()), ('model', model)])
+    cv_scores = cross_val_score(pipe, X, y, cv=5, scoring='roc_auc')
+    results[name] = {'Mean AUC': cv_scores.mean(), 'Std': cv_scores.std()}
+
+results_df = pd.DataFrame(results).T.round(3)
+print(results_df)
+
+# Tune the best model with GridSearchCV
+# Save final model as pickle</code></pre>
+        <pre><code>># SECTION 5: Executive Summary (Markdown + 5 Markdown cells)
+# Slide 1: Problem & Approach
+# Slide 2: Key EDA Findings (3 bullet points with numbers)
+# Slide 3: Model Performance Comparison (table)
+# Slide 4: Top 5 Predictive Features (feature importance chart)
+# Slide 5: Business Recommendations (3 actionable items)</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Export &amp; Publish</div>
+        <pre><code>># Export notebook as HTML
+# Terminal: jupyter nbconvert --to html capstone_project.ipynb
+
+# GitHub repository structure:
+# capstone-data-science/
+# ├── README.md           (project overview, how to run, key results)
+# ├── capstone_project.ipynb
+# ├── capstone_report.html  (exported notebook)
+# ├── data/
+# │   ├── raw_data.csv
+# │   └── cleaned_data.csv
+# ├── models/
+# │   └── best_model.pkl
+# └── charts/             (all saved PNG charts)
+
+# README must include:
+# - Problem statement (2-3 sentences)
+# - Dataset source link
+# - Key result: "Achieved X% AUC using Model Y"
+# - How to reproduce: pip install requirements, run notebook
+# - 3 key findings in bullet points</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Public GitHub repository with complete notebook (all cells executed with output), exported HTML report, saved model pickle, and a well-written README. Share the GitHub link on the intern portal. Mentor will grade on the rubric from project_briefs.html.
+      </div>
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="lab_guide_intermediate.html" class="btn-secondary">← Intermediate Labs</a>
+    <a href="project_briefs.html" class="btn-primary">📋 View Project Briefs →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>
+

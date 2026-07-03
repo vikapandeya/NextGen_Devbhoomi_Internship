@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking & Sysadmin — Concept Notes Advanced | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">⚡ Concept Notes — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; CONCEPT NOTES — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate Notes ↗</a>
+    <a href="project_briefs.html">Project Briefs ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">⚡</div>
+    <div class="lh-text">
+      <h2>Concept Notes — Advanced</h2>
+      <p>Weeks 9–12 · Ansible IaC · High Availability · AWS Networking · Kubernetes &amp; Terraform</p>
+    </div>
+    <div class="lh-badge">ADVANCED</div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="week-block" id="w9">
+    <div class="week-header wn-adv" onclick="toggleWeek('w9')">
+      <span class="wn-label">Week 9</span>
+      <span class="wn-title">Ansible &amp; Configuration Management</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Ansible Architecture</h3>
+      <p>Ansible is an <strong>agentless</strong> configuration management tool. It connects to managed nodes over SSH (or WinRM for Windows) from the <em>control node</em> and executes modules in Python.</p>
+
+      <table class="data-table">
+        <thead><tr><th>Component</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Control Node</strong></td><td>Machine where Ansible is installed and playbooks run from</td></tr>
+          <tr><td><strong>Managed Nodes</strong></td><td>Target hosts — only need Python and SSH access (no agent)</td></tr>
+          <tr><td><strong>Inventory</strong></td><td>List of managed nodes (hosts/groups); can be static file or dynamic script</td></tr>
+          <tr><td><strong>Playbook</strong></td><td>YAML file defining what to automate — contains Plays</td></tr>
+          <tr><td><strong>Play</strong></td><td>Maps a group of hosts to a list of tasks</td></tr>
+          <tr><td><strong>Task</strong></td><td>Calls a single Ansible module with arguments</td></tr>
+          <tr><td><strong>Module</strong></td><td>Unit of work (apt, copy, service, template, file, user, etc.)</td></tr>
+          <tr><td><strong>Role</strong></td><td>Reusable, structured collection of tasks, handlers, templates, and variables</td></tr>
+          <tr><td><strong>Handler</strong></td><td>Task triggered by <code>notify</code> — runs once at end of play (e.g., restart nginx)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Inventory File</h3>
+      <pre><code># /etc/ansible/hosts  (or -i inventory.ini)
+# INI format:
+[webservers]
+web01.lab.local ansible_user=ubuntu ansible_port=22
+web02.lab.local
+192.168.1.50
+
+[dbservers]
+db01.lab.local ansible_user=root
+
+[all:vars]
+ansible_ssh_private_key_file=~/.ssh/lab_key.pem
+ansible_python_interpreter=/usr/bin/python3
+
+[webservers:vars]
+http_port=80
+
+# YAML format (inventory.yml):
+all:
+  children:
+    webservers:
+      hosts:
+        web01.lab.local:
+          http_port: 8080
+        web02.lab.local:
+    dbservers:
+      hosts:
+        db01.lab.local:
+  vars:
+    ansible_user: ubuntu</code></pre>
+
+      <h3>Playbook Structure</h3>
+      <pre><code>---
+# site.yml — full playbook example
+- name: Configure Web Servers
+  hosts: webservers
+  become: yes                      # sudo for all tasks
+  vars:
+    nginx_port: 80
+    app_user: "www-data"
+  vars_files:
+    - vars/secrets.yml             # Encrypted with Ansible Vault
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present             # present=install, absent=remove, latest=upgrade
+
+    - name: Copy Nginx config
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Restart Nginx        # Triggers handler if file changed
+
+    - name: Create app user
+      user:
+        name: "{{ app_user }}"
+        system: yes
+        shell: /bin/false
+
+    - name: Ensure nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Run a shell command and capture output
+      shell: nginx -v 2>&1
+      register: nginx_version
+      changed_when: false          # Shell tasks always report "changed" — override
+
+    - name: Display nginx version
+      debug:
+        msg: "{{ nginx_version.stdout }}"
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted</code></pre>
+
+      <h3>Key Modules Reference</h3>
+      <pre><code># Package management
+- apt:  name=nginx state=present update_cache=yes    # Debian/Ubuntu
+- yum:  name=nginx state=present                     # RHEL/CentOS 7
+- dnf:  name=nginx state=present                     # RHEL/CentOS 8+
+
+# File operations
+- copy:     src=files/app.conf dest=/etc/app.conf owner=root mode='0644'
+- template: src=templates/app.conf.j2 dest=/etc/app.conf  # Jinja2 rendering
+- file:     path=/data/logs state=directory owner=app mode='0755'
+- file:     path=/tmp/old-file state=absent               # Delete file
+- lineinfile: path=/etc/sshd_config regexp='^PermitRootLogin' line='PermitRootLogin no'
+
+# Service management
+- service:   name=nginx state=started enabled=yes
+- systemd:   name=myapp state=restarted daemon_reload=yes
+
+# User management
+- user:   name=deploy groups=sudo,www-data shell=/bin/bash home=/home/deploy create_home=yes
+- group:  name=developers state=present
+
+# Git &amp; archive
+- git:    repo=https://github.com/myorg/app.git dest=/opt/app version=main
+- unarchive: src=app.tar.gz dest=/opt/ remote_src=yes
+
+# Command execution (avoid if idempotent module exists)
+- command:  /usr/bin/python3 manage.py migrate  chdir=/opt/app
+- shell:    source /opt/venv/bin/activate &amp;&amp; pip install -r requirements.txt</code></pre>
+
+      <h3>Jinja2 Templating</h3>
+      <pre><code># templates/nginx.conf.j2
+upstream backend {
+{% for server in backend_servers %}
+    server {{ server }}:{{ app_port }} weight={{ server_weight | default(1) }};
+{% endfor %}
+}
+
+server {
+    listen {{ nginx_port | default(80) }};
+    server_name {{ ansible_hostname }}.{{ domain | lower }};
+
+{% if enable_ssl %}
+    listen 443 ssl;
+    ssl_certificate {{ ssl_cert_path }};
+{% endif %}
+
+    location / {
+        proxy_pass http://backend;
+    }
+
+    # Environment: {{ env | upper }}
+    # Generated on: {{ ansible_date_time.iso8601 }}
+}</code></pre>
+
+      <h3>Ansible Roles Structure</h3>
+      <pre><code>roles/
+└── nginx/
+    ├── tasks/
+    │   └── main.yml           # Main task list (- import_tasks: install.yml)
+    ├── handlers/
+    │   └── main.yml           # Handlers (restart, reload)
+    ├── templates/
+    │   └── nginx.conf.j2      # Jinja2 templates
+    ├── files/
+    │   └── favicon.ico        # Static files (copy module)
+    ├── vars/
+    │   └── main.yml           # Role variables (high precedence)
+    ├── defaults/
+    │   └── main.yml           # Default variables (lowest precedence — override these)
+    ├── meta/
+    │   └── main.yml           # Role metadata, dependencies
+    └── README.md
+
+# Use role in playbook:
+- hosts: webservers
+  roles:
+    - nginx
+    - { role: geerlingguy.mysql, mysql_root_password: "{{ vault_mysql_pw }}" }
+
+# Install from Galaxy:
+ansible-galaxy install geerlingguy.nginx geerlingguy.mysql
+ansible-galaxy init my-custom-role        # Create role skeleton</code></pre>
+
+      <h3>Ansible Vault — Secrets Management</h3>
+      <pre><code>ansible-vault encrypt vars/secrets.yml             # Encrypt a file
+ansible-vault decrypt vars/secrets.yml             # Decrypt a file
+ansible-vault edit vars/secrets.yml               # Edit encrypted file
+ansible-vault view vars/secrets.yml               # View without decrypting to disk
+ansible-vault encrypt_string 'mypassword' --name 'db_password'  # Encrypt single value
+
+# Run playbook with vault:
+ansible-playbook site.yml --ask-vault-pass         # Prompt for password
+ansible-playbook site.yml --vault-password-file ~/.vault_pass   # Read from file</code></pre>
+
+      <h3>Config Management Tool Comparison</h3>
+      <table class="data-table">
+        <thead><tr><th>Tool</th><th>Architecture</th><th>Language</th><th>Mode</th><th>Learning Curve</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ansible</strong></td><td>Agentless, SSH</td><td>YAML + Python</td><td>Push</td><td>Low</td></tr>
+          <tr><td><strong>Puppet</strong></td><td>Agent-based (pull)</td><td>Puppet DSL / Ruby</td><td>Pull (periodic)</td><td>High</td></tr>
+          <tr><td><strong>Chef</strong></td><td>Agent-based (pull)</td><td>Ruby (Recipes/Cookbooks)</td><td>Pull (periodic)</td><td>High</td></tr>
+          <tr><td><strong>Salt</strong></td><td>Agent or agentless</td><td>YAML / Python</td><td>Push &amp; Pull</td><td>Medium</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="week-block" id="w10">
+    <div class="week-header wn-adv" onclick="toggleWeek('w10')">
+      <span class="wn-label">Week 10</span>
+      <span class="wn-title">High Availability &amp; Load Balancing</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>HAProxy Configuration</h3>
+      <pre><code># /etc/haproxy/haproxy.cfg
+
+global
+    maxconn 50000
+    log /dev/log local0
+    log /dev/log local1 notice
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log global
+    mode http                          # http mode for L7, tcp for L4
+    option httplog
+    option dontlognull
+    option forwardfor                  # Add X-Forwarded-For header
+    option http-server-close
+    timeout connect 5s
+    timeout client  30s
+    timeout server  30s
+    retries 3
+
+frontend http-in
+    bind *:80
+    bind *:443 ssl crt /etc/ssl/haproxy/bundle.pem
+    redirect scheme https if !{ ssl_fc }   # Redirect HTTP → HTTPS
+
+    # ACL-based routing
+    acl is_api path_beg /api/
+    acl is_static path_end .css .js .png .jpg
+
+    use_backend api-servers if is_api
+    use_backend static-servers if is_static
+    default_backend app-servers
+
+backend app-servers
+    balance roundrobin                 # roundrobin / leastconn / source (sticky)
+    option httpchk GET /health HTTP/1.1\r\nHost:\ app.example.com
+    http-check expect status 200
+    server app1 192.168.1.10:8080 check inter 2s fall 3 rise 2 maxconn 300
+    server app2 192.168.1.11:8080 check inter 2s fall 3 rise 2 maxconn 300
+    server app3 192.168.1.12:8080 check inter 2s fall 3 rise 2 maxconn 300 backup  # Backup only
+
+backend api-servers
+    balance leastconn
+    server api1 192.168.1.20:8000 check
+    server api2 192.168.1.21:8000 check
+
+# Stats page
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /haproxy-stats
+    stats auth admin:StrongPassword123
+    stats refresh 5s
+    stats show-legends</code></pre>
+
+      <h3>HAProxy Load Balancing Algorithms</h3>
+      <table class="data-table">
+        <thead><tr><th>Algorithm</th><th>Description</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><strong>roundrobin</strong></td><td>Each server in turn (respects weights)</td><td>Stateless apps, equal server capacity</td></tr>
+          <tr><td><strong>leastconn</strong></td><td>Send to server with fewest active connections</td><td>Long-lived connections (DB, WebSocket)</td></tr>
+          <tr><td><strong>source</strong></td><td>Hash source IP → same server (sticky)</td><td>Simple session persistence without cookies</td></tr>
+          <tr><td><strong>uri</strong></td><td>Hash request URI → consistent server</td><td>Caching servers, maximise cache hits</td></tr>
+          <tr><td><strong>first</strong></td><td>Fill first server to maxconn, then next</td><td>Minimise servers running (cost optimization)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>keepalived — VRRP Virtual IP</h3>
+      <pre><code># /etc/keepalived/keepalived.conf on PRIMARY (lb1 - 192.168.1.10)
+vrrp_script chk_haproxy {
+    script "/usr/bin/killall -0 haproxy"   # Check if haproxy is running
+    interval 2
+    weight -20                             # Reduce priority by 20 if check fails
+}
+
+vrrp_instance VI_1 {
+    state MASTER                           # MASTER on primary, BACKUP on secondary
+    interface eth0
+    virtual_router_id 51                   # Must match on both nodes
+    priority 110                           # MASTER has higher priority than BACKUP (100)
+    advert_int 1                           # Send VRRP advertisement every 1 second
+    authentication {
+        auth_type PASS
+        auth_pass SecureVRRP123
+    }
+    virtual_ipaddress {
+        192.168.1.100/24 dev eth0          # VIP — clients connect to this IP
+    }
+    track_script {
+        chk_haproxy
+    }
+    notify_master "/etc/keepalived/notify.sh MASTER"
+    notify_backup "/etc/keepalived/notify.sh BACKUP"
+}
+
+# On BACKUP node (lb2 - 192.168.1.11):
+# state BACKUP, priority 100 (lower than MASTER)
+# All other settings identical</code></pre>
+
+      <h3>Nginx Load Balancing</h3>
+      <pre><code># /etc/nginx/nginx.conf — upstream load balancing
+http {
+    upstream app_backend {
+        least_conn;                         # least_conn / ip_hash / (default=round-robin)
+        server 192.168.1.10:8080 weight=3;  # Receives 3x more traffic
+        server 192.168.1.11:8080 weight=1;
+        server 192.168.1.12:8080 down;      # Marked down (out of rotation)
+        server 192.168.1.13:8080 backup;    # Only used when others are down
+        keepalive 32;                       # Keep 32 connections to each backend open
+    }
+
+    server {
+        listen 80;
+        server_name app.example.com;
+
+        location / {
+            proxy_pass http://app_backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_connect_timeout 5s;
+            proxy_read_timeout 30s;
+            proxy_next_upstream error timeout invalid_header http_500;
+        }
+
+        location /health {
+            return 200 "OK\n";
+            add_header Content-Type text/plain;
+        }
+    }
+}</code></pre>
+
+      <h3>HA Patterns</h3>
+      <table class="data-table">
+        <thead><tr><th>Pattern</th><th>Description</th><th>Failover Time</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Active-Passive</strong></td><td>One node serves traffic; standby takes over on failure</td><td>~1-3 seconds (keepalived VRRP)</td><td>keepalived + HAProxy pair</td></tr>
+          <tr><td><strong>Active-Active</strong></td><td>Both nodes serve traffic simultaneously</td><td>Instant (remaining node absorbs load)</td><td>DNS round-robin + HAProxy each with VIP</td></tr>
+          <tr><td><strong>N+1 Redundancy</strong></td><td>N active + 1 spare, spare activates on failure</td><td>Seconds to minutes</td><td>3 web servers, 1 spare</td></tr>
+          <tr><td><strong>Geographic HA</strong></td><td>Nodes in multiple data centres / regions</td><td>Minutes (DNS TTL) to seconds (BGP anycast)</td><td>Cloudflare, Route 53 failover</td></tr>
+        </tbody>
+      </table>
+
+      <h3>BGP Anycast &amp; DNS-Based LB</h3>
+      <pre><code># BGP Anycast: same IP prefix advertised from multiple PoPs
+# Traffic routed to nearest PoP by BGP best-path selection
+# Used by: Cloudflare (1.1.1.1), Google (8.8.8.8), root DNS servers
+# Pros: very fast failover (BGP reconvergence), geo proximity
+# Cons: requires ISP relationships/BGP capable infrastructure
+
+# DNS Round-Robin LB:
+; DNS zone file — multiple A records for same name
+app.example.com.  60  IN  A  203.0.113.10
+app.example.com.  60  IN  A  203.0.113.11
+app.example.com.  60  IN  A  203.0.113.12
+# Low TTL (60s) means failures are detected quickly
+# But: no health checks — remove failed IPs manually or via automation
+
+# GSLB (Global Server Load Balancing) via Route 53 Health Checks:
+# Primary: us-east-1 ALB
+# Secondary: eu-west-1 ALB
+# Route 53 health check → if primary fails, DNS switches to secondary
+# Failover routing policy with health checks achieves automatic DR</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="week-block" id="w11">
+    <div class="week-header wn-adv" onclick="toggleWeek('w11')">
+      <span class="wn-label">Week 11</span>
+      <span class="wn-title">AWS Networking &amp; Cloud Infrastructure</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>VPC — Virtual Private Cloud</h3>
+      <pre><code># VPC = your isolated network environment in AWS
+# Spans all Availability Zones in a region
+# CIDR block: e.g., 10.0.0.0/16 (65,534 usable IPs)
+
+VPC (10.0.0.0/16)
+├── Public Subnet AZ-a  (10.0.1.0/24)  → Internet Gateway route
+├── Public Subnet AZ-b  (10.0.2.0/24)  → Internet Gateway route
+├── Private Subnet AZ-a (10.0.10.0/24) → NAT Gateway route
+├── Private Subnet AZ-b (10.0.11.0/24) → NAT Gateway route
+├── Database Subnet AZ-a (10.0.20.0/24) → No internet route
+└── Database Subnet AZ-b (10.0.21.0/24) → No internet route
+
+# Internet Gateway (IGW):
+# - One per VPC, enables public internet access
+# - Attach to VPC, then add route 0.0.0.0/0 → igw-xxx in public subnet route table
+
+# NAT Gateway:
+# - Placed in PUBLIC subnet, assigned Elastic IP
+# - Private subnets route 0.0.0.0/0 → nat-xxx
+# - Enables outbound internet (e.g., apt update) from private instances
+# - Inbound connections NOT allowed (stateful, but no inbound NAT)
+# - Cost: ~$0.045/hr + $0.045/GB data processed</code></pre>
+
+      <h3>Security Groups vs NACLs</h3>
+      <table class="data-table">
+        <thead><tr><th>Feature</th><th>Security Group</th><th>NACL</th></tr></thead>
+        <tbody>
+          <tr><td>Level</td><td>Instance (ENI)</td><td>Subnet</td></tr>
+          <tr><td>Statefulness</td><td>Stateful — return traffic auto-allowed</td><td>Stateless — must allow both directions</td></tr>
+          <tr><td>Rules</td><td>Allow only (implicit deny)</td><td>Allow AND Deny rules</td></tr>
+          <tr><td>Rule evaluation</td><td>All rules evaluated</td><td>Rules evaluated in number order (lowest first, stops at first match)</td></tr>
+          <tr><td>Default (new VPC)</td><td>Default SG allows all inbound from same SG</td><td>Default NACL allows all traffic</td></tr>
+          <tr><td>Use case</td><td>Micro-segmentation between instances</td><td>Block specific IPs/ranges at subnet level</td></tr>
+        </tbody>
+      </table>
+
+      <h3>VPC Connectivity Options</h3>
+      <pre><code># VPC Peering:
+# - Direct connection between two VPCs (same or cross-account/region)
+# - Requires route table entries on both sides
+# - NOT transitive: A↔B, B↔C does NOT mean A can reach C
+# - Use case: connect app VPC to monitoring VPC
+
+# Transit Gateway (TGW):
+# - AWS-managed hub: connects many VPCs + on-prem (via VPN or Direct Connect)
+# - Transitive routing supported
+# - Centralised routing policies and security
+# - Use case: large multi-VPC architectures (replace full mesh of peering)
+
+# VPN (Site-to-Site):
+# - IPSec tunnel between on-prem router and AWS Virtual Private Gateway
+# - Up to 1.25 Gbps per tunnel, multiple tunnels for redundancy
+
+# Direct Connect:
+# - Dedicated physical connection (1G/10G/100G) to AWS
+# - Consistent bandwidth and latency (no internet variability)
+# - Requires co-location at Direct Connect location or partner
+# - Use case: hybrid cloud, large data transfers, compliance requirements
+
+# VPC Endpoints:
+# - Access AWS services (S3, DynamoDB, SSM) without internet
+# - Interface endpoint (PrivateLink): ENI in your VPC, uses SG
+# - Gateway endpoint: S3 and DynamoDB only, route table entry (free)</code></pre>
+
+      <h3>Route 53 Routing Policies</h3>
+      <table class="data-table">
+        <thead><tr><th>Policy</th><th>Description</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Simple</strong></td><td>Single resource; if multiple values, random one returned</td><td>Single endpoint, no health checks</td></tr>
+          <tr><td><strong>Weighted</strong></td><td>Assign weights to records (e.g., 90/10 split)</td><td>A/B testing, blue-green deployments</td></tr>
+          <tr><td><strong>Latency</strong></td><td>Route to region with lowest latency for user</td><td>Multi-region active-active deployments</td></tr>
+          <tr><td><strong>Failover</strong></td><td>Primary + Secondary; switch when health check fails</td><td>Disaster recovery (active-passive)</td></tr>
+          <tr><td><strong>Geolocation</strong></td><td>Route based on user's geographic location</td><td>Content localisation, compliance (GDPR)</td></tr>
+          <tr><td><strong>Geoproximity</strong></td><td>Route based on proximity + optional bias</td><td>Fine-grained traffic shifting between regions</td></tr>
+          <tr><td><strong>Multivalue</strong></td><td>Up to 8 healthy records returned; health check each</td><td>Simple load balancing with health checks</td></tr>
+        </tbody>
+      </table>
+
+      <h3>AWS Load Balancers</h3>
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Layer</th><th>Protocols</th><th>Key Features</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ALB</strong> (Application)</td><td>L7</td><td>HTTP, HTTPS, gRPC, WebSocket</td><td>Path/host routing, WAF integration, authentication (Cognito/OIDC), Lambda targets</td></tr>
+          <tr><td><strong>NLB</strong> (Network)</td><td>L4</td><td>TCP, UDP, TLS</td><td>Ultra-low latency, static IPs, millions of req/s, preserves source IP, PrivateLink</td></tr>
+          <tr><td><strong>GWLB</strong> (Gateway)</td><td>L3</td><td>IP</td><td>Insert inline appliances (IDS/IPS/firewall) into traffic path using GENEVE</td></tr>
+          <tr><td><strong>CLB</strong> (Classic)</td><td>L4+L7</td><td>HTTP, HTTPS, TCP, SSL</td><td>Legacy, avoid for new projects</td></tr>
+        </tbody>
+      </table>
+
+      <h3>CloudFront CDN</h3>
+      <pre><code># CloudFront distributes content from 400+ edge locations globally
+# Origin → CloudFront Edge → User (cache reduces latency + origin load)
+
+# Key concepts:
+# Distribution: your CloudFront configuration
+# Origin:       S3 bucket, ALB, EC2, or custom HTTP server
+# Behavior:     rules matching URL paths to origins + cache settings
+# Cache Policy: what headers/cookies/query strings to include in cache key
+# OAC:          Origin Access Control — allows CloudFront to access private S3
+
+# Cache headers:
+Cache-Control: max-age=31536000    # Cache for 1 year (static assets)
+Cache-Control: no-cache            # Revalidate every time
+Cache-Control: s-maxage=3600       # CDN-specific TTL
+
+# Lambda@Edge:
+# Run Node.js or Python at edge locations
+# Use cases: A/B testing, HTTP redirects, auth at edge, personalisation
+# Triggers: viewer request/response, origin request/response
+
+# CloudFront functions:
+# Lighter weight (JavaScript only), only viewer-side events, microseconds execution</code></pre>
+
+      <h3>AWS Global Accelerator</h3>
+      <pre><code># Global Accelerator provides two static anycast IPs
+# Traffic enters AWS backbone at nearest edge PoP (vs. internet routing)
+# Routes to optimal endpoint (ALB/NLB/EC2) in multiple regions
+# Provides instant failover (&lt;30s) across regions
+# Improves TCP connection performance (backbone vs public internet)
+
+# Comparison: CloudFront vs Global Accelerator:
+# CloudFront:          HTTP/HTTPS content caching, cache at edge
+# Global Accelerator:  Any protocol (TCP/UDP), routes to healthy endpoints, no caching</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 12 -->
+  <div class="week-block" id="w12">
+    <div class="week-header wn-adv" onclick="toggleWeek('w12')">
+      <span class="wn-label">Week 12</span>
+      <span class="wn-title">Kubernetes Networking &amp; Terraform IaC</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Kubernetes Network Model</h3>
+      <p>Kubernetes enforces a flat, routable network model with three rules:</p>
+      <ol class="content-list">
+        <li>Every Pod gets a unique cluster-wide IP address</li>
+        <li>Pods can communicate with any other Pod without NAT</li>
+        <li>Agents on a Node can communicate with all Pods on that Node</li>
+      </ol>
+      <pre><code># Pod networking:
+# - Each Pod gets IP from pod CIDR (e.g., 10.244.0.0/16)
+# - Pod IP is ephemeral — changes when Pod restarts
+# - Services provide stable virtual IPs (ClusterIP from service CIDR)
+
+# CNI Plugins:
+# Flannel:  simple overlay using VXLAN; easy setup, no NetworkPolicy
+# Calico:   L3 routing (BGP or IPIP), NetworkPolicy, high performance
+# Cilium:   eBPF-based; L7 NetworkPolicy, Hubble observability, zero overhead
+# Weave:    encrypted mesh, simple, works in complex topologies
+# Canal:    Flannel for networking + Calico for NetworkPolicy</code></pre>
+
+      <h3>Kubernetes Service Types</h3>
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Access</th><th>IP Type</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ClusterIP</strong></td><td>Cluster-internal only</td><td>Virtual IP (kube-proxy)</td><td>Default; microservice-to-microservice communication</td></tr>
+          <tr><td><strong>NodePort</strong></td><td>External via NodeIP:NodePort (30000-32767)</td><td>Uses node IP</td><td>Dev/test access; building block for LB</td></tr>
+          <tr><td><strong>LoadBalancer</strong></td><td>External via cloud LB</td><td>Cloud LB public IP</td><td>Production external services in cloud environments</td></tr>
+          <tr><td><strong>ExternalName</strong></td><td>CNAME DNS alias</td><td>DNS name (no IP)</td><td>Redirect service name to external FQDN</td></tr>
+          <tr><td><strong>Headless</strong></td><td>Direct Pod IPs via DNS</td><td>None (ClusterIP: None)</td><td>StatefulSets, direct pod addressing</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Ingress &amp; NetworkPolicy</h3>
+      <pre><code># Ingress — L7 HTTP routing into the cluster
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx          # Which Ingress Controller to use
+  tls:
+    - hosts: [app.example.com]
+      secretName: app-tls-secret
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 8000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80
+
+# NetworkPolicy — whitelist-based pod firewall (requires CNI support)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-to-db
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      role: database               # Apply to database pods
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              role: api            # Only allow API pods to reach database
+      ports:
+        - protocol: TCP
+          port: 5432</code></pre>
+
+      <h3>Terraform — Infrastructure as Code</h3>
+      <pre><code># main.tf — deploy VPC + EC2 instance on AWS
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "prod/networking/terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "terraform-state-lock"   # For state locking
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+}
+
+# Variable declarations
+variable "aws_region" {
+  description = "AWS region to deploy to"
+  type        = string
+  default     = "ap-south-1"
+}
+
+variable "vpc_cidr" {
+  type    = string
+  default = "10.0.0.0/16"
+}
+
+# Data source — look up existing resource
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]  # Canonical (Ubuntu)
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-*-22.04-amd64-server-*"]
+  }
+}
+
+# Resources
+resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
+  tags = { Name = "main-vpc", Env = "prod" }
+}
+
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.main.id       # Reference another resource
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "${var.aws_region}a"
+  map_public_ip_on_launch = true
+  tags = { Name = "public-subnet" }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_security_group" "web" {
+  name   = "web-sg"
+  vpc_id = aws_vpc.main.id
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_instance" "web" {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.web.id]
+  user_data              = file("scripts/init.sh")
+  tags = { Name = "web-server" }
+}
+
+# Outputs
+output "web_public_ip" {
+  value       = aws_instance.web.public_ip
+  description = "Public IP of web server"
+}</code></pre>
+
+      <h3>Terraform Workflow</h3>
+      <pre><code># Core workflow:
+terraform init      # Download providers/modules, initialise backend
+terraform validate  # Check HCL syntax
+terraform fmt       # Auto-format code
+terraform plan      # Show what will be created/changed/destroyed (-out=plan.tfplan)
+terraform apply     # Create/update resources (prompts for confirmation)
+terraform apply "plan.tfplan"   # Apply saved plan (no prompt)
+terraform destroy   # Destroy ALL managed resources (use carefully!)
+terraform output    # Show output values
+terraform state list          # List all resources in state
+terraform state show aws_instance.web  # Show details of one resource
+terraform import aws_instance.web i-0abc123  # Import existing resource into state</code></pre>
+
+      <h3>Terraform Modules</h3>
+      <pre><code># Module usage in main.tf:
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"   # From registry.terraform.io
+  version = "~> 5.0"
+
+  name = "main-vpc"
+  cidr = "10.0.0.0/16"
+
+  azs             = ["ap-south-1a", "ap-south-1b"]
+  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
+  private_subnets = ["10.0.10.0/24", "10.0.11.0/24"]
+
+  enable_nat_gateway   = true
+  single_nat_gateway   = false  # One per AZ for HA
+  enable_dns_hostnames = true
+}
+
+# Reference module outputs:
+resource "aws_instance" "web" {
+  subnet_id = module.vpc.public_subnets[0]
+  # ...
+}
+
+# Local module:
+module "security_groups" {
+  source = "./modules/security_groups"
+  vpc_id = module.vpc.vpc_id
+}</code></pre>
+
+      <h3>Kubernetes Monitoring Stack</h3>
+      <pre><code># kube-prometheus-stack (Helm chart) — installs everything in one go
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install kube-prom prometheus-community/kube-prometheus-stack \
+  --namespace monitoring --create-namespace \
+  --set grafana.adminPassword=SecurePass123 \
+  --set prometheus.prometheusSpec.retention=30d
+
+# Components installed:
+# - Prometheus Operator + Prometheus instance
+# - Grafana (dashboards pre-loaded)
+# - Alertmanager
+# - node-exporter (DaemonSet — metrics from every node)
+# - kube-state-metrics (Deployment state, replica counts, etc.)
+# - cAdvisor (container CPU/memory metrics, built into kubelet)
+
+# Key Kubernetes metrics:
+# kube_pod_status_phase{phase="Running"}         — running pod count
+# kube_deployment_spec_replicas                  — desired replicas
+# kube_deployment_status_replicas_available      — available replicas
+# container_cpu_usage_seconds_total              — container CPU usage
+# container_memory_working_set_bytes             — container memory (what OOM uses)
+
+# HPA — Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70   # Scale up when avg CPU > 70%</code></pre>
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Concept Notes — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Project Briefs | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="lab_guide_advanced.html">Lab Guide ↗</a>
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">📋</div>
+    <h1>Project Briefs</h1>
+    <p class="lh-sub">Three capstone projects — one per level. Each project is submitted for evaluation. Your best project becomes the centerpiece of your portfolio.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">3 Projects</span>
+      <span class="lh-pill">Beginner · Intermediate · Advanced</span>
+      <span class="lh-pill gold">Portfolio Projects</span>
+    </div>
+  </div>
+
+  <!-- PROJECT 1 -->
+  <div class="sm-sec">Project 1 — Beginner Level</div>
+  <div class="project-card">
+    <div class="proj-header">
+      <div class="proj-num">P1</div>
+      <div class="proj-title">
+        <h3>Personal Portfolio Website</h3>
+        <p>HTML5 · CSS3 · JavaScript · GitHub Pages</p>
+      </div>
+      <span class="proj-level beg">Beginner</span>
+    </div>
+    <div class="proj-body">
+      <h4>Project Description</h4>
+      <p>Build a professional personal portfolio website that showcases who you are, your skills, and your projects. This is the page you will share with employers and use throughout the internship program.</p>
+
+      <h4 style="margin-top:20px;">Requirements</h4>
+      <ul>
+        <li>Multi-section single page: Hero, About, Skills, Projects, Contact</li>
+        <li>Sticky navigation with smooth scroll to sections</li>
+        <li>Skills displayed in a responsive CSS Grid layout</li>
+        <li>Projects section showing at least 2 projects with description, tech stack, and links</li>
+        <li>Contact form with JavaScript validation (name, email, message — all required)</li>
+        <li>Fully responsive: tested and working on mobile (360px) and desktop (1280px)</li>
+        <li>Deployed live on GitHub Pages</li>
+        <li>Zero HTML validation errors at validator.w3.org</li>
+      </ul>
+
+      <h4 style="margin-top:20px;">Bonus (Optional)</h4>
+      <ul>
+        <li>Dark mode toggle using CSS variables and JavaScript</li>
+        <li>Smooth CSS animations on scroll (Intersection Observer API)</li>
+        <li>Custom favicon and Open Graph meta tags</li>
+      </ul>
+    </div>
+
+    <div class="rubric-table">
+      <table>
+        <thead><tr><th>Criterion</th><th>Marks</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>HTML Structure &amp; Semantics</td><td>15</td><td>Correct semantic tags, valid HTML, accessibility attributes</td></tr>
+          <tr><td>CSS Styling &amp; Layout</td><td>20</td><td>Professional appearance, correct use of Flexbox/Grid, CSS variables</td></tr>
+          <tr><td>Responsive Design</td><td>20</td><td>Works at 360px, 768px, 1280px without overflow</td></tr>
+          <tr><td>JavaScript Functionality</td><td>20</td><td>Form validation works, no console errors</td></tr>
+          <tr><td>Deployment</td><td>15</td><td>Live URL accessible, HTTPS, no broken links</td></tr>
+          <tr><td>Code Quality</td><td>10</td><td>Clean indentation, no unused code, meaningful variable names</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td>Pass mark: 60</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="proj-deadline">
+      <span>Deadline: End of Week 4</span>
+      <span>Submission: Live URL + GitHub repo link</span>
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="sm-sec">Project 2 — Intermediate Level</div>
+  <div class="project-card">
+    <div class="proj-header">
+      <div class="proj-num">P2</div>
+      <div class="proj-title">
+        <h3>Full-Stack Expense Tracker</h3>
+        <p>React · Node.js · Express · MySQL · Vercel + Render</p>
+      </div>
+      <span class="proj-level int">Intermediate</span>
+    </div>
+    <div class="proj-body">
+      <h4>Project Description</h4>
+      <p>Build a full-stack expense tracking application where users can add, categorize, view, and delete expense entries. Data persists in a real MySQL database via a REST API.</p>
+
+      <h4 style="margin-top:20px;">Requirements</h4>
+      <ul>
+        <li>React frontend with components for: ExpenseForm, ExpenseList, ExpenseItem, Summary</li>
+        <li>Add expense: amount, description, category (food/travel/shopping/other), date</li>
+        <li>View all expenses sorted by date (newest first)</li>
+        <li>Delete any expense</li>
+        <li>Summary: total spent, total by category</li>
+        <li>Filter expenses by category</li>
+        <li>Express REST API: GET, POST, DELETE /api/expenses</li>
+        <li>MySQL table: id, amount, description, category, date, created_at</li>
+        <li>Environment variables for all DB credentials</li>
+        <li>CORS configured for your frontend domain only</li>
+        <li>Both frontend and backend deployed live</li>
+      </ul>
+
+      <h4 style="margin-top:20px;">Bonus (Optional)</h4>
+      <ul>
+        <li>Chart showing spending by category (Chart.js or CSS bars)</li>
+        <li>Monthly view — filter by month/year</li>
+        <li>Export expenses as CSV</li>
+      </ul>
+    </div>
+
+    <div class="rubric-table">
+      <table>
+        <thead><tr><th>Criterion</th><th>Marks</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>React Components &amp; State</td><td>20</td><td>Correct useState/useEffect, no prop-drilling issues</td></tr>
+          <tr><td>REST API Design</td><td>20</td><td>Correct HTTP methods, status codes, JSON responses</td></tr>
+          <tr><td>Database Integration</td><td>20</td><td>Real MySQL, parameterised queries, no hardcoded credentials</td></tr>
+          <tr><td>Frontend-API Connection</td><td>15</td><td>Loading/error states handled, CORS working</td></tr>
+          <tr><td>Deployment</td><td>15</td><td>Both services live, data persists across sessions</td></tr>
+          <tr><td>Code Quality</td><td>10</td><td>Clean structure, .env not committed, .gitignore correct</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td>Pass mark: 65</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="proj-deadline">
+      <span>Deadline: End of Week 8</span>
+      <span>Submission: Vercel URL + Render URL + GitHub repos</span>
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="sm-sec">Project 3 — Advanced Level</div>
+  <div class="project-card">
+    <div class="proj-header">
+      <div class="proj-num">P3</div>
+      <div class="proj-title">
+        <h3>Production-Ready Blog Platform</h3>
+        <p>TypeScript · React · Node.js · MySQL · Jest · GitHub Actions</p>
+      </div>
+      <span class="proj-level adv">Advanced</span>
+    </div>
+    <div class="proj-body">
+      <h4>Project Description</h4>
+      <p>Build a complete blogging platform with user authentication, full CRUD for posts, and comments. The codebase must be TypeScript throughout, have ≥70% test coverage, and a working CI/CD pipeline.</p>
+
+      <h4 style="margin-top:20px;">Requirements</h4>
+      <ul>
+        <li>TypeScript on both frontend (React) and backend (Node/Express)</li>
+        <li>User registration and login (JWT authentication)</li>
+        <li>Create, read, update, delete blog posts</li>
+        <li>Comments on posts (add + delete own comments)</li>
+        <li>Posts list page + individual post page</li>
+        <li>Rich text editor for writing posts (use a simple one like Quill.js)</li>
+        <li>Image upload for post cover image</li>
+        <li>Unit tests with Jest: ≥70% statement coverage</li>
+        <li>Component tests with React Testing Library</li>
+        <li>GitHub Actions CI pipeline: type-check + test + build on every push</li>
+        <li>Branch protection: <code>main</code> requires CI to pass</li>
+        <li>Dockerfile for the backend API</li>
+        <li>Lighthouse score ≥ 80 on Performance</li>
+      </ul>
+    </div>
+
+    <div class="rubric-table">
+      <table>
+        <thead><tr><th>Criterion</th><th>Marks</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>TypeScript Quality</td><td>15</td><td>No <code>any</code>, strict mode, interfaces for all data shapes</td></tr>
+          <tr><td>Authentication</td><td>15</td><td>JWT working, protected routes, tokens handled securely</td></tr>
+          <tr><td>CRUD Functionality</td><td>20</td><td>All CRUD operations working with correct HTTP status codes</td></tr>
+          <tr><td>Test Coverage</td><td>20</td><td>≥70% coverage, meaningful tests (not just coverage gaming)</td></tr>
+          <tr><td>CI/CD Pipeline</td><td>15</td><td>GitHub Actions passing, branch protection enabled</td></tr>
+          <tr><td>Production Quality</td><td>15</td><td>Lighthouse ≥80, no console errors, Docker image builds</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td>Pass mark: 70</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="proj-deadline">
+      <span>Deadline: End of Week 12</span>
+      <span>Submission: Live URL + CI pipeline link + GitHub repos</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_advanced.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Lab Guide</a>
+    <a href="career_roadmap.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Career Roadmap →</a>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

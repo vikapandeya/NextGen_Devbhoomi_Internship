@@ -1,0 +1,751 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Beginner Notes</a>
+    <a href="concept_notes_advanced.html">📖 Advanced Notes</a>
+    <a href="lab_guide_intermediate.html">🔬 Intermediate Labs</a>
+    <a href="quizzes.html">🧩 Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">📊</div>
+    <div class="lh-text">
+      <h2>Data Science &amp; Analytics — Intermediate Track</h2>
+      <p>Weeks 5–8 · Master statistics, machine learning fundamentals, intermediate ML models, and SQL for data analysis. Prerequisites: Weeks 1–4.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">Intermediate</span>
+      <span class="lh-badge">4 Weeks</span>
+      <span class="lh-badge">W5–W8</span>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="week-block" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <h3>Statistics for Data Science</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Descriptive Statistics</h4>
+        <p>Descriptive statistics summarize the key features of a dataset without making inferences about a larger population.</p>
+        <table class="ref-table">
+          <thead><tr><th>Statistic</th><th>What it measures</th><th>Python</th><th>When to use</th></tr></thead>
+          <tbody>
+            <tr><td>Mean (average)</td><td>Center of data</td><td>df['col'].mean()</td><td>Symmetric distributions, no extreme outliers</td></tr>
+            <tr><td>Median</td><td>Middle value (50th percentile)</td><td>df['col'].median()</td><td>Skewed data or when outliers are present</td></tr>
+            <tr><td>Mode</td><td>Most frequent value</td><td>df['col'].mode()[0]</td><td>Categorical data or discrete distributions</td></tr>
+            <tr><td>Variance</td><td>Average squared deviation from mean</td><td>df['col'].var()</td><td>Measuring spread in consistent units (squared)</td></tr>
+            <tr><td>Std Dev</td><td>Square root of variance</td><td>df['col'].std()</td><td>Measuring spread in original units — most interpretable</td></tr>
+            <tr><td>IQR</td><td>Q3 − Q1 (middle 50% range)</td><td>df['col'].quantile(.75) - df['col'].quantile(.25)</td><td>Robust spread measure, outlier detection</td></tr>
+          </tbody>
+        </table>
+        <pre><code>import pandas as pd
+import numpy as np
+
+salaries = pd.Series([35000, 42000, 38000, 95000, 41000, 39000, 37000, 150000])
+
+print(f"Mean:    {salaries.mean():.0f}")      # 59625 — pulled up by outliers
+print(f"Median:  {salaries.median():.0f}")    # 39500 — more representative
+print(f"Std Dev: {salaries.std():.0f}")       # 38073
+print(f"IQR:     {salaries.quantile(.75) - salaries.quantile(.25):.0f}")  # 4250
+
+# Note: Mean and Median differ a lot here because of the 95k and 150k outliers.
+# For salary data, always report the median.</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Probability Basics</h4>
+        <p>Probability quantifies uncertainty. P(A) represents the probability of event A occurring, ranging from 0 (impossible) to 1 (certain).</p>
+        <ul class="content-list">
+          <li><strong>P(A) = favorable outcomes / total outcomes</strong> — e.g., flipping a fair coin: P(Heads) = 1/2 = 0.5</li>
+          <li><strong>P(A and B) = P(A) × P(B)</strong> — when A and B are independent</li>
+          <li><strong>P(A or B) = P(A) + P(B) − P(A and B)</strong> — addition rule</li>
+          <li><strong>Conditional probability: P(A|B) = P(A and B) / P(B)</strong> — probability of A given B has occurred</li>
+        </ul>
+        <pre><code># Bayes' Theorem: P(A|B) = P(B|A) * P(A) / P(B)
+# Real example: Medical test
+# Disease prevalence: 1% of population has it
+# Test sensitivity: 99% (correctly identifies sick people)
+# Test specificity: 95% (correctly identifies healthy people)
+
+p_disease = 0.01            # prior: 1% of population
+p_positive_given_disease = 0.99    # sensitivity
+p_positive_given_no_disease = 0.05 # 1 - specificity (false positive rate)
+
+p_positive = (p_positive_given_disease * p_disease +
+              p_positive_given_no_disease * (1 - p_disease))
+
+p_disease_given_positive = (p_positive_given_disease * p_disease) / p_positive
+
+print(f"If you test positive, probability you have the disease: {p_disease_given_positive:.1%}")
+# Output: ~16.7% — despite a 99% accurate test!
+# This is why rare disease screening needs confirmation tests.</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Common Probability Distributions</h4>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>Normal Distribution</strong>
+            <p>Bell-shaped, symmetric. Defined by mean (μ) and standard deviation (σ). 68% of data within 1σ, 95% within 2σ, 99.7% within 3σ. Used for: heights, test scores, measurement errors.</p>
+          </div>
+          <div class="info-card">
+            <strong>Binomial Distribution</strong>
+            <p>Models the number of successes in n independent trials, each with probability p. Used for: number of email clicks, defects in a batch, survey yes/no responses.</p>
+          </div>
+          <div class="info-card">
+            <strong>Poisson Distribution</strong>
+            <p>Models the number of events in a fixed time or space interval, given average rate λ. Used for: customer arrivals per hour, server requests per second, accidents per day.</p>
+          </div>
+        </div>
+        <pre><code>>import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+# Normal distribution
+x = np.linspace(-4, 4, 100)
+axes[0].plot(x, stats.norm.pdf(x, loc=0, scale=1), color='#1B3A6B', linewidth=2)
+axes[0].set_title('Normal Distribution (μ=0, σ=1)')
+
+# Binomial distribution (n=10 coin flips, p=0.5)
+k = np.arange(0, 11)
+axes[1].bar(k, stats.binom.pmf(k, n=10, p=0.5), color='#C8941A')
+axes[1].set_title('Binomial (n=10, p=0.5)')
+
+# Poisson distribution (λ=3 events per hour)
+k = np.arange(0, 12)
+axes[2].bar(k, stats.poisson.pmf(k, mu=3), color='#4CAF50')
+axes[2].set_title('Poisson (λ=3)')
+
+plt.tight_layout()
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Central Limit Theorem</h4>
+        <p>The Central Limit Theorem (CLT) is one of the most important results in statistics: <strong>regardless of the population's distribution, the distribution of sample means approaches a normal distribution as sample size increases (typically n ≥ 30).</strong></p>
+        <p>Why it matters for data science: It justifies using normal distribution-based methods (confidence intervals, t-tests) even when the underlying data is not normally distributed. It also explains why averages are more stable than individual observations.</p>
+        <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+# Population: highly skewed (exponential distribution)
+population = np.random.exponential(scale=2, size=100000)
+
+# Take 1000 samples of size 30, record each sample mean
+sample_means = [np.random.choice(population, 30).mean() for _ in range(1000)]
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+axes[0].hist(population[:5000], bins=50, color='salmon', edgecolor='white')
+axes[0].set_title('Original Population (Skewed)')
+
+axes[1].hist(sample_means, bins=50, color='#1B3A6B', edgecolor='white')
+axes[1].set_title('Distribution of Sample Means (n=30)\n— approaches Normal!')
+
+plt.tight_layout()
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Hypothesis Testing</h4>
+        <p>Hypothesis testing is the formal process for making decisions based on data. You start with a default assumption (H₀) and test whether the data provides enough evidence to reject it.</p>
+        <ul class="content-list">
+          <li><strong>Null Hypothesis (H₀)</strong> — The default assumption. "There is no difference" / "The effect is zero."</li>
+          <li><strong>Alternative Hypothesis (H₁)</strong> — What you're trying to prove. "There IS a difference."</li>
+          <li><strong>p-value</strong> — Probability of seeing results this extreme (or more extreme) if H₀ were true. Low p-value = strong evidence against H₀.</li>
+          <li><strong>Significance level α = 0.05</strong> — Threshold. If p &lt; α, we reject H₀. We accept a 5% chance of being wrong.</li>
+          <li><strong>Type I error</strong> — False positive: rejecting H₀ when it's actually true (probability = α).</li>
+          <li><strong>Type II error</strong> — False negative: failing to reject H₀ when it's actually false.</li>
+        </ul>
+        <pre><code>>import pandas as pd
+from scipy import stats
+import seaborn as sns
+
+df = sns.load_dataset('titanic')
+
+# Question: Do first-class and third-class passengers pay significantly different fares?
+# H₀: Mean fare for class 1 = Mean fare for class 3
+# H₁: Mean fares are different (two-tailed test)
+
+first_class = df[df['pclass'] == 1]['fare'].dropna()
+third_class = df[df['pclass'] == 3]['fare'].dropna()
+
+print(f"First class mean fare:  £{first_class.mean():.2f}")
+print(f"Third class mean fare: £{third_class.mean():.2f}")
+
+t_stat, p_value = stats.ttest_ind(first_class, third_class)
+print(f"\nt-statistic: {t_stat:.4f}")
+print(f"p-value:     {p_value:.10f}")
+
+if p_value < 0.05:
+    print("\nConclusion: REJECT H₀ — Fares are significantly different (p < 0.05)")
+else:
+    print("\nConclusion: FAIL TO REJECT H₀ — No significant difference found")</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="week-block" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <h3>Machine Learning Foundations</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Types of Machine Learning</h4>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>Supervised Learning</strong>
+            <p>Learn from labeled examples (X → y pairs). Training data has correct answers. Goal: predict y for new X. Examples: spam detection (email → spam/not spam), house price prediction, customer churn.</p>
+          </div>
+          <div class="info-card">
+            <strong>Unsupervised Learning</strong>
+            <p>Find patterns in data without labels. No "correct answers" provided. Examples: customer segmentation (clustering), anomaly detection, topic modeling, dimensionality reduction.</p>
+          </div>
+          <div class="info-card">
+            <strong>Reinforcement Learning</strong>
+            <p>Agent learns by interacting with environment and receiving rewards/penalties. Examples: game-playing AI (AlphaGo), robot navigation, recommendation systems optimization.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>The ML Workflow</h4>
+        <div class="workflow-steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Data</strong> — Collect, load, and understand your dataset</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Features</strong> — Select, engineer, and preprocess input variables (X)</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Split</strong> — Divide into training set (learn) and test set (evaluate)</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Model</strong> — Choose and train a model on training data</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Evaluate</strong> — Measure performance on the test set (held out during training)</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Tune</strong> — Adjust hyperparameters, features, or model choice to improve performance</div></div>
+        </div>
+        <pre><code>>from sklearn.model_selection import train_test_split
+
+# X = features (input), y = target (output)
+X = df[['age', 'fare', 'pclass', 'sex_encoded']]
+y = df['survived']
+
+# 80% train, 20% test, random_state for reproducibility
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y  # stratify keeps class ratios
+)
+
+print(f"Train size: {len(X_train)} rows")
+print(f"Test size:  {len(X_test)} rows")
+print(f"Train survival rate: {y_train.mean():.1%}")
+print(f"Test survival rate:  {y_test.mean():.1%}")</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Linear Regression</h4>
+        <p>Linear regression predicts a continuous numeric value by fitting a straight line through the data. The model learns weights (coefficients) for each feature: ŷ = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ</p>
+        <pre><code>>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+
+# Load dataset
+housing = fetch_california_housing(as_frame=True)
+X, y = housing.data[['MedInc','HouseAge','AveRooms']], housing.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Evaluate
+mse  = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+r2   = r2_score(y_test, y_pred)
+
+print(f"RMSE: {rmse:.3f}")    # Root Mean Squared Error (in same units as y)
+print(f"R²:   {r2:.3f}")      # 0=terrible, 1=perfect, typical good: >0.7
+
+# Interpret coefficients
+for feat, coef in zip(X.columns, model.coef_):
+    print(f"  {feat}: {coef:.4f}")
+print(f"  Intercept: {model.intercept_:.4f}")</code></pre>
+        <p><strong>MSE</strong> — Average squared error between predictions and actuals. Lower is better. Penalizes large errors more than small ones.<br>
+        <strong>R²</strong> — Proportion of variance in y explained by the model. R²=0.75 means the model explains 75% of the variation in house prices.</p>
+      </div>
+
+      <div class="concept-section">
+        <h4>Logistic Regression — Classification</h4>
+        <p>Despite its name, logistic regression is a classification algorithm. It predicts probabilities (0–1) using the sigmoid function, then applies a threshold (default: 0.5) to classify into categories.</p>
+        <pre><code>>from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset('titanic').dropna(subset=['age','fare','pclass','sex','survived'])
+df['sex_enc'] = (df['sex'] == 'male').astype(int)
+
+X = df[['age', 'fare', 'pclass', 'sex_enc']]
+y = df['survived']
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model = LogisticRegression(max_iter=1000, random_state=42)
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]   # probability of survival
+
+print(f"Accuracy:  {accuracy_score(y_test, y_pred):.3f}")
+print(f"Precision: {precision_score(y_test, y_pred):.3f}")  # of predicted positives, how many were correct
+print(f"Recall:    {recall_score(y_test, y_pred):.3f}")     # of actual positives, how many did we find
+print(f"F1 Score:  {f1_score(y_test, y_pred):.3f}")         # harmonic mean of precision and recall
+print()
+print(classification_report(y_test, y_pred, target_names=['Died','Survived']))</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Feature Engineering</h4>
+        <p>Raw data rarely comes in the right format for ML models. Feature engineering transforms data to make patterns more learnable.</p>
+        <pre><code>>from sklearn.preprocessing import LabelEncoder, StandardScaler
+import pandas as pd
+
+# ---- One-Hot Encoding — for nominal categories ----
+# Converts 'color' = ['red','blue','green'] into 3 binary columns
+df_encoded = pd.get_dummies(df, columns=['embarked'], drop_first=True, dtype=int)
+
+# ---- Label Encoding — for ordinal categories ----
+le = LabelEncoder()
+df['size_enc'] = le.fit_transform(df['size'])    # 'small'=2, 'medium'=1, 'large'=0
+
+# ---- StandardScaler — for numeric features ----
+# Subtracts mean, divides by std → mean=0, std=1
+# Required by KNN, SVM, logistic regression, neural networks
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_train)           # fit on train only!
+X_test_scaled = scaler.transform(X_test)           # transform test using train's stats
+
+# ---- Create new features ----
+df['FamilySize'] = df['sibsp'] + df['parch'] + 1   # total family aboard
+df['IsAlone'] = (df['FamilySize'] == 1).astype(int)
+df['AgeGroup'] = pd.cut(df['age'], bins=[0,12,18,60,100], labels=['Child','Teen','Adult','Senior'])</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="week-block" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <h3>Intermediate ML Models</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Decision Trees</h4>
+        <p>A decision tree makes predictions by learning a set of if-then-else rules from data. It splits the data at each node by the feature and threshold that best separates the classes (measured by Gini impurity or information gain).</p>
+        <pre><code>>from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+model = DecisionTreeClassifier(max_depth=4, random_state=42)
+model.fit(X_train, y_train)
+
+print("Training accuracy:", accuracy_score(y_train, model.predict(X_train)))
+print("Test accuracy:    ", accuracy_score(y_test, model.predict(X_test)))
+# Large gap between train and test = overfitting
+
+# Print the tree rules
+print(export_text(model, feature_names=list(X.columns)))
+
+# Key hyperparameters:
+# max_depth        — limits tree depth (prevents overfitting)
+# min_samples_leaf — minimum samples in a leaf (prevents overfitting)
+# max_features     — number of features to consider at each split</code></pre>
+        <p><strong>Gini Impurity</strong> — Measures how often a randomly chosen element from a set would be incorrectly labeled. A perfectly pure node (all one class) has Gini = 0. A 50/50 split has Gini = 0.5.</p>
+        <p><strong>Overfitting</strong> — When a decision tree grows too deep, it memorizes the training data (including noise) and fails to generalize to new data. Training accuracy is high but test accuracy is much lower. Fix: limit max_depth.</p>
+      </div>
+
+      <div class="concept-section">
+        <h4>Random Forest — Ensemble Learning</h4>
+        <p>Random Forest builds many decision trees (an ensemble) on random subsets of the data (bagging = bootstrap aggregating) and random subsets of features. Each tree votes on the final prediction. This dramatically reduces overfitting compared to a single tree.</p>
+        <pre><code>>from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import matplotlib.pyplot as plt
+
+rf = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
+rf.fit(X_train, y_train)
+
+print("RF Test accuracy:", accuracy_score(y_test, rf.predict(X_test)))
+
+# Feature importance — which features matter most?
+importances = pd.Series(rf.feature_importances_, index=X.columns).sort_values(ascending=False)
+print("\nFeature Importance:")
+print(importances)
+
+plt.figure(figsize=(8, 4))
+importances.plot(kind='bar', color='#1B3A6B')
+plt.title('Random Forest Feature Importance')
+plt.ylabel('Importance Score')
+plt.tight_layout()
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>K-Nearest Neighbors (KNN)</h4>
+        <p>KNN classifies a new point by looking at the K closest points in the training data (by Euclidean distance) and taking a majority vote. It's a simple, intuitive algorithm but can be slow on large datasets.</p>
+        <pre><code>>from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+
+# KNN requires feature scaling — all features must be on same scale
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s  = scaler.transform(X_test)
+
+# Try different values of k
+results = []
+for k in range(1, 21):
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train_s, y_train)
+    results.append({'k': k, 'accuracy': accuracy_score(y_test, knn.predict(X_test_s))})
+
+import pandas as pd
+results_df = pd.DataFrame(results)
+print(results_df)
+# Choose k at the "elbow" — accuracy stops improving significantly
+
+# Small k = complex boundary, may overfit
+# Large k = smooth boundary, may underfit
+# Common choices: sqrt(n) or odd numbers to avoid ties</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>K-Means Clustering</h4>
+        <p>K-Means partitions data into K clusters by iteratively assigning points to the nearest centroid and updating centroids. It's an unsupervised algorithm — no labels needed.</p>
+        <pre><code>>from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate sample customer data
+np.random.seed(42)
+X = np.vstack([
+    np.random.randn(100, 2) + [2, 2],     # cluster 1
+    np.random.randn(100, 2) + [6, 6],     # cluster 2
+    np.random.randn(100, 2) + [2, 8]      # cluster 3
+])
+
+# Elbow method — find optimal k
+inertias = []
+for k in range(1, 9):
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    km.fit(X)
+    inertias.append(km.inertia_)   # sum of squared distances to nearest centroid
+
+plt.figure(figsize=(8, 4))
+plt.plot(range(1, 9), inertias, marker='o', color='#1B3A6B')
+plt.title('Elbow Method — Optimal K')
+plt.xlabel('Number of Clusters (K)')
+plt.ylabel('Inertia')
+plt.show()
+# Look for the "elbow" — where adding more clusters gives diminishing returns
+
+# Fit with chosen k=3
+km = KMeans(n_clusters=3, random_state=42, n_init=10)
+labels = km.fit_predict(X)
+
+plt.figure(figsize=(7, 6))
+plt.scatter(X[:,0], X[:,1], c=labels, cmap='Set2', alpha=0.7)
+plt.scatter(km.cluster_centers_[:,0], km.cluster_centers_[:,1],
+            s=200, c='red', marker='X', label='Centroids')
+plt.title('K-Means Clustering (k=3)')
+plt.legend()
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Model Evaluation &amp; Cross-Validation</h4>
+        <pre><code>>from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve
+from sklearn.model_selection import cross_val_score
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# ---- Confusion Matrix ----
+cm = confusion_matrix(y_test, y_pred)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=['Predicted Died','Predicted Survived'],
+            yticklabels=['Actual Died','Actual Survived'])
+plt.title('Confusion Matrix')
+plt.show()
+
+# ---- ROC-AUC ----
+# AUC: Area Under the ROC Curve
+# 0.5 = random guessing, 1.0 = perfect, >0.8 = good
+auc = roc_auc_score(y_test, y_prob)
+print(f"ROC-AUC: {auc:.3f}")
+
+fpr, tpr, thresholds = roc_curve(y_test, y_prob)
+plt.figure(figsize=(6, 6))
+plt.plot(fpr, tpr, color='#1B3A6B', linewidth=2, label=f'AUC = {auc:.3f}')
+plt.plot([0,1],[0,1], linestyle='--', color='gray')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate (Recall)')
+plt.title('ROC Curve')
+plt.legend()
+plt.show()
+
+# ---- Cross-validation: more reliable than single train/test split ----
+cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+print(f"CV Accuracy: {cv_scores.mean():.3f} ± {cv_scores.std():.3f}")
+# 5-fold: split data into 5 parts, train on 4, test on 1, repeat 5 times
+
+# ---- GridSearchCV — systematic hyperparameter tuning ----
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [3, 5, 7, None]
+}
+grid_search = GridSearchCV(RandomForestClassifier(random_state=42),
+                           param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+grid_search.fit(X_train, y_train)
+print("Best params:", grid_search.best_params_)
+print("Best CV score:", grid_search.best_score_)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="week-block" id="w8">
+    <div class="week-header" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <h3>SQL for Data Analysis</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Why SQL Matters for Data Scientists</h4>
+        <p>Most business data lives in relational databases (MySQL, PostgreSQL, Snowflake, BigQuery). Even if you're a Python expert, you'll spend significant time writing SQL to extract, transform, and aggregate data before loading it into a notebook. SQL is typically the fastest way to work with large datasets — running queries on the database server, not your laptop's RAM.</p>
+      </div>
+
+      <div class="concept-section">
+        <h4>Foundations — SELECT, WHERE, ORDER BY</h4>
+        <pre><code>>-- Basic structure
+SELECT column1, column2      -- which columns to return
+FROM tablename               -- which table
+WHERE condition              -- filter rows (optional)
+ORDER BY column1 DESC        -- sort results (optional)
+LIMIT 10;                    -- return at most 10 rows
+
+-- Examples
+SELECT * FROM customers;     -- all columns, all rows
+SELECT name, email FROM customers WHERE country = 'India';
+SELECT * FROM orders WHERE amount > 1000 ORDER BY amount DESC LIMIT 5;
+
+-- Text operators
+SELECT * FROM products WHERE name LIKE '%phone%';   -- contains 'phone'
+SELECT * FROM users WHERE status IN ('active','trial');
+SELECT * FROM orders WHERE date BETWEEN '2026-01-01' AND '2026-06-30';</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Aggregations — GROUP BY, HAVING</h4>
+        <pre><code>>-- COUNT, SUM, AVG, MIN, MAX
+SELECT country, COUNT(*) as customer_count
+FROM customers
+GROUP BY country
+ORDER BY customer_count DESC;
+
+-- HAVING filters groups (use WHERE before GROUP BY, HAVING after)
+SELECT product_id, SUM(quantity) as total_sold
+FROM order_items
+GROUP BY product_id
+HAVING SUM(quantity) > 100    -- only products sold more than 100 times
+ORDER BY total_sold DESC;
+
+-- Multiple aggregations
+SELECT
+    region,
+    COUNT(DISTINCT customer_id) as unique_customers,
+    SUM(amount) as total_revenue,
+    AVG(amount) as avg_order_value,
+    MAX(amount) as largest_order
+FROM orders
+WHERE YEAR(order_date) = 2026
+GROUP BY region;</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>JOINs — Combining Tables</h4>
+        <pre><code>>-- INNER JOIN — only matching rows from both tables
+SELECT o.order_id, c.name, o.amount
+FROM orders o
+INNER JOIN customers c ON o.customer_id = c.id;
+
+-- LEFT JOIN — all rows from left table, matching from right (NULL if no match)
+SELECT c.name, COUNT(o.order_id) as order_count
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id  -- includes customers with no orders
+GROUP BY c.id, c.name;
+
+-- RIGHT JOIN — all rows from right table (less common, can always rewrite as LEFT JOIN)
+-- FULL OUTER JOIN — all rows from both tables (not available in MySQL)
+
+-- Multi-table join
+SELECT c.name, p.name as product, oi.quantity, oi.price
+FROM customers c
+JOIN orders o        ON c.id = o.customer_id
+JOIN order_items oi  ON o.id = oi.order_id
+JOIN products p      ON oi.product_id = p.id
+WHERE c.country = 'India';</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Subqueries and CTEs</h4>
+        <pre><code>>-- Subquery — query inside a query
+SELECT name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);  -- above average salary
+
+-- CTE (Common Table Expression) — WITH clause — more readable
+WITH monthly_revenue AS (
+    SELECT
+        DATE_FORMAT(order_date, '%Y-%m') as month,
+        SUM(amount) as revenue
+    FROM orders
+    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+)
+SELECT month, revenue,
+       revenue - LAG(revenue) OVER (ORDER BY month) as mom_change
+FROM monthly_revenue
+ORDER BY month;
+
+-- Multiple CTEs
+WITH
+  active_users AS (SELECT id FROM users WHERE last_login > DATE_SUB(NOW(), INTERVAL 30 DAY)),
+  user_orders  AS (SELECT user_id, COUNT(*) as order_count FROM orders GROUP BY user_id)
+SELECT au.id, COALESCE(uo.order_count, 0) as orders
+FROM active_users au
+LEFT JOIN user_orders uo ON au.id = uo.user_id;</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Window Functions — Powerful Analytics</h4>
+        <pre><code>>-- Window functions operate on a set of rows relative to the current row
+-- They do NOT reduce the number of rows (unlike GROUP BY)
+
+-- ROW_NUMBER() — sequential number within partition
+SELECT name, department, salary,
+       ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) as rank_in_dept
+FROM employees;
+-- Useful for: getting top-N per group
+
+-- RANK() — same rank for ties, then skips (1,2,2,4)
+-- DENSE_RANK() — same rank for ties, no skipping (1,2,2,3)
+
+-- LAG() / LEAD() — access previous/next row values
+SELECT
+    date,
+    revenue,
+    LAG(revenue, 1) OVER (ORDER BY date) as prev_day_revenue,
+    revenue - LAG(revenue, 1) OVER (ORDER BY date) as day_change
+FROM daily_sales;
+
+-- Running total
+SELECT date, revenue,
+       SUM(revenue) OVER (ORDER BY date ROWS UNBOUNDED PRECEDING) as running_total
+FROM daily_sales;</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Connecting pandas to SQL</h4>
+        <pre><code>>import sqlite3
+import pandas as pd
+
+# Create SQLite database in memory (or from a file)
+conn = sqlite3.connect(':memory:')   # or 'mydata.db' for persistent
+
+# Create a table from a DataFrame
+df.to_sql('customers', conn, if_exists='replace', index=False)
+
+# Run SQL and get results as a DataFrame
+query = """
+    SELECT city, COUNT(*) as count, AVG(salary) as avg_salary
+    FROM customers
+    WHERE age > 25
+    GROUP BY city
+    HAVING count > 5
+    ORDER BY avg_salary DESC
+"""
+result = pd.read_sql(query, conn)
+print(result)
+
+conn.close()</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="concept_notes_beginner.html" class="btn-secondary">← Beginner Notes</a>
+    <a href="lab_guide_intermediate.html" class="btn-primary">🔬 Go to Intermediate Labs →</a>
+    <a href="concept_notes_advanced.html" class="btn-secondary">Next: Advanced Notes →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w5');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

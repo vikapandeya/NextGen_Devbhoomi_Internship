@@ -1,0 +1,818 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking & Sysadmin — Lab Guide Beginner | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">🔬 Lab Guide — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; LAB GUIDE — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Lab ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Beginner</h2>
+      <p>Weeks 1–4 · VM Setup · DNS &amp; DHCP · CLI Workshop · Network Diagnostics</p>
+    </div>
+    <div class="lh-badge">LAB · BEGINNER</div>
+  </div>
+
+  <div class="info-box note">
+    <strong>Lab Environment:</strong> All labs require VirtualBox (free) with Ubuntu Server 22.04 LTS. Download the ISO from <strong>ubuntu.com/download/server</strong>. Each week builds on the previous — complete in order.
+  </div>
+
+  <!-- WEEK 1 LAB -->
+  <div class="week-block" id="w1">
+    <div class="week-header wn-beg" onclick="toggleWeek('w1')">
+      <span class="wn-label">Week 1 Lab</span>
+      <span class="wn-title">VM Setup, Static IP &amp; OSI/Subnetting Practice</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Create and configure an Ubuntu Server 22.04 VM in VirtualBox</li>
+        <li>Configure a static IP address using Netplan</li>
+        <li>Understand how each OSI layer applies to a real HTTP request</li>
+        <li>Practice subnetting by hand — split a /24 into 4 equal subnets</li>
+      </ul>
+
+      <h3>Prerequisites</h3>
+      <ul class="content-list">
+        <li>VirtualBox installed (version 7.x recommended)</li>
+        <li>Ubuntu Server 22.04 LTS ISO downloaded</li>
+        <li>At least 4 GB RAM available on host machine</li>
+      </ul>
+
+      <h3>Step 1 — Create Ubuntu Server VM</h3>
+      <pre><code>VirtualBox Settings for the VM:
+  Name:      lab-server1
+  Type:      Linux / Ubuntu (64-bit)
+  RAM:       2048 MB
+  Disk:      20 GB (VDI, dynamically allocated)
+  Network:
+    Adapter 1: NAT         (internet access)
+    Adapter 2: Host-Only   (host-to-VM communication, 192.168.56.x range)
+
+Installation:
+  - Boot from ISO
+  - Choose: "Install Ubuntu Server"
+  - Network: leave as DHCP for now (we configure static next)
+  - Storage: use entire disk
+  - Create user: devuser / YourPassword123
+  - Install OpenSSH server: YES
+  - Wait for installation to complete and reboot</code></pre>
+
+      <h3>Step 2 — Configure Static IP via Netplan</h3>
+      <pre><code># After booting, log in as devuser
+# Find the name of your second interface (Host-Only NIC)
+ip addr show
+# Look for: enp0s8 (or enp0s3 for second adapter)
+
+# Edit the Netplan configuration
+sudo nano /etc/netplan/00-installer-config.yaml
+
+# Replace the content with:
+network:
+  version: 2
+  ethernets:
+    enp0s3:                    # First NIC (NAT) — leave as DHCP
+      dhcp4: true
+    enp0s8:                    # Second NIC (Host-Only) — static IP
+      dhcp4: false
+      addresses:
+        - 192.168.56.10/24
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
+
+# Apply the configuration
+sudo netplan apply</code></pre>
+
+      <div class="info-box tip">
+        <strong>YAML tip:</strong> Netplan files use YAML — indentation MUST use spaces (not tabs). Two spaces per level. A single incorrect space will cause an error.
+      </div>
+
+      <h3>Step 3 — Verify Network Configuration</h3>
+      <pre><code># Check IP address was applied
+ip addr show enp0s8
+# Expected output:
+# 3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 ...
+#     inet 192.168.56.10/24 brd 192.168.56.255 scope global enp0s8
+
+# Check routing table
+ip route show
+# Expected output:
+# default via 10.0.2.2 dev enp0s3 proto dhcp ...   (NAT gateway)
+# 192.168.56.0/24 dev enp0s8 proto kernel scope link src 192.168.56.10
+
+# Test internet connectivity
+ping -c 4 8.8.8.8
+# Expected: 4 packets transmitted, 4 received, 0% packet loss
+
+# Test DNS resolution
+ping -c 2 google.com
+# Expected: resolves to Google IP, pings successfully
+
+# Checkpoint: SSH from your host machine to the VM
+ssh devuser@192.168.56.10
+# (The VM's IP from Host-Only adapter)</code></pre>
+
+      <h3>Step 4 — OSI Layer Exercise</h3>
+      <p>For an HTTP GET request from your browser to <code>http://google.com</code>, document what happens at each OSI layer:</p>
+      <pre><code>Layer 7 — Application:
+  Browser creates HTTP request:
+  "GET / HTTP/1.1\r\nHost: google.com\r\nUser-Agent: Firefox/120\r\n\r\n"
+
+Layer 6 — Presentation:
+  If HTTPS: TLS negotiation, data encrypted
+  Character encoding: UTF-8
+
+Layer 5 — Session:
+  TCP session established (SYN/SYN-ACK/ACK handshake)
+  Session tracks request-response pairs
+
+Layer 4 — Transport:
+  TCP segment created:
+  Source port: 54321 (ephemeral, randomly chosen)
+  Destination port: 80 (HTTP) or 443 (HTTPS)
+  Sequence number: tracks byte ordering
+
+Layer 3 — Network:
+  IP packet created:
+  Source IP: 192.168.56.10 (your VM's IP)
+  Destination IP: 142.250.80.46 (Google's IP — resolved by DNS)
+  TTL: 64 (decremented by each router)
+
+Layer 2 — Data Link:
+  Ethernet frame created:
+  Source MAC: your VM's MAC address
+  Destination MAC: default gateway's MAC (ARP lookup)
+  EtherType: 0x0800 (IPv4)
+
+Layer 1 — Physical:
+  Frame converted to electrical signals (copper) or
+  light pulses (fibre) or radio waves (WiFi)
+  Transmitted at physical medium's speed</code></pre>
+
+      <h3>Step 5 — Subnetting Worksheet</h3>
+      <pre><code>Exercise: Split 192.168.10.0/24 into 4 equal subnets
+
+Step 1: How many bits to borrow?
+  4 subnets = 2^2, so borrow 2 bits
+  New prefix: /24 + 2 = /26
+  New subnet mask: 255.255.255.192
+
+Step 2: How many hosts per subnet?
+  Host bits: 32 - 26 = 6 bits
+  Total IPs: 2^6 = 64
+  Usable hosts: 64 - 2 = 62 (subtract network + broadcast)
+
+Step 3: Calculate the 4 subnets
+  Block size: 256 / 4 = 64
+
+Subnet 1: 192.168.10.0/26
+  Network:   192.168.10.0
+  First host: 192.168.10.1
+  Last host:  192.168.10.62
+  Broadcast:  192.168.10.63
+
+Subnet 2: 192.168.10.64/26
+  Network:    192.168.10.64
+  First host: 192.168.10.65
+  Last host:  192.168.10.126
+  Broadcast:  192.168.10.127
+
+Subnet 3: 192.168.10.128/26
+  Network:    192.168.10.128
+  First host: 192.168.10.129
+  Last host:  192.168.10.190
+  Broadcast:  192.168.10.191
+
+Subnet 4: 192.168.10.192/26
+  Network:    192.168.10.192
+  First host: 192.168.10.193
+  Last host:  192.168.10.254
+  Broadcast:  192.168.10.255
+
+Verification: 4 × 64 = 256 ✓ (accounts for entire /24)</code></pre>
+
+      <h3>Checkpoint Verification</h3>
+      <pre><code># All of the following should succeed before proceeding to Week 2:
+ip addr show enp0s8 | grep "192.168.56.10"   # Static IP configured
+ping -c 2 8.8.8.8                            # Internet reachable
+ping -c 2 google.com                         # DNS working
+ssh devuser@192.168.56.10                    # SSH accessible from host</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 2 LAB -->
+  <div class="week-block" id="w2">
+    <div class="week-header wn-beg" onclick="toggleWeek('w2')">
+      <span class="wn-label">Week 2 Lab</span>
+      <span class="wn-title">DNS Server (BIND9) &amp; DHCP Server Setup</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Install and configure BIND9 as an authoritative DNS server for <code>lab.local</code></li>
+        <li>Create forward and reverse DNS zones</li>
+        <li>Install and configure ISC DHCP Server</li>
+        <li>Test DNS resolution and DHCP lease assignment</li>
+      </ul>
+
+      <h3>Part A — BIND9 DNS Server</h3>
+      <pre><code># Install BIND9
+sudo apt update &amp;&amp; sudo apt install bind9 bind9utils bind9-doc -y
+
+# Verify installation
+named -v
+# Expected: BIND 9.18.x
+
+# Edit named.conf.local to add your zone
+sudo nano /etc/bind/named.conf.local</code></pre>
+
+      <pre><code>// Add to /etc/bind/named.conf.local:
+
+// Forward zone
+zone "lab.local" {
+    type master;
+    file "/etc/bind/db.lab.local";
+};
+
+// Reverse zone for 192.168.56.x
+zone "56.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.56";
+};</code></pre>
+
+      <pre><code># Create the forward zone file
+sudo nano /etc/bind/db.lab.local</code></pre>
+
+      <pre><code>; /etc/bind/db.lab.local — Forward zone for lab.local
+$TTL    604800
+@       IN      SOA     ns1.lab.local. admin.lab.local. (
+                        2024010101      ; Serial (increment when you change)
+                        3600            ; Refresh
+                        1800            ; Retry
+                        604800          ; Expire
+                        86400 )         ; Negative TTL
+
+; Name servers
+@       IN      NS      ns1.lab.local.
+
+; A Records
+ns1     IN      A       192.168.56.10
+server1 IN      A       192.168.56.10
+server2 IN      A       192.168.56.11
+gateway IN      A       192.168.56.1
+www     IN      CNAME   server1         ; www is an alias for server1</code></pre>
+
+      <pre><code># Create the reverse zone file
+sudo nano /etc/bind/db.192.168.56</code></pre>
+
+      <pre><code>; /etc/bind/db.192.168.56 — Reverse zone for 192.168.56.x
+$TTL    604800
+@       IN      SOA     ns1.lab.local. admin.lab.local. (
+                        2024010101
+                        3600
+                        1800
+                        604800
+                        86400 )
+
+@       IN      NS      ns1.lab.local.
+
+; PTR Records (last octet only)
+10      IN      PTR     server1.lab.local.
+11      IN      PTR     server2.lab.local.
+1       IN      PTR     gateway.lab.local.</code></pre>
+
+      <pre><code># Validate configuration files
+sudo named-checkconf                              # Check named.conf syntax
+sudo named-checkzone lab.local /etc/bind/db.lab.local       # Check forward zone
+sudo named-checkzone 56.168.192.in-addr.arpa /etc/bind/db.192.168.56  # Check reverse
+
+# Expected output: "OK"
+
+# Restart BIND9
+sudo systemctl restart bind9
+sudo systemctl status bind9                       # Verify running</code></pre>
+
+      <h3>Test DNS Resolution</h3>
+      <pre><code># Test forward lookup (A record)
+dig @192.168.56.10 server1.lab.local A
+# Expected ANSWER SECTION:
+# server1.lab.local.  604800  IN  A  192.168.56.10
+
+# Test reverse lookup (PTR record)
+dig @192.168.56.10 -x 192.168.56.10
+# Expected ANSWER SECTION:
+# 10.56.168.192.in-addr.arpa. 604800 IN PTR server1.lab.local.
+
+# Test CNAME
+dig @192.168.56.10 www.lab.local
+# Should show CNAME + A record chain
+
+# Test from the VM itself (configure to use local DNS)
+sudo resolvectl dns enp0s8 192.168.56.10
+ping server1.lab.local                            # Should resolve locally</code></pre>
+
+      <h3>Part B — ISC DHCP Server</h3>
+      <pre><code># Install DHCP server
+sudo apt install isc-dhcp-server -y
+
+# Configure DHCP
+sudo nano /etc/dhcp/dhcpd.conf</code></pre>
+
+      <pre><code># /etc/dhcp/dhcpd.conf
+default-lease-time 600;       # 10 minute default lease
+max-lease-time 7200;          # 2 hour maximum lease
+authoritative;                # This server is authoritative for the subnet
+
+# DNS update settings
+ddns-update-style none;
+
+subnet 192.168.56.0 netmask 255.255.255.0 {
+    range 192.168.56.100 192.168.56.200;          # Dynamic IP pool
+    option routers 192.168.56.1;                  # Default gateway
+    option domain-name-servers 192.168.56.10;     # Our DNS server
+    option domain-name "lab.local";               # Default search domain
+    option subnet-mask 255.255.255.0;
+    option broadcast-address 192.168.56.255;
+}
+
+# Static reservation for server2 (optional)
+host server2 {
+    hardware ethernet 08:00:27:AB:CD:EF;          # Replace with actual MAC
+    fixed-address 192.168.56.11;
+}</code></pre>
+
+      <pre><code># Specify which interface to listen on
+sudo nano /etc/default/isc-dhcp-server
+
+# Set:
+INTERFACESv4="enp0s8"
+
+# Restart DHCP server
+sudo systemctl restart isc-dhcp-server
+sudo systemctl status isc-dhcp-server</code></pre>
+
+      <h3>Test DHCP</h3>
+      <pre><code># On a second VM (lab-client1) with Host-Only adapter and DHCP enabled:
+# After boot, check received IP:
+ip addr show
+# Should show IP in range 192.168.56.100-200
+
+# View DHCP lease file on the server
+cat /var/lib/dhcp/dhcpd.leases
+# Should show the client's lease entry
+
+# View client's lease
+cat /var/lib/dhcp/dhclient.leases    # On the client VM
+
+# Monitor DHCP activity
+sudo journalctl -u isc-dhcp-server -f</code></pre>
+
+      <h3>Troubleshooting Tips</h3>
+      <table class="data-table">
+        <thead><tr><th>Problem</th><th>Check</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>BIND9 won't start</td><td><code>sudo journalctl -u bind9</code></td><td>Fix syntax errors reported; re-run named-checkconf</td></tr>
+          <tr><td>Zone file error</td><td><code>named-checkzone lab.local db.lab.local</code></td><td>Fix line number indicated; check SOA serial format</td></tr>
+          <tr><td>DHCP "not configured to listen"</td><td><code>/etc/default/isc-dhcp-server</code></td><td>Set INTERFACESv4 to correct interface name</td></tr>
+          <tr><td>dig returns SERVFAIL</td><td>Zone file PTR format</td><td>Ensure PTR records end with a trailing dot: <code>server1.lab.local.</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WEEK 3 LAB -->
+  <div class="week-block" id="w3">
+    <div class="week-header wn-beg" onclick="toggleWeek('w3')">
+      <span class="wn-label">Week 3 Lab</span>
+      <span class="wn-title">Linux CLI Workshop — 20 Exercises</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Manage users, groups, and file permissions</li>
+        <li>Use text processing tools (grep, awk, sed, tar)</li>
+        <li>Write a disk monitoring bash script with cron scheduling</li>
+        <li>Set up SSH key-based authentication and rsync backup</li>
+      </ul>
+
+      <h3>Exercises 1–5: Users, Groups &amp; Permissions</h3>
+      <pre><code># Exercise 1: Create a new user with home directory
+sudo useradd -m -s /bin/bash devuser
+sudo passwd devuser
+# Verify: cat /etc/passwd | grep devuser
+# Expected: devuser:x:1001:1001::/home/devuser:/bin/bash
+
+# Exercise 2: Create a directory with specific ownership
+sudo mkdir -p /data/projects
+sudo chown devuser:devuser /data/projects
+sudo chmod 750 /data/projects
+# Verify:
+ls -la /data/
+# Expected: drwxr-x---  devuser devuser  /data/projects
+
+# Exercise 3: Create a group and add the user
+sudo groupadd developers
+sudo usermod -aG developers devuser
+groups devuser
+# Expected: devuser : devuser sudo developers
+
+# Exercise 4: Set the setgid bit (new files inherit group)
+sudo chmod 2775 /data/projects
+ls -la /data/
+# Expected: drwxrwsr-x (note the 's' in group execute position)
+
+# Exercise 5: Test permissions as devuser
+su - devuser
+touch /data/projects/testfile.txt
+ls -la /data/projects/testfile.txt
+# Expected: owner=devuser, group=developers
+exit</code></pre>
+
+      <h3>Exercises 6–10: File Operations &amp; Text Processing</h3>
+      <pre><code># Exercise 6: Find all config files under /etc
+find /etc -name "*.conf" -type f 2>/dev/null | head -20
+# Expected: list of .conf file paths
+
+# Exercise 7: Search for a pattern recursively
+grep -rn "PasswordAuthentication" /etc/ssh/
+# Expected:
+# /etc/ssh/sshd_config:65:#PasswordAuthentication yes
+
+# Exercise 8: Extract user IDs from /etc/passwd sorted numerically
+awk -F: '{print $1, $3}' /etc/passwd | sort -k2 -n | tail -10
+# Expected: last 10 entries sorted by UID
+
+# Exercise 9: Edit SSH config to disable root login (in-place)
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak   # Backup first!
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
+grep "PermitRootLogin" /etc/ssh/sshd_config
+# Expected: PermitRootLogin no
+
+# Exercise 10: Create a compressed archive with date stamp
+sudo tar -czf /backup/projects-$(date +%Y%m%d).tar.gz /data/projects/ 2>/dev/null
+sudo mkdir -p /backup
+sudo tar -czf /backup/projects-$(date +%Y%m%d).tar.gz /data/projects/
+ls -lh /backup/
+# Expected: projects-20240115.tar.gz (with file size)
+# Decompress to verify: tar -tzf /backup/projects-*.tar.gz | head</code></pre>
+
+      <h3>Exercises 11–15: Disk Monitor Script</h3>
+      <pre><code># Exercise 11: Create the monitoring script
+sudo tee /usr/local/bin/disk_monitor.sh &lt;&lt;'EOF'
+#!/bin/bash
+# Disk usage monitoring script
+THRESHOLD=80
+LOG_FILE="/var/log/disk_monitor.log"
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
+df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read output; do
+    usep=$(echo "$output" | awk '{ print $1}' | cut -d'%' -f1)
+    partition=$(echo "$output" | awk '{ print $2 }')
+
+    if [ "$usep" -ge "$THRESHOLD" ]; then
+        echo "$TIMESTAMP: ALERT - Partition $partition is ${usep}% full" | tee -a "$LOG_FILE"
+        logger "DISK ALERT: $partition is ${usep}% full"
+    else
+        echo "$TIMESTAMP: OK - $partition is ${usep}% full" >> "$LOG_FILE"
+    fi
+done
+EOF
+
+# Exercise 12: Make it executable and test it
+sudo chmod +x /usr/local/bin/disk_monitor.sh
+sudo /usr/local/bin/disk_monitor.sh
+# Expected: OK messages for each partition (unless disk is &gt;80% full)
+
+# Exercise 13: View the log output
+cat /var/log/disk_monitor.log
+# Expected: timestamped OK or ALERT messages for each partition
+
+# Exercise 14: Schedule with cron (runs every 5 minutes)
+(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/local/bin/disk_monitor.sh") | crontab -
+crontab -l
+# Expected: the cron entry is listed
+
+# Exercise 15: Verify cron ran (wait 5+ minutes)
+tail -f /var/log/disk_monitor.log
+# Ctrl+C to stop watching
+# Check system cron log:
+sudo grep CRON /var/log/syslog | tail -5</code></pre>
+
+      <h3>Exercises 16–20: SSH Keys &amp; rsync</h3>
+      <pre><code>># Exercise 16: Generate an SSH key pair (on server1)
+ssh-keygen -t ed25519 -C "devuser@lab - $(date +%Y%m%d)" -f ~/.ssh/lab_key
+# Press Enter for no passphrase (for automation)
+ls -la ~/.ssh/
+# Expected: lab_key (private, 600) and lab_key.pub (public, 644)
+
+# Exercise 17: Copy public key to server2 (192.168.56.11)
+# First, ensure server2 is set up with same devuser account
+ssh-copy-id -i ~/.ssh/lab_key.pub devuser@192.168.56.11
+# Enter devuser's password when prompted
+# Expected: "Number of key(s) added: 1"
+
+# Exercise 18: Test passwordless SSH
+ssh -i ~/.ssh/lab_key devuser@192.168.56.11 'hostname &amp;&amp; uptime &amp;&amp; echo "SSH key auth works!"'
+# Expected output (no password prompt):
+# server2
+# 15:30:01 up 2:15, 1 user, load average: 0.00, 0.00, 0.00
+# SSH key auth works!
+
+# Exercise 19: Sync /data/projects to server2
+sudo mkdir -p /data/projects/app1 /data/projects/app2
+sudo touch /data/projects/app1/config.yaml /data/projects/app2/main.py
+
+rsync -avz --progress /data/projects/ devuser@192.168.56.11:/backup/projects/
+# Expected: shows files being transferred
+# Output ends with: sent xxx bytes, received xxx bytes
+
+# Exercise 20: Verify idempotency — second sync sends nothing
+rsync --dry-run -avz /data/projects/ devuser@192.168.56.11:/backup/projects/
+# Expected: "Number of regular files transferred: 0"
+# Only metadata lines, no actual file transfers</code></pre>
+
+      <div class="info-box tip">
+        <strong>rsync tip:</strong> The trailing slash on the source (<code>/data/projects/</code>) matters! With slash = sync <em>contents</em> of the directory. Without slash = sync the directory itself as a subdirectory.
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 LAB -->
+  <div class="week-block" id="w4">
+    <div class="week-header wn-beg" onclick="toggleWeek('w4')">
+      <span class="wn-label">Week 4 Lab</span>
+      <span class="wn-title">Network Diagnostics — 5 Scenario Troubleshooting</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Apply a systematic diagnostic process to identify and fix 5 real network problems</li>
+        <li>Use tcpdump to capture and analyze a TCP 3-way handshake</li>
+        <li>Understand common misconfiguration patterns and their symptoms</li>
+      </ul>
+
+      <div class="info-box note">
+        <strong>Lab Setup:</strong> An instructor script breaks different configs on the VM. Students must diagnose and fix them without being told what was broken. The scenarios below describe the symptoms you will encounter and the fix.
+      </div>
+
+      <h3>Scenario 1 — Wrong Default Gateway</h3>
+      <pre><code># SYMPTOM: Can ping 192.168.56.1 (local gateway) but cannot reach 8.8.8.8
+
+# STEP 1: Confirm the symptom
+ping -c 2 192.168.56.1        # Should succeed (local)
+ping -c 2 8.8.8.8             # Should FAIL (external)
+
+# STEP 2: Check the routing table
+ip route show
+# Broken output example:
+# 192.168.56.0/24 dev enp0s8 proto kernel scope link src 192.168.56.10
+# (Missing: default via X.X.X.X)
+# OR the default route points to a wrong gateway
+
+# STEP 3: Fix — add correct default route temporarily
+sudo ip route add default via 192.168.56.1
+ping -c 2 8.8.8.8             # Should now succeed
+
+# STEP 4: Make the fix permanent (Netplan)
+sudo nano /etc/netplan/00-installer-config.yaml
+# Add under enp0s8:
+#   routes:
+#     - to: 0.0.0.0/0
+#       via: 192.168.56.1
+sudo netplan apply
+
+# VERIFICATION:
+ip route show | grep default
+# Expected: default via 192.168.56.1 dev enp0s8</code></pre>
+
+      <h3>Scenario 2 — DNS Misconfiguration</h3>
+      <pre><code># SYMPTOM: ping 8.8.8.8 works (IP reachable) but ping google.com fails
+# Error: "ping: google.com: Name or service not known"
+
+# STEP 1: Confirm DNS is the problem
+ping -c 2 8.8.8.8             # Succeeds — internet works
+ping -c 2 google.com          # FAILS — DNS broken
+
+# STEP 2: Test DNS with explicit server
+dig @8.8.8.8 google.com       # Should SUCCEED (DNS works if we specify server)
+dig google.com                # FAILS — configured DNS server is bad
+
+# STEP 3: Check configured DNS server
+cat /etc/resolv.conf
+# Broken output:
+# nameserver 192.168.56.99    (wrong/nonexistent DNS server)
+
+# STEP 4: Fix using systemd-resolved
+sudo resolvectl dns enp0s8 8.8.8.8
+resolvectl status              # Verify DNS server set
+
+# OR edit Netplan to set correct nameservers
+sudo nano /etc/netplan/00-installer-config.yaml
+# Ensure nameservers.addresses: [8.8.8.8, 1.1.1.1]
+sudo netplan apply
+
+# VERIFICATION:
+dig google.com | grep "ANSWER SECTION" -A 1
+# Expected: google.com shows an IP address</code></pre>
+
+      <h3>Scenario 3 — Firewall Blocking Port 80</h3>
+      <pre><code># SYMPTOM: nginx is running but curl from other VM times out
+
+# STEP 1: Verify nginx is actually running and listening
+sudo systemctl status nginx           # Should show: active (running)
+ss -tulpn | grep :80
+# Expected: tcp LISTEN 0 511 0.0.0.0:80 nginx
+
+# STEP 2: Test locally (same machine)
+curl -s http://localhost              # Should return HTML
+
+# STEP 3: Check from other VM — times out
+# (On server2): curl -m 5 http://192.168.56.10/
+# Expected: curl: (28) Connection timed out
+
+# STEP 4: Check iptables for blocking rules
+sudo iptables -L -n -v
+# Look for: REJECT or DROP rule before any ACCEPT rule for port 80
+
+# STEP 5: Fix — allow port 80
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+# OR if there's a specific REJECT rule, remove it:
+sudo iptables -D INPUT -p tcp --dport 80 -j REJECT
+
+# STEP 6: Test again from server2
+# (On server2): curl -s http://192.168.56.10/
+# Expected: nginx default HTML page
+
+# VERIFICATION:
+sudo iptables -L INPUT -n -v | grep "dpt:80"
+# Expected: ACCEPT line for port 80</code></pre>
+
+      <h3>Scenario 4 — Wrong Subnet Mask</h3>
+      <pre><code># SYMPTOM: Two VMs on "same network" cannot communicate
+# Both have 192.168.56.x IPs but pings fail
+
+# STEP 1: Check IP configuration
+ip addr show enp0s8
+# Broken output:
+# inet 192.168.56.10/32 brd 192.168.56.10 scope global enp0s8
+#                   ^^^  /32 means "this host only" — no LAN connectivity!
+
+# STEP 2: Understand the problem
+# /32 mask = 255.255.255.255 — the host thinks it's isolated
+# No ARP requests sent, cannot reach any other host
+
+# STEP 3: Check ARP table
+arp -n
+# Empty or missing 192.168.56.1
+
+# STEP 4: Fix — remove wrong IP and add with correct mask
+sudo ip addr del 192.168.56.10/32 dev enp0s8
+sudo ip addr add 192.168.56.10/24 dev enp0s8
+# Bring interface back up if needed:
+sudo ip link set enp0s8 up
+
+# STEP 5: Make permanent in Netplan
+sudo nano /etc/netplan/00-installer-config.yaml
+# Ensure addresses: [192.168.56.10/24]  (not /32)
+sudo netplan apply
+
+# VERIFICATION:
+ip addr show enp0s8 | grep inet
+# Expected: inet 192.168.56.10/24 brd 192.168.56.255
+ping -c 2 192.168.56.11       # Should now succeed</code></pre>
+
+      <h3>Scenario 5 — DHCP Wrong Interface</h3>
+      <pre><code># SYMPTOM: DHCP server running but clients not getting IP addresses
+
+# STEP 1: Check if DHCP server is running
+sudo systemctl status isc-dhcp-server
+# May show: running but with warnings
+
+# STEP 2: Check DHCP server logs
+sudo journalctl -u isc-dhcp-server -n 30
+# Look for: "Not configured to listen on any interfaces"
+# OR:       "can't open /var/lib/dhcp/dhcpd.leases"
+
+# STEP 3: Check interface configuration
+cat /etc/default/isc-dhcp-server
+# Broken: INTERFACESv4=""   (empty or wrong interface name)
+
+# STEP 4: Fix — set the correct interface
+sudo nano /etc/default/isc-dhcp-server
+# Change to: INTERFACESv4="enp0s8"
+sudo systemctl restart isc-dhcp-server
+
+# STEP 5: Monitor for client leases
+sudo journalctl -u isc-dhcp-server -f
+# Then on client VM, request new DHCP lease:
+# sudo dhclient -v enp0s3
+
+# VERIFICATION:
+cat /var/lib/dhcp/dhcpd.leases
+# Should show a new lease entry with client MAC and IP
+sudo systemctl status isc-dhcp-server
+# Expected: active (running), no errors</code></pre>
+
+      <h3>tcpdump Lab — Capture a TCP Handshake</h3>
+      <pre><code># Start capture in background (captures port 80 traffic)
+sudo tcpdump -i enp0s8 -w /tmp/http.pcap port 80 &amp;
+TCPDUMP_PID=$!
+
+# Wait a moment then generate some HTTP traffic
+sleep 1
+curl -s http://server2.lab.local/ &gt; /dev/null   # Make HTTP request to server2
+
+# Stop capture
+sleep 1
+kill $TCPDUMP_PID
+echo "Capture stopped"
+
+# Analyze the capture
+sudo tcpdump -r /tmp/http.pcap -n
+# Expected output shows 3-way handshake:
+# XX:XX:XX.XXXXX IP 192.168.56.10.54321 &gt; 192.168.56.11.80: Flags [S]  ← SYN
+# XX:XX:XX.XXXXX IP 192.168.56.11.80 &gt; 192.168.56.10.54321: Flags [S.] ← SYN-ACK
+# XX:XX:XX.XXXXX IP 192.168.56.10.54321 &gt; 192.168.56.11.80: Flags [.]  ← ACK
+# ... HTTP data exchange follows ...
+# XX:XX:XX.XXXXX Flags [F.] ← FIN (connection close)</code></pre>
+
+      <h3>TCP Flag Reference</h3>
+      <table class="data-table">
+        <thead><tr><th>Flag</th><th>tcpdump symbol</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>SYN</td><td>[S]</td><td>Synchronise — start connection</td></tr>
+          <tr><td>SYN-ACK</td><td>[S.]</td><td>Server accepts connection</td></tr>
+          <tr><td>ACK</td><td>[.]</td><td>Acknowledge received data</td></tr>
+          <tr><td>FIN</td><td>[F]</td><td>Finish — close connection</td></tr>
+          <tr><td>RST</td><td>[R]</td><td>Reset — abort connection (port closed/error)</td></tr>
+          <tr><td>PSH</td><td>[P]</td><td>Push — send data immediately (no buffering)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Week 4 Summary Checklist</h3>
+      <pre><code># Before completing this week, verify all 5 scenarios:
+# Scenario 1: ip route show | grep default          (shows correct gateway)
+# Scenario 2: dig google.com | grep "ANSWER"        (resolves correctly)
+# Scenario 3: curl -s http://192.168.56.10 | head   (returns HTML)
+# Scenario 4: ping -c 2 192.168.56.11              (other VM reachable)
+# Scenario 5: cat /var/lib/dhcp/dhcpd.leases       (shows active leases)
+# tcpdump:    tcpdump -r /tmp/http.pcap | grep "\[S\]"  (shows SYN packets)</code></pre>
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Lab Guide — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

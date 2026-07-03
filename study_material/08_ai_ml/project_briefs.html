@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Project Briefs | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.project-card{background:#fff;border-radius:12px;padding:24px;margin-bottom:28px;border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.project-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;}
+.proj-icon{font-size:2.4rem;flex-shrink:0;}
+.proj-meta{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.proj-meta span{font-size:.82rem;background:rgba(0,0,0,.07);border-radius:20px;padding:2px 10px;}
+.proj-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.badge-beg{background:#d1fae5;color:#065f46;}
+.badge-int{background:#dbeafe;color:#1e40af;}
+.badge-adv{background:#ede9fe;color:#4c1d95;}
+.deliverables{background:rgba(0,0,0,.02);border-radius:8px;padding:14px 16px;margin:12px 0;}
+.deliverables h5{margin:0 0 8px;font-size:.9rem;text-transform:uppercase;letter-spacing:.05em;color:#666;}
+.deliverables ul{margin:0;padding-left:18px;}
+.deliverables li{padding:3px 0;font-size:.93rem;}
+.rubric-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:12px 0;}
+.rubric-table th,.rubric-table td{padding:8px 10px;border:1px solid rgba(0,0,0,.12);text-align:left;}
+.rubric-table th{background:rgba(0,0,0,.06);}
+.rubric-table tr:nth-child(even){background:rgba(0,0,0,.02);}
+.timeline-bar{display:flex;gap:6px;margin:12px 0;flex-wrap:wrap;}
+.tl-week{flex:1;min-width:80px;text-align:center;padding:6px 8px;border-radius:6px;font-size:.8rem;}
+.tl-week.active{background:var(--clr-accent,#2563eb);color:#fff;font-weight:700;}
+.tl-week.done{background:#d1fae5;color:#065f46;}
+.tl-week.future{background:rgba(0,0,0,.06);color:#888;}
+.warn-box{background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.9rem;}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="quizzes.html">🧩 Quizzes</a>
+    <a href="career_roadmap.html">🗺️ Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="hero-icon">📋</div>
+    <div class="hero-text">
+      <h2>Project Briefs — AI &amp; Machine Learning</h2>
+      <p>Three milestone projects spanning beginner to advanced — build real portfolio artifacts demonstrating your ML expertise.</p>
+      <div class="hero-pills">
+        <span class="pill">P1: Model Comparison</span>
+        <span class="pill">P2: Text AI App</span>
+        <span class="pill">P3: Production ML System</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="deliverables" style="margin-bottom:28px;">
+    <h5>Project Overview</h5>
+    <table class="rubric-table">
+      <tr><th>Project</th><th>Level</th><th>Deadline</th><th>Min. Score</th><th>Weight</th></tr>
+      <tr><td>P1 — ML Model Comparison Notebook</td><td><span class="proj-badge badge-beg">Beginner</span></td><td>End of Week 4</td><td>60 / 100</td><td>25%</td></tr>
+      <tr><td>P2 — Text AI Application</td><td><span class="proj-badge badge-int">Intermediate</span></td><td>End of Week 8</td><td>65 / 100</td><td>35%</td></tr>
+      <tr><td>P3 — Production ML System</td><td><span class="proj-badge badge-adv">Advanced</span></td><td>End of Week 12</td><td>70 / 100</td><td>40%</td></tr>
+    </table>
+    <p style="font-size:.9rem;margin:8px 0 0;color:#666;">All projects must be submitted as GitHub repositories with a README. Late submissions lose 5 points per day. Plagiarism results in automatic failure.</p>
+  </div>
+
+  <!-- P1 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="proj-icon">📊</div>
+      <div style="flex:1;">
+        <h3 style="margin:0 0 6px;">Project 1 — ML Model Comparison Notebook</h3>
+        <span class="proj-badge badge-beg">Beginner Level</span>
+        <div class="proj-meta">
+          <span>📅 Due: End of Week 4</span>
+          <span>⏱ Estimated: 8–12 hours</span>
+          <span>✅ Pass mark: 60/100</span>
+          <span>📦 Deliverable: Jupyter Notebook + GitHub</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Choose a real-world dataset (not Iris, not Titanic — find something that interests you), build a complete EDA + preprocessing + multi-model comparison analysis, and present your findings in a structured notebook that a non-technical manager could follow.</p>
+
+    <h4>Project Objectives</h4>
+    <ul>
+      <li>Apply the complete ML workflow end-to-end on a novel dataset</li>
+      <li>Demonstrate understanding of data preprocessing best practices</li>
+      <li>Compare at least 3 ML models fairly using cross-validation</li>
+      <li>Communicate insights clearly through visualizations and markdown</li>
+    </ul>
+
+    <div class="deliverables">
+      <h5>Dataset Requirements</h5>
+      <ul>
+        <li>At least 500 samples and 5 features</li>
+        <li>Must have a clear prediction target (classification or regression)</li>
+        <li>Sourced from Kaggle, UCI ML Repository, data.gov.in, or World Bank Open Data</li>
+        <li>Must NOT be a standard tutorial dataset (Iris, Titanic, Boston Housing, MNIST, CIFAR-10)</li>
+        <li>Suggested themes: crop yield prediction, loan default prediction, e-commerce churn, air quality, hospital readmission, IPL match outcome</li>
+      </ul>
+    </div>
+
+    <div class="deliverables">
+      <h5>Required Notebook Sections</h5>
+      <ul>
+        <li><strong>Section 1 — Problem Statement:</strong> What are you predicting? Why does it matter? What would the business impact be of a good model?</li>
+        <li><strong>Section 2 — Data Loading &amp; Overview:</strong> Shape, dtypes, target distribution, missing value audit</li>
+        <li><strong>Section 3 — EDA (Exploratory Data Analysis):</strong> Minimum 5 meaningful visualizations with clear conclusions written below each</li>
+        <li><strong>Section 4 — Preprocessing:</strong> Handle missing values, encode categoricals, scale where needed, use sklearn Pipeline</li>
+        <li><strong>Section 5 — Model Training:</strong> At least 3 different algorithm families (e.g., Linear, Tree-based, Distance-based)</li>
+        <li><strong>Section 6 — Evaluation:</strong> Cross-validated metrics, comparison table, select correct metrics for task type</li>
+        <li><strong>Section 7 — Conclusions:</strong> Best model + rationale, top 3 business insights, limitations, next steps</li>
+      </ul>
+    </div>
+
+    <div class="deliverables">
+      <h5>Deliverables</h5>
+      <ul>
+        <li>GitHub repository with <code>README.md</code> (dataset source, how to run, key findings)</li>
+        <li>Jupyter Notebook (.ipynb) — all cells must be run top-to-bottom without errors</li>
+        <li>Exported HTML version of the notebook (File → Download → .html)</li>
+        <li>Optional: Streamlit app deployed on Streamlit Community Cloud (bonus +5 points)</li>
+      </ul>
+    </div>
+
+    <h4>Grading Rubric</h4>
+    <table class="rubric-table">
+      <tr><th>Criterion</th><th>Points</th><th>What we look for</th></tr>
+      <tr><td>EDA Quality &amp; Insights</td><td>25</td><td>Visualizations are informative, labeled, and have written interpretations. Non-obvious insights mentioned.</td></tr>
+      <tr><td>Preprocessing Correctness</td><td>20</td><td>No data leakage. Pipeline used. Appropriate imputation and encoding strategies with justification.</td></tr>
+      <tr><td>Model Comparison</td><td>25</td><td>3+ algorithms, cross-validated metrics, fair comparison (same splits), correct metric choice for task type.</td></tr>
+      <tr><td>Code Quality</td><td>15</td><td>Functions defined for repeated operations, meaningful variable names, no code duplication, comments on non-obvious steps.</td></tr>
+      <tr><td>Conclusions &amp; Communication</td><td>15</td><td>Clear best model selection with justification, actionable business insights, realistic limitations acknowledged.</td></tr>
+    </table>
+
+    <div class="timeline-bar">
+      <div class="tl-week done">W1<br><small>Setup + EDA</small></div>
+      <div class="tl-week done">W2<br><small>More EDA</small></div>
+      <div class="tl-week active">W3<br><small>Preprocessing</small></div>
+      <div class="tl-week active">W4<br><small>Models + Submit</small></div>
+    </div>
+
+    <div class="warn-box">
+      <strong>Common Mistakes to Avoid:</strong> Fitting the scaler on all data before splitting (data leakage). Using accuracy as the only metric on imbalanced data. Not running cells in order before submitting. Selecting a dataset with only 100 rows. Missing conclusion section.
+    </div>
+  </div>
+
+  <!-- P2 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="proj-icon">💬</div>
+      <div style="flex:1;">
+        <h3 style="margin:0 0 6px;">Project 2 — Text AI Application</h3>
+        <span class="proj-badge badge-int">Intermediate Level</span>
+        <div class="proj-meta">
+          <span>📅 Due: End of Week 8</span>
+          <span>⏱ Estimated: 15–20 hours</span>
+          <span>✅ Pass mark: 65/100</span>
+          <span>📦 Deliverable: App + Notebook + GitHub</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Build a working text AI application that solves a real problem using NLP techniques. The application must be interactive — either a Streamlit web app or a FastAPI service — and must include both a classical ML approach and a comparison with a pre-trained transformer model.</p>
+
+    <h4>Choose Your Application Theme</h4>
+    <ul>
+      <li><strong>Option A — News Classifier:</strong> Classify Indian news articles (business, sports, politics, technology, entertainment) using TF-IDF + Classifier AND Hugging Face zero-shot classification. Dataset: inshorts-news or Times of India dataset on Kaggle.</li>
+      <li><strong>Option B — Customer Support Triage:</strong> Auto-categorize customer support tickets (billing, technical, account, feedback) and detect urgency. Route to appropriate department.</li>
+      <li><strong>Option C — Resume Skill Extractor:</strong> Extract key skills, experience years, and job titles from resume text using NLP + Claude API structured output.</li>
+      <li><strong>Option D — Hinglish Sentiment Analyzer:</strong> Classify sentiment in code-mixed Hindi-English text from social media. Handle transliteration challenges.</li>
+      <li><strong>Option E — Open Theme:</strong> Propose your own text AI application (pre-approval required from mentor within Week 5).</li>
+    </ul>
+
+    <div class="deliverables">
+      <h5>Technical Requirements</h5>
+      <ul>
+        <li>Collect or source a text dataset with at least 500 labeled examples for your task</li>
+        <li>Implement complete text preprocessing pipeline (tokenization, cleaning, normalization)</li>
+        <li>Train a TF-IDF + ML model (baseline) with cross-validated evaluation</li>
+        <li>Integrate at least one pre-trained model (Hugging Face pipeline OR Claude/GPT API)</li>
+        <li>Build an interactive Streamlit app or FastAPI endpoint that accepts user input</li>
+        <li>Compare baseline vs pre-trained model performance quantitatively</li>
+        <li>Handle edge cases: empty input, very long text, non-English/Hinglish input</li>
+      </ul>
+    </div>
+
+    <div class="deliverables">
+      <h5>Deliverables</h5>
+      <ul>
+        <li>GitHub repository with README explaining the problem, approach, and how to run</li>
+        <li>Analysis notebook (.ipynb) with EDA, model training, and evaluation</li>
+        <li>Application code (app.py for Streamlit or FastAPI) — runnable with one command</li>
+        <li>Live demo: deploy Streamlit app on Streamlit Cloud OR record a 3-minute demo video</li>
+        <li>requirements.txt with pinned library versions</li>
+        <li>Model comparison table: accuracy, F1, inference time, and qualitative observations</li>
+      </ul>
+    </div>
+
+    <h4>Grading Rubric</h4>
+    <table class="rubric-table">
+      <tr><th>Criterion</th><th>Points</th><th>What we look for</th></tr>
+      <tr><td>Problem Definition &amp; Data</td><td>15</td><td>Clear problem statement, appropriate dataset, data quality analysis, class distribution checked.</td></tr>
+      <tr><td>NLP Pipeline Quality</td><td>20</td><td>Proper tokenization, stopword removal, feature engineering relevant to task. Bigrams/ngrams where appropriate.</td></tr>
+      <tr><td>Model Performance</td><td>25</td><td>Baseline ML model properly evaluated. Pre-trained model integrated. Honest comparison with analysis of when each is better.</td></tr>
+      <tr><td>Application Quality</td><td>25</td><td>Works without crashing, handles edge cases, user-friendly interface, meaningful output (not just a number).</td></tr>
+      <tr><td>Documentation &amp; Demo</td><td>15</td><td>README explains everything needed to understand and run the project. Demo clearly shows the app working.</td></tr>
+    </table>
+
+    <div class="timeline-bar">
+      <div class="tl-week done">W5<br><small>Problem + Data</small></div>
+      <div class="tl-week done">W6<br><small>NLP Pipeline</small></div>
+      <div class="tl-week active">W7<br><small>Model + API</small></div>
+      <div class="tl-week active">W8<br><small>App + Submit</small></div>
+    </div>
+  </div>
+
+  <!-- P3 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="proj-icon">🏭</div>
+      <div style="flex:1;">
+        <h3 style="margin:0 0 6px;">Project 3 — Production ML System</h3>
+        <span class="proj-badge badge-adv">Advanced Level</span>
+        <div class="proj-meta">
+          <span>📅 Due: End of Week 12</span>
+          <span>⏱ Estimated: 25–35 hours</span>
+          <span>✅ Pass mark: 70/100</span>
+          <span>📦 Deliverable: Full System + Demo + GitHub</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Build a complete, production-ready ML system from data ingestion through serving with proper experiment tracking, API, and monitoring. This is your capstone project — it should demonstrate that you can build AI systems that would work in a real company, not just in a Colab notebook.</p>
+
+    <h4>Required System Components</h4>
+    <ul>
+      <li><strong>Data Pipeline:</strong> Automated data loading, validation (schema checks, range checks, missing value audit), and feature engineering — all in reusable functions.</li>
+      <li><strong>Training Pipeline:</strong> MLflow experiment tracking with parameter logging, metric logging, and model artifact storage. Must log at least 3 experiment runs comparing different approaches.</li>
+      <li><strong>Model Quality Gate:</strong> Automated evaluation that promotes a model to "production" only if it meets a defined minimum performance threshold (e.g., AUC &gt; 0.82).</li>
+      <li><strong>FastAPI REST Service:</strong> Production-grade API with Pydantic input validation, error handling, health endpoint, and /predict endpoint. Must handle invalid inputs gracefully.</li>
+      <li><strong>Monitoring:</strong> Data drift detection using at least one statistical method (PSI, KS test, or Wasserstein distance) comparing training distribution to simulated production data.</li>
+      <li><strong>Documentation:</strong> Architecture diagram (can be ASCII), API documentation (FastAPI auto-docs is acceptable), and runbook explaining how to retrain and redeploy.</li>
+    </ul>
+
+    <div class="deliverables">
+      <h5>Choose Your Domain</h5>
+      <ul>
+        <li><strong>Domain A — Financial Risk:</strong> Credit default prediction with regulatory-grade explainability (SHAP). Must handle class imbalance. Target: AUC &gt; 0.85.</li>
+        <li><strong>Domain B — Retail Intelligence:</strong> Demand forecasting + inventory optimization. Time-series features. RMSE as primary metric.</li>
+        <li><strong>Domain C — Healthcare:</strong> Patient readmission prediction. Precision must be high (no false alarms). Integration with a simulated EHR data format.</li>
+        <li><strong>Domain D — LLM-Powered App:</strong> Build a RAG system with ChromaDB, evaluation metrics (retrieval recall@k), and a FastAPI interface. Must handle at least 50 documents.</li>
+        <li><strong>Domain E — Open Theme:</strong> Any domain with pre-approval. Must include all 5 required components.</li>
+      </ul>
+    </div>
+
+    <div class="deliverables">
+      <h5>Deliverables</h5>
+      <ul>
+        <li>GitHub repository with well-organized folder structure (data/, src/, tests/, docs/)</li>
+        <li>All code runnable via a single script or Makefile command</li>
+        <li>MLflow tracking — minimum 3 logged runs with different configurations</li>
+        <li>FastAPI application tested with at least 5 test cases (using pytest or httpx)</li>
+        <li>Drift monitoring report (can be generated HTML from Evidently or custom)</li>
+        <li>Architecture diagram and system README (500+ words explaining design decisions)</li>
+        <li>5-minute recorded demo video showing the complete system end-to-end</li>
+      </ul>
+    </div>
+
+    <h4>Grading Rubric</h4>
+    <table class="rubric-table">
+      <tr><th>Criterion</th><th>Points</th><th>What we look for</th></tr>
+      <tr><td>Data Pipeline</td><td>15</td><td>Automated, validated, reusable. Handles common data issues. Clear separation from training code.</td></tr>
+      <tr><td>MLflow Tracking</td><td>20</td><td>All experiments logged (params, metrics, artifacts). Model registry used. Reproducible results.</td></tr>
+      <tr><td>API Quality</td><td>20</td><td>Validation works, errors handled gracefully, health check present, API tested, well-documented.</td></tr>
+      <tr><td>Monitoring</td><td>15</td><td>Drift detection implemented, threshold defined, alert mechanism described, report generated.</td></tr>
+      <tr><td>Code Quality &amp; Architecture</td><td>15</td><td>Modular, no duplication, meaningful names, appropriate abstractions, organized folder structure.</td></tr>
+      <tr><td>Documentation &amp; Demo</td><td>15</td><td>Architecture diagram, runbook, clear README, demo video covers all components.</td></tr>
+    </table>
+
+    <div class="timeline-bar">
+      <div class="tl-week done">W9<br><small>Architecture</small></div>
+      <div class="tl-week done">W10<br><small>Data + Train</small></div>
+      <div class="tl-week active">W11<br><small>API + Track</small></div>
+      <div class="tl-week active">W12<br><small>Monitor + Submit</small></div>
+    </div>
+
+    <div class="warn-box">
+      <strong>Capstone Quality Standard:</strong> P3 should be portfolio-worthy. Future employers will see this. Ensure: no hardcoded paths, no API keys in code (use .env), no notebooks in production code (only .py files in src/), and that a teammate who has never seen your code can run it by following the README.
+    </div>
+  </div>
+
+  <!-- Submission Instructions -->
+  <div class="deliverables" style="background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.2);">
+    <h5>General Submission Instructions</h5>
+    <ul>
+      <li>Submit GitHub repository URL via the NDFI Internship Portal by 11:59 PM on the deadline day</li>
+      <li>Repository must be public (or private with mentor added as collaborator: <code>ktpl-vikash</code>)</li>
+      <li>Final commit must be pushed before the deadline — timestamp is determined by GitHub commit time</li>
+      <li>Include your full name, intern ID, and batch in the README header</li>
+      <li>For live demos (P2): Streamlit app must remain live for at least 7 days after submission for evaluation</li>
+      <li>Code review sessions will be scheduled within 5 working days of submission</li>
+    </ul>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="../index.html" class="btn btn-secondary">← Study Portal</a>
+    <a href="quizzes.html" class="btn btn-primary">Take Quizzes →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27</footer>
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

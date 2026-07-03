@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking &amp; Sysadmin — Project Briefs | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.level-hero{padding:2rem 2rem 1.6rem;border-radius:12px;margin-bottom:2rem;background:linear-gradient(135deg,#1e40af 0%,#0ea5e9 100%);color:#fff;display:flex;align-items:center;gap:1.2rem;}
+.level-hero .hero-icon{font-size:2.8rem;line-height:1;}
+.level-hero h2{margin:0 0 .3rem;font-size:1.6rem;font-weight:700;}
+.level-hero p{margin:0;opacity:.88;font-size:.95rem;}
+.level-badge{display:inline-block;padding:.2rem .7rem;border-radius:20px;background:rgba(255,255,255,.18);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-top:.4rem;}
+
+.page-intro{background:#f8fafc;border-left:4px solid #3b82f6;border-radius:0 10px 10px 0;padding:1rem 1.2rem;margin-bottom:2rem;color:#374151;font-size:.95rem;line-height:1.6;}
+
+/* Project card */
+.project-card{border:1px solid #e2e8f0;border-radius:14px;margin-bottom:2.5rem;overflow:hidden;}
+.project-header{padding:1.4rem 1.6rem 1.2rem;display:flex;align-items:flex-start;gap:1rem;}
+.project-header.beginner{background:linear-gradient(135deg,#f0fdf4,#dcfce7);}
+.project-header.intermediate{background:linear-gradient(135deg,#eff6ff,#dbeafe);}
+.project-header.advanced{background:linear-gradient(135deg,#faf5ff,#ede9fe);}
+.ph-number{font-size:2.2rem;line-height:1;flex-shrink:0;}
+.ph-info{flex:1;}
+.ph-info h2{margin:0 0 .3rem;font-size:1.25rem;font-weight:800;color:#1e293b;}
+.ph-info p{margin:0;font-size:.9rem;color:#475569;}
+.ph-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem;}
+.badge{display:inline-block;padding:.2rem .7rem;border-radius:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+.badge-beg{background:#dcfce7;color:#166534;}
+.badge-int{background:#dbeafe;color:#1e40af;}
+.badge-adv{background:#ede9fe;color:#5b21b6;}
+.badge-solo{background:#fef3c7;color:#92400e;}
+.badge-team{background:#fce7f3;color:#9d174d;}
+.badge-deadline{background:#f1f5f9;color:#475569;}
+
+.project-body{padding:1.4rem 1.6rem 1.8rem;}
+.project-overview{background:#f8fafc;border-radius:8px;padding:1rem 1.1rem;margin-bottom:1.4rem;color:#374151;font-size:.93rem;line-height:1.65;}
+.project-overview strong{display:block;margin-bottom:.4rem;color:#1e293b;}
+
+/* Deliverables */
+.deliverables-section h3,.rubric-section h3,.submission-section h3{font-size:.95rem;font-weight:700;color:#1e293b;margin:0 0 .8rem;border-bottom:1px solid #e2e8f0;padding-bottom:.4rem;}
+.deliverables-list{list-style:none;padding:0;margin:0 0 1.4rem;}
+.deliverables-list li{display:flex;align-items:flex-start;gap:.7rem;padding:.45rem 0;border-bottom:1px solid #f1f5f9;font-size:.9rem;color:#374151;}
+.deliverables-list li:last-child{border-bottom:none;}
+.dl-check{color:#22c55e;font-size:1rem;flex-shrink:0;margin-top:.05rem;}
+
+/* Architecture diagram */
+.arch-box{background:#0f172a;color:#94a3b8;border-radius:10px;padding:1.2rem 1.4rem;font-family:'Cascadia Code','Fira Code','Consolas',monospace;font-size:.82rem;line-height:1.7;overflow-x:auto;margin-bottom:1.4rem;}
+
+/* Rubric table */
+.rubric-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:1.4rem;}
+.rubric-table th{background:#f1f5f9;color:#374151;font-weight:700;text-align:left;padding:.6rem .8rem;border:1px solid #e2e8f0;}
+.rubric-table td{padding:.6rem .8rem;border:1px solid #e2e8f0;color:#475569;vertical-align:top;}
+.rubric-table tr:nth-child(even) td{background:#f8fafc;}
+.rubric-total{font-weight:700;color:#1e293b;background:#e0f2fe!important;}
+.pts-badge{display:inline-block;padding:.15rem .5rem;background:#3b82f6;color:#fff;border-radius:4px;font-size:.78rem;font-weight:700;}
+.threshold{color:#15803d;font-weight:600;}
+
+/* Submission box */
+.submission-box{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.9rem 1.1rem;font-size:.9rem;color:#166534;}
+.submission-box strong{display:block;margin-bottom:.4rem;color:#14532d;}
+
+/* Cost note */
+.cost-note{background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:.9rem 1.1rem;font-size:.88rem;color:#78350f;margin-top:1rem;}
+.cost-note strong{color:#92400e;}
+
+/* Arch code block */
+pre.arch{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:1rem 1.2rem;overflow-x:auto;font-size:.82rem;line-height:1.8;font-family:'Cascadia Code','Fira Code','Consolas',monospace;margin-bottom:1.4rem;}
+
+.section-divider{height:1px;background:#e2e8f0;margin:1.4rem 0;}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="concept_notes_advanced.html">Advanced Notes ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+
+  <div class="level-hero">
+    <div class="hero-icon">📋</div>
+    <div>
+      <h2>Project Briefs — Networking &amp; System Administration</h2>
+      <p>Three capstone projects from beginner Linux admin to cloud-native infrastructure</p>
+      <span class="level-badge">3 Projects · Weeks 4, 8, 12</span>
+    </div>
+  </div>
+
+  <div class="page-intro">
+    Apply your Networking &amp; System Administration skills through three progressively complex real-world projects. Each project mimics actual infrastructure engineering tasks you'll encounter in the industry — from hardening a single Linux server to building fully automated, cloud-native infrastructure on AWS that real startups use in production.
+  </div>
+
+  <!-- ===== PROJECT 1 ===== -->
+  <div class="project-card">
+    <div class="project-header beginner">
+      <div class="ph-number">🖥️</div>
+      <div class="ph-info">
+        <h2>Project 1 — Fully Configured Linux Server</h2>
+        <p>Set up a production-ready Ubuntu Server from scratch with DNS, DHCP, firewall, and web serving</p>
+        <div class="ph-badges">
+          <span class="badge badge-beg">Beginner</span>
+          <span class="badge badge-solo">Solo Project</span>
+          <span class="badge badge-deadline">Deadline: End of Week 4</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-body">
+
+      <div class="project-overview">
+        <strong>📖 Project Overview</strong>
+        You will set up a production-ready Ubuntu Server from scratch. This mirrors the first task given to a junior Linux administrator at any IT company: take a bare server and make it fully operational, secure, and documented. By the end, a real user should be able to reach your web server, get a DHCP lease, and resolve hostnames through your DNS server — all running on one machine you configured entirely by hand.
+      </div>
+
+      <div class="deliverables-section">
+        <h3>📦 Deliverables Checklist</h3>
+        <ul class="deliverables-list">
+          <li><span class="dl-check">✓</span>Ubuntu Server 22.04 LTS installed (VirtualBox or cloud VM), snapshots taken before each major change</li>
+          <li><span class="dl-check">✓</span>Static IP configured via Netplan: <code>192.168.56.10/24</code>, gateway and DNS set, persists across reboots</li>
+          <li><span class="dl-check">✓</span>Hostname set to <code>server1.lab.local</code>, <code>/etc/hosts</code> updated with all lab hosts</li>
+          <li><span class="dl-check">✓</span>SSH hardened: key-based authentication only, <code>PasswordAuthentication no</code>, <code>PermitRootLogin no</code>, non-default port optional</li>
+          <li><span class="dl-check">✓</span>UFW firewall: allow SSH (22), HTTP (80); deny all other incoming; <code>ufw status verbose</code> output included in report</li>
+          <li><span class="dl-check">✓</span>BIND9 DNS: authoritative zone <code>lab.local</code> with at least 5 A records and corresponding PTR records; passes <code>named-checkzone lab.local /etc/bind/db.lab.local</code></li>
+          <li><span class="dl-check">✓</span>ISC DHCP server: serving the <code>192.168.56.100–200</code> range; lease tested on a client VM (screenshot of <code>ip addr</code> showing assigned IP)</li>
+          <li><span class="dl-check">✓</span>nginx: serving a custom HTML page on port 80, accessible from the host machine browser</li>
+          <li><span class="dl-check">✓</span>Cron job: <code>disk_monitor.sh</code> runs every 5 minutes, logs disk usage to <code>/var/log/disk_monitor.log</code> with timestamp</li>
+          <li><span class="dl-check">✓</span>Documentation: 1-page setup guide with all commands used, architecture diagram showing all services and their ports</li>
+        </ul>
+      </div>
+
+      <div class="rubric-section">
+        <h3>📊 Grading Rubric — 100 Points</h3>
+        <table class="rubric-table">
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Points</th>
+              <th>Pass Threshold</th>
+              <th>What We Check</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Network Configuration</strong><br>Static IP, hostname, routing, DNS resolution</td>
+              <td><span class="pts-badge">25</span></td>
+              <td class="threshold">18 / 25</td>
+              <td>ping gateway, nslookup server1.lab.local, ip route show</td>
+            </tr>
+            <tr>
+              <td><strong>Security Hardening</strong><br>SSH key-only auth, UFW rules, no unnecessary services</td>
+              <td><span class="pts-badge">25</span></td>
+              <td class="threshold">18 / 25</td>
+              <td>ssh -o PasswordAuthentication=yes (must fail), ufw status, ss -tlnp</td>
+            </tr>
+            <tr>
+              <td><strong>Services</strong><br>BIND9 DNS, DHCP, nginx all functional with verification commands</td>
+              <td><span class="pts-badge">25</span></td>
+              <td class="threshold">18 / 25</td>
+              <td>dig @server1 web1.lab.local, client DHCP lease, curl http://192.168.56.10</td>
+            </tr>
+            <tr>
+              <td><strong>Documentation</strong><br>Setup guide, architecture diagram, troubleshooting notes</td>
+              <td><span class="pts-badge">25</span></td>
+              <td class="threshold">15 / 25</td>
+              <td>PDF or Markdown, includes all commands, clear diagram, at least 3 troubleshooting scenarios</td>
+            </tr>
+            <tr class="rubric-total">
+              <td><strong>Total</strong></td>
+              <td><span class="pts-badge">100</span></td>
+              <td class="threshold">70 / 100 to pass</td>
+              <td>Must pass threshold in all 4 criteria individually</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="submission-section">
+        <h3>📤 Submission Instructions</h3>
+        <div class="submission-box">
+          <strong>How to submit:</strong>
+          GitHub repository containing: all configuration files (<code>/etc/netplan/</code>, <code>/etc/bind/</code>, <code>/etc/dhcp/</code>, <code>/etc/nginx/</code>), screenshot folder (10+ screenshots), commands log file, and your 1-page setup guide PDF or Markdown. Present via a live 5-minute demo where you demonstrate each service working from a separate client VM. Mentors will test by SSHing into your server with a key they provide.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== PROJECT 2 ===== -->
+  <div class="project-card">
+    <div class="project-header intermediate">
+      <div class="ph-number">📡</div>
+      <div class="ph-info">
+        <h2>Project 2 — Infrastructure Monitoring Stack</h2>
+        <p>Build a production-grade monitoring system for a 3-node cluster with Prometheus, Grafana, Alertmanager, and HA load balancing</p>
+        <div class="ph-badges">
+          <span class="badge badge-int">Intermediate</span>
+          <span class="badge badge-team">Team of 2</span>
+          <span class="badge badge-deadline">Deadline: End of Week 8</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-body">
+
+      <div class="project-overview">
+        <strong>📖 Project Overview</strong>
+        Build a production-grade monitoring infrastructure for a 3-node cluster. This is the exact stack used by DevOps and SRE teams at companies like Freshworks, Razorpay, and CRED. You will install and configure Prometheus for metrics collection, Grafana for visualization, Alertmanager for notifications, and HAProxy + Keepalived for high availability. By the end, a simulated node crash should automatically trigger an alert email within 2 minutes.
+      </div>
+
+      <div class="deliverables-section">
+        <h3>📦 Deliverables Checklist</h3>
+        <ul class="deliverables-list">
+          <li><span class="dl-check">✓</span>3-node Ubuntu cluster (node1, node2, node3) with Ansible-provisioned base configuration (hostname, packages, users, UFW) — playbook must be idempotent</li>
+          <li><span class="dl-check">✓</span>Prometheus (v2.45+) on node1 scraping all 3 nodes via Node Exporter; all 3 targets show UP in Prometheus UI at <code>/targets</code></li>
+          <li><span class="dl-check">✓</span>Grafana on node1 with 5 dashboards: CPU Usage, Memory Usage, Disk I/O, Network Throughput, Active Alerts — each with at least 3 panels</li>
+          <li><span class="dl-check">✓</span>Alertmanager: 3 alert rules configured — CPU &gt;80% for 5 minutes, Disk &lt;20% free for 10 minutes, Node Down for 1 minute — email notification received and demonstrated</li>
+          <li><span class="dl-check">✓</span>HAProxy load balancing Grafana across node1 (if replicated) with stats page enabled and accessible</li>
+          <li><span class="dl-check">✓</span>Keepalived VIP (<code>192.168.56.200</code>) on 2 HAProxy nodes with &lt;3 second failover demonstrated live during demo</li>
+          <li><span class="dl-check">✓</span>Automation: systemd service unit + watchdog script that automatically restarts Prometheus if the process crashes</li>
+          <li><span class="dl-check">✓</span>Loki + Promtail: log aggregation from all 3 nodes, logs searchable and filterable in Grafana Explore view</li>
+        </ul>
+      </div>
+
+      <div class="rubric-section">
+        <h3>📊 Grading Rubric — 100 Points</h3>
+        <table class="rubric-table">
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Points</th>
+              <th>Pass Threshold</th>
+              <th>What We Check</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prometheus Configuration</strong><br>Correct scrape config, all targets UP, rule files valid</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>All 3 node_exporter targets show UP, promtool check rules, PromQL queries return data</td>
+            </tr>
+            <tr>
+              <td><strong>Grafana Dashboards</strong><br>5 functional dashboards, meaningful panels, variables used</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>Live data visible, dashboard variables filter by node, alert annotations shown</td>
+            </tr>
+            <tr>
+              <td><strong>Alertmanager</strong><br>3 alert rules firing correctly, email notification received</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>Manually trigger alert (stress CPU), email received within 5 minutes, Alertmanager UI shows alert</td>
+            </tr>
+            <tr>
+              <td><strong>HAProxy + Keepalived</strong><br>Load balancing working, VIP failover demonstrated in &lt;3s</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>Round-robin working, stop HAProxy on MASTER, VIP moves to BACKUP, service continues</td>
+            </tr>
+            <tr>
+              <td><strong>Automation Scripts</strong><br>Watchdog functional, systemd unit correct, Ansible idempotent</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>Kill Prometheus process, watchdog restarts it within 10s, second Ansible run shows changed=0</td>
+            </tr>
+            <tr class="rubric-total">
+              <td><strong>Total</strong></td>
+              <td><span class="pts-badge">100</span></td>
+              <td class="threshold">70 / 100 to pass</td>
+              <td>Must pass threshold in all 5 criteria individually</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="submission-section">
+        <h3>📤 Submission Instructions</h3>
+        <div class="submission-box">
+          <strong>How to submit:</strong>
+          GitHub repository with all Ansible playbooks, Prometheus YAML configs, Alertmanager config, Grafana dashboard JSON exports (use Dashboard &gt; Export &gt; Save to file), systemd unit files, and watchdog script. Record a 5-minute demo video showing: all Prometheus targets UP, a Grafana dashboard with live data, an alert firing when you run <code>stress --cpu 4</code>, and the HAProxy failover test. Upload video to YouTube (unlisted) and add link to README.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== PROJECT 3 ===== -->
+  <div class="project-card">
+    <div class="project-header advanced">
+      <div class="ph-number">🚀</div>
+      <div class="ph-info">
+        <h2>Project 3 — Cloud-Native Infrastructure with IaC</h2>
+        <p>Build complete AWS infrastructure using Terraform, deploy a 3-tier app on EKS, implement monitoring, and automate deployments via GitHub Actions</p>
+        <div class="ph-badges">
+          <span class="badge badge-adv">Advanced</span>
+          <span class="badge badge-team">Team of 3</span>
+          <span class="badge badge-deadline">Deadline: End of Week 12</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-body">
+
+      <div class="project-overview">
+        <strong>📖 Project Overview</strong>
+        Build a complete cloud-native infrastructure on AWS using Terraform, deploy a 3-tier application on Kubernetes (EKS), implement full observability, and automate deployments via GitHub Actions. This is equivalent to a production infrastructure setup at a funded Indian startup — the same stack used at companies like Zepto, Groww, and Slice. This project is team-based because real infrastructure work is always collaborative.
+      </div>
+
+      <div class="deliverables-section">
+        <h3>🗺️ Architecture Diagram</h3>
+      </div>
+
+<pre class="arch">Internet
+   │
+   ▼
+CloudFront (CDN — static asset caching)
+   │
+   ▼
+Route 53 (ndfi-lab.example.com — DNS + health checks)
+   │
+   ▼
+ALB (Application Load Balancer — public subnets: ap-south-1a + ap-south-1b)
+   │
+   ▼
+EKS Cluster (private subnets — 3x t3.medium nodes)
+├── Frontend Pods (nginx — 3 replicas)
+├── Backend Pods (Node.js API — 3 replicas)
+└── Database (RDS PostgreSQL db.t3.micro — separate private subnet)
+   │
+NAT Gateway ──→ Internet (for pod outbound traffic: image pulls, updates)
+   │
+Monitoring Namespace:
+  Prometheus + Grafana (kube-prometheus-stack via Helm)
+  Alertmanager (PagerDuty + email)
+   │
+CI/CD:
+  GitHub Actions ──→ ECR (container images) ──→ EKS (rolling deploy)
+   │
+Remote State:
+  S3 bucket (terraform.tfstate) + DynamoDB table (state locking)</pre>
+
+      <div class="deliverables-section">
+        <h3>📦 Deliverables Checklist</h3>
+        <ul class="deliverables-list">
+          <li><span class="dl-check">✓</span><strong>Terraform IaC:</strong> VPC (10.0.0.0/16), 2 public + 2 private subnets, IGW + NAT GW, EKS cluster (3x t3.medium), RDS PostgreSQL (db.t3.micro) in private subnet, ALB, CloudFront distribution, remote state in S3 + DynamoDB locking — all in modular HCL files</li>
+          <li><span class="dl-check">✓</span><strong>Kubernetes Manifests:</strong> Deployments (3 replicas, RollingUpdate strategy), Services (ClusterIP for backend/DB, LoadBalancer for frontend), Ingress with nginx controller (path-based routing for / and /api), ConfigMap for non-secret config</li>
+          <li><span class="dl-check">✓</span><strong>NetworkPolicy:</strong> DB isolated — only backend pods can connect on port 5432; Backend isolated — only frontend + ingress-nginx namespace can reach port 3000; tested and verified with <code>nc</code></li>
+          <li><span class="dl-check">✓</span><strong>HPA (Horizontal Pod Autoscaler):</strong> CPU threshold 70%, min 2 replicas, max 10 replicas — demonstrated scaling up under load using <code>k6</code> or <code>ab</code></li>
+          <li><span class="dl-check">✓</span><strong>Monitoring:</strong> kube-prometheus-stack via Helm, 3 custom Grafana dashboards (Pod CPU/Memory, HTTP request rate &amp; error rate, DB connection count), 2 alert rules (pod CrashLoopBackOff, HTTP error rate &gt;5%)</li>
+          <li><span class="dl-check">✓</span><strong>CI/CD Pipeline</strong> (<code>.github/workflows/deploy.yml</code>): on push to <code>main</code> → Docker build → push to ECR with commit SHA tag → <code>kubectl set image</code> to update deployment → <code>kubectl rollout status</code> to verify zero-downtime deploy</li>
+          <li><span class="dl-check">✓</span><strong>Security:</strong> all secrets in AWS Secrets Manager or Kubernetes Secrets (no hardcoded credentials anywhere in code), SGs follow least-privilege principle, all NetworkPolicies applied and tested, <code>terraform plan</code> shows no security group rules open to 0.0.0.0/0 for SSH</li>
+          <li><span class="dl-check">✓</span><strong>Ansible:</strong> playbook for any EC2 bastion host configuration (hardening, tool installation) or EKS worker node bootstrap customization — idempotent</li>
+        </ul>
+      </div>
+
+      <div class="rubric-section">
+        <h3>📊 Grading Rubric — 100 Points</h3>
+        <table class="rubric-table">
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th>Points</th>
+              <th>Pass Threshold</th>
+              <th>What We Check</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Terraform IaC</strong><br>Valid HCL, remote state, modular structure, plan/apply clean</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td><code>terraform validate</code> passes, <code>terraform plan</code> shows no errors, state in S3, modules used for VPC + EKS</td>
+            </tr>
+            <tr>
+              <td><strong>Kubernetes Manifests</strong><br>All resources correct, application functional end-to-end</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>curl via Ingress returns 200, /api endpoint responds, DB queries succeed, HPA object exists</td>
+            </tr>
+            <tr>
+              <td><strong>Monitoring</strong><br>Prometheus scraping, Grafana dashboards live, alerts firing</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>All pod targets UP in Prometheus, 3 dashboards show live data, crash an app pod and verify alert fires</td>
+            </tr>
+            <tr>
+              <td><strong>Security</strong><br>NetworkPolicy, SGs, secrets management, no hardcoded credentials</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>grep for passwords/keys in repo (must find none), NetworkPolicy blocks frontend→DB connection, SG review</td>
+            </tr>
+            <tr>
+              <td><strong>CI/CD Pipeline</strong><br>GitHub Actions workflow functional, zero-downtime deploy</td>
+              <td><span class="pts-badge">20</span></td>
+              <td class="threshold">14 / 20</td>
+              <td>Push a commit, watch GitHub Actions run, verify new pod image tag updated, no downtime during rollout</td>
+            </tr>
+            <tr class="rubric-total">
+              <td><strong>Total</strong></td>
+              <td><span class="pts-badge">100</span></td>
+              <td class="threshold">70 / 100 to pass</td>
+              <td>Must pass threshold in all 5 criteria individually</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="submission-section">
+        <h3>📤 Submission Instructions</h3>
+        <div class="submission-box">
+          <strong>How to submit:</strong>
+          GitHub monorepo with the following structure: <code>terraform/</code> (all .tf files), <code>k8s/</code> (all manifests), <code>ansible/</code> (playbooks), <code>.github/workflows/</code> (CI/CD pipeline), <code>docs/</code> (architecture diagram PNG, cost estimate). Present a 10-minute live demo showing: <code>terraform apply</code> output, end-to-end app working via browser, a GitHub Actions pipeline run completing successfully, Grafana dashboards, and one alert firing. Include a cost estimate screenshot from AWS Pricing Calculator.
+        </div>
+      </div>
+
+      <div class="cost-note">
+        <strong>⚠️ AWS Cost Warning:</strong>
+        This infrastructure costs approximately $120–180/month if left running continuously. Use AWS Free Tier resources where possible (t3.micro for RDS falls under free tier for 12 months). Always run <code>terraform destroy</code> after completing demos to stop all charges. The main cost drivers are: EKS cluster (~$72/month), NAT Gateway (~$32/month), and ALB (~$16/month). Use <code>--auto-approve</code> only in CI — always review the plan output before applying manually.
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

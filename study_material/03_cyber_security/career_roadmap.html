@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Career Roadmap | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .career-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+  .career-card { background: white; border-radius: 12px; padding: 22px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+  .career-card.beg { border-top: 3px solid var(--green); }
+  .career-card.int { border-top: 3px solid var(--blue); }
+  .career-card.adv { border-top: 3px solid var(--purple); }
+  .career-icon { font-size: 28px; margin-bottom: 10px; }
+  .career-card h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .career-level { font-size: 11px; color: var(--gray); margin-bottom: 4px; }
+  .career-salary { font-size: 16px; font-weight: 800; color: var(--green); font-family: var(--mono); margin-bottom: 12px; }
+  .career-card ul { list-style: none; padding: 0; }
+  .career-card ul li { font-size: 12px; color: var(--text-mid); padding: 4px 0; border-bottom: 1px solid var(--border-light); display: flex; align-items: flex-start; gap: 6px; }
+  .career-card ul li:last-child { border-bottom: none; }
+  .career-card ul li::before { content: '▸'; color: var(--gold); flex-shrink: 0; }
+
+  .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 32px; }
+  .cert-card { background: white; border-radius: 8px; padding: 16px 18px; border: 1px solid var(--border); }
+  .cert-card.cert-free { border-left: 3px solid var(--green); }
+  .cert-card.cert-paid { border-left: 3px solid var(--blue); }
+  .cert-provider { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; font-family: var(--mono); margin-bottom: 4px; }
+  .cert-card h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .cert-card p { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .cert-cost { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 700; font-family: var(--mono); }
+  .cert-free .cert-cost { color: var(--green); }
+  .cert-paid .cert-cost { color: var(--blue); }
+
+  .action-plan { background: var(--navy); border-radius: 16px; padding: 28px 32px; margin-bottom: 32px; }
+  .action-plan h3 { font-size: 16px; font-weight: 700; color: var(--gold); margin-bottom: 20px; }
+  .ap-phase { margin-bottom: 24px; }
+  .ap-phase-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
+  .ap-phase-num { background: var(--gold); color: var(--navy); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+  .ap-phase-head h4 { font-size: 14px; font-weight: 700; color: white; margin-bottom: 2px; }
+  .ap-phase-head p { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .ap-phase ul { list-style: none; padding-left: 52px; }
+  .ap-phase ul li { font-size: 12px; color: rgba(255,255,255,0.8); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: flex-start; gap: 8px; }
+  .ap-phase ul li:last-child { border-bottom: none; }
+  .ap-phase ul li::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+  .ap-phase:last-child { margin-bottom: 0; }
+
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .ref-block { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+  .ref-block h5 { background: var(--navy); color: var(--gold); padding: 10px 16px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: var(--mono); margin: 0; }
+  .ref-block ul { list-style: none; padding: 14px 16px; }
+  .ref-block ul li { font-size: 12px; color: var(--text-mid); padding: 5px 0; border-bottom: 1px solid var(--border-light); display: flex; align-items: flex-start; gap: 8px; }
+  .ref-block ul li:last-child { border-bottom: none; }
+  .ref-block ul li::before { content: '▸'; color: var(--gold); flex-shrink: 0; }
+
+  @media (max-width: 960px) { .career-grid { grid-template-columns: 1fr 1fr; } .cert-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .career-grid, .cert-grid, .ref-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">🗺️ Career Roadmap</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; CAREER ROADMAP
+  <div class="dbar-links">
+    <a href="project_briefs.html">Projects ↗</a>
+    <a href="quick_reference.html">Quick Reference ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero adv">
+    <div class="lh-icon">🗺️</div>
+    <h1>Career Roadmap — Cyber Security</h1>
+    <p class="lh-sub">Your path from security fundamentals to a professional career in cybersecurity. India's fastest-growing tech career in 2026.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Roles &amp; Salaries</span>
+      <span class="lh-pill">Certifications</span>
+      <span class="lh-pill">90-Day Action Plan</span>
+      <span class="lh-pill gold">Career Guide</span>
+    </div>
+  </div>
+
+  <!-- JOB ROLES -->
+  <div class="sm-sec">Job Roles in Cyber Security</div>
+  <div class="career-grid">
+    <div class="career-card beg">
+      <div class="career-icon">🌱</div>
+      <h4>Junior Security Analyst</h4>
+      <div class="career-level">0–1 Year Experience</div>
+      <div class="career-salary">₹4–7 LPA</div>
+      <ul>
+        <li>SIEM monitoring and log analysis</li>
+        <li>Alert triage and first response</li>
+        <li>Incident documentation</li>
+        <li>Security tool administration</li>
+      </ul>
+    </div>
+    <div class="career-card beg">
+      <div class="career-icon">🔐</div>
+      <h4>SOC Analyst (L1/L2)</h4>
+      <div class="career-level">1–3 Years Experience</div>
+      <div class="career-salary">₹6–14 LPA</div>
+      <ul>
+        <li>Threat hunting and correlation</li>
+        <li>Incident response execution</li>
+        <li>Vulnerability management</li>
+        <li>SIEM detection rule tuning</li>
+      </ul>
+    </div>
+    <div class="career-card int">
+      <div class="career-icon">⚡</div>
+      <h4>Penetration Tester</h4>
+      <div class="career-level">2–4 Years Experience</div>
+      <div class="career-salary">₹8–20 LPA</div>
+      <ul>
+        <li>Web/network/mobile pen testing</li>
+        <li>Red team operations</li>
+        <li>Professional report writing</li>
+        <li>OWASP methodology</li>
+      </ul>
+    </div>
+    <div class="career-card int">
+      <div class="career-icon">🛡️</div>
+      <h4>Security Engineer</h4>
+      <div class="career-level">3–5 Years Experience</div>
+      <div class="career-salary">₹15–35 LPA</div>
+      <ul>
+        <li>Security architecture design</li>
+        <li>DevSecOps pipeline integration</li>
+        <li>Cloud security implementation</li>
+        <li>Tool selection and deployment</li>
+      </ul>
+    </div>
+    <div class="career-card adv">
+      <div class="career-icon">🔍</div>
+      <h4>Threat Intelligence Analyst</h4>
+      <div class="career-level">3–6 Years Experience</div>
+      <div class="career-salary">₹12–28 LPA</div>
+      <ul>
+        <li>CTI collection and analysis</li>
+        <li>IOC and TTP analysis</li>
+        <li>Threat actor tracking</li>
+        <li>Intelligence reports for stakeholders</li>
+      </ul>
+    </div>
+    <div class="career-card adv">
+      <div class="career-icon">💼</div>
+      <h4>CISO / Security Manager</h4>
+      <div class="career-level">8+ Years Experience</div>
+      <div class="career-salary">₹40–100+ LPA</div>
+      <ul>
+        <li>Security strategy and vision</li>
+        <li>GRC (Governance, Risk, Compliance)</li>
+        <li>Budget and board reporting</li>
+        <li>Security team leadership</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="sm-sec">Certifications — Roadmap</div>
+  <div class="cert-grid">
+    <div class="cert-card cert-free">
+      <div class="cert-provider">CompTIA</div>
+      <h4>Security+</h4>
+      <p>Industry baseline certification. Required by many employers as a minimum. The most recognized entry-level security cert globally. Covers threats, cryptography, network security, identity management, and more.</p>
+      <span class="cert-cost">Exam: ~₹25,000 &nbsp;·&nbsp; Entry Level</span>
+    </div>
+    <div class="cert-card cert-paid">
+      <div class="cert-provider">EC-Council</div>
+      <h4>CEH — Certified Ethical Hacker</h4>
+      <p>Well-known specifically in India. Good for penetration testing roles and government/defense sector. Multiple choice exam — not hands-on. Widely recognized by Indian IT services companies.</p>
+      <span class="cert-cost">Exam: ~₹45,000 + training &nbsp;·&nbsp; Intermediate</span>
+    </div>
+    <div class="cert-card cert-paid">
+      <div class="cert-provider">Offensive Security</div>
+      <h4>OSCP — Offensive Security Certified Professional</h4>
+      <p>24-hour hands-on exam — you must compromise machines under time pressure. The gold standard for penetration testers globally. Highly respected; carries genuine weight in job applications.</p>
+      <span class="cert-cost">Lab + Exam: ~₹60,000 &nbsp;·&nbsp; Advanced</span>
+    </div>
+    <div class="cert-card cert-paid">
+      <div class="cert-provider">(ISC)²</div>
+      <h4>CISSP — Certified Information Systems Security Professional</h4>
+      <p>For experienced security professionals with 5+ years. Covers management and technical domains. Highly regarded for security manager and CISO roles. Requires proven experience to sit the exam.</p>
+      <span class="cert-cost">Exam: ~₹45,000 &nbsp;·&nbsp; Senior Level (5+ yrs)</span>
+    </div>
+    <div class="cert-card cert-free">
+      <div class="cert-provider">Amazon Web Services</div>
+      <h4>AWS Security Specialty</h4>
+      <p>Demonstrates cloud security expertise on AWS. High demand as companies move workloads to cloud. Covers IAM, data protection, infrastructure security, incident response on AWS.</p>
+      <span class="cert-cost">Exam: ~₹22,000 &nbsp;·&nbsp; Intermediate (AWS experience needed)</span>
+    </div>
+    <div class="cert-card cert-free">
+      <div class="cert-provider">Various Providers</div>
+      <h4>DFIR — Digital Forensics &amp; Incident Response</h4>
+      <p>Growing specialized field. EC-Council CHFI (Certified Hacking Forensic Investigator) or SANS FOR508. Covers disk forensics, memory analysis, network forensics, and legal evidence handling.</p>
+      <span class="cert-cost">Varies by provider &nbsp;·&nbsp; Intermediate–Advanced</span>
+    </div>
+  </div>
+
+  <!-- SKILL MILESTONES -->
+  <div class="sm-sec">Skill Milestones</div>
+  <div class="info-row">
+    <div class="info-card">
+      <h4>🌱 Foundational</h4>
+      <ul>
+        <li>Explain CIA Triad clearly</li>
+        <li>Identify phishing emails reliably</li>
+        <li>Use password manager + MFA daily</li>
+        <li>Basic Linux terminal navigation</li>
+        <li>Understand OWASP Top 10 conceptually</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>⚡ Application</h4>
+      <ul>
+        <li>Test web apps with Burp Suite</li>
+        <li>Write professional pen test reports</li>
+        <li>Analyze network traffic in Wireshark</li>
+        <li>Write and run Nmap scans correctly</li>
+        <li>Document incident response steps</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>🚀 Professional</h4>
+      <ul>
+        <li>Complete 3+ CTF rooms on TryHackMe</li>
+        <li>Cloud security audit with AWS CLI</li>
+        <li>Build a SIEM log pipeline</li>
+        <li>Execute a red team exercise end-to-end</li>
+        <li>Map findings to MITRE ATT&amp;CK</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>💼 Job-Ready</h4>
+      <ul>
+        <li>CompTIA Security+ certified</li>
+        <li>2+ pen test reports in portfolio</li>
+        <li>Active TryHackMe/HTB profile with rank</li>
+        <li>LinkedIn with security-focused content</li>
+        <li>GitHub with DVWA writeup (labeled practice)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 90-DAY ACTION PLAN -->
+  <div class="sm-sec">90-Day Action Plan — From Internship to First Job</div>
+  <div class="action-plan">
+    <h3>Your 90-Day Launch Plan</h3>
+
+    <div class="ap-phase">
+      <div class="ap-phase-head">
+        <div class="ap-phase-num">1</div>
+        <div>
+          <h4>Days 1–30: Certify &amp; Build Your Presence</h4>
+          <p>Security is a credentialed field — get your first certification early</p>
+        </div>
+      </div>
+      <ul>
+        <li>Study for and attempt CompTIA Security+ — use Professor Messer's free study guide (professormesser.com)</li>
+        <li>Create a TryHackMe profile and complete at least 10 rooms including the Pre-Security path</li>
+        <li>Write 2 LinkedIn posts about what you learned (security content performs well — post about a CVE you studied or a lab you completed)</li>
+        <li>Publish your DVWA pen test report writeup on GitHub — clearly label it "Practice environment only"</li>
+      </ul>
+    </div>
+
+    <div class="ap-phase">
+      <div class="ap-phase-head">
+        <div class="ap-phase-num">2</div>
+        <div>
+          <h4>Days 31–60: Apply, Practice CTFs, Build a Home Lab</h4>
+          <p>Parallel track: applying while actively strengthening your skills</p>
+        </div>
+      </div>
+      <ul>
+        <li>Apply to SOC Analyst and Junior Security Analyst roles — LinkedIn, Naukri, and direct company career pages</li>
+        <li>Participate in a beginner CTF competition — PicoCTF (free) or search CTFTime.org for upcoming events</li>
+        <li>Complete the free Splunk Fundamentals 1 course at education.splunk.com (SIEM is the #1 tool in SOC roles)</li>
+        <li>Build a home lab: Kali Linux VM + Windows target VM + DVWA container — practice in isolation</li>
+      </ul>
+    </div>
+
+    <div class="ap-phase">
+      <div class="ap-phase-head">
+        <div class="ap-phase-num">3</div>
+        <div>
+          <h4>Days 61–90: Interview Preparation &amp; Convert</h4>
+          <p>Security interviews test practical knowledge — prepare accordingly</p>
+        </div>
+      </div>
+      <ul>
+        <li>Security interviews: explain a real CVE you've studied in detail (research CVE-2021-44228 Log4Shell or MS17-010 EternalBlue)</li>
+        <li>Practice drawing a network architecture diagram with security controls from memory (DMZ, firewall, IDS, bastion host)</li>
+        <li>Walk through a complete incident response scenario verbally — detection, containment, eradication, recovery, lessons learned</li>
+        <li>Target CERT-In empaneled companies for pen test roles, and BFSI sector companies (banks hire large numbers of security analysts due to RBI compliance requirements)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TOP EMPLOYERS -->
+  <div class="sm-sec">Top Employers in India — Cyber Security</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>BFSI Security Teams</h5>
+      <ul>
+        <li>HDFC Bank — large security operations center</li>
+        <li>SBI — government bank, high RBI compliance bar</li>
+        <li>ICICI Bank — active threat hunting team</li>
+        <li>Paytm / Razorpay — fintech, rapid growth</li>
+        <li>Zerodha — lean but security-conscious team</li>
+      </ul>
+    </div>
+    <div class="ref-block">
+      <h5>IT Services Security Practice</h5>
+      <ul>
+        <li>TCS Cyber Security — large volume hiring</li>
+        <li>Infosys Cyber Security — managed security services</li>
+        <li>Wipro CyberDefense — MSSP and consulting</li>
+        <li>HCL Technologies Security — SOC and pen test</li>
+      </ul>
+    </div>
+    <div class="ref-block">
+      <h5>Security Product Companies</h5>
+      <ul>
+        <li>Quick Heal — Indian AV and endpoint security</li>
+        <li>K7 Computing — Indian security products company</li>
+        <li>CrowdStrike India — endpoint detection and response</li>
+        <li>Palo Alto Networks India — firewall and SASE</li>
+      </ul>
+    </div>
+    <div class="ref-block">
+      <h5>Consulting &amp; MSSPs</h5>
+      <ul>
+        <li>Deloitte Cyber — GRC and pen testing</li>
+        <li>KPMG India — compliance and security audits</li>
+        <li>EY India — SOC transformation projects</li>
+        <li>Accenture Security / IBM Security — large MSSP operations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="project_briefs.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Project Briefs</a>
+    <div style="display:flex;gap:12px;">
+      <a href="quick_reference.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Quick Reference →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Career Roadmap &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Reference | UI/UX Design | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+@media print {
+  .sm-header, .sm-domain-bar, .sm-footer, .print-btn { display: none !important; }
+  body { font-size: 11px; }
+  .sm-main { padding: 0; }
+  .ref-section { page-break-inside: avoid; margin-bottom: 16px; }
+  pre, code { font-size: 9px; }
+  .ref-table { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">⚡ Quick Reference</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; QUICK REFERENCE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes</a>
+    <a href="lab_guide_beginner.html">Lab Guides</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+    <a href="quizzes.html">Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">⚡</div>
+    <div class="lh-text">
+      <h2>Quick Reference — UI/UX Design</h2>
+      <p>All the essential checklists, heuristics, shortcuts, and templates in one printable page. Keep this open during design reviews and portfolio prep.</p>
+    </div>
+    <div class="lh-pills">
+      <button class="print-btn" onclick="window.print()">🖨️ Print Reference</button>
+    </div>
+  </div>
+
+  <!-- Section 1: Nielsen's 10 Heuristics -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">1. Nielsen's 10 Usability Heuristics</h3>
+    <table class="ref-table">
+      <thead>
+        <tr><th>#</th><th>Heuristic</th><th>In Practice</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Visibility of System Status</strong></td>
+          <td>Loading spinners, progress bars, save confirmations, "Step 3 of 5" indicators, upload progress percentages</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Match Between System &amp; Real World</strong></td>
+          <td>Shopping cart icon, inbox metaphor, familiar terminology — use words users say, not internal product names</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>User Control &amp; Freedom</strong></td>
+          <td>Undo button, Cancel option, back navigation always accessible, "Exit" clearly visible in modals</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Consistency &amp; Standards</strong></td>
+          <td>Same button label for same action throughout, consistent icon set, "Delete" always means delete (not Remove sometimes)</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Error Prevention</strong></td>
+          <td>Disable submit until form is valid, confirm before delete, input masks for phone/date, inline validation before submission</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><strong>Recognition Over Recall</strong></td>
+          <td>Show recent items, autocomplete suggestions, visible options in menus — don't make users memorise commands or paths</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><strong>Flexibility &amp; Efficiency</strong></td>
+          <td>Keyboard shortcuts for power users, saved preferences, quick-action buttons, bulk operations, personalised defaults</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><strong>Aesthetic &amp; Minimal Design</strong></td>
+          <td>Every element must earn its place — remove anything that doesn't directly serve a user task. Content competes with content.</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><strong>Help Users Recognise &amp; Recover From Errors</strong></td>
+          <td>"Email is invalid — please include @" not "Error 400". Plain language, specific problem, clear fix instructions</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><strong>Help &amp; Documentation</strong></td>
+          <td>Contextual tooltips on hover, searchable help centre, onboarding walkthrough for first-time users, in-context FAQs</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 2: WCAG Accessibility Check -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">2. WCAG 2.1 Accessibility Quick Check</h3>
+    <table class="ref-table">
+      <thead>
+        <tr><th>Check</th><th>Pass Criteria</th><th>Tool</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Normal text contrast</td>
+          <td>≥ 4.5:1 ratio</td>
+          <td>Stark (Figma plugin), WebAIM Contrast Checker</td>
+        </tr>
+        <tr>
+          <td>Large text (18px+ or 14px+ bold)</td>
+          <td>≥ 3:1 ratio</td>
+          <td>Stark, axe DevTools browser extension</td>
+        </tr>
+        <tr>
+          <td>Focus indicators</td>
+          <td>Visible on all interactive elements</td>
+          <td>Manual keyboard test (Tab through the page)</td>
+        </tr>
+        <tr>
+          <td>Images</td>
+          <td>Descriptive alt text present on all meaningful images</td>
+          <td>Chrome Accessibility panel (F12 → Accessibility)</td>
+        </tr>
+        <tr>
+          <td>Form labels</td>
+          <td>Each input has a visible, associated label element</td>
+          <td>axe DevTools, Chrome Accessibility panel</td>
+        </tr>
+        <tr>
+          <td>Colour as the only indicator</td>
+          <td>Must have a secondary indicator (icon, text, or pattern)</td>
+          <td>Colour blindness simulator (Figma: View → Colour Blindness)</td>
+        </tr>
+        <tr>
+          <td>Touch targets</td>
+          <td>Minimum 44 × 44pt for interactive elements</td>
+          <td>Figma measurement tool, Stark</td>
+        </tr>
+        <tr>
+          <td>Video / audio content</td>
+          <td>Captions provided for all spoken content</td>
+          <td>Manual check</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 3: Design Principles -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">3. Design Principles Quick Reference</h3>
+    <div class="principles-list">
+      <div class="principle-item">
+        <div class="principle-name">Contrast</div>
+        <div class="principle-desc">Make the important thing stand out. CTAs must be visually dominant — the most important action on the screen should have the highest contrast and visual weight.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Repetition</div>
+        <div class="principle-desc">Repeat visual elements to create consistency and unity. Same button style, same icon family, same border radius throughout — variation signals meaning.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Alignment</div>
+        <div class="principle-desc">Every element should align to an invisible grid. Left-align body text in Latin scripts. Misaligned elements create visual noise and feel unpolished.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Proximity</div>
+        <div class="principle-desc">Related things belong close together. Price + CTA + quantity selector should form one group. Unrelated things need clear space between them.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Hierarchy</div>
+        <div class="principle-desc">Guide the eye: biggest / boldest / highest-contrast = most important. The user should never have to decide where to look first — the design should direct them.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Whitespace</div>
+        <div class="principle-desc">Empty space is a design material. Filling every pixel is a design failure, not a virtue. Let content breathe — whitespace focuses attention and reduces cognitive load.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Affordance</div>
+        <div class="principle-desc">Things that do something should look like they do it. Buttons look tappable, links look clickable, sliders look draggable. Avoid invisible interactions.</div>
+      </div>
+      <div class="principle-item">
+        <div class="principle-name">Feedback</div>
+        <div class="principle-desc">Every user action deserves a system response. Button press = visual change. Form submit = confirmation. Upload = progress indicator. Silence causes anxiety and re-taps.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Figma Shortcuts -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">4. Figma Keyboard Shortcuts</h3>
+    <table class="ref-table">
+      <thead>
+        <tr><th>Action</th><th>Mac</th><th>Windows</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rectangle</td><td>R</td><td>R</td></tr>
+        <tr><td>Text</td><td>T</td><td>T</td></tr>
+        <tr><td>Frame</td><td>F</td><td>F</td></tr>
+        <tr><td>Group</td><td>⌘G</td><td>Ctrl+G</td></tr>
+        <tr><td>Create Component</td><td>⌘⌥K</td><td>Ctrl+Alt+K</td></tr>
+        <tr><td>Apply Auto Layout</td><td>⇧A</td><td>Shift+A</td></tr>
+        <tr><td>Duplicate</td><td>⌘D</td><td>Ctrl+D</td></tr>
+        <tr><td>Zoom to fit</td><td>⇧1</td><td>Shift+1</td></tr>
+        <tr><td>Hide all panels</td><td>⌘\</td><td>Ctrl+\</td></tr>
+        <tr><td>Open Inspect panel</td><td>⌘I</td><td>Ctrl+I</td></tr>
+        <tr><td>Copy style</td><td>⌘⌥C</td><td>Ctrl+Alt+C</td></tr>
+        <tr><td>Paste style</td><td>⌘⌥V</td><td>Ctrl+Alt+V</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 5: Research Methods -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">5. UX Research Methods Comparison</h3>
+    <table class="ref-table">
+      <thead>
+        <tr><th>Method</th><th>Type</th><th>Best For</th><th>Participants</th><th>Time</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User Interview</td>
+          <td>Qualitative</td>
+          <td>Motivations &amp; mental models</td>
+          <td>5–8</td>
+          <td>30–60 min each</td>
+        </tr>
+        <tr>
+          <td>Usability Test</td>
+          <td>Qualitative</td>
+          <td>Task completion issues</td>
+          <td>5</td>
+          <td>20–30 min each</td>
+        </tr>
+        <tr>
+          <td>Card Sort</td>
+          <td>Mixed</td>
+          <td>Navigation &amp; IA structure</td>
+          <td>15–30</td>
+          <td>20 min each</td>
+        </tr>
+        <tr>
+          <td>Tree Test</td>
+          <td>Quantitative</td>
+          <td>Navigation validation</td>
+          <td>50+</td>
+          <td>10 min each</td>
+        </tr>
+        <tr>
+          <td>Survey</td>
+          <td>Quantitative</td>
+          <td>Attitudes at scale</td>
+          <td>50+</td>
+          <td>10 min to fill</td>
+        </tr>
+        <tr>
+          <td>A/B Test</td>
+          <td>Quantitative</td>
+          <td>Compare 2 design versions</td>
+          <td>1,000+</td>
+          <td>2–4 weeks live</td>
+        </tr>
+        <tr>
+          <td>Heuristic Evaluation</td>
+          <td>Expert review</td>
+          <td>Quick usability audit</td>
+          <td>1–3 experts</td>
+          <td>2–4 hours</td>
+        </tr>
+        <tr>
+          <td>Analytics Review</td>
+          <td>Quantitative</td>
+          <td>Behaviour patterns at scale</td>
+          <td>All users</td>
+          <td>Ongoing</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 6: UX Deliverables Checklist -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">6. Common UX Deliverables Checklist</h3>
+    <table class="ref-table">
+      <thead>
+        <tr><th>Deliverable</th><th>Must Include</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>User Persona</strong></td>
+          <td>Name, photo placeholder, age, occupation, 2–3 goals, 2–3 frustrations, a verbatim quote, tech comfort level</td>
+        </tr>
+        <tr>
+          <td><strong>User Journey Map</strong></td>
+          <td>Stages, user actions per stage, thoughts, emotional curve, pain points, design opportunities per stage</td>
+        </tr>
+        <tr>
+          <td><strong>Sitemap</strong></td>
+          <td>Full hierarchy of all screens/pages, navigation relationships, section groupings clearly labelled</td>
+        </tr>
+        <tr>
+          <td><strong>User Flow</strong></td>
+          <td>Task-specific path, start and end points, decision diamonds with yes/no branches, error paths included</td>
+        </tr>
+        <tr>
+          <td><strong>Lo-Fi Wireframes</strong></td>
+          <td>All screens in the core flow, greyscale only, annotations explaining key interactions and content areas</td>
+        </tr>
+        <tr>
+          <td><strong>Hi-Fi Mockups</strong></td>
+          <td>Full colour, real content (no Lorem Ipsum), consistent design system, all screens and states represented</td>
+        </tr>
+        <tr>
+          <td><strong>Figma Prototype</strong></td>
+          <td>Clickable frames covering the core flow end-to-end, transitions set, must work without guidance</td>
+        </tr>
+        <tr>
+          <td><strong>Usability Test Report</strong></td>
+          <td>Participants overview, tasks + task completion rates, top 3–5 findings with severity, recommendations</td>
+        </tr>
+        <tr>
+          <td><strong>Design System</strong></td>
+          <td>Colour + text styles, spacing tokens, 5+ components with variants, anatomy labels, usage documentation</td>
+        </tr>
+        <tr>
+          <td><strong>Developer Handoff Spec</strong></td>
+          <td>Spacing grid annotated, assets exported and named, component inventory, CSS tokens documented</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 7: UX Case Study Template -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">7. UX Case Study Template</h3>
+    <pre><code>Title: [Project Name] — [1-line description of what you achieved]
+
+01. Context
+    App/website, target users, company/client (or personal project),
+    your role, team size, timeline
+
+02. The Problem
+    "Users of [product] struggle with [specific issue] because [root cause].
+     This results in [measurable impact — time, money, frustration, drop-off]."
+
+03. Research
+    Methods: [list 2–3 methods: interviews, usability testing, competitive analysis]
+    Key Findings:
+    • Finding 1 — [what you learned, with numbers or quotes if possible]
+    • Finding 2 — [unexpected insight that shaped your direction]
+    • Finding 3 — [pain point confirmed across multiple participants]
+
+04. Key Insight
+    "We found that [specific insight], which means [design implication].
+     This changed our approach from [original direction] to [new direction]."
+
+05. Ideation
+    [Show 3 concepts explored — sketches, low-fi screens, or wireframe variations]
+    Explain why you chose the direction you went with.
+
+06. Design Solution
+    [Show final hi-fi screens]
+    [1–2 sentences of rationale per key design decision — why, not just what]
+
+07. Prototype
+    [Figma link — embed or clickable text link]
+    [Note: the core flow must be testable without guidance]
+
+08. Testing &amp; Iteration
+    [What you tested (which tasks?), who (participants), when]
+    [What changed after testing — show before/after if possible]
+    [Evidence of improvement: task completion rate went from X% to Y%]
+
+09. Outcome
+    [Metrics improved (if available) — task completion, time-on-task, SUS score]
+    [Key lessons — what surprised you, what you'd do differently]
+    [What comes next if the project continued]</code></pre>
+    <div class="ref-callout">
+      <strong>Portfolio tip:</strong> The strongest case studies start with a problem that makes the reader think "yes, I've experienced that frustration" — before showing a single screen. The screens are the evidence, not the story.
+    </div>
+  </section>
+
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Quick Reference &nbsp;·&nbsp; Batch 2026–27</footer>
+</body>
+</html>

@@ -1,0 +1,665 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Concept Notes (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">📖 Concept Notes — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; CONCEPT NOTES — BEGINNER
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">🔬 Beginner Labs</a>
+    <a href="concept_notes_intermediate.html">📖 Intermediate Notes</a>
+    <a href="quizzes.html">🧩 Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="lh-icon">📊</div>
+    <div class="lh-text">
+      <h2>Data Science &amp; Analytics — Beginner Track</h2>
+      <p>Weeks 1–4 · Build your foundation in Python, data manipulation, cleaning, and visualization. No prior data science experience required.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">Beginner</span>
+      <span class="lh-badge">4 Weeks</span>
+      <span class="lh-badge">W1–W4</span>
+    </div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="week-block" id="w1">
+    <div class="week-header" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <h3>Introduction to Data Science</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>What is Data Science?</h4>
+        <p>Data Science is the interdisciplinary field that uses statistics, programming, and domain expertise to extract knowledge and insights from structured and unstructured data. It sits at the intersection of mathematics, computer science, and business intelligence.</p>
+        <p>A data scientist collects raw data, processes it, builds models to find patterns, and communicates insights to decision-makers. The ultimate goal is always to drive better decisions — whether that means reducing customer churn, increasing sales, or preventing fraud.</p>
+      </div>
+
+      <div class="concept-section">
+        <h4>The OSEMN Framework — The Data Science Process</h4>
+        <p>OSEMN (pronounced "awesome") describes the five key steps in any data science project:</p>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>O — Obtain</strong>
+            <p>Gather data from databases, APIs, CSV files, web scraping, sensors, or surveys. Without data, there is no data science.</p>
+          </div>
+          <div class="info-card">
+            <strong>S — Scrub</strong>
+            <p>Clean the data: handle missing values, remove duplicates, fix data types, filter outliers. This step typically takes 60–80% of project time.</p>
+          </div>
+          <div class="info-card">
+            <strong>E — Explore</strong>
+            <p>Perform exploratory data analysis (EDA): compute statistics, create visualizations, find correlations, and form hypotheses about what the data means.</p>
+          </div>
+          <div class="info-card">
+            <strong>M — Model</strong>
+            <p>Apply machine learning or statistical models: regression, classification, clustering, time series forecasting. Choose a model that fits the problem type.</p>
+          </div>
+          <div class="info-card">
+            <strong>N — Interpret</strong>
+            <p>Translate results into actionable business insights. Communicate findings clearly to technical and non-technical stakeholders.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>Types of Data</h4>
+        <table class="ref-table">
+          <thead><tr><th>Category</th><th>Type</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>By Structure</td><td>Structured</td><td>SQL tables, CSV files, spreadsheets — rows and columns with defined types</td></tr>
+            <tr><td>By Structure</td><td>Unstructured</td><td>Text documents, images, audio, video — no predefined schema</td></tr>
+            <tr><td>By Structure</td><td>Semi-structured</td><td>JSON, XML, HTML — partially organized but not tabular</td></tr>
+            <tr><td>By Measurement</td><td>Quantitative</td><td>Height, salary, temperature — numbers you can calculate with</td></tr>
+            <tr><td>By Measurement</td><td>Qualitative</td><td>Name, color, category, region — labels or categories</td></tr>
+            <tr><td>Quantitative Sub</td><td>Continuous</td><td>Weight (can be 70.5 kg), temperature, price</td></tr>
+            <tr><td>Quantitative Sub</td><td>Discrete</td><td>Number of children, clicks, customer count — whole numbers only</td></tr>
+            <tr><td>Qualitative Sub</td><td>Nominal</td><td>Country, blood type — no inherent order</td></tr>
+            <tr><td>Qualitative Sub</td><td>Ordinal</td><td>Rating (1–5 stars), education level — ordered but gaps are unequal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-section">
+        <h4>Data Science Roles</h4>
+        <div class="role-grid">
+          <div class="role-card">
+            <strong>Data Analyst</strong>
+            <p>Focuses on understanding past and present data. Uses SQL, Excel, Power BI, and Python to create reports and dashboards. Answers "what happened?"</p>
+          </div>
+          <div class="role-card">
+            <strong>Data Scientist</strong>
+            <p>Builds predictive models and extracts deeper insights. Uses machine learning and statistics. Answers "what will happen?" and "why?"</p>
+          </div>
+          <div class="role-card">
+            <strong>Data Engineer</strong>
+            <p>Builds the infrastructure: pipelines, warehouses, ETL jobs. Ensures data flows reliably from sources to consumers. Thinks about scale and reliability.</p>
+          </div>
+          <div class="role-card">
+            <strong>ML Engineer</strong>
+            <p>Takes ML models from notebooks into production. Focuses on deployment, serving, monitoring, and performance. Bridges data science and software engineering.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>Core Tools Overview</h4>
+        <div class="tool-list">
+          <div class="tool-item"><strong>Python</strong> — The most popular language for data science. Rich ecosystem, readable syntax, and widespread industry adoption.</div>
+          <div class="tool-item"><strong>Jupyter Notebook</strong> — Interactive environment where you can mix code, charts, and text in one document. The standard for exploratory analysis.</div>
+          <div class="tool-item"><strong>pandas</strong> — Python library for data manipulation. Think of it as Excel for programmers. DataFrames let you load, filter, aggregate, and transform data easily.</div>
+          <div class="tool-item"><strong>NumPy</strong> — Fast numerical computing in Python. Provides arrays optimized for math operations. Foundation of pandas, scikit-learn, and most ML libraries.</div>
+          <div class="tool-item"><strong>Matplotlib &amp; Seaborn</strong> — Visualization libraries. Matplotlib is low-level and flexible; Seaborn is high-level and beautiful by default.</div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>Real-World Applications</h4>
+        <ul class="content-list">
+          <li><strong>Recommendation Systems</strong> — Netflix suggests movies, Amazon suggests products, Spotify suggests songs using collaborative filtering and content-based filtering.</li>
+          <li><strong>Fraud Detection</strong> — Banks flag unusual transactions in real-time using anomaly detection models trained on millions of historical transactions.</li>
+          <li><strong>Demand Forecasting</strong> — Supermarkets and e-commerce platforms predict how much stock to order each week to minimize waste and avoid stockouts.</li>
+          <li><strong>Medical Diagnosis</strong> — ML models help radiologists detect tumors in medical images with accuracy comparable to specialists.</li>
+          <li><strong>Customer Churn</strong> — Telecom companies predict which customers will cancel their plans so retention teams can intervene proactively.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block" id="w2">
+    <div class="week-header" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <h3>Python for Data Science Basics</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Setting Up Your Environment</h4>
+        <p>You have two options to get started without any configuration headaches:</p>
+        <ul class="content-list">
+          <li><strong>Google Colab (Recommended)</strong> — Free, browser-based, no installation. Go to colab.research.google.com, sign in with Google, and click "New Notebook." All major data science libraries are pre-installed.</li>
+          <li><strong>Anaconda (Local)</strong> — Download from anaconda.com/download. Installs Python + Jupyter + all major DS libraries in one step. Run <code>jupyter notebook</code> from your terminal to launch.</li>
+        </ul>
+        <pre><code># After Anaconda install, or in any Python environment:
+pip install pandas numpy matplotlib seaborn scikit-learn
+
+# Launch Jupyter
+jupyter notebook   # opens in your browser at localhost:8888</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Python Refresher — Data Science Essentials</h4>
+        <pre><code># Lists — ordered, mutable
+ages = [23, 31, 27, 45, 19]
+print(ages[0])        # 23 — zero-indexed
+print(ages[-1])       # 19 — last element
+print(ages[1:3])      # [31, 27] — slicing
+
+# Dictionaries — key-value pairs
+student = {'name': 'Priya', 'age': 22, 'score': 88.5}
+print(student['name'])  # Priya
+student['grade'] = 'A'  # add new key
+
+# Loops
+for age in ages:
+    if age > 25:
+        print(f"{age} is above 25")
+
+# Functions
+def calculate_bmi(weight_kg, height_m):
+    """Returns Body Mass Index."""
+    return weight_kg / (height_m ** 2)
+
+bmi = calculate_bmi(70, 1.75)
+print(f"BMI: {bmi:.2f}")  # BMI: 22.86</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>NumPy Arrays</h4>
+        <p>NumPy arrays are the foundation of data science in Python. They are faster than lists because they store all elements with the same data type in contiguous memory, enabling vectorized operations (operating on the whole array at once without Python loops).</p>
+        <pre><code>import numpy as np
+
+# Create arrays
+a = np.array([1, 2, 3, 4, 5])
+b = np.zeros((3, 4))          # 3x4 matrix of zeros
+c = np.ones((2, 3))           # 2x3 matrix of ones
+d = np.arange(0, 10, 2)       # [0, 2, 4, 6, 8]
+e = np.linspace(0, 1, 5)      # [0, 0.25, 0.5, 0.75, 1.0]
+f = np.random.randn(100)      # 100 random normal values
+
+# Shape and properties
+print(a.shape)   # (5,)
+print(b.shape)   # (3, 4)
+print(a.dtype)   # int64
+
+# Indexing and slicing
+matrix = np.array([[1,2,3],[4,5,6],[7,8,9]])
+print(matrix[0, 1])      # 2  — row 0, col 1
+print(matrix[:, 0])      # [1,4,7] — all rows, col 0
+print(matrix[1:, 1:])    # [[5,6],[8,9]] — submatrix
+
+# Basic operations (element-wise)
+print(a + 10)            # [11,12,13,14,15]
+print(a * 2)             # [2,4,6,8,10]
+print(a ** 2)            # [1,4,9,16,25]
+
+# Broadcasting — smaller array expands to match larger
+row = np.array([1, 2, 3])
+col = np.array([[10],[20],[30]])
+print(row + col)         # 3x3 matrix
+
+# Aggregations
+print(a.sum())           # 15
+print(a.mean())          # 3.0
+print(a.std())           # 1.414
+print(a.max(), a.min())  # 5 1
+
+# Boolean indexing
+print(a[a > 3])          # [4, 5]</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>pandas Series and DataFrames</h4>
+        <p>pandas is built on top of NumPy and gives you labeled, spreadsheet-like data structures for real-world data.</p>
+        <pre><code>import pandas as pd
+
+# ---- Series: 1D labeled array ----
+prices = pd.Series([100, 250, 175, 300], index=['Apple','Google','Amazon','Meta'])
+print(prices['Google'])   # 250
+print(prices[prices > 200])   # filter
+
+# ---- DataFrame: 2D table ----
+data = {
+    'name':   ['Arjun', 'Priya', 'Vikram', 'Sunita'],
+    'age':    [25, 22, 30, 27],
+    'salary': [45000, 38000, 62000, 55000],
+    'city':   ['Delhi', 'Mumbai', 'Bangalore', 'Delhi']
+}
+df = pd.DataFrame(data)
+
+# ---- Load from CSV ----
+df = pd.read_csv('employees.csv')
+
+# ---- Quick inspection ----
+print(df.head())         # first 5 rows
+print(df.tail(3))        # last 3 rows
+print(df.shape)          # (rows, columns)
+print(df.info())         # column types + non-null counts
+print(df.describe())     # count, mean, std, min, quartiles, max</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Data Selection in pandas</h4>
+        <pre><code># Single column → Series
+print(df['name'])
+
+# Multiple columns → DataFrame
+print(df[['name', 'salary']])
+
+# .loc — label-based: df.loc[row_label, col_label]
+print(df.loc[0])                          # first row by index
+print(df.loc[0:2, ['name','salary']])     # rows 0-2, two columns
+
+# .iloc — position-based: df.iloc[row_pos, col_pos]
+print(df.iloc[0])                         # first row
+print(df.iloc[0:3, 0:2])                  # first 3 rows, first 2 columns
+
+# Boolean filtering
+print(df[df['salary'] > 50000])
+print(df[(df['city'] == 'Delhi') &amp; (df['age'] < 28)])
+
+# Quick aggregations
+print(df['salary'].mean())
+print(df['city'].value_counts())
+print(df.groupby('city')['salary'].mean())</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block" id="w3">
+    <div class="week-header" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <h3>Data Cleaning &amp; Exploration</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Why Data Cleaning Matters</h4>
+        <p>Real-world data is messy. Studies consistently show that data scientists spend 60–80% of their time cleaning data rather than modeling. Common problems include:</p>
+        <ul class="content-list">
+          <li><strong>Missing values</strong> — Rows where a sensor failed, a user left a field blank, or data wasn't collected. These cause errors in most ML models.</li>
+          <li><strong>Duplicates</strong> — Same record entered twice due to system glitches or data merges from multiple sources.</li>
+          <li><strong>Wrong data types</strong> — Dates stored as strings, numbers stored as text, categories stored as integers. These prevent correct analysis.</li>
+          <li><strong>Outliers</strong> — Values like age=999 or salary=-5000 that are clearly errors, or legitimate extreme values that need special handling.</li>
+          <li><strong>Inconsistent categories</strong> — "Delhi", "delhi", "DELHI", "New Delhi" all meaning the same city but stored differently.</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h4>Handling Missing Data</h4>
+        <pre><code>import pandas as pd
+import numpy as np
+
+df = pd.read_csv('titanic.csv')
+
+# Detect missing values
+print(df.isnull().sum())           # count per column
+print(df.isnull().sum() / len(df)) # percentage per column
+
+# Visualize missing data pattern
+# pip install missingno  (optional but great)
+# import missingno as msno; msno.matrix(df)
+
+# Drop rows where ANY value is missing
+df_clean = df.dropna()
+
+# Drop rows where SPECIFIC columns are missing
+df_clean = df.dropna(subset=['age', 'fare'])
+
+# Drop columns with more than 50% missing
+threshold = len(df) * 0.5
+df_clean = df.dropna(thresh=threshold, axis=1)
+
+# Fill missing with a constant
+df['embarked'] = df['embarked'].fillna('S')
+
+# Fill missing with the column median (robust to outliers)
+df['age'] = df['age'].fillna(df['age'].median())
+
+# Fill missing with the column mean
+df['fare'] = df['fare'].fillna(df['fare'].mean())
+
+# Forward fill — use previous row's value (useful for time series)
+df['price'] = df['price'].fillna(method='ffill')</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Removing Duplicates &amp; Fixing Types</h4>
+        <pre><code># Check for duplicates
+print(df.duplicated().sum())   # number of duplicate rows
+
+# Remove duplicates (keeps first occurrence by default)
+df = df.drop_duplicates()
+
+# Remove duplicates based on specific columns
+df = df.drop_duplicates(subset=['passenger_id'])
+
+# ---- Fixing data types ----
+print(df.dtypes)   # see current types
+
+# Convert string to number
+df['fare'] = pd.to_numeric(df['fare'], errors='coerce')
+
+# Convert to integer
+df['pclass'] = df['pclass'].astype(int)
+
+# Convert to category (saves memory for low-cardinality columns)
+df['sex'] = df['sex'].astype('category')
+
+# Convert string to datetime
+df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+
+# ---- Standardize text categories ----
+df['city'] = df['city'].str.lower().str.strip()
+df['city'] = df['city'].replace({'new delhi': 'delhi', 'bombay': 'mumbai'})</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Exploratory Data Analysis (EDA)</h4>
+        <pre><code>>import pandas as pd
+
+df = pd.read_csv('titanic.csv')
+
+# --- Summary Statistics ---
+print(df.describe())                    # numeric columns
+print(df.describe(include='object'))    # categorical columns
+
+# --- Value counts for categorical columns ---
+print(df['sex'].value_counts())
+print(df['pclass'].value_counts())
+
+# Normalize to get proportions
+print(df['survived'].value_counts(normalize=True))
+
+# --- Groupby aggregations ---
+# Survival rate by sex
+print(df.groupby('sex')['survived'].mean())
+
+# Average fare by class
+print(df.groupby('pclass')['fare'].mean())
+
+# Multiple aggregations at once
+print(df.groupby('pclass').agg({'survived':'mean', 'fare':'mean', 'age':'median'}))
+
+# --- Sorting ---
+print(df.sort_values('fare', ascending=False).head(10))
+
+# --- Correlation ---
+print(df[['age','fare','survived']].corr())
+
+# --- Cross-tabulation ---
+print(pd.crosstab(df['sex'], df['survived']))</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Basic Visualizations with Matplotlib</h4>
+        <pre><code>import matplotlib.pyplot as plt
+
+# Line chart
+plt.figure(figsize=(10, 5))
+plt.plot([1,2,3,4,5], [20,35,30,45,40], color='navy', linewidth=2, marker='o')
+plt.title('Monthly Sales')
+plt.xlabel('Month')
+plt.ylabel('Sales (₹ thousands)')
+plt.tight_layout()
+plt.show()
+
+# Bar chart
+categories = ['Economy', 'Business', 'First']
+values = [250, 180, 70]
+plt.figure(figsize=(8, 5))
+plt.bar(categories, values, color=['#1B3A6B','#C8941A','#4CAF50'])
+plt.title('Passengers by Class')
+plt.ylabel('Count')
+plt.show()
+
+# Histogram — distribution of a numeric variable
+plt.figure(figsize=(8, 5))
+plt.hist(df['age'].dropna(), bins=30, color='#1B3A6B', edgecolor='white')
+plt.title('Age Distribution of Passengers')
+plt.xlabel('Age')
+plt.ylabel('Count')
+plt.show()
+
+# Scatter plot — relationship between two variables
+plt.figure(figsize=(8, 6))
+plt.scatter(df['age'], df['fare'], alpha=0.4, c=df['survived'], cmap='RdYlGn')
+plt.title('Age vs Fare (colored by survival)')
+plt.xlabel('Age')
+plt.ylabel('Fare')
+plt.colorbar(label='Survived')
+plt.show()</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-block" id="w4">
+    <div class="week-header" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <h3>Data Visualization with Seaborn</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Seaborn vs Matplotlib — When to Use Each</h4>
+        <table class="ref-table">
+          <thead><tr><th>Feature</th><th>Matplotlib</th><th>Seaborn</th></tr></thead>
+          <tbody>
+            <tr><td>Level</td><td>Low-level — more code, more control</td><td>High-level — less code, better defaults</td></tr>
+            <tr><td>Default aesthetics</td><td>Plain, functional</td><td>Beautiful statistical charts out of the box</td></tr>
+            <tr><td>Best for</td><td>Custom plots, publication figures, exact control</td><td>Statistical exploration, quick EDA, categorical plots</td></tr>
+            <tr><td>Integration</td><td>Foundation for everything else</td><td>Built on top of Matplotlib</td></tr>
+            <tr><td>Usage</td><td>plt.plot(), plt.bar(), plt.hist()</td><td>sns.histplot(), sns.boxplot(), sns.heatmap()</td></tr>
+          </tbody>
+        </table>
+        <p>The best approach: use Seaborn for exploration and analysis, then switch to Matplotlib for fine-grained customization when preparing final presentation charts.</p>
+      </div>
+
+      <div class="concept-section">
+        <h4>Core Seaborn Chart Types</h4>
+        <pre><code>import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
+df = sns.load_dataset('titanic')
+
+# ---- Histogram with KDE (kernel density estimate) ----
+plt.figure(figsize=(8, 5))
+sns.histplot(df['age'].dropna(), bins=30, kde=True, color='#1B3A6B')
+plt.title('Age Distribution')
+plt.show()
+
+# ---- Box plot — shows median, IQR, and outliers ----
+plt.figure(figsize=(8, 5))
+sns.boxplot(x='pclass', y='fare', data=df, palette='Set2')
+plt.title('Fare Distribution by Passenger Class')
+plt.show()
+
+# ---- Scatter plot with category coloring ----
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='age', y='fare', hue='survived', data=df,
+                palette={0:'red', 1:'green'}, alpha=0.6)
+plt.title('Age vs Fare (green = survived)')
+plt.show()
+
+# ---- Bar plot — mean with confidence intervals ----
+plt.figure(figsize=(8, 5))
+sns.barplot(x='pclass', y='survived', data=df, palette='Blues_d')
+plt.title('Survival Rate by Passenger Class')
+plt.ylabel('Survival Rate')
+plt.show()
+
+# ---- Count plot — frequency of each category ----
+plt.figure(figsize=(8, 5))
+sns.countplot(x='embark_town', hue='survived', data=df, palette='Set1')
+plt.title('Embarkation Town vs Survival')
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Correlation Matrix &amp; Heatmap</h4>
+        <p>A correlation matrix shows the pairwise correlation coefficient (range: -1 to +1) between all numeric columns. A value near +1 means strong positive correlation; near -1 means strong negative; near 0 means no linear relationship.</p>
+        <pre><code>>import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset('titanic')
+
+# Compute correlation matrix
+corr_matrix = df[['survived','pclass','age','sibsp','parch','fare']].corr()
+print(corr_matrix)
+
+# Visualize as heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix,
+            annot=True,         # show numbers in each cell
+            fmt='.2f',          # 2 decimal places
+            cmap='coolwarm',    # blue=negative, red=positive
+            vmin=-1, vmax=1,    # fix color scale
+            square=True,
+            linewidths=0.5)
+plt.title('Feature Correlation Matrix')
+plt.tight_layout()
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Pairplot — Feature Relationships at a Glance</h4>
+        <p>sns.pairplot() creates a grid of scatter plots for all pairs of numeric columns, with histograms on the diagonal. It's one of the fastest ways to spot patterns in a dataset.</p>
+        <pre><code>>import seaborn as sns
+
+iris = sns.load_dataset('iris')
+
+# Basic pairplot
+sns.pairplot(iris)
+plt.show()
+
+# Colored by species — reveals cluster separation
+sns.pairplot(iris, hue='species', palette='Set2',
+             plot_kws={'alpha': 0.6})
+plt.suptitle('Iris Dataset — Feature Relationships', y=1.02)
+plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Customizing Charts — Titles, Labels, Colors, Figsize</h4>
+        <pre><code>>import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set global style
+sns.set_style("whitegrid")
+sns.set_palette("muted")
+
+# Create a figure with subplots
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig.suptitle('Titanic Analysis Dashboard', fontsize=16, fontweight='bold')
+
+df = sns.load_dataset('titanic')
+
+# Left chart
+sns.barplot(x='pclass', y='survived', data=df, ax=axes[0], palette='Blues_d')
+axes[0].set_title('Survival Rate by Class', fontsize=13)
+axes[0].set_xlabel('Passenger Class', fontsize=11)
+axes[0].set_ylabel('Survival Rate', fontsize=11)
+
+# Right chart
+sns.histplot(df['age'].dropna(), kde=True, ax=axes[1], color='#C8941A')
+axes[1].set_title('Age Distribution', fontsize=13)
+axes[1].set_xlabel('Age', fontsize=11)
+axes[1].set_ylabel('Count', fontsize=11)
+
+plt.tight_layout()
+plt.savefig('titanic_charts.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Charts saved!")</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Saving Charts — plt.savefig()</h4>
+        <p>Always call <code>plt.savefig()</code> BEFORE <code>plt.show()</code>. After <code>plt.show()</code>, the figure buffer is cleared and you'll save a blank file.</p>
+        <pre><code>import matplotlib.pyplot as plt
+
+# Basic save
+plt.savefig('my_chart.png')
+
+# High-quality save with transparency
+plt.savefig('my_chart.png',
+            dpi=300,              # dots per inch — 150 for web, 300 for print
+            bbox_inches='tight',  # remove extra whitespace
+            transparent=True)     # transparent background (for presentations)
+
+# Save as vector format (scales without pixelation)
+plt.savefig('my_chart.svg')
+plt.savefig('my_chart.pdf')
+
+# In Jupyter, set this at the top to show crisp charts inline:
+# %config InlineBackend.figure_format = 'retina'</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="lab_guide_beginner.html" class="btn-primary">🔬 Go to Beginner Labs →</a>
+    <a href="concept_notes_intermediate.html" class="btn-secondary">Next: Intermediate Notes →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Concept Notes — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

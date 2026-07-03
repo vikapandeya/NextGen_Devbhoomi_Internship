@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Project Briefs | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .proj-card { background: white; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 32px; overflow: hidden; box-shadow: var(--shadow-md); }
+  .proj-header { padding: 28px 32px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+  .proj-header h2 { font-size: 22px; font-weight: 800; color: white; margin-bottom: 6px; }
+  .proj-header p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .proj-num { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; font-family: var(--mono); }
+  .proj-level-badge { background: rgba(255,255,255,0.15); color: white; padding: 8px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid rgba(255,255,255,0.3); white-space: nowrap; flex-shrink: 0; }
+  .proj-body { padding: 28px 32px; }
+  .proj-stack { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .proj-stack span { background: var(--navy); color: var(--gold-light); padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; font-family: var(--mono); }
+  .req-list { list-style: none; margin-bottom: 24px; }
+  .req-list li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border-light); font-size: 13px; color: var(--text-mid); }
+  .req-list li:last-child { border-bottom: none; }
+  .req-list li::before { content: '☐'; color: var(--navy); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .proj-deadline { background: var(--navy-deep); color: var(--gold-light); padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; display: inline-block; margin-top: 8px; font-family: var(--mono); }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">📋</div>
+    <h1>Project Briefs — Cyber Security</h1>
+    <p class="lh-sub">Three projects demonstrating security assessment, defense implementation, and incident response skills.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">3 Projects</span>
+      <span class="lh-pill">Beginner · Intermediate · Advanced</span>
+      <span class="lh-pill">Weeks 4 / 8 / 12</span>
+      <span class="lh-pill gold">Portfolio-Grade Work</span>
+    </div>
+  </div>
+
+  <!-- PROJECT 1 -->
+  <div class="sm-sec">Project 1 — Beginner</div>
+  <div class="proj-card">
+    <div class="proj-header proj-beg">
+      <div>
+        <div class="proj-num">Project 01 of 03</div>
+        <h2>Personal Security Hardening Report</h2>
+        <p>Conduct a full personal security audit of your digital life and implement measurable improvements. This is your first real security assessment — document the before and after state with evidence.</p>
+      </div>
+      <div class="proj-level-badge">🌱 Beginner</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-stack">
+        <span>Research</span>
+        <span>Password Manager</span>
+        <span>MFA</span>
+        <span>Browser Security</span>
+        <span>HaveIBeenPwned</span>
+      </div>
+
+      <h4 style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;">Requirements (Checklist)</h4>
+      <ul class="req-list">
+        <li>Check all personal email addresses on HaveIBeenPwned — document each breach found (service, date, data types exposed)</li>
+        <li>Install Bitwarden and migrate a minimum of 20 accounts to strong unique passwords (20+ characters each)</li>
+        <li>Enable MFA on all critical accounts: primary email, all banking/financial apps, GitHub, social media accounts</li>
+        <li>Audit all browser extensions — remove any that are unused, have excessive permissions, or are from unverified publishers</li>
+        <li>Enable full-disk encryption on your laptop (BitLocker on Windows, FileVault on Mac)</li>
+        <li>Configure automatic OS and browser updates — confirm they are active with a screenshot</li>
+        <li>Document before/after state with screenshots for each step (Bitwarden health report, HIBP results, MFA confirmations)</li>
+      </ul>
+
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>Points</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Documentation quality — clear structure, screenshots, before/after evidence</td><td class="pts">20</td></tr>
+          <tr><td>HIBP audit + Bitwarden setup with 20+ migrated accounts</td><td class="pts">25</td></tr>
+          <tr><td>MFA enabled on all critical accounts with confirmation evidence</td><td class="pts">25</td></tr>
+          <tr><td>Browser extension audit + OS hardening (encryption + auto-updates)</td><td class="pts">20</td></tr>
+          <tr><td>Written reflection — what surprised you, what risk did you eliminate, what remains</td><td class="pts">10</td></tr>
+          <tr style="background:var(--navy);color:white;"><td><strong>Total &nbsp;·&nbsp; Pass Mark: 60/100</strong></td><td class="pts" style="color:var(--gold);">100</td></tr>
+        </tbody>
+      </table>
+
+      <div class="proj-deadline">📅 Deadline: End of Week 4</div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="sm-sec">Project 2 — Intermediate</div>
+  <div class="proj-card">
+    <div class="proj-header proj-int">
+      <div>
+        <div class="proj-num">Project 02 of 03</div>
+        <h2>Web Application Security Assessment</h2>
+        <p>Conduct a structured penetration test against DVWA following the OWASP Testing Methodology. Document all findings in a professional report you could present to a real client.</p>
+      </div>
+      <div class="proj-level-badge">⚡ Intermediate</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-stack">
+        <span>DVWA</span>
+        <span>Burp Suite</span>
+        <span>OWASP Methodology</span>
+        <span>CVSS v3.1</span>
+        <span>Pen Test Report</span>
+      </div>
+
+      <h4 style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;">Requirements (Checklist)</h4>
+      <ul class="req-list">
+        <li>Test all applicable OWASP Top 10 categories against DVWA at Low security — document whether each is present or not present</li>
+        <li>Minimum 5 documented vulnerabilities with: CVE reference (where applicable), CVSS v3.1 base score (use the NIST calculator), proof-of-concept reproduction steps, screenshot evidence, and a specific actionable remediation recommendation</li>
+        <li>Professional report with Executive Summary (non-technical, 1 page), Scope and Methodology section, Findings section (one detailed page per finding), Risk Rating summary table, and full screenshot appendix</li>
+        <li>CVSS scores must be justified — list the vector components you chose (AV:N/AC:L/…) and why each was selected</li>
+        <li>Remediation recommendations must be specific — reference the vulnerable function/file/parameter, not just the general fix pattern</li>
+      </ul>
+
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>Points</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Number of valid, documented vulnerabilities (minimum 5 required)</td><td class="pts">25</td></tr>
+          <tr><td>Quality of proof-of-concept steps — reproducible, precise, with evidence</td><td class="pts">25</td></tr>
+          <tr><td>CVSS v3.1 scoring accuracy with justification of vector components</td><td class="pts">15</td></tr>
+          <tr><td>Remediation specificity and technical accuracy</td><td class="pts">20</td></tr>
+          <tr><td>Report professionalism — structure, language, executive summary quality</td><td class="pts">15</td></tr>
+          <tr style="background:var(--navy);color:white;"><td><strong>Total &nbsp;·&nbsp; Pass Mark: 65/100</strong></td><td class="pts" style="color:var(--gold);">100</td></tr>
+        </tbody>
+      </table>
+
+      <div class="proj-deadline">📅 Deadline: End of Week 8</div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="sm-sec">Project 3 — Advanced</div>
+  <div class="proj-card">
+    <div class="proj-header proj-adv">
+      <div>
+        <div class="proj-num">Project 03 of 03</div>
+        <h2>Cloud Security Posture Assessment &amp; Hardening</h2>
+        <p>Conduct a full security assessment of an AWS environment, implement all critical findings, and build an automated security monitoring solution in Python. This is your capstone portfolio piece for Cyber Security.</p>
+      </div>
+      <div class="proj-level-badge">🚀 Advanced</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-stack">
+        <span>AWS</span>
+        <span>GuardDuty</span>
+        <span>CloudTrail</span>
+        <span>IAM</span>
+        <span>Python boto3</span>
+        <span>SNS</span>
+      </div>
+
+      <h4 style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;">Requirements (Checklist)</h4>
+      <ul class="req-list">
+        <li>IAM audit: credential report analysis, identify unused users/roles (no login in 90+ days), identify overprivileged policies (AdministratorAccess attached to non-admin users), MFA status for all users</li>
+        <li>S3 audit: check all buckets for public access, versioning status, server-side encryption, and bucket policies — document each finding with risk level</li>
+        <li>Network audit: review Security Groups for overly permissive inbound rules (0.0.0.0/0 on sensitive ports), check VPC Flow Logs are enabled, review NACLs</li>
+        <li>Write a Python script using boto3 that programmatically checks for 5 specific misconfigurations (e.g. MFA not on root, S3 bucket is public, Security Group allows 0.0.0.0/0 on port 22) and outputs a JSON report with findings, severity, and resource ARN</li>
+        <li>Enable and configure GuardDuty + Security Hub — screenshot showing both are active and collecting findings</li>
+        <li>Create an SNS alert that emails you when the root account is used (CloudWatch Event → SNS → Email)</li>
+        <li>Before and after screenshots for every remediation — prove the fix was applied, not just described</li>
+        <li>Write a 15+ page security assessment report following the structure from Project 2 but for cloud infrastructure</li>
+      </ul>
+
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>Points</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>IAM, S3, and network audit findings — accuracy, completeness, risk assessment</td><td class="pts">25</td></tr>
+          <tr><td>boto3 Python script — code quality, handles errors, produces valid JSON output</td><td class="pts">20</td></tr>
+          <tr><td>GuardDuty + Security Hub setup + SNS root login alert — all three operational with evidence</td><td class="pts">20</td></tr>
+          <tr><td>Assessment report quality — 15+ pages, findings with evidence, remediation roadmap</td><td class="pts">25</td></tr>
+          <tr><td>Before/after remediation evidence — each remediation confirmed with screenshots</td><td class="pts">10</td></tr>
+          <tr style="background:var(--navy);color:white;"><td><strong>Total &nbsp;·&nbsp; Pass Mark: 70/100</strong></td><td class="pts" style="color:var(--gold);">100</td></tr>
+        </tbody>
+      </table>
+
+      <div class="proj-deadline">📅 Deadline: End of Week 12</div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_advanced.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Lab Guide</a>
+    <div style="display:flex;gap:12px;">
+      <a href="career_roadmap.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Career Roadmap →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

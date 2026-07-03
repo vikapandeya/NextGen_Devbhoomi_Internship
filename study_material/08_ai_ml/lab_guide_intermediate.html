@@ -1,0 +1,1148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Lab Guide (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lab-card{background:rgba(0,0,0,.03);border-radius:10px;padding:18px 20px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08);}
+.lab-card h4{margin:0 0 8px;display:flex;align-items:center;gap:8px;}
+.lab-meta{display:flex;gap:12px;margin-bottom:14px;font-size:.85rem;color:#666;flex-wrap:wrap;}
+.lab-meta span{background:rgba(0,0,0,.07);border-radius:20px;padding:2px 10px;}
+.step-list{counter-reset:step;list-style:none;padding:0;margin:10px 0;}
+.step-list li{counter-increment:step;padding:8px 0 8px 44px;position:relative;border-bottom:1px dashed rgba(0,0,0,.07);}
+.step-list li:last-child{border-bottom:none;}
+.step-list li::before{content:counter(step);position:absolute;left:0;top:8px;background:var(--clr-int,#0284c7);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;}
+.tip-box{background:rgba(2,132,199,.07);border:1px solid rgba(2,132,199,.25);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.9rem;}
+.tip-box strong{color:var(--clr-int,#0284c7);}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">🔬 Lab Guide — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; LAB GUIDE (INTERMEDIATE)
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">🔬 Beginner Labs</a>
+    <a href="concept_notes_intermediate.html">📖 Concept Notes</a>
+    <a href="lab_guide_advanced.html">🔬 Advanced Labs</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="hero-icon">🔬</div>
+    <div class="hero-text">
+      <h2>Lab Guide — Intermediate Level</h2>
+      <p>XGBoost, SHAP explainability, sentiment analysis, deep learning, transfer learning, and LLM API integration.</p>
+      <div class="hero-pills">
+        <span class="pill">XGBoost + SHAP</span>
+        <span class="pill">NLP Sentiment</span>
+        <span class="pill">Fashion MNIST</span>
+        <span class="pill">Claude API</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- W5 -->
+  <div class="week-block" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <h3>Week 5 — Ensemble Methods &amp; Explainability</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 1 — XGBoost + SHAP: Customer Churn Prediction</h4>
+        <div class="lab-meta">
+          <span>⏱ 90 minutes</span>
+          <span>📊 Synthetic Telecom Churn</span>
+          <span>🎯 XGBoost, SHAP values, model explanation</span>
+        </div>
+        <p>Build a churn prediction model and explain individual predictions using SHAP — a critical skill for deploying ML in business contexts where stakeholders need justification.</p>
+        <ol class="step-list">
+          <li>Generate realistic churn dataset:
+            <pre><code>>import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+np.random.seed(42)
+n = 5000
+df = pd.DataFrame({
+    'tenure_months':     np.random.randint(1, 72, n),
+    'monthly_charges':   np.random.uniform(20, 120, n),
+    'num_products':      np.random.randint(1, 5, n),
+    'support_calls':     np.random.poisson(2, n),
+    'late_payments':     np.random.poisson(1, n),
+    'contract_type':     np.random.choice([0,1,2], n, p=[0.5,0.3,0.2]),
+    'has_fiber':         np.random.randint(0, 2, n),
+    'payment_auto':      np.random.randint(0, 2, n),
+})
+# Churn logic: newer customers, high charges, many support calls more likely
+churn_prob = (
+    0.4 - 0.005*df['tenure_months']
+    + 0.003*df['monthly_charges']
+    + 0.08*df['support_calls']
+    + 0.05*df['late_payments']
+    - 0.1*df['contract_type']
+    - 0.05*df['payment_auto']
+)
+df['churn'] = (np.random.rand(n) < churn_prob.clip(0.05, 0.95)).astype(int)
+print(f"Churn rate: {df['churn'].mean():.3f}")
+print(df.describe().round(2))</code></pre>
+          </li>
+          <li>Feature engineering:
+            <pre><code>>df['charges_per_month_active'] = df['monthly_charges'] / (df['tenure_months'] + 1)
+df['support_rate'] = df['support_calls'] / (df['tenure_months'] + 1)
+df['is_long_term'] = (df['tenure_months'] > 24).astype(int)
+features = ['tenure_months','monthly_charges','num_products','support_calls',
+            'late_payments','contract_type','has_fiber','payment_auto',
+            'charges_per_month_active','support_rate','is_long_term']
+X = df[features]
+y = df['churn']
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)</code></pre>
+          </li>
+          <li>Train XGBoost with early stopping:
+            <pre><code>>from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split as tts
+
+X_tr, X_val, y_tr, y_val = tts(X_train, y_train, test_size=0.15, random_state=42)
+
+xgb = XGBClassifier(
+    n_estimators=500,
+    learning_rate=0.05,
+    max_depth=6,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    eval_metric='auc',
+    use_label_encoder=False,
+    random_state=42
+)
+xgb.fit(X_tr, y_tr,
+        eval_set=[(X_val, y_val)],
+        early_stopping_rounds=30,
+        verbose=50)
+print(f"\nBest iteration: {xgb.best_iteration}")</code></pre>
+          </li>
+          <li>Evaluate comprehensively:
+            <pre><code>>from sklearn.metrics import (classification_report, roc_auc_score,
+                             average_precision_score, confusion_matrix,
+                             ConfusionMatrixDisplay)
+import matplotlib.pyplot as plt
+
+y_pred  = xgb.predict(X_test)
+y_proba = xgb.predict_proba(X_test)[:,1]
+
+print("Classification Report:")
+print(classification_report(y_test, y_pred, target_names=['Stay','Churn']))
+print(f"ROC-AUC: {roc_auc_score(y_test, y_proba):.3f}")
+print(f"PR-AUC:  {average_precision_score(y_test, y_proba):.3f}")
+
+cm = confusion_matrix(y_test, y_pred)
+ConfusionMatrixDisplay(cm, display_labels=['Stay','Churn']).plot(cmap='Blues')
+plt.title('XGBoost Confusion Matrix')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>SHAP global explanation:
+            <pre><code>>import shap
+# TreeExplainer is fast for tree-based models
+explainer   = shap.TreeExplainer(xgb)
+shap_values = explainer.shap_values(X_test)
+
+# Summary plot: overall feature importance with direction
+plt.figure(figsize=(8, 6))
+shap.summary_plot(shap_values, X_test,
+                  feature_names=features, show=False)
+plt.title('SHAP Summary — Global Feature Impact')
+plt.tight_layout()
+plt.show()
+# Red = higher feature value pushes toward churn
+# Blue = lower feature value pushes toward churn</code></pre>
+          </li>
+          <li>SHAP local explanation (single customer):
+            <pre><code>># Explain why a specific high-risk customer was flagged
+high_risk_idx = y_proba.argmax()
+print(f"Highest risk customer (index {high_risk_idx}):")
+print(X_test.iloc[high_risk_idx])
+print(f"Churn probability: {y_proba[high_risk_idx]:.3f}")
+
+shap.force_plot(
+    explainer.expected_value,
+    shap_values[high_risk_idx],
+    X_test.iloc[high_risk_idx],
+    feature_names=features,
+    matplotlib=True, show=False
+)
+plt.title('SHAP Force Plot — Why This Customer Is High Risk')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Business threshold analysis:
+            <pre><code>># Find threshold that maximizes F1 while keeping false alarm rate low
+from sklearn.metrics import precision_recall_curve
+import numpy as np
+
+precisions, recalls, thresholds = precision_recall_curve(y_test, y_proba)
+f1_scores = 2 * precisions * recalls / (precisions + recalls + 1e-9)
+best_threshold = thresholds[np.argmax(f1_scores[:-1])]
+print(f"Optimal threshold: {best_threshold:.3f}")
+
+y_pred_optimal = (y_proba >= best_threshold).astype(int)
+from sklearn.metrics import accuracy_score, f1_score
+print(f"At threshold {best_threshold:.2f}:")
+print(f"  Accuracy: {accuracy_score(y_test, y_pred_optimal):.3f}")
+print(f"  F1:       {f1_score(y_test, y_pred_optimal):.3f}")</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Business context:</strong> In telecom, retaining a customer costs ~5x less than acquiring a new one. SHAP values help the retention team understand exactly WHY a customer was flagged, enabling personalized retention offers.</div>
+      </div>
+
+    </div>
+  </div><!-- /W5 -->
+
+  <!-- W6 -->
+  <div class="week-block" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <h3>Week 6 — Hyperparameter Tuning &amp; Cross-Validation</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 6 — GridSearchCV vs RandomizedSearchCV on the Churn Dataset</h4>
+        <div class="lab-meta">
+          <span>⏱ 70 minutes</span>
+          <span>📊 Telco Churn Dataset</span>
+          <span>🎯 Cross-validation, GridSearch, RandomSearch, Pipeline</span>
+        </div>
+        <p>Learn to tune model hyperparameters systematically and build a reusable sklearn Pipeline that prevents data leakage during cross-validation.</p>
+        <ol class="step-list">
+          <li>Load and prepare the Churn dataset:
+            <pre><code>import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV, cross_val_score
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import classification_report, roc_auc_score
+
+df = pd.read_csv('WA_Fn-UseC_-Telco-Customer-Churn.csv')
+
+# Clean TotalCharges
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+df['TotalCharges'].fillna(df['TotalCharges'].median(), inplace=True)
+
+# Encode target
+df['Churn'] = (df['Churn'] == 'Yes').astype(int)
+
+# Encode categoricals
+cat_cols = df.select_dtypes(include='object').columns.tolist()
+cat_cols.remove('customerID')
+for col in cat_cols:
+    df[col] = LabelEncoder().fit_transform(df[col])
+
+X = df.drop(columns=['customerID', 'Churn'])
+y = df['Churn']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+print("Train:", X_train.shape, "| Test:", X_test.shape)</code></pre>
+          </li>
+          <li>Baseline — Random Forest with default params:
+            <pre><code>baseline = RandomForestClassifier(random_state=42)
+baseline.fit(X_train, y_train)
+y_pred = baseline.predict(X_test)
+print("Baseline ROC-AUC:", roc_auc_score(y_test, baseline.predict_proba(X_test)[:,1]).round(4))
+print(classification_report(y_test, y_pred))</code></pre>
+          </li>
+          <li>Build a Pipeline (prevents data leakage):
+            <pre><code>pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('clf', RandomForestClassifier(random_state=42, class_weight='balanced'))
+])
+
+# 5-fold CV on baseline pipeline
+cv_scores = cross_val_score(pipe, X_train, y_train, cv=5, scoring='roc_auc')
+print(f"5-fold CV ROC-AUC: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}")</code></pre>
+          </li>
+          <li>GridSearchCV — exhaustive search:
+            <pre><code>param_grid = {
+    'clf__n_estimators': [100, 200],
+    'clf__max_depth': [None, 10, 20],
+    'clf__min_samples_leaf': [1, 5]
+}
+
+grid_search = GridSearchCV(pipe, param_grid, cv=5, scoring='roc_auc', n_jobs=-1, verbose=1)
+grid_search.fit(X_train, y_train)
+
+print("Best params:", grid_search.best_params_)
+print("Best CV AUC:", grid_search.best_score_.round(4))</code></pre>
+          </li>
+          <li>RandomizedSearchCV — faster with more combinations:
+            <pre><code">from scipy.stats import randint
+
+param_dist = {
+    'clf__n_estimators': randint(50, 400),
+    'clf__max_depth': [None, 5, 10, 15, 20, 30],
+    'clf__min_samples_split': randint(2, 20),
+    'clf__min_samples_leaf': randint(1, 10),
+    'clf__max_features': ['sqrt', 'log2', 0.5]
+}
+
+rand_search = RandomizedSearchCV(pipe, param_dist, n_iter=40, cv=5,
+                                 scoring='roc_auc', n_jobs=-1, random_state=42)
+rand_search.fit(X_train, y_train)
+
+print("Best params (random):", rand_search.best_params_)
+print("Best CV AUC (random):", rand_search.best_score_.round(4))</code></pre>
+          </li>
+          <li>Evaluate best model on test set:
+            <pre><code>best_model = rand_search.best_estimator_
+y_pred_best = best_model.predict(X_test)
+y_proba_best = best_model.predict_proba(X_test)[:,1]
+
+print("Test ROC-AUC:", roc_auc_score(y_test, y_proba_best).round(4))
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred_best))</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Rule of thumb:</strong> Use GridSearchCV when you have fewer than ~50 combinations and training is fast. Use RandomizedSearchCV for large search spaces or slow models — 40 random samples often finds results as good as an exhaustive 200-combination grid. Always put your scaler inside the Pipeline to avoid test-set leakage during cross-validation.</div>
+      </div>
+
+    </div>
+  </div><!-- /W6 -->
+
+  <!-- W7 -->
+  <div class="week-block" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <h3>Week 7 — Natural Language Processing Lab</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 2 — Text Sentiment Analysis: Product Reviews</h4>
+        <div class="lab-meta">
+          <span>⏱ 75 minutes</span>
+          <span>📊 Movie/Product reviews</span>
+          <span>🎯 TF-IDF, LogReg, Hugging Face pipeline comparison</span>
+        </div>
+        <p>Build a sentiment classifier for product reviews, compare TF-IDF + ML vs pretrained Transformer, and handle the full text preprocessing pipeline.</p>
+        <ol class="step-list">
+          <li>Create or download dataset:
+            <pre><code>>import pandas as pd
+import numpy as np
+
+# Simulated product reviews dataset
+reviews_data = {
+    'text': [
+        "Absolutely amazing product! Works perfectly and delivery was super fast.",
+        "Terrible quality. Broke after 2 days of use. Complete waste of money.",
+        "Good product for the price. Battery life could be better but overall satisfied.",
+        "Worst purchase ever. Customer service is non-existent. Avoid at all costs.",
+        "Love it! Exactly as described. Would definitely recommend to friends.",
+        "Disappointing. The screen flickers constantly. Returned immediately.",
+        "Decent quality but packaging was damaged on arrival. Product itself is fine.",
+        "Outstanding performance! Exceeded all my expectations. 10/10 would buy again.",
+        "Not worth the price. There are much better alternatives available.",
+        "Fantastic! Quick delivery, excellent build quality, and great customer support.",
+        "The product stopped working after a week. Very unreliable brand.",
+        "Solid value for money. Does exactly what it promises. No complaints.",
+        "Really disappointed. Photos on website look much better than reality.",
+        "Perfect gift! My family loved it. High quality and well packaged.",
+        "Average at best. Not the worst but definitely not worth this price.",
+    ],
+    'sentiment': [1,0,1,0,1,0,0,1,0,1,0,1,0,1,0]  # 1=positive, 0=negative
+}
+df = pd.DataFrame(reviews_data)
+print(f"Dataset: {len(df)} reviews")
+print(f"Positive: {df['sentiment'].sum()}, Negative: {(1-df['sentiment']).sum()}")</code></pre>
+          </li>
+          <li>Text preprocessing:
+            <pre><code>>import re
+import string
+
+def clean_text(text):
+    text = text.lower()
+    text = re.sub(r'[^\w\s]', ' ', text)    # Remove punctuation
+    text = re.sub(r'\d+', '', text)           # Remove numbers
+    text = re.sub(r'\s+', ' ', text).strip()  # Normalize whitespace
+    return text
+
+df['clean_text'] = df['text'].apply(clean_text)
+print("Sample cleaned texts:")
+for orig, clean in zip(df['text'][:3], df['clean_text'][:3]):
+    print(f"  Original: {orig[:60]}...")
+    print(f"  Cleaned:  {clean[:60]}...")
+    print()</code></pre>
+          </li>
+          <li>TF-IDF + Logistic Regression pipeline:
+            <pre><code>>from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import StratifiedKFold, cross_val_score
+from sklearn.metrics import classification_report
+
+# Build pipeline with bigrams
+tfidf_pipe = Pipeline([
+    ('tfidf', TfidfVectorizer(
+        ngram_range=(1, 2),
+        max_features=500,
+        min_df=1,
+        sublinear_tf=True,
+        stop_words='english'
+    )),
+    ('clf', LogisticRegression(C=1.0, max_iter=1000, random_state=42))
+])
+
+X_text = df['clean_text']
+y = df['sentiment']
+
+# Leave-One-Out CV for small dataset
+from sklearn.model_selection import LeaveOneOut, cross_val_predict
+y_pred_cv = cross_val_predict(tfidf_pipe, X_text, y, cv=LeaveOneOut())
+print("TF-IDF + LogReg (Leave-One-Out CV):")
+print(classification_report(y, y_pred_cv, target_names=['Negative','Positive']))</code></pre>
+          </li>
+          <li>Inspect learned features:
+            <pre><code>>tfidf_pipe.fit(X_text, y)
+tfidf = tfidf_pipe.named_steps['tfidf']
+clf   = tfidf_pipe.named_steps['clf']
+
+# Most positive and negative words/phrases
+feature_names = tfidf.get_feature_names_out()
+coefs = clf.coef_[0]
+top_positive = [(feature_names[i], coefs[i]) for i in coefs.argsort()[-10:][::-1]]
+top_negative = [(feature_names[i], coefs[i]) for i in coefs.argsort()[:10]]
+
+print("Top positive indicators:")
+for word, score in top_positive:
+    print(f"  {word:25s}: {score:.3f}")
+print("\nTop negative indicators:")
+for word, score in top_negative:
+    print(f"  {word:25s}: {score:.3f}")</code></pre>
+          </li>
+          <li>Hugging Face sentiment pipeline:
+            <pre><code>>from transformers import pipeline as hf_pipeline
+
+# Pretrained DistilBERT fine-tuned on SST-2 (Stanford Sentiment Treebank)
+sentiment_hf = hf_pipeline(
+    "sentiment-analysis",
+    model="distilbert-base-uncased-finetuned-sst-2-english"
+)
+
+# Compare predictions
+print("TF-IDF vs Hugging Face Comparison:")
+print(f"{'Review':50s} | {'TF-IDF':8s} | {'HuggFace':10s} | {'Actual':6s}")
+print("-" * 85)
+for i, row in df.iterrows():
+    tfidf_pred = tfidf_pipe.predict([row['clean_text']])[0]
+    hf_result  = sentiment_hf(row['text'][:512])[0]
+    hf_label   = 1 if hf_result['label'] == 'POSITIVE' else 0
+    actual     = row['sentiment']
+    match = "✓" if (tfidf_pred == actual and hf_label == actual) else "~"
+    print(f"{match} {row['text'][:48]:50s} | {tfidf_pred:8d} | {hf_label:10d} | {actual:6d}")</code></pre>
+          </li>
+          <li>Test with your own reviews:
+            <pre><code>>custom_reviews = [
+    "This phone's camera is incredible but the battery dies too fast.",
+    "Worst laptop ever. Heats up within 5 minutes. Returned same day.",
+    "Decent product. Not amazing but gets the job done for daily tasks.",
+]
+
+print("Custom Review Predictions:")
+for review in custom_reviews:
+    tfidf_prob  = tfidf_pipe.predict_proba([review])[0][1]
+    hf_result   = sentiment_hf(review[:512])[0]
+    print(f"\nReview: '{review[:60]}...'")
+    print(f"  TF-IDF: {'Positive' if tfidf_prob > 0.5 else 'Negative'} ({tfidf_prob:.2f})")
+    print(f"  HuggFace: {hf_result['label']} ({hf_result['score']:.3f})")</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Key insight:</strong> Hugging Face's pretrained BERT model generally outperforms TF-IDF + LogReg, especially on complex language patterns like sarcasm and negation ("not bad" = actually good). TF-IDF is faster, interpretable, and needs no GPU.</div>
+      </div>
+
+    </div>
+  </div><!-- /W7 -->
+
+  <!-- W8 -->
+  <div class="week-block" id="w8">
+    <div class="week-header" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <h3>Week 8 — Unsupervised Learning &amp; Dimensionality Reduction</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 8 — K-Means Clustering &amp; PCA on Customer Segments</h4>
+        <div class="lab-meta">
+          <span>⏱ 65 minutes</span>
+          <span>📊 Mall Customer Dataset</span>
+          <span>🎯 K-Means, Elbow Method, PCA, DBSCAN</span>
+        </div>
+        <p>Apply unsupervised learning to find hidden customer segments without any labels. Use PCA to visualise high-dimensional clusters in 2D.</p>
+        <ol class="step-list">
+          <li>Load and prepare the dataset:
+            <pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.cluster import KMeans, DBSCAN
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.metrics import silhouette_score
+
+# Download: kaggle datasets download -d vjchoudhary7/customer-segmentation-tutorial-in-python
+df = pd.read_csv('Mall_Customers.csv')
+df.columns = ['id','gender','age','income','spending_score']
+df['gender'] = (df['gender'] == 'Male').astype(int)
+print(df.describe())</code></pre>
+          </li>
+          <li>Find optimal K using the Elbow Method:
+            <pre><code>X = df[['income','spending_score']].values
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+inertias, silhouettes = [], []
+K_range = range(2, 11)
+for k in K_range:
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labels = km.fit_predict(X_scaled)
+    inertias.append(km.inertia_)
+    silhouettes.append(silhouette_score(X_scaled, labels))
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+ax1.plot(K_range, inertias, 'bo-')
+ax1.set_xlabel('Number of clusters K')
+ax1.set_ylabel('Inertia (WCSS)')
+ax1.set_title('Elbow Method')
+
+ax2.plot(K_range, silhouettes, 'rs-')
+ax2.set_xlabel('Number of clusters K')
+ax2.set_ylabel('Silhouette Score')
+ax2.set_title('Silhouette Scores (higher = better)')
+
+plt.tight_layout()
+plt.savefig('elbow_silhouette.png', bbox_inches='tight')
+plt.show()
+print("Best K by silhouette:", K_range[np.argmax(silhouettes)])</code></pre>
+          </li>
+          <li>Fit K-Means with optimal K and visualise clusters:
+            <pre><code">BEST_K = 5  # adjust based on your elbow/silhouette analysis
+km = KMeans(n_clusters=BEST_K, random_state=42, n_init=10)
+df['cluster'] = km.fit_predict(X_scaled)
+
+plt.figure(figsize=(10, 6))
+colors = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6']
+for i in range(BEST_K):
+    mask = df['cluster'] == i
+    plt.scatter(df[mask]['income'], df[mask]['spending_score'],
+                c=colors[i], label=f'Cluster {i}', s=80, alpha=0.7)
+plt.scatter(scaler.inverse_transform(km.cluster_centers_)[:,0],
+            scaler.inverse_transform(km.cluster_centers_)[:,1],
+            c='black', marker='X', s=200, label='Centroids', zorder=5)
+plt.xlabel('Annual Income (k$)')
+plt.ylabel('Spending Score (1-100)')
+plt.title(f'K-Means Clustering (K={BEST_K})')
+plt.legend()
+plt.savefig('kmeans_clusters.png', bbox_inches='tight')
+plt.show()
+
+# Profile each segment
+print("\nCluster profiles:")
+print(df.groupby('cluster')[['age','income','spending_score']].mean().round(1))</code></pre>
+          </li>
+          <li>PCA for visualising high-dimensional data:
+            <pre><code># Use all 4 features (age, gender, income, spending)
+X_full = df[['gender','age','income','spending_score']].values
+X_full_scaled = StandardScaler().fit_transform(X_full)
+
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_full_scaled)
+print(f"Variance explained: PC1={pca.explained_variance_ratio_[0]:.1%}, PC2={pca.explained_variance_ratio_[1]:.1%}")
+
+km_pca = KMeans(n_clusters=BEST_K, random_state=42, n_init=10)
+pca_labels = km_pca.fit_predict(X_pca)
+
+plt.figure(figsize=(8, 5))
+for i in range(BEST_K):
+    mask = pca_labels == i
+    plt.scatter(X_pca[mask,0], X_pca[mask,1], c=colors[i], label=f'Cluster {i}', s=60, alpha=0.7)
+plt.xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.1%} variance)')
+plt.ylabel(f'PC2 ({pca.explained_variance_ratio_[1]:.1%} variance)')
+plt.title('Customer Segments in PCA Space')
+plt.legend()
+plt.savefig('pca_clusters.png', bbox_inches='tight')
+plt.show()</code></pre>
+          </li>
+          <li>Compare with DBSCAN (density-based, auto-detects clusters):
+            <pre><code">from sklearn.neighbors import NearestNeighbors
+# Find optimal eps using k-NN distance plot
+nbrs = NearestNeighbors(n_neighbors=4).fit(X_scaled)
+distances, _ = nbrs.kneighbors(X_scaled)
+distances = np.sort(distances[:,3])
+plt.figure(figsize=(8,4))
+plt.plot(distances)
+plt.xlabel('Data points (sorted)')
+plt.ylabel('4th NN distance')
+plt.title('DBSCAN eps selection — look for the elbow')
+plt.show()
+
+db = DBSCAN(eps=0.4, min_samples=5).fit(X_scaled)
+db_labels = db.labels_
+n_clusters = len(set(db_labels)) - (1 if -1 in db_labels else 0)
+n_noise = (db_labels == -1).sum()
+print(f"DBSCAN: {n_clusters} clusters, {n_noise} noise points")</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Cluster naming interpretation:</strong> After finding 5 clusters, give them business-friendly names based on their profiles. e.g. Cluster 0 = "High Income, High Spenders (Luxury)" · Cluster 2 = "Young, Low Income, High Spenders (Impulsive Buyers)". This translation from data to insight is what makes the analysis valuable to business stakeholders.</div>
+      </div>
+
+    </div>
+  </div><!-- /W8 -->
+
+  <!-- W9 -->
+  <div class="week-block" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <div class="week-num wn-adv">W9</div>
+      <h3>Week 9 — Deep Learning Introduction</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 3 — Deep Learning: Fashion MNIST Classifier</h4>
+        <div class="lab-meta">
+          <span>⏱ 75 minutes</span>
+          <span>📊 Fashion MNIST (60K images)</span>
+          <span>🎯 Keras Sequential, BatchNorm, Dropout, callbacks</span>
+        </div>
+        <p>Build a deep neural network to classify 10 clothing categories (T-shirts, trousers, shoes...) using Keras on the Fashion MNIST dataset.</p>
+        <ol class="step-list">
+          <li>Load Fashion MNIST:
+            <pre><code>>import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+import matplotlib.pyplot as plt
+
+(X_train, y_train), (X_test, y_test) = keras.datasets.fashion_mnist.load_data()
+print(f"Train: {X_train.shape}, Test: {X_test.shape}")
+
+class_names = ['T-shirt','Trouser','Pullover','Dress','Coat',
+               'Sandal','Shirt','Sneaker','Bag','Ankle boot']
+
+# Visualize samples
+fig, axes = plt.subplots(3, 5, figsize=(12, 8))
+for ax, img, label in zip(axes.flat, X_train[:15], y_train[:15]):
+    ax.imshow(img, cmap='gray')
+    ax.set_title(class_names[label], fontsize=9)
+    ax.axis('off')
+plt.suptitle('Fashion MNIST Samples')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Preprocess:
+            <pre><code>># Normalize pixel values from [0, 255] to [0, 1]
+X_train = X_train.astype('float32') / 255.0
+X_test  = X_test.astype('float32')  / 255.0
+
+# Flatten 28x28 images to 784-length vectors for Dense network
+X_train_flat = X_train.reshape(-1, 784)
+X_test_flat  = X_test.reshape(-1, 784)
+
+# Validation split from training data
+X_val   = X_train_flat[:6000]
+X_tr    = X_train_flat[6000:]
+y_val   = y_train[:6000]
+y_tr    = y_train[6000:]
+print(f"Train: {X_tr.shape}, Val: {X_val.shape}, Test: {X_test_flat.shape}")</code></pre>
+          </li>
+          <li>Build deep neural network:
+            <pre><code>>from tensorflow.keras import layers
+
+model = keras.Sequential([
+    layers.Input(shape=(784,)),
+
+    layers.Dense(512),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.Dropout(0.3),
+
+    layers.Dense(256),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.Dropout(0.3),
+
+    layers.Dense(128),
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+    layers.Dropout(0.2),
+
+    layers.Dense(10, activation='softmax')   # 10 clothing categories
+], name='fashion_dnn')
+
+model.compile(
+    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+model.summary()</code></pre>
+          </li>
+          <li>Train with callbacks:
+            <pre><code>>callbacks = [
+    keras.callbacks.EarlyStopping(
+        monitor='val_accuracy', patience=5,
+        restore_best_weights=True, verbose=1
+    ),
+    keras.callbacks.ReduceLROnPlateau(
+        monitor='val_loss', factor=0.5, patience=3, verbose=1
+    )
+]
+
+history = model.fit(
+    X_tr, y_tr,
+    epochs=50,
+    batch_size=128,
+    validation_data=(X_val, y_val),
+    callbacks=callbacks,
+    verbose=1
+)
+print(f"\nBest val accuracy: {max(history.history['val_accuracy']):.3f}")</code></pre>
+          </li>
+          <li>Plot training history:
+            <pre><code>>fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+ax1.plot(history.history['accuracy'],     label='Train Accuracy')
+ax1.plot(history.history['val_accuracy'], label='Val Accuracy')
+ax1.set_title('Accuracy over Epochs')
+ax1.set_xlabel('Epoch')
+ax1.legend()
+
+ax2.plot(history.history['loss'],     label='Train Loss')
+ax2.plot(history.history['val_loss'], label='Val Loss')
+ax2.set_title('Loss over Epochs')
+ax2.set_xlabel('Epoch')
+ax2.legend()
+
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Evaluate on test set:
+            <pre><code>>test_loss, test_acc = model.evaluate(X_test_flat, y_test, verbose=0)
+print(f"Test Accuracy: {test_acc:.3f}")
+
+from sklearn.metrics import classification_report
+y_pred = model.predict(X_test_flat).argmax(axis=1)
+print(classification_report(y_test, y_pred, target_names=class_names))</code></pre>
+          </li>
+          <li>Visualize predictions:
+            <pre><code>>y_pred_proba = model.predict(X_test_flat[:15])
+y_pred_class = y_pred_proba.argmax(axis=1)
+
+fig, axes = plt.subplots(3, 5, figsize=(14, 9))
+for i, ax in enumerate(axes.flat):
+    ax.imshow(X_test[i], cmap='gray')
+    true_label = class_names[y_test[i]]
+    pred_label = class_names[y_pred_class[i]]
+    conf       = y_pred_proba[i].max()
+    color = 'green' if y_pred_class[i] == y_test[i] else 'red'
+    ax.set_title(f"T:{true_label}\nP:{pred_label} ({conf:.0%})",
+                 color=color, fontsize=8)
+    ax.axis('off')
+plt.suptitle('Fashion MNIST Predictions (green=correct, red=wrong)')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Expected results:</strong> ~89–91% test accuracy on Fashion MNIST. Common confusions: Shirt vs T-shirt (similar shapes), Pullover vs Coat. Try adding Conv2D layers (Lab 4) to push to ~93–95%.</div>
+      </div>
+
+    </div>
+  </div><!-- /W9 -->
+
+  <!-- W10 -->
+  <div class="week-block" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <div class="week-num wn-adv">W10</div>
+      <h3>Week 10 — Transfer Learning Lab</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 4 — Transfer Learning: Flowers Image Classifier</h4>
+        <div class="lab-meta">
+          <span>⏱ 90 minutes</span>
+          <span>📊 TensorFlow Flowers Dataset</span>
+          <span>🎯 MobileNetV2, data augmentation, fine-tuning</span>
+        </div>
+        <p>Use MobileNetV2 pretrained on ImageNet to classify 5 types of flowers. Learn the two-phase transfer learning approach used in industry.</p>
+        <ol class="step-list">
+          <li>Download and prepare dataset:
+            <pre><code>>import tensorflow as tf
+import tensorflow_datasets as tfds
+
+# Download flowers dataset (3670 images, 5 classes)
+(ds_train, ds_test), ds_info = tfds.load(
+    'tf_flowers',
+    split=['train[:80%]', 'train[80%:]'],
+    with_info=True,
+    as_supervised=True
+)
+class_names = ds_info.features['label'].names
+NUM_CLASSES = len(class_names)
+print(f"Classes ({NUM_CLASSES}): {class_names}")
+print(f"Train size: {ds_info.splits['train'].num_examples * 0.8:.0f}")</code></pre>
+          </li>
+          <li>Build preprocessing pipelines:
+            <pre><code>>IMG_SIZE = 224
+BATCH_SIZE = 32
+AUTOTUNE = tf.data.AUTOTUNE
+
+def preprocess(image, label):
+    image = tf.cast(image, tf.float32)
+    image = tf.image.resize(image, [IMG_SIZE, IMG_SIZE])
+    image = image / 255.0
+    return image, label
+
+def augment(image, label):
+    image, label = preprocess(image, label)
+    image = tf.image.random_flip_left_right(image)
+    image = tf.image.random_brightness(image, max_delta=0.2)
+    image = tf.image.random_contrast(image, lower=0.8, upper=1.2)
+    return image, label
+
+train_ds = (ds_train.map(augment, num_parallel_calls=AUTOTUNE)
+                    .batch(BATCH_SIZE).prefetch(AUTOTUNE))
+test_ds  = (ds_test.map(preprocess, num_parallel_calls=AUTOTUNE)
+                   .batch(BATCH_SIZE).prefetch(AUTOTUNE))</code></pre>
+          </li>
+          <li>Visualize augmented samples:
+            <pre><code>>import matplotlib.pyplot as plt
+import numpy as np
+
+sample_batch = next(iter(train_ds))
+images, labels = sample_batch[0][:9].numpy(), sample_batch[1][:9].numpy()
+
+fig, axes = plt.subplots(3, 3, figsize=(9, 9))
+for ax, img, lbl in zip(axes.flat, images, labels):
+    ax.imshow(np.clip(img, 0, 1))
+    ax.set_title(class_names[lbl])
+    ax.axis('off')
+plt.suptitle('Augmented Training Samples')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Phase 1 — Feature Extraction:
+            <pre><code>>from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras import layers, models, optimizers
+
+# Load MobileNetV2 without top (classification head)
+base = MobileNetV2(input_shape=(IMG_SIZE, IMG_SIZE, 3),
+                   include_top=False, weights='imagenet')
+base.trainable = False   # Freeze all pretrained layers
+print(f"MobileNetV2 layers: {len(base.layers)}")
+print(f"Trainable params: {sum(v.numpy().size for v in base.trainable_variables):,}")
+
+# Add custom head
+inputs = tf.keras.Input(shape=(IMG_SIZE, IMG_SIZE, 3))
+x = base(inputs, training=False)
+x = layers.GlobalAveragePooling2D()(x)
+x = layers.Dense(256, activation='relu')(x)
+x = layers.Dropout(0.3)(x)
+outputs = layers.Dense(NUM_CLASSES, activation='softmax')(x)
+
+model = models.Model(inputs, outputs)
+model.compile(optimizer=optimizers.Adam(1e-3),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+print("\nPhase 1 Training (feature extraction)...")
+history1 = model.fit(train_ds, epochs=10, validation_data=test_ds, verbose=1)
+print(f"Phase 1 best val accuracy: {max(history1.history['val_accuracy']):.3f}")</code></pre>
+          </li>
+          <li>Phase 2 — Fine-tuning:
+            <pre><code>>print(f"\nTotal MobileNetV2 layers: {len(base.layers)}")
+base.trainable = True
+
+# Unfreeze only last 30 layers (top of network)
+for layer in base.layers[:-30]:
+    layer.trainable = False
+
+trainable = sum(1 for l in base.layers if l.trainable)
+print(f"Trainable layers: {trainable} / {len(base.layers)}")
+
+model.compile(
+    optimizer=optimizers.Adam(learning_rate=1e-5),  # 100x lower LR!
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+print("\nPhase 2 Training (fine-tuning top layers)...")
+history2 = model.fit(
+    train_ds, epochs=10, validation_data=test_ds,
+    callbacks=[tf.keras.callbacks.EarlyStopping(patience=4, restore_best_weights=True)],
+    verbose=1
+)
+final_val_acc = max(history2.history['val_accuracy'])
+print(f"\nFinal val accuracy: {final_val_acc:.3f}")</code></pre>
+          </li>
+          <li>Evaluate and visualize:
+            <pre><code>>test_loss, test_acc = model.evaluate(test_ds)
+print(f"Final Test Accuracy: {test_acc:.3f}")
+
+# Predict on sample images
+sample_images = next(iter(test_ds))[0][:6].numpy()
+predictions   = model.predict(sample_images)
+
+fig, axes = plt.subplots(2, 3, figsize=(12, 8))
+for ax, img, pred in zip(axes.flat, sample_images, predictions):
+    ax.imshow(np.clip(img, 0, 1))
+    pred_class = class_names[pred.argmax()]
+    confidence = pred.max()
+    ax.set_title(f"{pred_class}\n({confidence:.0%})", fontsize=10)
+    ax.axis('off')
+plt.suptitle('Transfer Learning — Flower Predictions')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Expected results:</strong> Phase 1 ~75–80% accuracy after 10 epochs. Phase 2 fine-tuning adds 5–10% to reach ~85–92% final accuracy. Training from scratch on this small dataset would plateau at ~60–70%.</div>
+      </div>
+
+    </div>
+  </div><!-- /W10 -->
+
+  <!-- W11 -->
+  <div class="week-block" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <div class="week-num wn-adv">W11</div>
+      <h3>Week 11 — LLM API Integration</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 5 — LLM API Integration: Claude-powered Data Analyzer</h4>
+        <div class="lab-meta">
+          <span>⏱ 90 minutes</span>
+          <span>📊 Any dataset</span>
+          <span>🎯 Anthropic Claude API, structured output, prompt engineering</span>
+        </div>
+        <p>Build a mini data analysis assistant that uses Claude to interpret ML results, explain model predictions in plain language, and generate insights for non-technical stakeholders.</p>
+        <ol class="step-list">
+          <li>Setup Anthropic SDK:
+            <pre><code>>!pip install anthropic -q
+import anthropic
+import os
+
+# Set API key — get from https://console.anthropic.com
+# In Colab: use Secrets manager (key icon in left panel → add ANTHROPIC_API_KEY)
+from google.colab import userdata
+os.environ['ANTHROPIC_API_KEY'] = userdata.get('ANTHROPIC_API_KEY')
+
+client = anthropic.Anthropic()
+print("Anthropic client initialized!")</code></pre>
+          </li>
+          <li>Basic API call:
+            <pre><code>>def ask_claude(prompt, max_tokens=1024, model="claude-3-5-sonnet-20241022"):
+    message = client.messages.create(
+        model=model,
+        max_tokens=max_tokens,
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return message.content[0].text
+
+# Test
+response = ask_claude("What is the difference between precision and recall? Give a concrete example.")
+print(response)</code></pre>
+          </li>
+          <li>Generate model interpretation report:
+            <pre><code>>import pandas as pd
+
+# Simulate model evaluation results
+model_results = {
+    'Logistic Regression': {'accuracy': 0.810, 'precision': 0.795, 'recall': 0.783, 'f1': 0.789, 'roc_auc': 0.871},
+    'Random Forest':       {'accuracy': 0.843, 'precision': 0.831, 'recall': 0.822, 'f1': 0.826, 'roc_auc': 0.912},
+    'XGBoost':             {'accuracy': 0.856, 'precision': 0.849, 'recall': 0.841, 'f1': 0.845, 'roc_auc': 0.928},
+}
+
+feature_importances = {
+    'tenure_months': 0.24, 'monthly_charges': 0.21,
+    'support_calls': 0.18, 'late_payments': 0.15,
+    'contract_type': 0.12, 'has_fiber': 0.06,
+    'payment_auto': 0.04
+}
+
+interpretation_prompt = f"""You are a senior data scientist explaining ML results to a business team.
+
+Task: Customer churn prediction for a telecom company.
+Dataset: 5,000 customers, ~28% churn rate.
+
+Model Comparison Results:
+{pd.DataFrame(model_results).T.to_string()}
+
+Top Feature Importances (XGBoost):
+{pd.Series(feature_importances).sort_values(ascending=False).to_string()}
+
+Please provide:
+1. Which model should we deploy and why? (2-3 sentences)
+2. What do the feature importances tell us about churn drivers? (3-4 business insights)
+3. What is the business impact if we deploy XGBoost? (assume 500 customers flagged per month, intervention saves 60% of those)
+4. What are the top 2 risks we should monitor post-deployment?
+
+Keep the response practical and accessible to non-technical managers."""
+
+report = ask_claude(interpretation_prompt, max_tokens=1500)
+print("=== AI-Generated Model Interpretation Report ===")
+print(report)</code></pre>
+          </li>
+          <li>Explain individual prediction to customer:
+            <pre><code>>customer_data = {
+    'tenure_months': 8,
+    'monthly_charges': 95.50,
+    'num_products': 1,
+    'support_calls_last_3mo': 4,
+    'late_payments_last_6mo': 2,
+    'contract_type': 'Month-to-Month',
+    'has_fiber_internet': True,
+    'auto_payment': False
+}
+
+shap_contributions = {
+    'tenure_months':       -0.12,  # Short tenure → increases churn risk
+    'monthly_charges':     +0.18,  # High charges → increases churn risk
+    'support_calls':       +0.21,  # Many calls → increases churn risk
+    'late_payments':       +0.14,  # Late payments → increases churn risk
+    'contract_type':       +0.09,  # Month-to-month → increases churn risk
+    'auto_payment':        -0.05,  # No auto-pay → slight churn risk increase
+}
+churn_probability = 0.78
+
+explanation_prompt = f"""Customer data: {customer_data}
+Predicted churn probability: {churn_probability:.0%}
+SHAP feature contributions (positive = increases churn risk):
+{shap_contributions}
+
+Write a 3-4 sentence explanation for the customer retention specialist:
+1. Summarize why this customer is high risk
+2. Which 2 factors are most driving the risk
+3. Suggest 1-2 specific retention actions for this customer profile
+
+Be specific, actionable, and avoid technical jargon."""
+
+explanation = ask_claude(explanation_prompt)
+print("=== Customer Churn Explanation ===")
+print(f"Customer Risk Score: {churn_probability:.0%}")
+print(explanation)</code></pre>
+          </li>
+          <li>Structured JSON output extraction:
+            <pre><code>>import json
+
+def extract_insights_as_json(data_summary: str) -> dict:
+    prompt = f"""Analyze this dataset summary and extract key insights as JSON.
+
+Data Summary:
+{data_summary}
+
+Return ONLY valid JSON with this structure:
+{{
+  "dataset_quality": {{"score": 1-10, "main_issues": [...]}},
+  "key_patterns": ["pattern1", "pattern2", "pattern3"],
+  "recommended_models": ["model1", "model2"],
+  "business_risks": ["risk1", "risk2"],
+  "next_steps": ["step1", "step2", "step3"]
+}}"""
+
+    response = ask_claude(prompt, max_tokens=800)
+    # Extract JSON from response (Claude may add explanation text)
+    json_start = response.find('{')
+    json_end   = response.rfind('}') + 1
+    json_str   = response[json_start:json_end]
+    return json.loads(json_str)
+
+summary = """
+Telecom dataset: 5,000 customers, 28% churn rate.
+Missing values: 3% in monthly_charges, 1% in tenure.
+Feature correlations: support_calls strongly correlated with churn (r=0.45).
+Class imbalance: moderate (72% stay, 28% churn).
+Outliers detected in monthly_charges (top 1%).
+"""
+insights = extract_insights_as_json(summary)
+print(json.dumps(insights, indent=2))</code></pre>
+          </li>
+          <li>Build a simple Q&amp;A chatbot about your model:
+            <pre><code>>def chat_about_model(model_context: str):
+    print("=== ML Model Q&A Assistant (type 'quit' to exit) ===\n")
+    conversation_history = []
+    system_context = f"You are an ML expert assistant. Context about the deployed model: {model_context}"
+
+    while True:
+        user_input = input("Your question: ").strip()
+        if user_input.lower() in ['quit', 'exit', 'q']:
+            print("Session ended.")
+            break
+        if not user_input:
+            continue
+
+        conversation_history.append({"role": "user", "content": user_input})
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=512,
+            system=system_context,
+            messages=conversation_history
+        )
+        answer = response.content[0].text
+        conversation_history.append({"role": "assistant", "content": answer})
+        print(f"\nAssistant: {answer}\n")
+
+model_ctx = "XGBoost churn prediction model. AUC=0.928. Top features: tenure, monthly_charges, support_calls. Predicts churn for 500 customers/month."
+chat_about_model(model_ctx)</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Production tip:</strong> Never expose raw API keys in code. Use environment variables or a secrets manager. For production, add rate limiting, caching of frequent prompts, and cost tracking (Claude's API costs ~$0.003/1K input tokens for Sonnet).</div>
+      </div>
+
+    </div>
+  </div><!-- /W11 -->
+
+  <div class="bottom-nav">
+    <a href="lab_guide_beginner.html" class="btn btn-secondary">← Beginner Labs</a>
+    <a href="lab_guide_advanced.html" class="btn btn-primary">Advanced Labs →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Lab Guide (Intermediate) &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

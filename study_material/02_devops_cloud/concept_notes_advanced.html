@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps & Cloud — Concept Notes (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .analogy-box{background:linear-gradient(135deg,#F3E5F5,#E8D5F5);border:1px solid #CE93D8;border-left:4px solid var(--purple);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+  .analogy-box strong{color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">📖 Concept Notes — Advanced Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; CONCEPT NOTES — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate ↗</a>
+    <a href="lab_guide_advanced.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero adv">
+    <div class="lh-icon">🚀</div>
+    <h1>Advanced Level — Concept Notes</h1>
+    <p class="lh-sub">Weeks 9–12: Kubernetes, monitoring &amp; observability, security hardening, and site reliability engineering (SRE) principles.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 9–12</span>
+      <span class="lh-pill">Kubernetes · Prometheus · Security · SRE</span>
+      <span class="lh-pill gold">Advanced Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Docker &amp; docker-compose fluency</li>
+        <li>CI/CD pipeline built</li>
+        <li>AWS EC2 deployed app</li>
+        <li>Terraform basics done</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>New Tools</h4>
+      <ul>
+        <li>kubectl + minikube</li>
+        <li>Prometheus + Grafana</li>
+        <li>Trivy (security scanner)</li>
+        <li>HashiCorp Vault</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Key Concepts</h4>
+      <ul>
+        <li>Container orchestration</li>
+        <li>Observability pillars</li>
+        <li>Shift-left security</li>
+        <li>Error budgets &amp; SLOs</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>End Goal</h4>
+      <ul>
+        <li>App running on K8s</li>
+        <li>Grafana dashboards live</li>
+        <li>Security scans in CI</li>
+        <li>Postmortem template written</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="sm-sec">Week 9 — Kubernetes Fundamentals</div>
+  <div class="week-block open" id="w9">
+    <div class="week-head" onclick="toggleWeek('w9')">
+      <div class="week-num wn-adv">W9</div>
+      <div class="week-head-text"><h3>Kubernetes — Pods · Deployments · Services · ConfigMaps</h3><p>Orchestrate containers at scale</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> If Docker is a shipping container, Kubernetes is the entire shipping port — it decides where each container goes, ensures containers are always running, scales up when traffic spikes, and automatically replaces crashed containers. The port manager never sleeps.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>K8s Architecture</h4>
+          <ul>
+            <li><strong>Control Plane:</strong> API server, scheduler, etcd</li>
+            <li><strong>Worker Nodes:</strong> kubelet, kube-proxy, container runtime</li>
+            <li>etcd: distributed key-value store — cluster state</li>
+            <li>API server: all kubectl commands go here first</li>
+            <li>Scheduler: decides which node runs each pod</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Core Objects</h4>
+          <ul>
+            <li><strong>Pod</strong>: smallest deployable unit — 1+ containers</li>
+            <li><strong>Deployment</strong>: manages replica count + rollouts</li>
+            <li><strong>Service</strong>: stable network endpoint for pods</li>
+            <li><strong>Namespace</strong>: logical isolation within cluster</li>
+            <li><strong>ConfigMap/Secret</strong>: config and sensitive data</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>kubectl Commands</h4>
+          <ul>
+            <li><code>kubectl apply -f manifest.yaml</code></li>
+            <li><code>kubectl get pods -n namespace</code></li>
+            <li><code>kubectl describe pod pod-name</code></li>
+            <li><code>kubectl logs pod-name -f</code></li>
+            <li><code>kubectl exec -it pod -- /bin/sh</code></li>
+            <li><code>kubectl delete deployment name</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Ingress</h4>
+          <ul>
+            <li>Routes external HTTP traffic to services</li>
+            <li>One load balancer for many services</li>
+            <li>Path-based routing: /api → api-svc</li>
+            <li>Host-based: app.example.com → frontend</li>
+            <li>TLS termination at the ingress layer</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># deployment.yaml — Node.js app</span>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: myapp:v1.2
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+
+<span class="comment"># service.yaml</span>
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-svc
+spec:
+  selector:
+    app: myapp
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP</pre>
+      <div class="key-takeaway">
+        <h4>Week 9 Key Takeaways</h4>
+        <ul>
+          <li>Never run bare Pods in production — always use Deployments so K8s can restart failed pods</li>
+          <li>Services expose Pods to the network — without a Service, a Pod is completely unreachable</li>
+          <li>Use namespaces to separate dev/staging/prod in the same cluster — prevents accidental changes</li>
+          <li>Set resource requests and limits on every container — without them, one app can starve all others</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="sm-sec">Week 10 — Monitoring &amp; Observability</div>
+  <div class="week-block" id="w10">
+    <div class="week-head" onclick="toggleWeek('w10')">
+      <div class="week-num wn-adv">W10</div>
+      <div class="week-head-text"><h3>Prometheus · Grafana · Logs · Alerts · SLOs</h3><p>See everything happening in production</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Three Pillars of Observability</h4>
+          <ul>
+            <li><strong>Metrics</strong>: numbers over time (CPU, req/sec, error rate)</li>
+            <li><strong>Logs</strong>: text events with timestamps and context</li>
+            <li><strong>Traces</strong>: the full journey of a single request</li>
+            <li>All three together give a complete picture</li>
+            <li>Missing any one = blind spot in production</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Prometheus</h4>
+          <ul>
+            <li>Pull-based: scrapes /metrics endpoints</li>
+            <li>PromQL: powerful query language for metrics</li>
+            <li>Scrape configs: define what to monitor</li>
+            <li>Exporters: node-exporter, mysqld-exporter</li>
+            <li>AlertManager: send alerts to Slack/PagerDuty</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Grafana</h4>
+          <ul>
+            <li>Dashboards: visualize Prometheus metrics</li>
+            <li>Panels: graphs, gauges, tables, alerts</li>
+            <li>Alert rules: notify when thresholds crossed</li>
+            <li>Data sources: Prometheus, Elasticsearch, CloudWatch</li>
+            <li>Import community dashboards by ID</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>SLI / SLO / SLA</h4>
+          <ul>
+            <li><strong>SLI</strong>: measurement (e.g. % requests &lt; 200ms)</li>
+            <li><strong>SLO</strong>: target (e.g. 99.9% uptime per month)</li>
+            <li><strong>SLA</strong>: legal agreement with customers</li>
+            <li>Error budget: 100% − SLO (0.1% = 8.7 hrs/year)</li>
+            <li>Track error budget burn rate daily</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># prometheus.yml — scrape config</span>
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'myapp'
+    static_configs:
+      - targets: ['app:3000']
+    metrics_path: '/metrics'
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+<span class="comment"># Useful PromQL queries</span>
+# Request rate per second
+rate(http_requests_total[5m])
+
+# Error rate percentage
+rate(http_requests_total{status=~"5.."}[5m])
+  / rate(http_requests_total[5m]) * 100
+
+# P95 response time
+histogram_quantile(0.95,
+  rate(http_request_duration_seconds_bucket[5m])
+)</pre>
+      <div class="key-takeaway">
+        <h4>Week 10 Key Takeaways</h4>
+        <ul>
+          <li>You can't fix what you can't see — monitoring is non-negotiable before any production launch</li>
+          <li>Set alerts before you need them, not after an incident has already hurt users</li>
+          <li>Error budget = 100% − SLO: 99.9% SLO means only 8.7 hours downtime allowed per year</li>
+          <li>The 4 Golden Signals: Latency, Traffic, Errors, Saturation — monitor these for every service</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="sm-sec">Week 11 — DevSecOps</div>
+  <div class="week-block" id="w11">
+    <div class="week-head" onclick="toggleWeek('w11')">
+      <div class="week-num wn-adv">W11</div>
+      <div class="week-head-text"><h3>Security in the Pipeline — Shift Left DevSecOps</h3><p>Find vulnerabilities before they reach production</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Shift Left Security</h4>
+          <ul>
+            <li>Find vulnerabilities early in development, not production</li>
+            <li>Cost: $1 to fix in dev = $10 in QA = $100 in prod</li>
+            <li>SAST: Static scan of source code (no runtime needed)</li>
+            <li>DAST: Dynamic test of a running application</li>
+            <li>SCA: Software Composition Analysis — scan dependencies</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Container Security</h4>
+          <ul>
+            <li>Scan images with Trivy before deployment</li>
+            <li>Use non-root user — <code>USER node</code> in Dockerfile</li>
+            <li>Read-only root filesystem where possible</li>
+            <li>Use distroless or scratch base images</li>
+            <li>Never store credentials in Dockerfile ENV</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Secrets Management</h4>
+          <ul>
+            <li>AWS Secrets Manager: store and rotate secrets</li>
+            <li>HashiCorp Vault: open-source secrets engine</li>
+            <li>Never commit secrets to Git — use .gitignore</li>
+            <li>Rotate all credentials on a schedule</li>
+            <li>Audit secret access — who accessed what, when</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>K8s Network Policies</h4>
+          <ul>
+            <li>Default: all pods can talk to all pods</li>
+            <li>Network policies restrict pod-to-pod traffic</li>
+            <li>Allow only: frontend → backend, backend → db</li>
+            <li>Deny all by default, allow explicitly</li>
+            <li>Use Calico or Cilium as network policy engine</li>
+          </ul>
+        </div>
+      </div>
+<pre><span class="comment"># Trivy — scan Docker image before push</span>
+trivy image --severity HIGH,CRITICAL myapp:v1.2
+trivy image --exit-code 1 --severity CRITICAL myapp:v1.2
+
+<span class="comment"># GitHub Actions — security scan job</span>
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: myapp:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Check for secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+
+      - name: npm audit
+        run: npm audit --audit-level=high
+
+<span class="comment"># Retrieve secret from HashiCorp Vault</span>
+vault kv get -field=db_password secret/myapp/prod</pre>
+      <div class="key-takeaway">
+        <h4>Week 11 Key Takeaways</h4>
+        <ul>
+          <li>Security is everyone's job — not just the security team's. DevSecOps means developers own security too</li>
+          <li>Scan container images before every deployment — a vulnerable base image is a production incident waiting</li>
+          <li>Rotate all credentials regularly — treat compromised credentials as a known risk, not a hypothetical one</li>
+          <li>Principle of least privilege everywhere — IAM, K8s RBAC, database users. Grant exactly what's needed, nothing more</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 12 -->
+  <div class="sm-sec">Week 12 — SRE Principles &amp; Production Reliability</div>
+  <div class="week-block" id="w12">
+    <div class="week-head" onclick="toggleWeek('w12')">
+      <div class="week-num wn-adv">W12</div>
+      <div class="week-head-text"><h3>SRE — Error Budgets · Incident Management · Chaos Engineering</h3><p>Keep systems reliable at scale</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>SRE Philosophy</h4>
+          <ul>
+            <li>Reliability is a feature — users don't notice uptime, only downtime</li>
+            <li>Error budgets: quantify acceptable unreliability</li>
+            <li>Toil reduction: automate repetitive manual work</li>
+            <li>Blameless postmortems: find system failures, not human failures</li>
+            <li>Google's SRE book: required reading for this domain</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Incident Management</h4>
+          <ul>
+            <li>On-call rotations: shared responsibility, fair hours</li>
+            <li>Runbooks: step-by-step playbooks for known incidents</li>
+            <li>Severity levels: SEV1 (all-hands) to SEV5 (no urgency)</li>
+            <li>War rooms: real-time incident coordination channel</li>
+            <li>Every SEV1/SEV2 requires a postmortem within 48h</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Chaos Engineering</h4>
+          <ul>
+            <li>Intentionally break things to find weaknesses first</li>
+            <li>Netflix Chaos Monkey: randomly kills production servers</li>
+            <li>Start small: kill one pod, then a whole node</li>
+            <li>Game Days: scheduled chaos experiments with the team</li>
+            <li>Goal: prove the system recovers automatically</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Disaster Recovery</h4>
+          <ul>
+            <li><strong>RTO</strong>: Recovery Time Objective — how fast to recover</li>
+            <li><strong>RPO</strong>: Recovery Point Objective — how much data loss is ok</li>
+            <li>Multi-region deployment for critical systems</li>
+            <li>Test your backups regularly — untested backups don't exist</li>
+            <li>Runbook for full environment rebuild from scratch</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-takeaway">
+        <h4>Week 12 Key Takeaways</h4>
+        <ul>
+          <li>Automate toil — if you perform the same manual task three times, write a script the third time</li>
+          <li>Every incident needs a blameless postmortem with concrete action items — blame fixes nothing</li>
+          <li>SRE targets 99.9–99.99% availability: 99.9% = 8.7 hours downtime/year; 99.99% = 52 minutes/year</li>
+          <li>Practice your disaster recovery before you need it — a DR plan you've never tested is not a DR plan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_intermediate.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Intermediate Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_advanced.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+      <a href="../index.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Study Portal →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Concept Notes — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w9');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

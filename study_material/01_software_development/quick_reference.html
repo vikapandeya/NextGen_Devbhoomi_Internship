@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Quick Reference | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  @media print {
+    .sm-header, .sm-domain-bar, .sm-footer, .no-print { display: none !important; }
+    .sm-page { padding: 0; }
+    .ref-grid { grid-template-columns: repeat(3, 1fr); }
+    .ref-block { break-inside: avoid; }
+    body { font-size: 11px; }
+    pre { font-size: 10px; }
+    .sm-sec { margin-top: 16px; padding: 6px 10px; font-size: 10px; }
+  }
+  .tag-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  .tag-table th { background: var(--navy); color: white; padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .5px; }
+  .tag-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
+  .tag-table tr:hover td { background: var(--paper); }
+  .tag-table code { background: rgba(27,58,107,.08); padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">⚡ Quick Reference</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar no-print">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; QUICK REFERENCE (PRINTABLE)
+  <div class="dbar-links">
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+    <a href="#" onclick="window.print();return false;">🖨️ Print</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero beg no-print">
+    <div class="lh-icon">⚡</div>
+    <h1>Quick Reference Sheet</h1>
+    <p class="lh-sub">Essential HTML, CSS, JavaScript, React, and Node.js syntax at a glance. Print this page for your desk or offline study.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Printable</span>
+      <span class="lh-pill">All Levels</span>
+      <span class="lh-pill gold">Keep This Handy</span>
+    </div>
+  </div>
+
+  <!-- HTML REFERENCE -->
+  <div class="sm-sec">HTML5 — Essential Tags</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>Document Structure</h5>
+      <table class="tag-table">
+        <thead><tr><th>Tag</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Declare HTML5</td></tr>
+          <tr><td><code>&lt;html lang="en"&gt;</code></td><td>Root element</td></tr>
+          <tr><td><code>&lt;head&gt;</code></td><td>Metadata (not visible)</td></tr>
+          <tr><td><code>&lt;body&gt;</code></td><td>Visible content</td></tr>
+          <tr><td><code>&lt;title&gt;</code></td><td>Browser tab title</td></tr>
+          <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Character encoding</td></tr>
+          <tr><td><code>&lt;meta name="viewport"...&gt;</code></td><td>Responsive trigger</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ref-block">
+      <h5>Semantic Layout</h5>
+      <table class="tag-table">
+        <thead><tr><th>Tag</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;header&gt;</code></td><td>Top of page/section</td></tr>
+          <tr><td><code>&lt;nav&gt;</code></td><td>Navigation links</td></tr>
+          <tr><td><code>&lt;main&gt;</code></td><td>Primary content (once)</td></tr>
+          <tr><td><code>&lt;section&gt;</code></td><td>Thematic group</td></tr>
+          <tr><td><code>&lt;article&gt;</code></td><td>Self-contained piece</td></tr>
+          <tr><td><code>&lt;aside&gt;</code></td><td>Sidebar content</td></tr>
+          <tr><td><code>&lt;footer&gt;</code></td><td>Bottom of page/section</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ref-block">
+      <h5>Common Elements</h5>
+      <table class="tag-table">
+        <thead><tr><th>Tag</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;h1&gt;–&lt;h6&gt;</code></td><td>Headings (1 = main)</td></tr>
+          <tr><td><code>&lt;p&gt;</code></td><td>Paragraph</td></tr>
+          <tr><td><code>&lt;a href=""&gt;</code></td><td>Hyperlink</td></tr>
+          <tr><td><code>&lt;img src="" alt=""&gt;</code></td><td>Image</td></tr>
+          <tr><td><code>&lt;ul&gt; &lt;ol&gt; &lt;li&gt;</code></td><td>Lists</td></tr>
+          <tr><td><code>&lt;button&gt;</code></td><td>Clickable button</td></tr>
+          <tr><td><code>&lt;input&gt; &lt;textarea&gt;</code></td><td>Form inputs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CSS REFERENCE -->
+  <div class="sm-sec">CSS3 — Key Properties</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>Box Model &amp; Sizing</h5>
+      <pre>/* Always include at top */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* CSS Variables */
+:root {
+  --navy: #1B3A6B;
+  --gold: #C8941A;
+}
+
+/* Usage */
+color: var(--navy);</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Flexbox Essentials</h5>
+      <pre>.flex-parent {
+  display: flex;
+  justify-content: space-between; /* horizontal */
+  align-items: center;            /* vertical */
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Center anything */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}</pre>
+    </div>
+    <div class="ref-block">
+      <h5>CSS Grid</h5>
+      <pre>/* Fixed columns */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Responsive (no media query) */
+.auto-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Responsive Breakpoints</h5>
+      <pre>/* Mobile-first approach */
+
+/* Base styles: mobile (no query) */
+.card { width: 100%; }
+
+/* Tablet */
+@media (min-width: 768px) {
+  .card { width: 48%; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card { width: 31%; }
+}</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Common Patterns</h5>
+      <pre>/* Sticky header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Smooth hover */
+.btn {
+  transition: all 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Truncate text */
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Typography Scale</h5>
+      <pre>:root {
+  --text-xs:   0.75rem;  /* 12px */
+  --text-sm:   0.875rem; /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg:   1.125rem; /* 18px */
+  --text-xl:   1.25rem;  /* 20px */
+  --text-2xl:  1.5rem;   /* 24px */
+  --text-3xl:  1.875rem; /* 30px */
+  --text-4xl:  2.25rem;  /* 36px */
+}</pre>
+    </div>
+  </div>
+
+  <!-- JS REFERENCE -->
+  <div class="sm-sec">JavaScript — Essential Syntax</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>Variables &amp; Functions</h5>
+      <pre>const name = 'Priya';       // won't change
+let count = 0;              // will change
+
+// Arrow function
+const greet = (name) => {
+  return `Hello ${name}`;
+};
+
+// Short form (implicit return)
+const double = (n) => n * 2;
+
+// Destructuring
+const { id, title } = task;
+const [first, ...rest] = arr;</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Array Methods</h5>
+      <pre>const arr = [1, 2, 3, 4, 5];
+
+arr.map(n => n * 2)       // [2,4,6,8,10]
+arr.filter(n => n > 2)    // [3,4,5]
+arr.find(n => n > 3)      // 4
+arr.reduce((a, n) => a+n) // 15
+arr.includes(3)           // true
+arr.some(n => n > 4)      // true
+arr.every(n => n > 0)     // true
+
+// Spread (copy + add)
+const newArr = [...arr, 6];
+
+// Add to start
+const withNew = [0, ...arr];</pre>
+    </div>
+    <div class="ref-block">
+      <h5>DOM Manipulation</h5>
+      <pre>// Select
+const el = document.querySelector('.btn');
+const all = document.querySelectorAll('li');
+
+// Change content
+el.textContent = 'New text';
+el.innerHTML = '&lt;strong&gt;Bold&lt;/strong&gt;';
+
+// Classes
+el.classList.add('active');
+el.classList.remove('active');
+el.classList.toggle('open');
+el.classList.contains('active'); // bool
+
+// Events
+el.addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log(e.target);
+});</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Async / Fetch</h5>
+      <pre>// Fetch API
+const getData = async () => {
+  try {
+    const res = await fetch('/api/tasks');
+    if (!res.ok) throw new Error('Error');
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// POST request
+await fetch('/api/tasks', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({ title: 'New task' }),
+});</pre>
+    </div>
+  </div>
+
+  <!-- REACT REFERENCE -->
+  <div class="sm-sec">React — Hooks &amp; Patterns</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>Component Template</h5>
+      <pre>import { useState, useEffect } from 'react';
+
+function MyComponent({ title, onAction }) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Runs once on mount
+    fetchData().then(setData);
+  }, []);
+
+  if (!data) return &lt;p&gt;Loading...&lt;/p&gt;;
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      {data.map(item => (
+        &lt;div key={item.id}&gt;{item.name}&lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+export default MyComponent;</pre>
+    </div>
+    <div class="ref-block">
+      <h5>useState Patterns</h5>
+      <pre>// Basic
+const [count, setCount] = useState(0);
+setCount(count + 1);
+
+// Object state
+const [form, setForm] = useState({ name:'', email:'' });
+setForm({ ...form, name: 'Priya' });
+
+// Array state
+const [items, setItems] = useState([]);
+// Add item:
+setItems([...items, newItem]);
+// Remove item:
+setItems(items.filter(i => i.id !== id));
+// Update item:
+setItems(items.map(i =>
+  i.id === id ? { ...i, done: true } : i
+));</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Conditional Rendering</h5>
+      <pre>// &&  operator
+{isLoggedIn && &lt;UserMenu /&gt;}
+
+// Ternary
+{loading ? &lt;Spinner /&gt; : &lt;Content /&gt;}
+
+// Early return
+if (error) return &lt;ErrorMessage msg={error} /&gt;;
+if (loading) return &lt;Spinner /&gt;;
+
+// Multiple conditions
+{status === 'idle'    && &lt;IdleView /&gt;}
+{status === 'loading' && &lt;Spinner /&gt;}
+{status === 'success' && &lt;SuccessView /&gt;}</pre>
+    </div>
+  </div>
+
+  <!-- EXPRESS REFERENCE -->
+  <div class="sm-sec">Node.js / Express — Quick Reference</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>Server Setup</h5>
+      <pre>const express = require('express');
+const cors    = require('cors');
+require('dotenv').config();
+
+const app = express();
+
+app.use(cors());           // Allow CORS
+app.use(express.json());   // Parse JSON body
+
+app.listen(3001, () =>
+  console.log('Server on :3001'));</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Route Patterns</h5>
+      <pre>// GET all
+app.get('/api/items', async (req, res) => {
+  const [rows] = await db.query('SELECT * FROM items');
+  res.json(rows);
+});
+
+// GET one by id
+app.get('/api/items/:id', async (req, res) => {
+  const { id } = req.params;
+  const [rows] = await db.query(
+    'SELECT * FROM items WHERE id = ?', [id]);
+  if (!rows.length) return res.status(404).json({error:'Not found'});
+  res.json(rows[0]);
+});</pre>
+    </div>
+    <div class="ref-block">
+      <h5>HTTP Status Codes</h5>
+      <table class="tag-table">
+        <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>200</code></td><td>OK — success</td></tr>
+          <tr><td><code>201</code></td><td>Created — POST success</td></tr>
+          <tr><td><code>204</code></td><td>No Content — DELETE success</td></tr>
+          <tr><td><code>400</code></td><td>Bad Request — invalid input</td></tr>
+          <tr><td><code>401</code></td><td>Unauthorized — not logged in</td></tr>
+          <tr><td><code>403</code></td><td>Forbidden — no permission</td></tr>
+          <tr><td><code>404</code></td><td>Not Found</td></tr>
+          <tr><td><code>500</code></td><td>Server Error</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- GIT REFERENCE -->
+  <div class="sm-sec">Git — Essential Commands</div>
+  <div class="ref-grid">
+    <div class="ref-block">
+      <h5>Daily Workflow</h5>
+      <pre>git status                  # see changes
+git add filename.js         # stage one file
+git add .                   # stage all changes
+git commit -m "Add login"   # commit with message
+git push                    # push to remote
+git pull                    # pull latest changes</pre>
+    </div>
+    <div class="ref-block">
+      <h5>Branching</h5>
+      <pre>git branch feature/login   # create branch
+git checkout feature/login # switch to branch
+git checkout -b fix/bug    # create + switch
+
+git merge feature/login    # merge into current
+git branch -d feature/login # delete branch
+
+git log --oneline          # see commit history</pre>
+    </div>
+    <div class="ref-block">
+      <h5>First-Time Setup</h5>
+      <pre>git init                   # new repo
+git config --global user.name "Your Name"
+git config --global user.email "you@email.com"
+
+# Connect to GitHub
+git remote add origin &lt;url&gt;
+git branch -M main
+git push -u origin main
+
+# .gitignore essentials
+node_modules/
+.env
+dist/
+*.log</pre>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);" class="no-print">
+    <a href="career_roadmap.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Career Roadmap</a>
+    <a href="../index.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Back to Study Portal →</a>
+  </div>
+</div>
+
+<footer class="sm-footer no-print">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Quick Reference &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

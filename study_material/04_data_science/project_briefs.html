@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Project Briefs | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="lab_guide_advanced.html">🔬 Advanced Labs</a>
+    <a href="career_roadmap.html">🗺️ Career Roadmap</a>
+    <a href="quizzes.html">🧩 Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">📋</div>
+    <div class="lh-text">
+      <h2>Data Science &amp; Analytics — Project Briefs</h2>
+      <p>3 assessed projects across beginner, intermediate, and advanced levels. Each project is evaluated by a mentor using the rubric below. Submit via the intern portal with your GitHub repository link.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">3 Projects</span>
+      <span class="lh-badge">W4 / W8 / W12</span>
+    </div>
+  </div>
+
+  <!-- PROJECT 1 -->
+  <div class="project-card" id="p1">
+    <div class="proj-header beg">
+      <div class="proj-badge">P1</div>
+      <div class="proj-title">
+        <h3>Exploratory Data Analysis Report</h3>
+        <div class="proj-meta">
+          <span class="tag-level beg">Beginner</span>
+          <span class="tag-week">Due: End of Week 4</span>
+          <span class="tag-pts">100 Points</span>
+          <span class="tag-pass">Pass: 60 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <div class="proj-section">
+        <h4>Overview</h4>
+        <p>Produce a professional exploratory data analysis (EDA) report as a Jupyter Notebook. This project tests your ability to load real data, clean it systematically, ask meaningful questions about it, answer those questions with visualizations, and communicate your findings clearly in writing.</p>
+      </div>
+
+      <div class="proj-section">
+        <h4>Tech Stack</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">Python 3.x</span>
+          <span class="tech-tag">Jupyter Notebook / Colab</span>
+          <span class="tech-tag">pandas</span>
+          <span class="tech-tag">Matplotlib</span>
+          <span class="tech-tag">Seaborn</span>
+          <span class="tech-tag">GitHub</span>
+        </div>
+      </div>
+
+      <div class="proj-section">
+        <h4>Dataset Options</h4>
+        <p>Choose ONE of the following (all available without external downloads):</p>
+        <ul class="content-list">
+          <li><strong>Titanic</strong> — <code>sns.load_dataset('titanic')</code> — Passenger survival data. Rich mix of numeric, categorical, and missing values.</li>
+          <li><strong>Iris</strong> — <code>from sklearn.datasets import load_iris</code> — Classic flower classification dataset. Clean and well-structured.</li>
+          <li><strong>California Housing</strong> — <code>from sklearn.datasets import fetch_california_housing</code> — House price prediction with 8 numeric features.</li>
+        </ul>
+      </div>
+
+      <div class="proj-section">
+        <h4>Requirements Checklist</h4>
+        <ul class="req-list">
+          <li class="req-item"><span class="req-icon">✓</span> Load the dataset and display shape, dtypes, and head()</li>
+          <li class="req-item"><span class="req-icon">✓</span> Handle missing values (explain your strategy for each column)</li>
+          <li class="req-item"><span class="req-icon">✓</span> Remove duplicates and fix inconsistent data types</li>
+          <li class="req-item"><span class="req-icon">✓</span> At least 8 meaningful visualizations (minimum: 1 histogram, 1 scatter, 1 heatmap, 1 barplot/boxplot)</li>
+          <li class="req-item"><span class="req-icon">✓</span> Written Markdown analysis cell below each chart (what does it show? what is your key observation?)</li>
+          <li class="req-item"><span class="req-icon">✓</span> A "5 Key Insights" Markdown section at the end with numbered bullet points</li>
+          <li class="req-item"><span class="req-icon">✓</span> Exported HTML report: <code>jupyter nbconvert --to html</code></li>
+          <li class="req-item"><span class="req-icon">✓</span> GitHub repository with a README that describes the project, dataset, and top 3 findings</li>
+        </ul>
+      </div>
+
+      <div class="proj-section">
+        <h4>Grading Rubric</h4>
+        <table class="rubric-table">
+          <thead>
+            <tr><th>Category</th><th>Points</th><th>What We're Looking For</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Data Cleaning</strong></td>
+              <td class="pts-cell">20</td>
+              <td>Missing values handled with reasoning (not just dropped), duplicates removed, types fixed. Clean df shown at end.</td>
+            </tr>
+            <tr>
+              <td><strong>Visualizations</strong></td>
+              <td class="pts-cell">25</td>
+              <td>8+ charts, correct chart type for each question, labeled axes and titles, readable colors, charts saved as PNG.</td>
+            </tr>
+            <tr>
+              <td><strong>Written Analysis</strong></td>
+              <td class="pts-cell">25</td>
+              <td>Each chart has a Markdown cell with a genuine observation — not just "this chart shows X." 5 Key Insights are specific, not generic.</td>
+            </tr>
+            <tr>
+              <td><strong>Code Quality</strong></td>
+              <td class="pts-cell">15</td>
+              <td>Clean, readable code. Functions used to avoid repetition. No dead/commented-out code. Comments where needed.</td>
+            </tr>
+            <tr>
+              <td><strong>Presentation</strong></td>
+              <td class="pts-cell">15</td>
+              <td>Notebook has a title cell, logical section flow, all cells executed in order with output visible, HTML export clean.</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="rubric-total"><td>Total</td><td class="pts-cell">100</td><td>Pass threshold: 60 pts</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="proj-submission">
+        <strong>Submission:</strong> GitHub repository URL submitted via intern portal. Deadline: Sunday midnight of Week 4. Late submissions: -5 pts per day.
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="project-card" id="p2">
+    <div class="proj-header int">
+      <div class="proj-badge">P2</div>
+      <div class="proj-title">
+        <h3>Predictive Model — Customer Churn</h3>
+        <div class="proj-meta">
+          <span class="tag-level int">Intermediate</span>
+          <span class="tag-week">Due: End of Week 8</span>
+          <span class="tag-pts">100 Points</span>
+          <span class="tag-pass">Pass: 65 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <div class="proj-section">
+        <h4>Overview</h4>
+        <p>Build a complete machine learning pipeline to predict customer churn for a telecom company. This project tests your end-to-end ML skills: data preparation, feature engineering, model training, rigorous evaluation, and interpretation. The deliverable is a production-ready prediction system that a business team could actually use.</p>
+      </div>
+
+      <div class="proj-section">
+        <h4>Tech Stack</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">Python 3.x</span>
+          <span class="tech-tag">Jupyter Notebook</span>
+          <span class="tech-tag">pandas / NumPy</span>
+          <span class="tech-tag">scikit-learn</span>
+          <span class="tech-tag">XGBoost</span>
+          <span class="tech-tag">Matplotlib / Seaborn</span>
+          <span class="tech-tag">pickle</span>
+          <span class="tech-tag">GitHub</span>
+        </div>
+      </div>
+
+      <div class="proj-section">
+        <h4>Dataset</h4>
+        <p><strong>Telco Customer Churn</strong> — Available on Kaggle (search "Telco Customer Churn" by IBM). Your mentor will share the CSV file via the intern portal if you cannot access Kaggle. The dataset contains ~7,000 customers with 20+ features including demographics, account information, and services subscribed.</p>
+        <p>Key columns: <code>customerID</code>, <code>tenure</code>, <code>MonthlyCharges</code>, <code>TotalCharges</code>, <code>Contract</code>, <code>InternetService</code>, <code>Churn</code> (target — Yes/No).</p>
+      </div>
+
+      <div class="proj-section">
+        <h4>Requirements Checklist</h4>
+        <ul class="req-list">
+          <li class="req-item"><span class="req-icon">✓</span> Full EDA section: distribution of churn, class balance, correlation with key features</li>
+          <li class="req-item"><span class="req-icon">✓</span> Feature engineering: encode all categoricals, handle TotalCharges (stored as string), create at least 2 new features</li>
+          <li class="req-item"><span class="req-icon">✓</span> Handle class imbalance (churn ~26%) — use class_weight='balanced' or SMOTE</li>
+          <li class="req-item"><span class="req-icon">✓</span> Train at least 3 models: Logistic Regression, Random Forest, XGBoost</li>
+          <li class="req-item"><span class="req-icon">✓</span> Compare using: Accuracy, Precision, Recall, F1, ROC-AUC in a summary table</li>
+          <li class="req-item"><span class="req-icon">✓</span> Tune the best model with GridSearchCV or RandomizedSearchCV (show before/after performance)</li>
+          <li class="req-item"><span class="req-icon">✓</span> Final model saved as <code>churn_model.pkl</code> using pickle</li>
+          <li class="req-item"><span class="req-icon">✓</span> A <code>predict_churn(customer_data)</code> function that accepts a dict and returns churn probability</li>
+          <li class="req-item"><span class="req-icon">✓</span> GitHub repo with README, requirements.txt, and notebook</li>
+        </ul>
+      </div>
+
+      <div class="proj-section">
+        <h4>Grading Rubric</h4>
+        <table class="rubric-table">
+          <thead>
+            <tr><th>Category</th><th>Points</th><th>What We're Looking For</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>EDA Quality</strong></td>
+              <td class="pts-cell">20</td>
+              <td>Churn rate analysis, correlation of churn with each feature, visualizations for key business questions, written observations.</td>
+            </tr>
+            <tr>
+              <td><strong>Feature Engineering</strong></td>
+              <td class="pts-cell">20</td>
+              <td>All categoricals encoded correctly, TotalCharges converted to float, at least 2 new features with justification, class imbalance handled.</td>
+            </tr>
+            <tr>
+              <td><strong>Model Comparison</strong></td>
+              <td class="pts-cell">25</td>
+              <td>3+ models trained, compared on 5 metrics in a table, ROC curves plotted together, reasoning for metric choice given the business context.</td>
+            </tr>
+            <tr>
+              <td><strong>Tuning &amp; Final Model</strong></td>
+              <td class="pts-cell">20</td>
+              <td>GridSearchCV with reasonable parameter grid, clear before/after comparison, model saved as pickle, prediction function works on new customer dict.</td>
+            </tr>
+            <tr>
+              <td><strong>Code Quality</strong></td>
+              <td class="pts-cell">15</td>
+              <td>Modular code (functions, not copy-paste), clear variable names, no unused imports, informative print statements, GitHub README complete.</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="rubric-total"><td>Total</td><td class="pts-cell">100</td><td>Pass threshold: 65 pts</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="proj-section">
+        <h4>Mentor Tips</h4>
+        <ul class="content-list">
+          <li>F1-score matters more than accuracy here — churn is imbalanced. A model that always predicts "No Churn" gets 74% accuracy but catches zero churners.</li>
+          <li>Think about the business cost: missing a churning customer (false negative) is worse than flagging a non-churner (false positive). Adjust your threshold accordingly.</li>
+          <li>In your EDA, check: do contract type and tenure interact with churn? These tend to be the strongest predictors.</li>
+        </ul>
+      </div>
+
+      <div class="proj-submission">
+        <strong>Submission:</strong> GitHub repository URL submitted via intern portal. Deadline: Sunday midnight of Week 8. Include a requirements.txt so mentors can reproduce your environment.
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="project-card" id="p3">
+    <div class="proj-header adv">
+      <div class="proj-badge">P3</div>
+      <div class="proj-title">
+        <h3>End-to-End Data Product</h3>
+        <div class="proj-meta">
+          <span class="tag-level adv">Advanced</span>
+          <span class="tag-week">Due: End of Week 12</span>
+          <span class="tag-pts">100 Points</span>
+          <span class="tag-pass">Pass: 70 pts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-body">
+      <div class="proj-section">
+        <h4>Overview</h4>
+        <p>Build a complete, production-deployed data product: an ML prediction API backed by a Flask server, an interactive Dash or Streamlit dashboard with 5+ charts and a live prediction form, all containerized with Docker and deployed live to a cloud hosting platform. This project proves you can ship real data science work, not just notebooks.</p>
+      </div>
+
+      <div class="proj-section">
+        <h4>Tech Stack</h4>
+        <div class="tech-tags">
+          <span class="tech-tag">Python 3.x</span>
+          <span class="tech-tag">scikit-learn / XGBoost</span>
+          <span class="tech-tag">Flask (API)</span>
+          <span class="tech-tag">Dash or Streamlit (Dashboard)</span>
+          <span class="tech-tag">SQLite / PostgreSQL</span>
+          <span class="tech-tag">Docker</span>
+          <span class="tech-tag">GitHub Actions (CI)</span>
+          <span class="tech-tag">Heroku / Render / Railway (Deploy)</span>
+        </div>
+      </div>
+
+      <div class="proj-section">
+        <h4>Dataset</h4>
+        <p>Any real public dataset of your choice. Recommended domains (choose what interests you):</p>
+        <ul class="content-list">
+          <li><strong>Heart Disease</strong> — Medical prediction, widely understood</li>
+          <li><strong>Loan Default Prediction</strong> — Financial risk, very relevant for India</li>
+          <li><strong>Air Quality Index</strong> — Environmental data, relevant for Devbhoomi region</li>
+          <li><strong>Crop Yield Prediction</strong> — Agriculture, highly relevant to Uttarakhand context</li>
+          <li><strong>E-commerce Sales Forecasting</strong> — Combine time series + dashboard</li>
+        </ul>
+      </div>
+
+      <div class="proj-section">
+        <h4>Requirements Checklist</h4>
+        <ul class="req-list">
+          <li class="req-item"><span class="req-icon">✓</span> Clean, modeled dataset with feature engineering and cross-validated ML model (AUC &gt; 0.75 or R² &gt; 0.70)</li>
+          <li class="req-item"><span class="req-icon">✓</span> Flask REST API: POST <code>/predict</code> endpoint accepts JSON, returns prediction + probability + timestamp</li>
+          <li class="req-item"><span class="req-icon">✓</span> SQLite or PostgreSQL: log every prediction (input features, prediction, timestamp) to a database</li>
+          <li class="req-item"><span class="req-icon">✓</span> Dashboard (Dash or Streamlit): 5+ charts including at least one interactive filter/dropdown, and a prediction form where user enters values and sees model output live</li>
+          <li class="req-item"><span class="req-icon">✓</span> Docker: <code>Dockerfile</code> that builds and runs the entire app on any machine</li>
+          <li class="req-item"><span class="req-icon">✓</span> GitHub Actions: CI workflow that runs at least one test (pytest) on every push to main</li>
+          <li class="req-item"><span class="req-icon">✓</span> Deployed live: share a public URL where mentors can test your app without running it locally</li>
+          <li class="req-item"><span class="req-icon">✓</span> 1-page business report (PDF or Markdown): problem, approach, key findings, 3 business recommendations</li>
+        </ul>
+      </div>
+
+      <div class="proj-section">
+        <h4>Flask API Example Structure</h4>
+        <pre><code>>from flask import Flask, request, jsonify
+import pickle, sqlite3, datetime
+import pandas as pd
+
+app = Flask(__name__)
+
+with open('model.pkl', 'rb') as f:
+    model = pickle.load(f)
+
+def log_prediction(features, prediction, probability):
+    conn = sqlite3.connect('predictions.db')
+    conn.execute('''CREATE TABLE IF NOT EXISTS predictions
+                    (id INTEGER PRIMARY KEY, timestamp TEXT, features TEXT,
+                     prediction INTEGER, probability REAL)''')
+    conn.execute('INSERT INTO predictions VALUES (?,?,?,?,?)',
+                 (None, datetime.datetime.now().isoformat(),
+                  str(features), int(prediction), float(probability)))
+    conn.commit()
+    conn.close()
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json()
+    df = pd.DataFrame([data])
+    prediction   = int(model.predict(df)[0])
+    probability  = float(model.predict_proba(df)[0][1])
+    log_prediction(data, prediction, probability)
+    return jsonify({
+        'prediction':  prediction,
+        'probability': round(probability, 3),
+        'timestamp':   datetime.datetime.now().isoformat()
+    })
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({'status': 'ok', 'model': 'loaded'})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)</code></pre>
+      </div>
+
+      <div class="proj-section">
+        <h4>Grading Rubric</h4>
+        <table class="rubric-table">
+          <thead>
+            <tr><th>Category</th><th>Points</th><th>What We're Looking For</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ML Quality</strong></td>
+              <td class="pts-cell">20</td>
+              <td>Cross-validated model meets performance threshold. Feature engineering documented. Model selection justified. No data leakage in pipeline.</td>
+            </tr>
+            <tr>
+              <td><strong>Dashboard UX</strong></td>
+              <td class="pts-cell">20</td>
+              <td>5+ working charts, at least 1 interactive filter, prediction form submits and shows output, charts have clear titles and labels, clean layout.</td>
+            </tr>
+            <tr>
+              <td><strong>API Design</strong></td>
+              <td class="pts-cell">20</td>
+              <td>POST /predict accepts valid JSON and returns correct format. /health endpoint works. Predictions logged to DB. Error handling for invalid input.</td>
+            </tr>
+            <tr>
+              <td><strong>Deployment</strong></td>
+              <td class="pts-cell">20</td>
+              <td>Dockerfile builds successfully. App runs with <code>docker run</code>. Live URL works and accepts predictions. GitHub Actions CI passes.</td>
+            </tr>
+            <tr>
+              <td><strong>Documentation</strong></td>
+              <td class="pts-cell">20</td>
+              <td>README with architecture diagram, setup instructions, API docs (endpoints + example JSON), 1-page business report with recommendations.</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="rubric-total"><td>Total</td><td class="pts-cell">100</td><td>Pass threshold: 70 pts</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="proj-section">
+        <h4>Mentor Tips</h4>
+        <ul class="content-list">
+          <li>Start with a working notebook, then extract the model into a Flask API. Don't try to build the API and model simultaneously.</li>
+          <li>Render.com and Railway.app both have free tiers that support Docker deployments — much easier than Heroku's current setup.</li>
+          <li>Your business report should be written for a CEO, not a data scientist. No model equations — just findings and recommendations.</li>
+          <li>If CI/CD is new to you: the GitHub Actions workflow just needs to <code>pip install</code> and run one <code>pytest</code> function that calls your <code>/predict</code> endpoint and checks the response format.</li>
+        </ul>
+      </div>
+
+      <div class="proj-submission">
+        <strong>Submission:</strong> GitHub repository URL + live app URL, both submitted via intern portal. Deadline: Sunday midnight of Week 12. Final demo to your mentor (10-minute screen share) to be scheduled separately.
+      </div>
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="lab_guide_advanced.html" class="btn-secondary">← Advanced Labs</a>
+    <a href="career_roadmap.html" class="btn-primary">🗺️ View Career Roadmap →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+
+

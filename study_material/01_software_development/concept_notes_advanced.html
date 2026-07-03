@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Concept Notes (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .analogy-box{background:linear-gradient(135deg,#FDF6E3,#F5E6C0);border:1px solid var(--gold-light);border-left:4px solid var(--gold);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+  .analogy-box strong{color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">📖 Concept Notes — Advanced Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; CONCEPT NOTES — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">← Intermediate</a>
+    <a href="lab_guide_advanced.html">Lab Guide ↗</a>
+    <a href="project_briefs.html">Projects ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero adv">
+    <div class="lh-icon">🚀</div>
+    <h1>Advanced Level — Concept Notes</h1>
+    <p class="lh-sub">Weeks 9–12: TypeScript, Testing, CI/CD pipelines, system design principles, and real-world software architecture. You graduate from "it works" to "it's production-ready."</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 9–12</span>
+      <span class="lh-pill">TypeScript · Testing · CI/CD · Architecture</span>
+      <span class="lh-pill">Production-Ready</span>
+      <span class="lh-pill gold">Advanced Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card"><h4>Prerequisites</h4><ul><li>React + Node (Intermediate done)</li><li>REST APIs + MySQL</li><li>Git + GitHub basics</li><li>Deployment experience</li></ul></div>
+    <div class="info-card"><h4>New Tools</h4><ul><li>TypeScript</li><li>Jest + React Testing Library</li><li>GitHub Actions (CI/CD)</li><li>Docker basics</li></ul></div>
+    <div class="info-card"><h4>Key Concepts</h4><ul><li>Type safety</li><li>Unit + integration testing</li><li>Software architecture patterns</li><li>Performance optimization</li></ul></div>
+    <div class="info-card"><h4>End Goal</h4><ul><li>Production-deployed app</li><li>CI/CD pipeline live</li><li>Test coverage ≥ 70%</li><li>Industry-ready portfolio</li></ul></div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="sm-sec">Week 9 — TypeScript</div>
+  <div class="week-block open" id="w9">
+    <div class="week-head" onclick="toggleWeek('w9')">
+      <div class="week-num wn-adv">W9</div>
+      <div class="week-head-text"><h3>TypeScript — Type-Safe JavaScript</h3><p>Types · Interfaces · Generics · TypeScript with React</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> TypeScript is like a spell-checker for code. JavaScript lets you write anything and only shows errors when you run the program. TypeScript catches errors while you type, before the app even runs. Companies love it because bugs discovered early cost 10× less to fix than bugs found in production.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why TypeScript?</h4>
+          <ul>
+            <li>JavaScript + static typing = TypeScript</li>
+            <li>Catch type errors at compile time, not runtime</li>
+            <li>70% of codebases at large companies use TS</li>
+            <li>Better IDE autocomplete (IntelliSense)</li>
+            <li>Self-documenting code — types explain what functions expect</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Basic Types</h4>
+          <ul>
+            <li><code>string</code>, <code>number</code>, <code>boolean</code></li>
+            <li><code>string[]</code> or <code>Array&lt;string&gt;</code> — array of strings</li>
+            <li><code>null</code>, <code>undefined</code>, <code>void</code></li>
+            <li><code>any</code> — avoid, defeats the purpose</li>
+            <li><code>unknown</code> — safer alternative to <code>any</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Interfaces</h4>
+          <ul>
+            <li>Define shape of an object</li>
+            <li>Optional properties: <code>name?: string</code></li>
+            <li>Readonly: <code>readonly id: number</code></li>
+            <li>Extend with <code>extends</code></li>
+            <li>Use for API response shapes, component props</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>TypeScript in React</h4>
+          <ul>
+            <li>Create: <code>npm create vite@latest -- --template react-ts</code></li>
+            <li>Props interface: <code>interface CardProps { title: string; }</code></li>
+            <li>State: <code>useState&lt;User | null&gt;(null)</code></li>
+            <li><code>React.FC</code> for function component type</li>
+            <li>Event types: <code>React.ChangeEvent&lt;HTMLInputElement&gt;</code></li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment">// TypeScript interfaces and typed components</span>
+
+interface Task {
+  id: number;
+  title: string;
+  done: boolean;
+  dueDate?: string; <span class="comment">// optional</span>
+}
+
+interface TaskCardProps {
+  task: Task;
+  onToggle: (id: number) =&gt; void;
+}
+
+const TaskCard: React.FC&lt;TaskCardProps&gt; = ({ task, onToggle }) =&gt; {
+  return (
+    &lt;div className={`card ${task.done ? 'done' : ''}`}&gt;
+      &lt;h3&gt;{task.title}&lt;/h3&gt;
+      &lt;button onClick={() =&gt; onToggle(task.id)}&gt;
+        {task.done ? 'Undo' : 'Complete'}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+};</pre>
+      <div class="key-takeaway">
+        <h4>Week 9 Key Takeaways</h4>
+        <ul>
+          <li>TypeScript is a superset of JavaScript — valid JS is valid TS, you just add types</li>
+          <li>Define an interface for every API response and component props object</li>
+          <li>Avoid <code>any</code> — if you reach for it, stop and think about the correct type</li>
+          <li>Enable <code>strict: true</code> in tsconfig.json from day one</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="week-block" id="w10">
+    <div class="week-head" onclick="toggleWeek('w10')">
+      <div class="week-num wn-adv">W10</div>
+      <div class="week-head-text"><h3>Testing — Unit &amp; Integration Tests</h3><p>Jest · React Testing Library · Test pyramid · Coverage</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why Testing?</h4>
+          <ul>
+            <li>Catch bugs before they reach users</li>
+            <li>Refactor confidently — tests prove nothing broke</li>
+            <li>Code with tests is 3× cheaper to maintain</li>
+            <li>Companies require test coverage in job descriptions</li>
+            <li>Untested code = technical debt that grows</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Test Pyramid</h4>
+          <ul>
+            <li>Unit tests (bottom, most) — one function at a time</li>
+            <li>Integration tests (middle) — multiple pieces together</li>
+            <li>E2E tests (top, fewest) — whole user flow (slow)</li>
+            <li>Aim for 70% unit, 20% integration, 10% E2E</li>
+            <li>High unit coverage + some integration = sweet spot</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Jest Basics</h4>
+          <ul>
+            <li><code>describe('group', () =&gt; { })</code> — group tests</li>
+            <li><code>test('name', () =&gt; { })</code> — individual test</li>
+            <li><code>expect(value).toBe(expected)</code> — assertion</li>
+            <li><code>toBe</code> — strict equality</li>
+            <li><code>toEqual</code> — deep equality (objects/arrays)</li>
+            <li><code>toThrow</code> — expects an error thrown</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>React Testing Library</h4>
+          <ul>
+            <li>Test from user's perspective, not implementation</li>
+            <li><code>render(&lt;Component /&gt;)</code> — renders component</li>
+            <li><code>screen.getByText('Submit')</code> — find by visible text</li>
+            <li><code>fireEvent.click(button)</code> — simulate user click</li>
+            <li><code>waitFor()</code> — wait for async updates</li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment">// Unit test with Jest</span>
+function calculateTotal(items) {
+  return items.reduce((sum, item) =&gt; sum + item.price, 0);
+}
+
+describe('calculateTotal', () =&gt; {
+  test('returns 0 for empty array', () =&gt; {
+    expect(calculateTotal([])).toBe(0);
+  });
+  test('sums prices correctly', () =&gt; {
+    const items = [{ price: 100 }, { price: 250 }];
+    expect(calculateTotal(items)).toBe(350);
+  });
+});
+
+<span class="comment">// React component test</span>
+import { render, screen, fireEvent } from '@testing-library/react';
+import Counter from './Counter';
+
+test('increments count when button clicked', () =&gt; {
+  render(&lt;Counter title="Test" /&gt;);
+  const btn = screen.getByText('+');
+  fireEvent.click(btn);
+  expect(screen.getByText('Count: 1')).toBeInTheDocument();
+});</pre>
+      <div class="key-takeaway">
+        <h4>Week 10 Key Takeaways</h4>
+        <ul>
+          <li>Write tests alongside code — not as an afterthought at the end</li>
+          <li>Test behaviour (what it does), not implementation (how it does it)</li>
+          <li>Run <code>npm test -- --coverage</code> to see your coverage report</li>
+          <li>Aim for 70%+ coverage; 100% is often impractical and counterproductive</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="week-block" id="w11">
+    <div class="week-head" onclick="toggleWeek('w11')">
+      <div class="week-num wn-adv">W11</div>
+      <div class="week-head-text"><h3>CI/CD Pipelines with GitHub Actions</h3><p>Automation · Build pipelines · Auto-deploy · Quality gates</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>What is CI/CD?</h4>
+          <ul>
+            <li>CI = Continuous Integration: auto-run tests on every push</li>
+            <li>CD = Continuous Deployment: auto-deploy when tests pass</li>
+            <li>Removes "works on my machine" problem</li>
+            <li>Every commit is validated before it reaches production</li>
+            <li>Industry standard at every professional company</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>GitHub Actions</h4>
+          <ul>
+            <li>Workflows defined as YAML files in <code>.github/workflows/</code></li>
+            <li><code>on: [push, pull_request]</code> — triggers</li>
+            <li><code>jobs</code> — groups of steps (run in parallel)</li>
+            <li><code>steps</code> — individual commands</li>
+            <li>Free minutes for public repos; private repos have limits</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Quality Gates</h4>
+          <ul>
+            <li>Block merges if tests fail</li>
+            <li>Block merges if coverage drops below threshold</li>
+            <li>Run linting (ESLint) in pipeline</li>
+            <li>Run type checking (<code>tsc --noEmit</code>) in pipeline</li>
+            <li>Branch protection rules enforce this</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Docker Basics</h4>
+          <ul>
+            <li>Container: isolated environment with all dependencies</li>
+            <li><code>Dockerfile</code>: instructions to build the container image</li>
+            <li><code>docker build -t myapp .</code> — build image</li>
+            <li><code>docker run -p 3000:3000 myapp</code> — run container</li>
+            <li>Same container runs locally AND in production</li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment"># .github/workflows/ci.yml — GitHub Actions pipeline</span>
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Run tests
+        run: npm test -- --coverage --watchAll=false
+
+      - name: Build
+        run: npm run build</pre>
+      <div class="key-takeaway">
+        <h4>Week 11 Key Takeaways</h4>
+        <ul>
+          <li>A CI pipeline that runs on every push is non-negotiable at professional companies</li>
+          <li>Use <code>npm ci</code> in CI (not <code>npm install</code>) — it's faster and uses exact lockfile versions</li>
+          <li>Add branch protection rules on GitHub so <code>main</code> can't be pushed to directly</li>
+          <li>A failing CI badge on your repo tells employers you care about code quality</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 12 -->
+  <div class="week-block" id="w12">
+    <div class="week-head" onclick="toggleWeek('w12')">
+      <div class="week-num wn-adv">W12</div>
+      <div class="week-head-text"><h3>System Design &amp; Architecture Principles</h3><p>SOLID · Design patterns · Scalability · Performance</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>SOLID Principles</h4>
+          <ul>
+            <li><strong>S</strong>ingle Responsibility — one class/function, one job</li>
+            <li><strong>O</strong>pen/Closed — open for extension, closed for modification</li>
+            <li><strong>L</strong>iskov Substitution — subclasses must be usable as parent</li>
+            <li><strong>I</strong>nterface Segregation — small specific interfaces</li>
+            <li><strong>D</strong>ependency Inversion — depend on abstractions</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Common Design Patterns</h4>
+          <ul>
+            <li>Singleton — one instance shared globally</li>
+            <li>Observer — publish/subscribe event model</li>
+            <li>Repository — abstract data access layer</li>
+            <li>Factory — create objects without specifying class</li>
+            <li>MVC — Model View Controller separation</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Performance Best Practices</h4>
+          <ul>
+            <li>React: <code>useMemo</code>, <code>useCallback</code>, <code>React.memo</code></li>
+            <li>Lazy loading: <code>React.lazy()</code> + <code>Suspense</code></li>
+            <li>Image optimization: compress, use WebP format</li>
+            <li>API: pagination, caching, debouncing search</li>
+            <li>Measure before optimizing — use Chrome Lighthouse</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Scalability Concepts</h4>
+          <ul>
+            <li>Horizontal scaling: add more servers</li>
+            <li>Vertical scaling: bigger server (has limits)</li>
+            <li>Caching: Redis for frequently read data</li>
+            <li>Database indexing: indexes speed up reads</li>
+            <li>Rate limiting: protect API from abuse</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-takeaway">
+        <h4>Week 12 Key Takeaways</h4>
+        <ul>
+          <li>SOLID principles prevent spaghetti code — start applying S (Single Responsibility) immediately</li>
+          <li>Don't over-engineer early — patterns are solutions to known problems, not requirements</li>
+          <li>Run Lighthouse on every deployed project — aim for Performance score ≥ 90</li>
+          <li>Architecture is a conversation, not a rule — explain your choices in your portfolio</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_intermediate.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Intermediate Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_advanced.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+      <a href="project_briefs.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Projects →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Concept Notes — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w9');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

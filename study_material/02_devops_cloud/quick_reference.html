@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps &amp; Cloud — Quick Reference | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  @media print {
+    .sm-header, .sm-domain-bar, .sm-footer, .no-print { display: none !important; }
+    .sm-page { padding: 0; }
+    .ref-grid { grid-template-columns: repeat(2, 1fr); }
+    .ref-block { break-inside: avoid; }
+    body { font-size: 11px; }
+    pre { font-size: 10px; }
+    .sm-sec { margin-top: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">⚡ Quick Reference</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar no-print">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; QUICK REFERENCE (PRINTABLE)
+  <div class="dbar-links">
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+    <a href="#" onclick="window.print();return false;">🖨️ Print</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero beg no-print">
+    <div class="lh-icon">⚡</div>
+    <h1>Quick Reference Sheet — DevOps &amp; Cloud Engineering</h1>
+    <p class="lh-sub">Essential Linux, Docker, Git, AWS CLI, Terraform, and Kubernetes commands. Print and keep on your desk. Everything you need in one place.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Printable</span>
+      <span class="lh-pill">All Levels</span>
+      <span class="lh-pill gold">Keep This Handy</span>
+    </div>
+  </div>
+
+  <!-- ── LINUX ── -->
+  <div class="sm-sec">Linux Commands</div>
+  <div class="ref-grid">
+
+    <div class="ref-block">
+      <div class="ref-block-head">Navigation &amp; Files</div>
+      <div class="ref-block-body">
+<pre>pwd                    <span class="comment"># print working directory</span>
+ls -la                 <span class="comment"># list all files with permissions</span>
+cd /path/to/dir        <span class="comment"># change directory</span>
+cd ..                  <span class="comment"># go up one level</span>
+mkdir -p dir/subdir    <span class="comment"># create nested directories</span>
+touch file.txt         <span class="comment"># create empty file</span>
+cp src.txt dst.txt     <span class="comment"># copy file</span>
+mv old.txt new.txt     <span class="comment"># move / rename file</span>
+rm -rf directory/      <span class="comment"># delete directory (careful!)</span>
+cat file.txt           <span class="comment"># print file contents</span>
+less file.txt          <span class="comment"># scroll through file</span>
+head -20 file.txt      <span class="comment"># first 20 lines</span>
+tail -f /var/log/app   <span class="comment"># follow log in real time</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Search &amp; Processes</div>
+      <div class="ref-block-body">
+<pre>grep -r "text" .       <span class="comment"># search all files recursively</span>
+grep -n "error" app.log<span class="comment"># show line numbers</span>
+find . -name "*.log"   <span class="comment"># find files by name pattern</span>
+ps aux                 <span class="comment"># list all running processes</span>
+ps aux | grep nginx    <span class="comment"># filter processes by name</span>
+kill -9 PID            <span class="comment"># force kill process by PID</span>
+top                    <span class="comment"># live process monitor</span>
+htop                   <span class="comment"># better interactive process view</span>
+df -h                  <span class="comment"># disk usage (human readable)</span>
+free -h                <span class="comment"># memory usage</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Permissions &amp; Networking</div>
+      <div class="ref-block-body">
+<pre>chmod 755 script.sh    <span class="comment"># rwx for owner, r-x for others</span>
+chmod 600 key.pem      <span class="comment"># read-only for owner (SSH keys)</span>
+chown user:group file  <span class="comment"># change file ownership</span>
+sudo command           <span class="comment"># run as root</span>
+ssh user@hostname      <span class="comment"># connect via SSH</span>
+ssh -i key.pem ec2-user@ip  <span class="comment"># SSH with key file</span>
+scp file user@host:/path    <span class="comment"># copy file to remote</span>
+curl -I https://url    <span class="comment"># check HTTP response headers</span>
+curl -s url | jq .     <span class="comment"># fetch JSON and pretty-print</span>
+ping hostname          <span class="comment"># test connectivity</span>
+nslookup domain.com    <span class="comment"># DNS lookup</span>
+netstat -tulpn         <span class="comment"># show listening ports</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">System &amp; Package Management</div>
+      <div class="ref-block-body">
+<pre>sudo apt update        <span class="comment"># refresh package list (Debian/Ubuntu)</span>
+sudo apt install nginx <span class="comment"># install a package</span>
+sudo systemctl start nginx   <span class="comment"># start a service</span>
+sudo systemctl status nginx  <span class="comment"># check service status</span>
+sudo systemctl enable nginx  <span class="comment"># start on boot</span>
+journalctl -u nginx -f  <span class="comment"># follow service logs</span>
+uname -r               <span class="comment"># kernel version</span>
+lsb_release -a         <span class="comment"># OS version</span>
+which docker           <span class="comment"># find binary location</span>
+export VAR="value"     <span class="comment"># set env variable in session</span>
+echo $HOME             <span class="comment"># print env variable</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── DOCKER ── -->
+  <div class="sm-sec">Docker Commands</div>
+  <div class="ref-grid">
+
+    <div class="ref-block">
+      <div class="ref-block-head">Images</div>
+      <div class="ref-block-body">
+<pre>docker build -t name:tag .     <span class="comment"># build image from Dockerfile</span>
+docker build --no-cache -t n:t . <span class="comment"># force fresh build</span>
+docker images                  <span class="comment"># list local images</span>
+docker pull nginx:alpine       <span class="comment"># pull from Docker Hub</span>
+docker push user/name:tag      <span class="comment"># push to registry</span>
+docker rmi image-id            <span class="comment"># remove image</span>
+docker image prune             <span class="comment"># remove unused images</span>
+docker inspect image-id        <span class="comment"># full image metadata</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Containers</div>
+      <div class="ref-block-body">
+<pre>docker run -d -p 80:3000 \
+  --name app image:tag         <span class="comment"># run detached, port mapped</span>
+docker run --rm -it image sh   <span class="comment"># interactive, auto-remove</span>
+docker ps                      <span class="comment"># running containers</span>
+docker ps -a                   <span class="comment"># all containers (inc. stopped)</span>
+docker stop app                <span class="comment"># graceful stop</span>
+docker rm app                  <span class="comment"># remove stopped container</span>
+docker logs app                <span class="comment"># view container logs</span>
+docker logs -f app             <span class="comment"># follow logs live</span>
+docker exec -it app sh         <span class="comment"># open shell in container</span>
+docker stats                   <span class="comment"># live resource usage</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">docker-compose</div>
+      <div class="ref-block-body">
+<pre>docker-compose up -d           <span class="comment"># start all services detached</span>
+docker-compose down            <span class="comment"># stop + remove containers</span>
+docker-compose down -v         <span class="comment"># also remove volumes</span>
+docker-compose ps              <span class="comment"># list service containers</span>
+docker-compose logs -f         <span class="comment"># follow all service logs</span>
+docker-compose logs -f web     <span class="comment"># follow one service</span>
+docker-compose build           <span class="comment"># rebuild all images</span>
+docker-compose restart web     <span class="comment"># restart one service</span>
+docker-compose exec web sh     <span class="comment"># shell into service</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Dockerfile Essentials</div>
+      <div class="ref-block-body">
+<pre><span class="keyword">FROM</span> node:20-alpine        <span class="comment"># base image</span>
+<span class="keyword">WORKDIR</span> /app               <span class="comment"># set working directory</span>
+<span class="keyword">COPY</span> package*.json ./      <span class="comment"># copy package files first</span>
+<span class="keyword">RUN</span> npm ci --only=prod     <span class="comment"># install production deps</span>
+<span class="keyword">COPY</span> . .                   <span class="comment"># copy app source</span>
+<span class="keyword">EXPOSE</span> 3000                <span class="comment"># document the port</span>
+<span class="keyword">USER</span> node                  <span class="comment"># run as non-root user</span>
+<span class="keyword">CMD</span> ["node", "server.js"]  <span class="comment"># start command</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── GIT ── -->
+  <div class="sm-sec">Git Commands</div>
+  <div class="ref-grid">
+
+    <div class="ref-block">
+      <div class="ref-block-head">Daily Workflow</div>
+      <div class="ref-block-body">
+<pre>git status                 <span class="comment"># see changed files</span>
+git diff                   <span class="comment"># see unstaged changes</span>
+git add .                  <span class="comment"># stage all changes</span>
+git add file.js            <span class="comment"># stage specific file</span>
+git commit -m "feat: ..."  <span class="comment"># commit with message</span>
+git push                   <span class="comment"># push to remote</span>
+git pull                   <span class="comment"># pull latest from remote</span>
+git log --oneline -10      <span class="comment"># compact recent history</span>
+git show abc123            <span class="comment"># inspect a commit</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Branching</div>
+      <div class="ref-block-body">
+<pre>git checkout -b feature/name  <span class="comment"># create + switch branch</span>
+git checkout main          <span class="comment"># switch to main</span>
+git branch                 <span class="comment"># list local branches</span>
+git branch -a              <span class="comment"># list all (inc. remote)</span>
+git merge feature/name     <span class="comment"># merge into current branch</span>
+git branch -d feature/name <span class="comment"># delete merged branch</span>
+git push origin --delete f <span class="comment"># delete remote branch</span>
+git stash                  <span class="comment"># save work-in-progress</span>
+git stash pop              <span class="comment"># restore stashed changes</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Advanced &amp; Recovery</div>
+      <div class="ref-block-body">
+<pre>git revert HEAD            <span class="comment"># undo last commit safely</span>
+git reset HEAD~1           <span class="comment"># undo commit, keep changes</span>
+git reset --hard HEAD~1    <span class="comment"># undo commit, discard changes</span>
+git cherry-pick abc123     <span class="comment"># apply one commit to branch</span>
+git tag v1.0.0             <span class="comment"># create a version tag</span>
+git tag -a v1.0.0 -m "..."  <span class="comment"># annotated tag</span>
+git push --tags            <span class="comment"># push all tags</span>
+git blame file.js          <span class="comment"># who changed each line?</span>
+git bisect start           <span class="comment"># binary search for a bug</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">.gitignore Patterns</div>
+      <div class="ref-block-body">
+<pre><span class="comment"># Node.js</span>
+node_modules/
+npm-debug.log
+.env
+.env.local
+
+<span class="comment"># Build outputs</span>
+dist/
+build/
+*.log
+
+<span class="comment"># OS / Editor</span>
+.DS_Store
+.vscode/
+*.swp
+
+<span class="comment"># Secrets (never commit these!)</span>
+*.pem
+*.key
+credentials.json</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── AWS CLI ── -->
+  <div class="sm-sec">AWS CLI Commands</div>
+  <div class="ref-grid">
+
+    <div class="ref-block">
+      <div class="ref-block-head">Config &amp; S3</div>
+      <div class="ref-block-body">
+<pre>aws configure              <span class="comment"># set up credentials + region</span>
+aws configure list         <span class="comment"># show current config</span>
+aws s3 ls                  <span class="comment"># list all buckets</span>
+aws s3 ls s3://bucket-name <span class="comment"># list bucket contents</span>
+aws s3 mb s3://bucket-name <span class="comment"># create bucket</span>
+aws s3 cp file.txt s3://bucket/  <span class="comment"># upload file</span>
+aws s3 sync ./dist s3://bucket/  <span class="comment"># sync directory</span>
+aws s3 rb s3://bucket --force    <span class="comment"># delete bucket + contents</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">EC2</div>
+      <div class="ref-block-body">
+<pre>aws ec2 describe-instances  <span class="comment"># list all EC2 instances</span>
+aws ec2 describe-instances \
+  --query 'Reservations[].Instances[].
+    [InstanceId,State.Name,PublicIpAddress]' \
+  --output table            <span class="comment"># formatted table view</span>
+aws ec2 start-instances \
+  --instance-ids i-xxxxxxxx <span class="comment"># start stopped instance</span>
+aws ec2 stop-instances \
+  --instance-ids i-xxxxxxxx <span class="comment"># stop instance</span>
+aws ec2 describe-security-groups  <span class="comment"># list security groups</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">ECR &amp; ECS</div>
+      <div class="ref-block-body">
+<pre><span class="comment"># Authenticate Docker to ECR</span>
+aws ecr get-login-password \
+  --region ap-south-1 | docker login \
+  --username AWS \
+  --password-stdin &lt;account&gt;.dkr.ecr.ap-south-1.amazonaws.com
+
+aws ecr create-repository \
+  --repository-name myapp  <span class="comment"># create ECR repo</span>
+aws ecr describe-repositories  <span class="comment"># list repos</span>
+aws ecs list-clusters      <span class="comment"># list ECS clusters</span>
+aws ecs describe-services \
+  --cluster name --services svc <span class="comment"># service details</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">IAM &amp; Useful Flags</div>
+      <div class="ref-block-body">
+<pre>aws iam get-user           <span class="comment"># show current IAM user</span>
+aws iam list-users         <span class="comment"># list all IAM users</span>
+aws sts get-caller-identity  <span class="comment"># who am I? (account + ARN)</span>
+
+<span class="comment"># Useful global flags</span>
+--region ap-south-1        <span class="comment"># override region per command</span>
+--profile myprofile        <span class="comment"># use named credential profile</span>
+--output json              <span class="comment"># JSON output</span>
+--output table             <span class="comment"># human-readable table</span>
+--query 'key.path'         <span class="comment"># filter output with JMESPath</span>
+--dry-run                  <span class="comment"># test without making changes</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── TERRAFORM ── -->
+  <div class="sm-sec">Terraform</div>
+  <div class="ref-grid">
+
+    <div class="ref-block">
+      <div class="ref-block-head">Core Workflow</div>
+      <div class="ref-block-body">
+<pre>terraform init             <span class="comment"># download providers + modules</span>
+terraform validate         <span class="comment"># check HCL syntax</span>
+terraform fmt              <span class="comment"># auto-format code</span>
+terraform plan             <span class="comment"># preview changes</span>
+terraform plan -out=tfplan <span class="comment"># save plan to file</span>
+terraform apply            <span class="comment"># apply (prompts for confirm)</span>
+terraform apply -auto-approve  <span class="comment"># apply without prompt</span>
+terraform apply tfplan     <span class="comment"># apply saved plan</span>
+terraform destroy          <span class="comment"># destroy all resources</span>
+terraform destroy -target=aws_instance.web  <span class="comment"># destroy one</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">State &amp; Info</div>
+      <div class="ref-block-body">
+<pre>terraform show             <span class="comment"># show current state</span>
+terraform state list       <span class="comment"># list all managed resources</span>
+terraform state show \
+  aws_s3_bucket.main       <span class="comment"># details of one resource</span>
+terraform output           <span class="comment"># show output values</span>
+terraform output bucket_arn  <span class="comment"># specific output</span>
+terraform refresh          <span class="comment"># sync state with real infra</span>
+terraform import aws_instance.web i-xxx  <span class="comment"># import existing</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">HCL — Provider &amp; Resource</div>
+      <div class="ref-block-body">
+<pre><span class="keyword">provider</span> <span class="string">"aws"</span> {
+  region = var.aws_region
+}
+
+<span class="keyword">resource</span> <span class="string">"aws_s3_bucket"</span> <span class="string">"main"</span> {
+  bucket = var.bucket_name
+  tags = {
+    Environment = var.env
+    Project     = <span class="string">"ndfi-devops"</span>
+  }
+}
+
+<span class="keyword">resource</span> <span class="string">"aws_instance"</span> <span class="string">"web"</span> {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = <span class="string">"t2.micro"</span>
+  vpc_security_group_ids = [aws_security_group.web.id]
+}</pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">HCL — Variables &amp; Outputs</div>
+      <div class="ref-block-body">
+<pre><span class="keyword">variable</span> <span class="string">"bucket_name"</span> {
+  type        = string
+  description = <span class="string">"Name of the S3 bucket"</span>
+  default     = <span class="string">"ndfi-assets"</span>
+}
+
+<span class="keyword">variable</span> <span class="string">"env"</span> {
+  type    = string
+  validation {
+    condition     = contains([<span class="string">"dev"</span>,<span class="string">"prod"</span>], var.env)
+    error_message = <span class="string">"Must be dev or prod."</span>
+  }
+}
+
+<span class="keyword">output</span> <span class="string">"bucket_arn"</span> {
+  value       = aws_s3_bucket.main.arn
+  description = <span class="string">"ARN of the created bucket"</span>
+}</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── KUBERNETES ── -->
+  <div class="sm-sec">Kubernetes (kubectl)</div>
+  <div class="ref-grid">
+
+    <div class="ref-block">
+      <div class="ref-block-head">Get &amp; Describe Resources</div>
+      <div class="ref-block-body">
+<pre>kubectl get pods                    <span class="comment"># list pods (default namespace)</span>
+kubectl get pods -n kube-system     <span class="comment"># specific namespace</span>
+kubectl get pods -A                 <span class="comment"># all namespaces</span>
+kubectl get svc                     <span class="comment"># list services</span>
+kubectl get deployments             <span class="comment"># list deployments</span>
+kubectl get nodes                   <span class="comment"># list cluster nodes</span>
+kubectl get all                     <span class="comment"># all resource types</span>
+kubectl describe pod pod-name       <span class="comment"># detailed pod info</span>
+kubectl describe node node-name     <span class="comment"># node details + conditions</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Deploy &amp; Scale</div>
+      <div class="ref-block-body">
+<pre>kubectl apply -f manifest.yaml      <span class="comment"># create / update resources</span>
+kubectl apply -f k8s/               <span class="comment"># apply whole directory</span>
+kubectl delete -f manifest.yaml     <span class="comment"># delete resources from file</span>
+kubectl delete pod pod-name         <span class="comment"># delete a pod (restarts!)</span>
+kubectl scale deployment app \
+  --replicas=3                      <span class="comment"># scale deployment</span>
+kubectl rollout restart \
+  deployment/app                    <span class="comment"># rolling restart</span>
+kubectl rollout status \
+  deployment/app                    <span class="comment"># check rollout progress</span>
+kubectl rollout undo deployment/app <span class="comment"># rollback to previous</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Debug &amp; Logs</div>
+      <div class="ref-block-body">
+<pre>kubectl logs pod-name               <span class="comment"># pod logs</span>
+kubectl logs -f pod-name            <span class="comment"># follow logs live</span>
+kubectl logs pod-name -c container  <span class="comment"># multi-container pod</span>
+kubectl exec -it pod-name -- sh     <span class="comment"># shell into pod</span>
+kubectl port-forward \
+  svc/app 8080:80                   <span class="comment"># forward service port locally</span>
+kubectl get events \
+  --sort-by='.lastTimestamp'        <span class="comment"># cluster events</span>
+kubectl top pods                    <span class="comment"># CPU + memory per pod</span>
+kubectl top nodes                   <span class="comment"># CPU + memory per node</span></pre>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-block-head">Manifest — Deployment + Service</div>
+      <div class="ref-block-body">
+<pre><span class="keyword">apiVersion</span>: apps/v1
+<span class="keyword">kind</span>: Deployment
+<span class="keyword">metadata</span>:
+  name: api
+<span class="keyword">spec</span>:
+  replicas: <span class="number">2</span>
+  selector:
+    matchLabels: { app: api }
+  template:
+    metadata:
+      labels: { app: api }
+    spec:
+      containers:
+      - name: api
+        image: &lt;ecr-url&gt;/api:latest
+        ports: [{containerPort: <span class="number">3000</span>}]
+---
+<span class="keyword">apiVersion</span>: v1
+<span class="keyword">kind</span>: Service
+<span class="keyword">metadata</span>: { name: api }
+<span class="keyword">spec</span>:
+  selector: { app: api }
+  ports: [{port: <span class="number">80</span>, targetPort: <span class="number">3000</span>}]</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── GITHUB ACTIONS ── -->
+  <div class="sm-sec">GitHub Actions — CI/CD Snippet</div>
+  <div class="ref-grid">
+    <div class="ref-block" style="grid-column:1/-1;">
+      <div class="ref-block-head">Complete: Test → Build → Push to ECR → Deploy to EC2</div>
+      <div class="ref-block-body">
+<pre><span class="comment"># .github/workflows/deploy.yml</span>
+<span class="keyword">name</span>: Deploy
+<span class="keyword">on</span>:
+  push:
+    branches: [main]
+
+<span class="keyword">jobs</span>:
+  deploy:
+    <span class="keyword">runs-on</span>: ubuntu-latest
+    <span class="keyword">steps</span>:
+      - <span class="keyword">uses</span>: actions/checkout@v4
+
+      - <span class="keyword">name</span>: Setup Node
+        <span class="keyword">uses</span>: actions/setup-node@v4
+        <span class="keyword">with</span>: { node-version: <span class="string">'20'</span> }
+
+      - <span class="keyword">name</span>: Test
+        <span class="keyword">run</span>: npm ci &amp;&amp; npm test
+
+      - <span class="keyword">name</span>: Configure AWS credentials
+        <span class="keyword">uses</span>: aws-actions/configure-aws-credentials@v4
+        <span class="keyword">with</span>:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - <span class="keyword">name</span>: Login to ECR
+        <span class="keyword">id</span>: login-ecr
+        <span class="keyword">uses</span>: aws-actions/amazon-ecr-login@v2
+
+      - <span class="keyword">name</span>: Build and push image
+        <span class="keyword">run</span>: |
+          IMAGE=${{ steps.login-ecr.outputs.registry }}/myapp:${{ github.sha }}
+          docker build -t $IMAGE .
+          docker push $IMAGE
+          echo "IMAGE=$IMAGE" &gt;&gt; $GITHUB_ENV
+
+      - <span class="keyword">name</span>: Deploy to EC2
+        <span class="keyword">run</span>: |
+          echo "${{ secrets.EC2_SSH_KEY }}" &gt; key.pem
+          chmod 600 key.pem
+          ssh -i key.pem -o StrictHostKeyChecking=no \
+            ec2-user@${{ secrets.EC2_HOST }} \
+            "docker pull $IMAGE &amp;&amp; docker stop app; docker rm app; \
+             docker run -d --name app -p 80:3000 $IMAGE"</pre>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.sm-page -->
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Quick Reference &nbsp;·&nbsp; Batch 2026–27</footer>
+
+</body>
+</html>

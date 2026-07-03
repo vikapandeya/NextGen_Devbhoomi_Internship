@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps & Cloud — Concept Notes (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .analogy-box{background:linear-gradient(135deg,#FDF6E3,#F5E6C0);border:1px solid var(--gold-light);border-left:4px solid var(--gold);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+  .analogy-box strong{color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">📖 Concept Notes — Beginner Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; CONCEPT NOTES — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate ↗</a>
+    <a href="lab_guide_beginner.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero beg">
+    <div class="lh-icon">⚙️</div>
+    <h1>Beginner Level — DevOps &amp; Cloud Concept Notes</h1>
+    <p class="lh-sub">4 weeks: Linux fundamentals, Git version control, networking basics, and an introduction to cloud computing. These are the bedrock skills every DevOps engineer builds on.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Weeks</span>
+      <span class="lh-pill">Linux · Git · Networking · Cloud Intro</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card"><h4>What You'll Learn</h4><ul><li>Linux command line basics</li><li>File permissions &amp; processes</li><li>Git branching strategies</li><li>TCP/IP and DNS fundamentals</li></ul></div>
+    <div class="info-card"><h4>Tools Used</h4><ul><li>Ubuntu (WSL or VM)</li><li>Git + GitHub</li><li>curl, ping, nslookup</li><li>AWS Free Tier (signup)</li></ul></div>
+    <div class="info-card"><h4>Learning Approach</h4><ul><li>Use terminal daily</li><li>Practice each command</li><li>Build muscle memory</li><li>Screenshot every task</li></ul></div>
+    <div class="info-card"><h4>End Goal</h4><ul><li>Comfortable in Linux terminal</li><li>Git workflow fluency</li><li>Basic network knowledge</li><li>AWS account configured</li></ul></div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="sm-sec">Week 1 — Linux Command Line Fundamentals</div>
+  <div class="week-block open" id="w1">
+    <div class="week-head" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <div class="week-head-text"><h3>Linux Terminal — Navigate, Files, Permissions</h3><p>bash · ls · cd · chmod · sudo · man</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> Linux is like knowing how to drive a manual (stick shift) car. Most servers in the world run Linux, and knowing the terminal is the "manual gearbox" of DevOps — more powerful, more precise, and required for any serious infrastructure work.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why Linux for DevOps?</h4>
+          <ul>
+            <li>90%+ of cloud servers run Linux</li>
+            <li>All Docker containers are Linux-based</li>
+            <li>Kubernetes nodes run Linux</li>
+            <li>Free and open source</li>
+            <li>More control than GUI tools</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Navigation Commands</h4>
+          <ul>
+            <li><code>pwd</code> — print current directory</li>
+            <li><code>ls -la</code> — list all files with details</li>
+            <li><code>cd /path</code> — change directory</li>
+            <li><code>cd ..</code> — go up one level</li>
+            <li><code>cd ~</code> — go to home directory</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>File Operations</h4>
+          <ul>
+            <li><code>mkdir foldername</code> — create directory</li>
+            <li><code>touch file.txt</code> — create empty file</li>
+            <li><code>cp source dest</code> — copy file</li>
+            <li><code>mv old new</code> — move or rename</li>
+            <li><code>rm file.txt</code> — delete (permanent!)</li>
+            <li><code>cat file.txt</code> — display file content</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>File Permissions</h4>
+          <ul>
+            <li><code>chmod 755 script.sh</code> — rwxr-xr-x</li>
+            <li>r=4, w=2, x=1 (owner/group/others)</li>
+            <li><code>chmod +x file</code> — make executable</li>
+            <li><code>sudo command</code> — run as superuser</li>
+            <li><code>chown user:group file</code> — change owner</li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment"># Common Linux commands in practice</span>
+pwd                         # /home/ubuntu
+ls -la /etc                 # list /etc with permissions
+mkdir -p projects/myapp     # create nested directories
+cat /etc/os-release         # see Linux version
+grep "error" /var/log/syslog  # search in log file
+tail -f /var/log/nginx/access.log  # watch live log
+
+<span class="comment"># Process management</span>
+ps aux                      # list all processes
+ps aux | grep nginx         # filter for nginx
+kill 1234                   # kill process by PID
+top                         # live process monitor
+htop                        # better version of top</pre>
+      <div class="key-takeaway">
+        <h4>Week 1 Key Takeaways</h4>
+        <ul>
+          <li>The terminal is not scary — it's just a more powerful way to work with files</li>
+          <li><code>sudo</code> = administrator mode; never run as root by default on production servers</li>
+          <li><code>man commandname</code> shows the manual for any command — use it freely</li>
+          <li>Practice: do all your file operations from terminal for the rest of this week, not GUI</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block" id="w2">
+    <div class="week-head" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <div class="week-head-text"><h3>Git — Version Control &amp; Branching</h3><p>Commit history · branches · merge · pull requests</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> Git is like Google Docs' version history, but for code. Every save (commit) is a snapshot you can return to. Branches are like parallel "what if" versions that can later be merged together. Teams of 1000 engineers collaborate through Git without stepping on each other's code.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Core Git Concepts</h4>
+          <ul>
+            <li>Repository: folder tracked by Git</li>
+            <li>Commit: a saved snapshot of your code</li>
+            <li>Branch: an independent line of development</li>
+            <li>Remote: the copy on GitHub/GitLab</li>
+            <li>HEAD: the commit you're currently on</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Git Workflow (Feature Branch)</h4>
+          <ul>
+            <li><code>git checkout -b feature/login</code></li>
+            <li>Make changes, write code</li>
+            <li><code>git add . &amp;&amp; git commit -m "Add login"</code></li>
+            <li><code>git push origin feature/login</code></li>
+            <li>Open Pull Request on GitHub</li>
+            <li>Review → Merge → Delete branch</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Commit Best Practices</h4>
+          <ul>
+            <li>Present tense: "Add feature" not "Added feature"</li>
+            <li>Short first line (&lt;72 chars)</li>
+            <li>One commit per logical change</li>
+            <li>Never commit .env files or secrets</li>
+            <li>Commit often — small commits are safer</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Resolving Merge Conflicts</h4>
+          <ul>
+            <li>Conflict = two branches changed the same line</li>
+            <li>Git marks conflicts with <code>&lt;&lt;&lt;&lt;&lt;</code> and <code>&gt;&gt;&gt;&gt;&gt;</code></li>
+            <li>Edit the file to keep what you want</li>
+            <li><code>git add file.txt</code> then <code>git commit</code></li>
+            <li>Prevention: pull often, work on separate files</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-takeaway">
+        <h4>Week 2 Key Takeaways</h4>
+        <ul>
+          <li>Always branch from <code>main</code> — never commit directly to <code>main</code> on team projects</li>
+          <li><code>git pull</code> before you start any new work — always start from latest code</li>
+          <li>Write meaningful commit messages — your future self will thank you</li>
+          <li>Never use <code>git push --force</code> on shared branches — it overwrites others' work</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block" id="w3">
+    <div class="week-head" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <div class="week-head-text"><h3>Networking Fundamentals</h3><p>TCP/IP · DNS · HTTP · Ports · Load balancing</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>IP Addresses &amp; Subnets</h4>
+          <ul>
+            <li>IP address: unique identifier for a device</li>
+            <li>IPv4: 192.168.1.1 (4 octets, 0–255)</li>
+            <li>IPv6: longer, for modern internet</li>
+            <li>Private: 192.168.x.x, 10.x.x.x (not internet)</li>
+            <li>Public: visible on the internet</li>
+            <li>Subnet mask: defines network size</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>DNS</h4>
+          <ul>
+            <li>DNS = Domain Name System</li>
+            <li>Translates domain names to IP addresses</li>
+            <li>google.com → 142.250.x.x</li>
+            <li>A record: domain → IPv4 address</li>
+            <li>CNAME: domain → another domain</li>
+            <li><code>nslookup google.com</code> to test DNS</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Common Ports</h4>
+          <ul>
+            <li>22 — SSH (secure remote login)</li>
+            <li>80 — HTTP (web, unencrypted)</li>
+            <li>443 — HTTPS (web, encrypted)</li>
+            <li>3306 — MySQL database</li>
+            <li>5432 — PostgreSQL database</li>
+            <li>6379 — Redis cache</li>
+            <li>3000/8080 — common app dev ports</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>HTTP Basics</h4>
+          <ul>
+            <li>Stateless request-response protocol</li>
+            <li>Client sends request → server sends response</li>
+            <li>Headers carry metadata</li>
+            <li>HTTPS = HTTP + TLS encryption</li>
+            <li>Status codes: 2xx=success, 4xx=client error, 5xx=server error</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-takeaway">
+        <h4>Week 3 Key Takeaways</h4>
+        <ul>
+          <li>Everything on the internet is just computers sending packets over TCP/IP</li>
+          <li>Memorize common port numbers — you'll see them in firewalls, security groups, and config files</li>
+          <li>When a website loads slowly, DNS resolution is often the culprit — use <code>dig</code> to diagnose</li>
+          <li>HTTP = unencrypted. Never serve production apps on HTTP — always HTTPS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-block" id="w4">
+    <div class="week-head" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <div class="week-head-text"><h3>Cloud Computing Introduction</h3><p>IaaS · PaaS · SaaS · AWS core services · Cloud concepts</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> Cloud computing is like electricity from the grid. You don't build a power plant — you plug in and pay for what you use. Before the cloud, companies built their own data centers (their own power plants). Now they rent compute, storage, and networking on demand.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Service Models</h4>
+          <ul>
+            <li><strong>IaaS</strong> (Infrastructure): raw VMs, storage, networking. You manage OS up. Examples: AWS EC2, GCP Compute Engine</li>
+            <li><strong>PaaS</strong> (Platform): managed runtime. You manage code only. Examples: Heroku, Render, Railway</li>
+            <li><strong>SaaS</strong> (Software): ready-made software. Examples: Gmail, Slack, GitHub</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Key Cloud Concepts</h4>
+          <ul>
+            <li>Region: geographic location of data centers</li>
+            <li>Availability Zone (AZ): isolated data centers in a region</li>
+            <li>Elasticity: scale up/down on demand</li>
+            <li>Pay-as-you-go: only pay for what you use</li>
+            <li>Managed services: AWS handles maintenance</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>AWS Core Services (Beginner)</h4>
+          <ul>
+            <li><strong>EC2</strong>: virtual server (compute)</li>
+            <li><strong>S3</strong>: object storage (files, images)</li>
+            <li><strong>RDS</strong>: managed relational database</li>
+            <li><strong>IAM</strong>: user permissions management</li>
+            <li><strong>VPC</strong>: private network in AWS</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>AWS Free Tier</h4>
+          <ul>
+            <li>EC2 t2.micro: 750 hours/month free</li>
+            <li>S3: 5 GB storage free</li>
+            <li>RDS: 750 hours/month free</li>
+            <li>Lambda: 1 million requests/month free</li>
+            <li>Free for 12 months from signup</li>
+            <li>Set billing alerts immediately!</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-takeaway">
+        <h4>Week 4 Key Takeaways</h4>
+        <ul>
+          <li>Create your AWS account immediately and set a billing alarm at $5 — unexpected charges are common for beginners</li>
+          <li>Never commit AWS access keys to GitHub — use IAM roles and environment variables</li>
+          <li>The Big 3 cloud providers are AWS (largest), Azure (Microsoft), GCP (Google) — AWS is most in-demand in India</li>
+          <li>Start with the simplest services (S3 for storage, EC2 for compute) before advanced ones</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="../index.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Study Portal</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_beginner.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+      <a href="concept_notes_intermediate.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Intermediate →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Concept Notes — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w1');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

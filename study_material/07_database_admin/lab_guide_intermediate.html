@@ -1,0 +1,743 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Guide — Intermediate | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">🔬 Lab Guide — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Labs</a>
+    <a href="lab_guide_advanced.html">Advanced Labs</a>
+    <a href="concept_notes_intermediate.html">Concept Notes</a>
+    <a href="project_briefs.html">Projects</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Intermediate Level</h2>
+      <p>Five hands-on labs covering library system design, complex analytics, stored procedures, query optimisation, and PostgreSQL with JSON/window functions.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">ER Design</span>
+      <span class="pill">Window Functions</span>
+      <span class="pill">Stored Procedures</span>
+      <span class="pill">EXPLAIN Optimisation</span>
+      <span class="pill">PostgreSQL JSONB</span>
+    </div>
+  </div>
+
+  <!-- Lab 1 -->
+  <div class="week-block int" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <span class="week-num wn-int">Lab 1</span>
+      <h3>Database Design — Library Management System (Week 5)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Design a full library management system from ER diagram through to complex analytical queries.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Design the schema</strong><br>
+            Key design decisions:
+            <ul>
+              <li>Use <code>VARCHAR(20)</code> for ISBN — not INT — because ISBNs contain dashes (978-0-596-51774-8)</li>
+              <li><code>fine_amount</code> is NULL until book is returned (calculated at return time)</li>
+              <li><code>returned_at</code> is NULL for active loans</li>
+            </ul>
+            <pre><code>CREATE DATABASE library_db;
+USE library_db;
+
+CREATE TABLE books (
+  isbn            VARCHAR(20) PRIMARY KEY,
+  title           VARCHAR(200) NOT NULL,
+  author          VARCHAR(100) NOT NULL,
+  genre           VARCHAR(50),
+  total_copies    INT NOT NULL DEFAULT 1,
+  available_copies INT NOT NULL DEFAULT 1,
+  CHECK (available_copies >= 0),
+  CHECK (available_copies <= total_copies)
+);
+
+CREATE TABLE members (
+  id              INT PRIMARY KEY AUTO_INCREMENT,
+  name            VARCHAR(100) NOT NULL,
+  email           VARCHAR(150) UNIQUE,
+  phone           VARCHAR(15),
+  membership_type ENUM('student','faculty','public') DEFAULT 'student',
+  expiry_date     DATE NOT NULL
+);
+
+CREATE TABLE loans (
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  book_isbn   VARCHAR(20) NOT NULL,
+  member_id   INT NOT NULL,
+  loaned_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  due_date    DATE NOT NULL,
+  returned_at DATETIME,
+  fine_amount DECIMAL(8,2),
+  FOREIGN KEY (book_isbn)  REFERENCES books(isbn),
+  FOREIGN KEY (member_id)  REFERENCES members(id),
+  CHECK (returned_at IS NULL OR returned_at >= loaned_at)
+);</code></pre>
+          </li>
+          <li>
+            <strong>Insert sample data</strong><br>
+            <pre><code>INSERT INTO books VALUES
+  ('978-0-7432-7356-5', 'The Pragmatic Programmer', 'Andrew Hunt', 'Technology', 3, 2),
+  ('978-0-13-468599-1', 'Clean Code', 'Robert C. Martin', 'Technology', 2, 0),
+  ('978-0-14-028329-7', 'The Alchemist', 'Paulo Coelho', 'Fiction', 5, 3),
+  ('978-0-06-112008-4', 'To Kill a Mockingbird', 'Harper Lee', 'Fiction', 2, 2);
+
+INSERT INTO members (name, email, membership_type, expiry_date) VALUES
+  ('Priya Sharma',  'priya@lib.com',   'student',  '2025-03-31'),
+  ('Rahul Verma',   'rahul@lib.com',   'faculty',  '2025-12-31'),
+  ('Ankit Singh',   'ankit@lib.com',   'student',  '2024-03-31'),
+  ('Meena Kumari',  'meena@lib.com',   'public',   '2024-09-30');
+
+INSERT INTO loans (book_isbn, member_id, loaned_at, due_date, returned_at, fine_amount) VALUES
+  ('978-0-7432-7356-5', 1, '2024-01-10', '2024-01-24', '2024-01-23', NULL),
+  ('978-0-13-468599-1', 2, '2024-01-05', '2024-01-19', NULL, NULL),
+  ('978-0-13-468599-1', 3, '2024-01-08', '2024-01-22', NULL, NULL),
+  ('978-0-14-028329-7', 1, '2024-01-15', '2024-01-29', '2024-02-05', 21.00);</code></pre>
+          </li>
+          <li>
+            <strong>Write analytical queries</strong><br>
+            <pre><code>-- 1. Overdue loans (not returned past due date)
+SELECT m.name, b.title, l.due_date,
+  DATEDIFF(NOW(), l.due_date) AS days_overdue
+FROM loans l
+JOIN members m ON l.member_id = m.id
+JOIN books   b ON l.book_isbn = b.isbn
+WHERE l.returned_at IS NULL AND l.due_date < CURDATE()
+ORDER BY days_overdue DESC;
+
+-- 2. Most borrowed books this month
+SELECT b.title, COUNT(l.id) AS loan_count
+FROM loans l
+JOIN books b ON l.book_isbn = b.isbn
+WHERE l.loaned_at >= DATE_FORMAT(NOW(), '%Y-%m-01')
+GROUP BY b.isbn, b.title
+ORDER BY loan_count DESC;
+
+-- 3. Members with outstanding fines (returned late)
+SELECT m.name, SUM(l.fine_amount) AS total_fines
+FROM loans l
+JOIN members m ON l.member_id = m.id
+WHERE l.fine_amount > 0
+GROUP BY m.id, m.name
+ORDER BY total_fines DESC;
+
+-- 4. Books with 0 available copies (fully loaned out)
+SELECT isbn, title, total_copies
+FROM books
+WHERE available_copies = 0;
+
+-- 5. Member borrowing history
+SELECT m.name, b.title, l.loaned_at, l.due_date,
+  COALESCE(CAST(l.returned_at AS CHAR), 'Not returned') AS returned_at,
+  COALESCE(l.fine_amount, 0) AS fine
+FROM loans l
+JOIN members m ON l.member_id = m.id
+JOIN books   b ON l.book_isbn = b.isbn
+WHERE m.id = 1
+ORDER BY l.loaned_at DESC;</code></pre>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 2 -->
+  <div class="week-block int" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <span class="week-num wn-int">Lab 2</span>
+      <h3>Complex SQL — Analytics Queries (Weeks 5–6)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Write 10 analytical SQL queries on the e-commerce schema using window functions, CTEs, and advanced aggregations.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>10 Analytical Queries</h4>
+        <pre><code>USE it_university;  -- switch back to e-commerce DB
+
+-- 1. Monthly revenue trend for the past 12 months
+SELECT
+  DATE_FORMAT(created_at, '%Y-%m') AS month,
+  COUNT(*)       AS orders,
+  SUM(total)     AS revenue
+FROM orders
+WHERE status = 'delivered'
+  AND created_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+ORDER BY month;
+
+-- 2. Week-over-week order growth using LAG()
+-- (Requires MySQL 8.0+ for window functions)
+WITH weekly AS (
+  SELECT
+    YEARWEEK(created_at) AS week,
+    COUNT(*) AS order_count
+  FROM orders
+  GROUP BY YEARWEEK(created_at)
+)
+SELECT week, order_count,
+  LAG(order_count) OVER (ORDER BY week) AS prev_week,
+  order_count - LAG(order_count) OVER (ORDER BY week) AS growth
+FROM weekly;
+
+-- 3. Top 5 products by revenue with running total
+SELECT
+  p.name,
+  SUM(oi.quantity * oi.unit_price) AS product_revenue,
+  SUM(SUM(oi.quantity * oi.unit_price))
+    OVER (ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+          ROWS UNBOUNDED PRECEDING) AS running_total
+FROM order_items oi
+JOIN products p ON oi.product_id = p.id
+GROUP BY p.id, p.name
+ORDER BY product_revenue DESC
+LIMIT 5;
+
+-- 4. Customers ranked by lifetime value
+SELECT
+  c.name,
+  SUM(o.total) AS lifetime_value,
+  RANK() OVER (ORDER BY SUM(o.total) DESC) AS ranking
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name;
+
+-- 5. Average order value by status
+SELECT status, COUNT(*) AS orders, ROUND(AVG(total), 2) AS avg_value
+FROM orders
+GROUP BY status
+ORDER BY avg_value DESC;
+
+-- 6. Product categories contributing >10% of total revenue
+WITH total AS (SELECT SUM(oi.quantity * oi.unit_price) AS grand_total FROM order_items oi),
+     cat_rev AS (
+       SELECT p.category,
+         SUM(oi.quantity * oi.unit_price) AS cat_revenue
+       FROM order_items oi
+       JOIN products p ON oi.product_id = p.id
+       GROUP BY p.category
+     )
+SELECT cat_rev.category, cat_rev.cat_revenue,
+  ROUND(cat_rev.cat_revenue / total.grand_total * 100, 1) AS pct
+FROM cat_rev, total
+WHERE cat_rev.cat_revenue / total.grand_total > 0.10
+ORDER BY cat_rev.cat_revenue DESC;
+
+-- 7. Customers who bought in their first month but not their second (churn)
+WITH first_order AS (
+  SELECT customer_id, MIN(DATE_FORMAT(created_at,'%Y-%m')) AS first_month
+  FROM orders GROUP BY customer_id
+),
+second_month_orders AS (
+  SELECT DISTINCT o.customer_id
+  FROM orders o
+  JOIN first_order fo ON o.customer_id = fo.customer_id
+  WHERE DATE_FORMAT(o.created_at,'%Y-%m') =
+    DATE_FORMAT(DATE_ADD(STR_TO_DATE(CONCAT(fo.first_month,'-01'),'%Y-%m-%d'),
+    INTERVAL 1 MONTH), '%Y-%m')
+)
+SELECT c.name, fo.first_month
+FROM first_order fo
+JOIN customers c ON fo.customer_id = c.id
+WHERE fo.customer_id NOT IN (SELECT customer_id FROM second_month_orders);
+
+-- 8. Median order value (MySQL has no MEDIAN())
+SET @row_index := -1;
+SELECT AVG(subq.total) AS median_order_value
+FROM (
+  SELECT @row_index := @row_index + 1 AS row_index, total
+  FROM orders ORDER BY total
+) AS subq
+WHERE subq.row_index IN (FLOOR(@row_index / 2), CEIL(@row_index / 2));
+
+-- 9. Recursive CTE: category hierarchy (self-referential)
+CREATE TABLE IF NOT EXISTS categories (
+  id        INT PRIMARY KEY AUTO_INCREMENT,
+  name      VARCHAR(100),
+  parent_id INT,
+  FOREIGN KEY (parent_id) REFERENCES categories(id)
+);
+INSERT INTO categories (id, name, parent_id) VALUES
+  (1, 'Electronics', NULL), (2, 'Computers', 1),
+  (3, 'Laptops', 2), (4, 'Gaming Laptops', 3), (5, 'Mobile', 1);
+
+WITH RECURSIVE cat_tree AS (
+  SELECT id, name, parent_id, 0 AS depth, CAST(name AS CHAR(500)) AS path
+  FROM categories WHERE parent_id IS NULL
+  UNION ALL
+  SELECT c.id, c.name, c.parent_id, ct.depth+1,
+    CONCAT(ct.path, ' > ', c.name)
+  FROM categories c JOIN cat_tree ct ON c.parent_id = ct.id
+)
+SELECT depth, name, path FROM cat_tree ORDER BY path;
+
+-- 10. Order items with % contribution to order total
+SELECT
+  o.id AS order_id,
+  p.name AS product,
+  oi.quantity * oi.unit_price AS item_total,
+  o.total AS order_total,
+  ROUND((oi.quantity * oi.unit_price) / o.total * 100, 1) AS pct_of_order
+FROM order_items oi
+JOIN orders   o ON oi.order_id  = o.id
+JOIN products p ON oi.product_id = p.id
+ORDER BY o.id, item_total DESC;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 3 -->
+  <div class="week-block int" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <span class="week-num wn-int">Lab 3</span>
+      <h3>Stored Procedures &amp; Triggers (Week 8)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Build 3 stored procedures and 2 triggers, then verify their behavior through testing.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Setup: Audit Log Table</h4>
+        <pre><code>CREATE TABLE IF NOT EXISTS audit_log (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  action     VARCHAR(100) NOT NULL,
+  table_name VARCHAR(50),
+  record_id  INT,
+  user_id    INT,
+  details    TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Stored Procedure 1: sp_place_order</h4>
+        <pre><code>DELIMITER //
+CREATE PROCEDURE sp_place_order(
+  IN  p_customer_id INT,
+  IN  p_cart        JSON,      -- [{"product_id":1,"qty":2},{"product_id":3,"qty":1}]
+  OUT p_order_id    INT,
+  OUT p_message     VARCHAR(200)
+)
+BEGIN
+  DECLARE v_total     DECIMAL(10,2) DEFAULT 0;
+  DECLARE v_price     DECIMAL(10,2);
+  DECLARE v_stock     INT;
+  DECLARE v_product   INT;
+  DECLARE v_qty       INT;
+  DECLARE v_idx       INT DEFAULT 0;
+  DECLARE v_count     INT;
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    SET p_order_id = -1;
+    SET p_message  = 'Order failed — rolled back.';
+  END;
+
+  SET v_count = JSON_LENGTH(p_cart);
+  START TRANSACTION;
+
+  -- Validate stock and calculate total
+  WHILE v_idx < v_count DO
+    SET v_product = JSON_UNQUOTE(JSON_EXTRACT(p_cart, CONCAT('$[',v_idx,'].product_id')));
+    SET v_qty     = JSON_UNQUOTE(JSON_EXTRACT(p_cart, CONCAT('$[',v_idx,'].qty')));
+
+    SELECT price, stock INTO v_price, v_stock
+    FROM products WHERE id = v_product FOR UPDATE;
+
+    IF v_stock < v_qty THEN
+      ROLLBACK;
+      SET p_order_id = -1;
+      SET p_message  = CONCAT('Insufficient stock for product ID ', v_product);
+      LEAVE sp;
+    END IF;
+
+    UPDATE products SET stock = stock - v_qty WHERE id = v_product;
+    SET v_total = v_total + (v_price * v_qty);
+    SET v_idx = v_idx + 1;
+  END WHILE;
+
+  -- Create order
+  INSERT INTO orders (customer_id, total, status) VALUES (p_customer_id, v_total, 'pending');
+  SET p_order_id = LAST_INSERT_ID();
+
+  -- Insert order items
+  SET v_idx = 0;
+  WHILE v_idx < v_count DO
+    SET v_product = JSON_UNQUOTE(JSON_EXTRACT(p_cart, CONCAT('$[',v_idx,'].product_id')));
+    SET v_qty     = JSON_UNQUOTE(JSON_EXTRACT(p_cart, CONCAT('$[',v_idx,'].qty')));
+    SELECT price INTO v_price FROM products WHERE id = v_product;
+    INSERT INTO order_items (order_id, product_id, quantity, unit_price)
+    VALUES (p_order_id, v_product, v_qty, v_price);
+    SET v_idx = v_idx + 1;
+  END WHILE;
+
+  COMMIT;
+  SET p_message = CONCAT('Order ', p_order_id, ' placed. Total: ₹', v_total);
+END //
+DELIMITER ;</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Stored Procedure 2: sp_get_customer_summary</h4>
+        <pre><code>DELIMITER //
+CREATE PROCEDURE sp_get_customer_summary(IN p_customer_id INT)
+BEGIN
+  SELECT
+    c.name,
+    c.email,
+    c.city,
+    COUNT(o.id)   AS total_orders,
+    SUM(o.total)  AS lifetime_value,
+    MAX(o.created_at) AS last_order_date
+  FROM customers c
+  LEFT JOIN orders o ON c.id = o.customer_id
+  WHERE c.id = p_customer_id
+  GROUP BY c.id, c.name, c.email, c.city;
+END //
+DELIMITER ;
+
+CALL sp_get_customer_summary(1);</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Trigger 1: Audit Log on Order Insert</h4>
+        <pre><code>DELIMITER //
+CREATE TRIGGER after_order_insert
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+  INSERT INTO audit_log (action, table_name, record_id, details)
+  VALUES (
+    'ORDER_PLACED',
+    'orders',
+    NEW.id,
+    CONCAT('Customer ', NEW.customer_id, ' placed order for ₹', NEW.total)
+  );
+END //
+DELIMITER ;
+
+-- Test: insert an order, check audit_log
+INSERT INTO orders (customer_id, total) VALUES (1, 999.00);
+SELECT * FROM audit_log ORDER BY created_at DESC LIMIT 5;</code></pre>
+      </div>
+      <div class="sm-sec">
+        <h4>Trigger 2: Prevent Deleting Products with Orders</h4>
+        <pre><code>DELIMITER //
+CREATE TRIGGER before_product_delete
+BEFORE DELETE ON products
+FOR EACH ROW
+BEGIN
+  DECLARE v_count INT;
+  SELECT COUNT(*) INTO v_count FROM order_items WHERE product_id = OLD.id;
+  IF v_count > 0 THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'Cannot delete a product that has existing order history';
+  END IF;
+END //
+DELIMITER ;
+
+-- Test: try to delete a product that has orders
+DELETE FROM products WHERE id = 1;
+-- Should get error: Cannot delete a product that has existing order history
+
+-- Delete a product with NO orders — should succeed
+DELETE FROM products WHERE id = 10;  -- pen set (if it has no order items)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 4 -->
+  <div class="week-block int" id="w8">
+    <div class="week-header" onclick="toggleWeek('w8')">
+      <span class="week-num wn-int">Lab 4</span>
+      <h3>EXPLAIN &amp; Query Optimisation (Week 6)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Take 5 deliberately slow queries, diagnose them with EXPLAIN, apply fixes, and measure the improvement.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>5 Slow Queries and Their Fixes</h4>
+        <pre><code>-- =============================================
+-- Problem 1: Function on indexed column
+-- =============================================
+-- ✗ SLOW: YEAR() prevents index use
+EXPLAIN SELECT * FROM orders WHERE YEAR(created_at) = 2024;
+-- type=ALL, key=NULL
+
+-- ✓ FIX: range condition uses index
+CREATE INDEX idx_created ON orders(created_at);
+EXPLAIN SELECT * FROM orders
+WHERE created_at BETWEEN '2024-01-01 00:00:00' AND '2024-12-31 23:59:59';
+-- type=range, key=idx_created
+
+-- =============================================
+-- Problem 2: Leading wildcard LIKE
+-- =============================================
+-- ✗ SLOW: leading % cannot use B-tree index
+EXPLAIN SELECT * FROM customers WHERE email LIKE '%@gmail.com';
+-- type=ALL
+
+-- ✓ FIX: trailing wildcard can use index
+CREATE INDEX idx_email ON customers(email);
+EXPLAIN SELECT * FROM customers WHERE email LIKE 'priya%';
+-- type=range, uses idx_email
+
+-- For suffix search, use FULLTEXT index instead:
+ALTER TABLE customers ADD FULLTEXT INDEX ft_email (email);
+
+-- =============================================
+-- Problem 3: Multi-table JOIN with no FK indexes
+-- =============================================
+EXPLAIN
+SELECT c.name, p.name, oi.quantity
+FROM order_items oi
+JOIN orders   o ON oi.order_id   = o.id
+JOIN customers c ON o.customer_id = c.id
+JOIN products  p ON oi.product_id = p.id;
+-- Without indexes on FK columns: all=ALL on every table
+
+-- ✓ FIX: add indexes on all FK columns
+CREATE INDEX idx_oi_order   ON order_items(order_id);
+CREATE INDEX idx_oi_product ON order_items(product_id);
+CREATE INDEX idx_ord_cust   ON orders(customer_id);
+
+EXPLAIN
+SELECT c.name, p.name, oi.quantity
+FROM order_items oi
+JOIN orders   o ON oi.order_id   = o.id
+JOIN customers c ON o.customer_id = c.id
+JOIN products  p ON oi.product_id = p.id;
+-- Now: ref/eq_ref for all joins
+
+-- =============================================
+-- Problem 4: SELECT * with unnecessary columns
+-- =============================================
+-- ✗ SLOW: fetches all columns, prevents covering index
+EXPLAIN SELECT * FROM customers WHERE city = 'Delhi';
+
+-- ✓ FIX: select only needed columns, create covering index
+CREATE INDEX idx_city_name ON customers(city, name, email);
+EXPLAIN SELECT name, email FROM customers WHERE city = 'Delhi';
+-- Extra column: Using index (covering index — no table lookup!)
+
+-- =============================================
+-- Problem 5: ORDER BY on non-indexed column causing filesort
+-- =============================================
+EXPLAIN SELECT * FROM orders ORDER BY total DESC LIMIT 10;
+-- Extra: Using filesort (sorts entire result in memory/disk — slow)
+
+CREATE INDEX idx_total ON orders(total);
+EXPLAIN SELECT id, customer_id, total FROM orders ORDER BY total DESC LIMIT 10;
+-- Extra: Using index (reads index in order — no sort needed)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab 5 -->
+  <div class="week-block int" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <span class="week-num wn-int">Lab 5</span>
+      <h3>PostgreSQL JSON &amp; Window Functions (Week 8 Advanced Preview)</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Objective</h4>
+        <p>Set up PostgreSQL, create a blog database with JSONB and array columns, then write JSON queries and window function queries.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Install PostgreSQL + pgAdmin 4</strong><br>
+            Windows: download PostgreSQL installer from postgresql.org. During setup: password for postgres user, port 5432. pgAdmin 4 is included. Open pgAdmin → right-click Databases → Create → Database → name: blog_db.
+          </li>
+          <li>
+            <strong>Create the blog schema</strong><br>
+            <pre><code>-- In pgAdmin query tool or psql:
+CREATE TABLE authors (
+  id        SERIAL PRIMARY KEY,
+  name      TEXT NOT NULL,
+  email     TEXT UNIQUE
+);
+
+CREATE TABLE posts (
+  id          SERIAL PRIMARY KEY,
+  title       TEXT NOT NULL,
+  body        TEXT,
+  tags        TEXT[],          -- native PostgreSQL array
+  meta        JSONB,           -- flexible metadata
+  created_at  TIMESTAMPTZ DEFAULT NOW(),
+  author_id   INT REFERENCES authors(id)
+);</code></pre>
+          </li>
+          <li>
+            <strong>Insert 10 posts with real JSON and arrays</strong><br>
+            <pre><code>INSERT INTO authors (name, email) VALUES
+  ('Priya Sharma', 'priya@blog.com'),
+  ('Rahul Verma',  'rahul@blog.com');
+
+INSERT INTO posts (title, tags, meta, author_id) VALUES
+  ('Getting Started with PostgreSQL',
+   ARRAY['database','postgresql','beginner'],
+   '{"views": 1250, "featured": true, "category": "database"}',
+   1),
+  ('Advanced Indexing Strategies',
+   ARRAY['database','indexing','performance'],
+   '{"views": 890, "featured": false, "category": "database"}',
+   1),
+  ('Building APIs with Node.js',
+   ARRAY['nodejs','api','backend'],
+   '{"views": 2340, "featured": true, "category": "backend"}',
+   2),
+  ('React Hooks Deep Dive',
+   ARRAY['react','frontend','javascript'],
+   '{"views": 3100, "featured": true, "category": "frontend"}',
+   2),
+  ('Docker for Developers',
+   ARRAY['docker','devops','containers'],
+   '{"views": 445, "featured": false, "category": "devops"}',
+   1),
+  ('PostgreSQL Window Functions',
+   ARRAY['database','postgresql','analytics'],
+   '{"views": 678, "featured": false, "category": "database"}',
+   1),
+  ('CSS Grid Layout',
+   ARRAY['css','frontend','design'],
+   '{"views": 521, "featured": false, "category": "frontend"}',
+   2),
+  ('Kubernetes Basics',
+   ARRAY['kubernetes','devops','cloud'],
+   '{"views": 234, "featured": false, "category": "devops"}',
+   2),
+  ('MongoDB vs PostgreSQL',
+   ARRAY['database','mongodb','postgresql'],
+   '{"views": 1876, "featured": true, "category": "database"}',
+   1),
+  ('TypeScript Best Practices',
+   ARRAY['typescript','javascript','frontend'],
+   '{"views": 1423, "featured": false, "category": "frontend"}',
+   2);</code></pre>
+          </li>
+          <li>
+            <strong>JSON queries</strong><br>
+            <pre><code>-- Filter by JSONB category
+SELECT title, meta->>'category' AS category
+FROM posts
+WHERE meta->>'category' = 'database';
+
+-- Filter by JSONB featured flag
+SELECT title FROM posts WHERE meta @> '{"featured": true}';
+
+-- Sort by views (cast text to int)
+SELECT title, (meta->>'views')::int AS views
+FROM posts
+ORDER BY views DESC;
+
+-- GIN index for faster JSONB queries
+CREATE INDEX idx_meta_gin ON posts USING GIN(meta);
+
+-- Verify index is used
+EXPLAIN SELECT * FROM posts WHERE meta @> '{"category": "database"}';</code></pre>
+          </li>
+          <li>
+            <strong>Array queries</strong><br>
+            <pre><code>-- Posts with 'nodejs' tag
+SELECT title FROM posts WHERE 'nodejs' = ANY(tags);
+
+-- Posts with ALL of these tags
+SELECT title FROM posts WHERE tags @> ARRAY['database','postgresql'];
+
+-- Expand tags into individual rows
+SELECT id, title, unnest(tags) AS tag FROM posts ORDER BY id, tag;</code></pre>
+          </li>
+          <li>
+            <strong>Window functions</strong><br>
+            <pre><code>-- Rank posts by views per category
+SELECT
+  title,
+  meta->>'category' AS category,
+  (meta->>'views')::int AS views,
+  RANK() OVER (
+    PARTITION BY meta->>'category'
+    ORDER BY (meta->>'views')::int DESC
+  ) AS rank_in_category
+FROM posts;
+
+-- Previous post's view count with LAG()
+SELECT
+  title,
+  created_at,
+  (meta->>'views')::int AS views,
+  LAG((meta->>'views')::int) OVER (ORDER BY created_at) AS prev_views
+FROM posts
+ORDER BY created_at;
+
+-- Cumulative views over time
+SELECT
+  title,
+  created_at,
+  (meta->>'views')::int AS views,
+  SUM((meta->>'views')::int) OVER (ORDER BY created_at) AS cumulative_views
+FROM posts
+ORDER BY created_at;</code></pre>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w5');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept Notes — Advanced | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">📖 Concept Notes — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; CONCEPT NOTES — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner</a>
+    <a href="concept_notes_intermediate.html">Intermediate</a>
+    <a href="lab_guide_advanced.html">Lab Guide</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">🗄️</div>
+    <div class="lh-text">
+      <h2>Concept Notes — Advanced Level</h2>
+      <p>PostgreSQL advanced features, DBA operations, NoSQL databases, and modern cloud database patterns for production systems.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">PostgreSQL JSON/Window Functions</span>
+      <span class="pill">DBA Operations</span>
+      <span class="pill">NoSQL</span>
+      <span class="pill">Cloud Databases</span>
+    </div>
+  </div>
+
+  <!-- W9 -->
+  <div class="week-block adv" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <span class="week-num wn-adv">Week 9</span>
+      <h3>PostgreSQL Advanced Features</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Why PostgreSQL over MySQL?</h4>
+        <ul>
+          <li>Full ACID compliance with MVCC (Multi-Version Concurrency Control) — readers don't block writers</li>
+          <li>Rich data types: arrays, JSONB, geometric, network address, ranges, composite types</li>
+          <li>More powerful query planner (parallel queries, partial indexes, expression indexes)</li>
+          <li>Extension ecosystem: PostGIS (geospatial), pgvector (AI embeddings), timescaledb</li>
+          <li>Better standards compliance (ANSI SQL)</li>
+          <li>Default in cloud managed services: Supabase, Neon, Railway use PostgreSQL</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>JSON and JSONB Columns</h4>
+        <pre><code>-- JSON stores exact text; JSONB stores binary (faster queries, supports GIN index)
+-- Use JSONB for querying; JSON only if you need to preserve key order/whitespace
+CREATE TABLE products (
+  id     SERIAL PRIMARY KEY,
+  name   TEXT,
+  meta   JSONB    -- flexible attributes: {"weight": "1kg", "color": "red", "tags": ["sale"]}
+);
+
+-- Extract value as JSON
+SELECT meta->'color' FROM products WHERE id = 1;
+-- Extracts: "red" (with quotes)
+
+-- Extract value as text
+SELECT meta->>'color' FROM products WHERE id = 1;
+-- Extracts: red (without quotes)
+
+-- Nested extraction
+SELECT meta->'dimensions'->>'height' FROM products;
+
+-- Filter by JSONB value (containment operator @>)
+SELECT * FROM products WHERE meta @> '{"color": "red"}';
+
+-- GIN index for fast JSONB queries
+CREATE INDEX idx_meta ON products USING GIN (meta);
+
+-- Update a JSONB field
+UPDATE products
+SET meta = jsonb_set(meta, '{color}', '"blue"')
+WHERE id = 1;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Array Columns</h4>
+        <pre><code>CREATE TABLE posts (
+  id    SERIAL PRIMARY KEY,
+  title TEXT,
+  tags  TEXT[]  -- native array type
+);
+
+INSERT INTO posts (title, tags) VALUES
+  ('Intro to PostgreSQL', ARRAY['database', 'postgresql', 'beginner']),
+  ('Advanced Indexing',   '{database,indexing,performance}');
+
+-- Query: posts with 'database' tag
+SELECT * FROM posts WHERE 'database' = ANY(tags);
+
+-- Query: posts with ALL of these tags
+SELECT * FROM posts WHERE tags @> ARRAY['database','postgresql'];
+
+-- Expand array into rows
+SELECT id, unnest(tags) AS tag FROM posts;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Window Functions</h4>
+        <pre><code>-- ROW_NUMBER, RANK, DENSE_RANK: ranking within partitions
+SELECT
+  name,
+  department,
+  salary,
+  ROW_NUMBER()  OVER (PARTITION BY department ORDER BY salary DESC) AS row_num,
+  RANK()        OVER (PARTITION BY department ORDER BY salary DESC) AS rank,
+  DENSE_RANK()  OVER (PARTITION BY department ORDER BY salary DESC) AS dense_rank
+FROM employees;
+-- ROW_NUMBER: 1,2,3,4 always unique
+-- RANK:       1,2,2,4 (gap after tie)
+-- DENSE_RANK: 1,2,2,3 (no gap after tie)
+
+-- LAG / LEAD: access previous/next row's value
+SELECT
+  order_date,
+  revenue,
+  LAG(revenue) OVER (ORDER BY order_date) AS prev_revenue,
+  revenue - LAG(revenue) OVER (ORDER BY order_date) AS change
+FROM daily_sales;
+
+-- Running total with SUM() OVER
+SELECT
+  order_date,
+  revenue,
+  SUM(revenue) OVER (ORDER BY order_date ROWS UNBOUNDED PRECEDING) AS running_total
+FROM daily_sales;
+
+-- NTILE: divide into N buckets (quartiles, deciles)
+SELECT name, score, NTILE(4) OVER (ORDER BY score DESC) AS quartile
+FROM exam_results;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>CTEs (Common Table Expressions)</h4>
+        <pre><code>-- Regular CTE: named subquery, run once
+WITH monthly_revenue AS (
+  SELECT
+    DATE_TRUNC('month', created_at) AS month,
+    SUM(total) AS revenue
+  FROM orders
+  WHERE status = 'delivered'
+  GROUP BY 1
+)
+SELECT month, revenue,
+  revenue - LAG(revenue) OVER (ORDER BY month) AS growth
+FROM monthly_revenue;
+
+-- Recursive CTE: tree traversal (org chart, category hierarchy)
+WITH RECURSIVE org_chart AS (
+  -- Base case: top-level employees (no manager)
+  SELECT id, name, manager_id, 0 AS level
+  FROM employees
+  WHERE manager_id IS NULL
+
+  UNION ALL
+
+  -- Recursive case: each employee's direct reports
+  SELECT e.id, e.name, e.manager_id, oc.level + 1
+  FROM employees e
+  JOIN org_chart oc ON e.manager_id = oc.id
+)
+SELECT level, name FROM org_chart ORDER BY level, name;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Full-Text Search</h4>
+        <pre><code>-- Create text search vector
+ALTER TABLE posts ADD COLUMN search_vector tsvector;
+UPDATE posts SET search_vector = to_tsvector('english', title || ' ' || body);
+
+-- GIN index on search vector
+CREATE INDEX idx_fts ON posts USING GIN(search_vector);
+
+-- Search: find posts matching 'database performance'
+SELECT title, ts_rank(search_vector, query) AS rank
+FROM posts, to_tsquery('english', 'database &amp; performance') AS query
+WHERE search_vector @@ query
+ORDER BY rank DESC;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- W10 -->
+  <div class="week-block adv" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <span class="week-num wn-adv">Week 10</span>
+      <h3>Database Administration Tasks</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>User Management &amp; Least Privilege</h4>
+        <pre><code>-- Create application user with minimal permissions
+CREATE USER 'app_user'@'%' IDENTIFIED BY 'strong_password_here';
+GRANT SELECT, INSERT, UPDATE, DELETE ON myapp.* TO 'app_user'@'%';
+
+-- Create read-only reporting user
+CREATE USER 'reporter'@'localhost' IDENTIFIED BY 'pass';
+GRANT SELECT ON myapp.* TO 'reporter'@'localhost';
+
+-- Verify permissions
+SHOW GRANTS FOR 'app_user'@'%';
+
+-- Revoke a permission
+REVOKE DELETE ON myapp.orders FROM 'app_user'@'%';
+
+-- PostgreSQL role-based approach
+CREATE ROLE readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
+CREATE USER analyst WITH PASSWORD 'pass';
+GRANT readonly TO analyst;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Backup Strategies</h4>
+        <p><strong>Logical backup (mysqldump / pg_dump):</strong> exports SQL statements — portable, human-readable, slow for large databases.</p>
+        <pre><code>-- MySQL: backup single database
+mysqldump -u root -p myapp > myapp_backup_2024-06-15.sql
+
+-- MySQL: backup all databases
+mysqldump -u root -p --all-databases > full_backup.sql
+
+-- MySQL: restore
+mysql -u root -p myapp < myapp_backup_2024-06-15.sql
+
+-- PostgreSQL: backup
+pg_dump -U postgres myapp -f myapp_backup.sql
+pg_dump -U postgres myapp -Fc -f myapp_backup.dump  # compressed format
+
+-- PostgreSQL: restore compressed
+pg_restore -U postgres -d myapp_restored myapp_backup.dump</code></pre>
+        <p><strong>Physical backup:</strong> file-level copy of data directory. Use Percona XtraBackup for MySQL (hot backup — no downtime). Faster for very large databases (&gt;100GB).</p>
+        <p><strong>Point-in-Time Recovery (PITR):</strong> restore to any moment by replaying binary logs (MySQL) or WAL archives (PostgreSQL) on top of a full backup. Essential for "undo" operations.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Replication</h4>
+        <p><strong>MySQL replication (primary → replica):</strong></p>
+        <ul>
+          <li>Primary writes to binary log (binlog)</li>
+          <li>Replica reads binlog and applies changes</li>
+          <li>Use cases: read scaling (route reads to replicas), failover, reporting without impacting production</li>
+          <li>Statement-based vs row-based replication: row-based is safer for non-deterministic queries</li>
+        </ul>
+        <p><strong>PostgreSQL logical replication:</strong> more flexible — replicate specific tables, apply transformations, replicate to different PostgreSQL versions.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Monitoring &amp; Maintenance</h4>
+        <pre><code>-- MySQL: enable slow query log
+SET GLOBAL slow_query_log = 1;
+SET GLOBAL long_query_time = 1;  -- log queries taking >1 second
+SET GLOBAL slow_query_log_file = '/var/log/mysql-slow.log';
+
+-- MySQL sys schema: find the worst queries
+SELECT query, exec_count, avg_latency
+FROM sys.statement_analysis
+ORDER BY avg_latency DESC LIMIT 10;
+
+-- PostgreSQL: pg_stat_statements extension (add to postgresql.conf)
+-- shared_preload_libraries = 'pg_stat_statements'
+SELECT query, calls, mean_exec_time
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC LIMIT 10;
+
+-- PostgreSQL VACUUM: reclaims space from deleted rows
+VACUUM ANALYZE posts;          -- manual vacuum + update statistics
+-- autovacuum handles this automatically in production
+
+-- MySQL: rebuild table and reclaim space
+OPTIMIZE TABLE orders;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Partitioning</h4>
+        <p>When tables exceed ~100 million rows, queries slow down even with indexes. Partitioning splits one logical table into multiple physical sub-tables based on a column value:</p>
+        <pre><code>-- MySQL range partitioning: by year
+CREATE TABLE orders (
+  id         INT AUTO_INCREMENT,
+  created_at DATETIME NOT NULL,
+  total      DECIMAL(10,2),
+  PRIMARY KEY (id, created_at)  -- partition key must be in PK
+)
+PARTITION BY RANGE (YEAR(created_at)) (
+  PARTITION p2022 VALUES LESS THAN (2023),
+  PARTITION p2023 VALUES LESS THAN (2024),
+  PARTITION p2024 VALUES LESS THAN (2025),
+  PARTITION pmax  VALUES LESS THAN MAXVALUE
+);
+-- Query WHERE YEAR(created_at)=2023 only scans p2023 partition</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- W11 -->
+  <div class="week-block adv" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <span class="week-num wn-adv">Week 11</span>
+      <h3>NoSQL Databases</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>CAP Theorem</h4>
+        <p>In a distributed system, you can guarantee at most 2 of these 3 properties:</p>
+        <ul>
+          <li><strong>Consistency:</strong> every read receives the most recent write</li>
+          <li><strong>Availability:</strong> every request receives a response (not necessarily the latest data)</li>
+          <li><strong>Partition Tolerance:</strong> the system continues operating even when network partitions occur</li>
+        </ul>
+        <p>Network partitions always happen in distributed systems, so you choose CA (traditional RDBMS, single node) or CP (MongoDB, HBase) or AP (Cassandra, DynamoDB with eventual consistency).</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>MongoDB — Document Store</h4>
+        <pre><code>// Documents (BSON = Binary JSON) in a "products" collection
+{
+  "_id": ObjectId("..."),
+  "name": "MacBook Pro",
+  "price": 199999,
+  "specs": { "ram": "16GB", "storage": "512GB" },  // embedded document
+  "tags": ["laptop", "apple", "sale"],              // array
+  "reviews": [                                       // embedded array of docs
+    { "user": "Priya", "rating": 5, "text": "Great!" }
+  ]
+}
+
+// Node.js with Mongoose
+const mongoose = require('mongoose');
+const productSchema = new mongoose.Schema({
+  name:  { type: String, required: true },
+  price: { type: Number, min: 0 },
+  tags:  [String],
+  specs: mongoose.Schema.Types.Mixed
+});
+const Product = mongoose.model('Product', productSchema);
+
+// CRUD
+await Product.create({ name: 'Laptop', price: 45000, tags: ['electronics'] });
+await Product.find({ tags: 'electronics', price: { $lte: 50000 } }).sort('-price').limit(5);
+await Product.updateOne({ _id: id }, { $set: { price: 42000 }, $push: { tags: 'sale' } });
+await Product.deleteMany({ price: { $lt: 100 } });</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Redis — Key-Value Store</h4>
+        <pre><code>// Redis data structures and use cases:
+
+// String: caching, counters, flags
+SET user:42:name "Priya Sharma" EX 3600    // with 1-hour TTL
+GET user:42:name
+INCR page:views:home                       // atomic counter
+
+// Hash: object storage (like a row)
+HSET user:42 name "Priya" email "p@e.com" role "admin"
+HGET user:42 name                          // "Priya"
+HGETALL user:42                            // all fields
+
+// List: queues, recent activity
+LPUSH notifications:42 "Your order shipped"
+LRANGE notifications:42 0 9               // last 10 notifications
+
+// Sorted Set: leaderboards, time-series
+ZADD leaderboard 1500 "alice" 1200 "bob" 1800 "charlie"
+ZREVRANGE leaderboard 0 4 WITHSCORES     // top 5 with scores
+ZINCRBY leaderboard 100 "bob"            // add 100 to bob's score
+
+// Node.js with ioredis
+const Redis = require('ioredis');
+const redis = new Redis();
+await redis.set('key', JSON.stringify(data), 'EX', 300);  // 5-min cache
+const cached = await redis.get('key');
+if (cached) return JSON.parse(cached);    // cache hit</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Choosing SQL vs NoSQL</h4>
+        <table class="ref-table">
+          <thead><tr><th>Choose SQL when...</th><th>Choose NoSQL when...</th></tr></thead>
+          <tbody>
+            <tr><td>Complex JOINs between related data</td><td>Schema changes frequently</td></tr>
+            <tr><td>ACID transactions required (financial, inventory)</td><td>Horizontal scale needed (billions of records)</td></tr>
+            <tr><td>Complex reporting and analytics</td><td>Data is document-shaped (nested, variable)</td></tr>
+            <tr><td>Data is highly structured and stable</td><td>Very high write throughput (IoT, logs)</td></tr>
+            <tr><td>Team knows SQL well</td><td>Caching, sessions, real-time features (Redis)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- W12 -->
+  <div class="week-block adv" id="w12">
+    <div class="week-header" onclick="toggleWeek('w12')">
+      <span class="week-num wn-adv">Week 12</span>
+      <h3>Cloud Databases &amp; Modern Patterns</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>AWS Managed Databases</h4>
+        <ul>
+          <li><strong>RDS (Relational Database Service):</strong> managed MySQL, PostgreSQL, MariaDB, Oracle, SQL Server. Handles patching, backups, monitoring. Multi-AZ for automatic failover. Read replicas for scaling reads. You still control the schema and queries.</li>
+          <li><strong>Aurora:</strong> MySQL/PostgreSQL compatible but built from scratch by AWS. Claims 5× faster than MySQL, 3× faster than PostgreSQL. Auto-scales storage up to 128TB. Aurora Serverless v2 pauses/resumes on demand. Best for variable workloads.</li>
+          <li><strong>DynamoDB:</strong> serverless key-value + document database. Millisecond latency at any scale. Pay per request or provisioned capacity. GSI (Global Secondary Index) enables alternate access patterns. On-demand billing — pay only for what you use.</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Modern Database Services</h4>
+        <ul>
+          <li><strong>Google Cloud Spanner:</strong> the first globally distributed, horizontally scalable RDBMS. Full SQL support with ACID across regions. Used by Google (YouTube, Google Ads). Very expensive but unique capability.</li>
+          <li><strong>PlanetScale (MySQL Serverless):</strong> built on Vitess (YouTube's MySQL sharding layer). Key feature: <em>branching</em> — create a branch of your database schema for a PR, test migrations in isolation, merge like code. No-downtime schema changes.</li>
+          <li><strong>Supabase:</strong> PostgreSQL as a service with auto-generated REST and GraphQL APIs, Auth, Realtime subscriptions, Storage. Popular with Next.js / React developers. Free tier generous.</li>
+          <li><strong>Neon:</strong> serverless PostgreSQL with branching, auto-scaling, and a generous free tier. Pauses when idle — ideal for development and low-traffic projects.</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Database Migrations</h4>
+        <p>Version-controlled schema changes — just like Git for code, but for your database schema:</p>
+        <pre><code>-- Migration files (Flyway format, alphabetically sorted)
+V1__create_users.sql
+V2__create_posts.sql
+V3__add_tags_column.sql
+V4__create_comments.sql
+
+-- V3__add_tags_column.sql
+ALTER TABLE posts ADD COLUMN tags JSON;
+-- Undo: ALTER TABLE posts DROP COLUMN tags;
+
+-- Flyway commands:
+-- flyway migrate    — apply pending migrations
+-- flyway info       — show migration status
+-- flyway validate   — verify checksums match
+-- flyway repair     — fix failed migration records
+
+-- V5 migration: safe pattern for large tables
+-- Add column (instant with DEFAULT NULL)
+ALTER TABLE posts ADD COLUMN search_vector tsvector;
+-- Backfill in batches (don't lock the whole table)
+UPDATE posts SET search_vector = to_tsvector('english', title || ' ' || body)
+WHERE id BETWEEN 1 AND 10000;
+-- Add index CONCURRENTLY (PostgreSQL, no table lock)
+CREATE INDEX CONCURRENTLY idx_search ON posts USING GIN(search_vector);</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Event Sourcing &amp; CQRS (Advanced Pattern)</h4>
+        <p><strong>CQRS (Command Query Responsibility Segregation):</strong> separate models for reads and writes. The write model handles commands (place order, cancel order) and appends events to an event log. The read model is a denormalised "view" of the data optimised for queries.</p>
+        <p><strong>Event Sourcing:</strong> instead of storing the current state, store every event that led to it:</p>
+        <pre><code>-- Events table (append-only — never UPDATE or DELETE)
+events(id, aggregate_type, aggregate_id, event_type, payload JSON, created_at)
+
+-- Events for order #42:
+event_type='ORDER_CREATED',  payload={"customer_id":1, "items":[...]}
+event_type='PAYMENT_RECEIVED', payload={"amount":499.99}
+event_type='ORDER_SHIPPED',   payload={"tracking":"IN1234"}
+
+-- Current state = replay all events for aggregate_id=42
+-- Benefit: complete audit trail, time travel, replayable</code></pre>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Concept Notes — Advanced &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

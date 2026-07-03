@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile App Development — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.analogy-box{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border:1px solid #90CAF9;border-left:4px solid var(--blue);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+.analogy-box strong{color:var(--navy);}
+.when-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:12px;}
+.when-table th{background:var(--blue);color:white;padding:8px 12px;text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;}
+.when-table td{padding:8px 12px;border-bottom:1px solid var(--border-light);}
+.when-table tr:hover td{background:var(--paper);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📱 Mobile App Development</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 5 OF 9 &nbsp;·&nbsp; MOBILE APP DEVELOPMENT &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner ↗</a>
+    <a href="concept_notes_advanced.html">Advanced ↗</a>
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">📱</div>
+    <h1>Concept Notes — Intermediate</h1>
+    <p class="lh-sub">Weeks 5–8: connect apps to real APIs, manage shared state without Redux, access device hardware through Expo modules, and build apps that keep working offline. These are the skills that separate a portfolio project from a production app.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 5–8</span>
+      <span class="lh-pill">Context · Zustand</span>
+      <span class="lh-pill">Axios · Expo Modules</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>What You Will Learn</h4>
+      <ul>
+        <li>Context API + useReducer</li>
+        <li>REST API integration</li>
+        <li>Camera, Location, Notifications</li>
+        <li>SQLite + offline-first patterns</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>New Tools &amp; Libraries</h4>
+      <ul>
+        <li>Zustand (state management)</li>
+        <li>Axios (HTTP client)</li>
+        <li>expo-location, expo-image-picker</li>
+        <li>expo-sqlite, React Query</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Completed Weeks 1–4</li>
+        <li>Expo app running on device</li>
+        <li>React Navigation set up</li>
+        <li>AsyncStorage familiar</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>End Goal</h4>
+      <ul>
+        <li>App consuming a live API</li>
+        <li>Camera + Gallery integration</li>
+        <li>Works offline with cached data</li>
+        <li>Ready for Advanced topics</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="sm-sec">Week 5 — State Management &amp; Context API</div>
+  <div class="week-block open" id="w5">
+    <div class="week-head" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <div class="week-head-text">
+        <h3>State Management — Context, useReducer &amp; Zustand</h3>
+        <p>Prop drilling · createContext · useReducer · Zustand basics</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>The prop drilling problem:</strong> Imagine passing a single piece of paper through 6 people in a row just to give it to the person at the end. Each middle person has to handle paper they don't care about. That is prop drilling — and Context API is the internal messaging system that lets you skip the chain.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>React Context API</h4>
+          <ul>
+            <li><code>createContext(defaultValue)</code> — create the context</li>
+            <li><code>&lt;AuthContext.Provider value={'{'}user{'}'}&gt;</code> — wrap the tree</li>
+            <li><code>useContext(AuthContext)</code> — read value anywhere inside the tree</li>
+            <li>Best for: auth state, theme, language, user preferences</li>
+            <li>Does not replace all useState — only global/cross-cutting concerns</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>useReducer</h4>
+          <ul>
+            <li>Like Redux but built into React — no extra package</li>
+            <li><code>const [state, dispatch] = useReducer(reducer, initialState)</code></li>
+            <li>Dispatch an action: <code>dispatch({'{'}type: 'ADD_TODO', payload: text{'}'})</code></li>
+            <li>Reducer: pure function <code>(state, action) =&gt; newState</code></li>
+            <li>Use when: multiple sub-values, complex transitions, action-based logic</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Zustand — Lightweight State</h4>
+          <ul>
+            <li><code>npm install zustand</code></li>
+            <li>Create a store: <code>const useStore = create((set) =&gt; ({'{'}...{'}'}))</code></li>
+            <li>Read: <code>const count = useStore(s =&gt; s.count)</code></li>
+            <li>Update: <code>set({'{'}count: count + 1{'}'})</code></li>
+            <li>No Provider, no boilerplate — one file, works everywhere</li>
+            <li>Zustand store can persist to AsyncStorage with a middleware</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>AsyncStorage + Context Pattern</h4>
+          <ul>
+            <li>Load from AsyncStorage → set into Context on app start</li>
+            <li>When Context state changes → save to AsyncStorage</li>
+            <li>Result: global state that survives app close</li>
+            <li>Common for: auth token, user settings, theme preference</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="when-table">
+        <thead><tr><th>Situation</th><th>Use</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Local component state (a counter, input value)</td><td><code>useState</code></td><td>Simple, isolated, no sharing needed</td></tr>
+          <tr><td>Complex state with multiple actions</td><td><code>useReducer</code></td><td>Predictable transitions, easy to test</td></tr>
+          <tr><td>Shared state across many screens</td><td>Context + useReducer</td><td>No prop drilling, standard React pattern</td></tr>
+          <tr><td>App-wide state, frequent updates</td><td>Zustand</td><td>No re-render overhead, minimal boilerplate</td></tr>
+          <tr><td>Server/API data with caching</td><td>React Query</td><td>Handles loading/error/cache automatically (Week 8)</td></tr>
+        </tbody>
+      </table>
+
+      <pre><span class="comment">// AuthContext.js — auth state available everywhere</span>
+<span class="keyword">import</span> { createContext, useContext, useReducer, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> AsyncStorage <span class="keyword">from</span> <span class="string">'@react-native-async-storage/async-storage'</span>;
+
+<span class="keyword">const</span> AuthContext = createContext(null);
+
+<span class="keyword">function</span> authReducer(state, action) {
+  <span class="keyword">switch</span> (action.type) {
+    <span class="keyword">case</span> <span class="string">'LOGIN'</span>:  <span class="keyword">return</span> { user: action.payload, token: action.token };
+    <span class="keyword">case</span> <span class="string">'LOGOUT'</span>: <span class="keyword">return</span> { user: null, token: null };
+    <span class="keyword">default</span>: <span class="keyword">return</span> state;
+  }
+}
+
+<span class="keyword">export function</span> AuthProvider({ children }) {
+  <span class="keyword">const</span> [state, dispatch] = useReducer(authReducer, { user: null, token: null });
+
+  useEffect(() =&gt; {
+    <span class="keyword">async function</span> loadToken() {
+      <span class="keyword">const</span> token = <span class="keyword">await</span> AsyncStorage.getItem(<span class="string">'auth_token'</span>);
+      <span class="keyword">if</span> (token) dispatch({ type: <span class="string">'LOGIN'</span>, token });
+    }
+    loadToken();
+  }, []);
+
+  <span class="keyword">return</span> &lt;AuthContext.Provider value={{'{'}state, dispatch{'}'}&gt;{children}&lt;/AuthContext.Provider&gt;;
+}
+
+<span class="keyword">export const</span> useAuth = () =&gt; useContext(AuthContext);</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 5 Key Takeaways</h4>
+        <ul>
+          <li>Context is not a replacement for all state — only for data that many screens need</li>
+          <li><code>useReducer</code> makes complex state changes predictable and testable</li>
+          <li>Zustand is the industry favourite for medium-complexity apps — learn its pattern</li>
+          <li>Combine Context with AsyncStorage to get persistent global state with no external library</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="sm-sec">Week 6 — APIs &amp; Networking</div>
+  <div class="week-block" id="w6">
+    <div class="week-head" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <div class="week-head-text">
+        <h3>REST API Integration with fetch &amp; Axios</h3>
+        <p>Loading states · Error handling · Axios interceptors · useEffect cleanup</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> Your app is a customer in a restaurant. The REST API is the kitchen. <code>fetch()</code> is the waiter who carries your order and brings the food back. Sometimes the kitchen is busy (loading), sometimes they get your order wrong (error), and sometimes the food arrives perfectly (data). Handle all three states in your UI.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>fetch() in React Native</h4>
+          <ul>
+            <li>Same browser fetch API — works identically in RN</li>
+            <li>Returns a Promise — always use <code>async/await</code></li>
+            <li>Two steps: <code>await fetch(url)</code> then <code>await res.json()</code></li>
+            <li>Wrap in try/catch to handle network errors</li>
+            <li>For POST: pass <code>method, headers, body: JSON.stringify(data)</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Axios Advantages</h4>
+          <ul>
+            <li><code>npm install axios</code></li>
+            <li>Auto-parses JSON — no <code>.json()</code> step</li>
+            <li>Request/response interceptors — attach auth tokens globally</li>
+            <li><code>axios.create({'{'}baseURL, timeout{'}'})</code> — reusable instance</li>
+            <li>Throws on non-2xx status — no manual <code>if(!res.ok)</code> check</li>
+            <li>Cancel requests with <code>AbortController</code> or cancel token</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Loading / Error / Data Pattern</h4>
+          <ul>
+            <li><code>const [data, setData] = useState(null)</code></li>
+            <li><code>const [isLoading, setIsLoading] = useState(true)</code></li>
+            <li><code>const [error, setError] = useState(null)</code></li>
+            <li>Show <code>&lt;ActivityIndicator /&gt;</code> while loading</li>
+            <li>Show error message with retry button on error</li>
+            <li>Show data list when all good</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>useEffect Cleanup</h4>
+          <ul>
+            <li>If component unmounts before fetch completes → state update error</li>
+            <li>Solution: <code>AbortController</code> — cancel the request on cleanup</li>
+            <li>Return a cleanup function from useEffect: <code>return () =&gt; controller.abort()</code></li>
+            <li>This prevents "can't update state on unmounted component" warning</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;
+<span class="keyword">import</span> { ActivityIndicator } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="comment">// Reusable axios instance</span>
+<span class="keyword">const</span> api = axios.create({
+  baseURL: <span class="string">'https://newsapi.org/v2'</span>,
+  timeout: 8000,
+  headers: { Authorization: <span class="string">`Bearer ${API_KEY}`</span> },
+});
+
+<span class="keyword">function</span> NewsScreen() {
+  <span class="keyword">const</span> [articles, setArticles] = useState([]);
+  <span class="keyword">const</span> [isLoading, setIsLoading] = useState(true);
+  <span class="keyword">const</span> [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    <span class="keyword">const</span> controller = <span class="keyword">new</span> AbortController();
+    <span class="keyword">async function</span> fetchNews() {
+      <span class="keyword">try</span> {
+        <span class="keyword">const</span> { data } = <span class="keyword">await</span> api.get(<span class="string">'/top-headlines'</span>, {
+          params: { country: <span class="string">'in'</span> },
+          signal: controller.signal,
+        });
+        setArticles(data.articles);
+      } <span class="keyword">catch</span> (err) {
+        <span class="keyword">if</span> (!axios.isCancel(err)) setError(<span class="string">'Could not load news. Tap to retry.'</span>);
+      } <span class="keyword">finally</span> {
+        setIsLoading(false);
+      }
+    }
+    fetchNews();
+    <span class="keyword">return</span> () =&gt; controller.abort(); <span class="comment">// cleanup on unmount</span>
+  }, []);
+
+  <span class="keyword">if</span> (isLoading) <span class="keyword">return</span> &lt;ActivityIndicator size=<span class="string">"large"</span> color=<span class="string">"#1B3A6B"</span> /&gt;;
+  <span class="keyword">if</span> (error) <span class="keyword">return</span> &lt;Text onPress={fetchNews}&gt;{error}&lt;/Text&gt;;
+
+  <span class="keyword">return</span> &lt;FlatList data={articles} keyExtractor={a =&gt; a.url} renderItem={...} /&gt;;
+}</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 6 Key Takeaways</h4>
+        <ul>
+          <li>Always handle three states: loading, error, and data — never leave the user staring at a blank screen</li>
+          <li>Use Axios for real projects — auto JSON parsing and interceptors save significant boilerplate</li>
+          <li>Use <code>AbortController</code> in useEffect cleanup to prevent memory leaks from cancelled requests</li>
+          <li>Show a retry button on errors — users need a path forward when the network fails</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="sm-sec">Week 7 — Device Features &amp; Permissions</div>
+  <div class="week-block" id="w7">
+    <div class="week-head" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <div class="week-head-text">
+        <h3>Expo Modules — Camera, Location, Notifications</h3>
+        <p>expo-image-picker · expo-location · expo-notifications · expo-camera</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Expo managed workflow advantage:</strong> Accessing the camera on a raw React Native project requires touching native iOS/Android code. Expo modules wrap all of that in a clean JS API. You never write a line of Swift or Kotlin — and you still get full access to the camera, GPS, sensors, and notifications.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>expo-image-picker</h4>
+          <ul>
+            <li><code>npx expo install expo-image-picker</code></li>
+            <li><code>launchImageLibraryAsync()</code> — open photo gallery</li>
+            <li><code>launchCameraAsync()</code> — open camera to take photo</li>
+            <li>Request permissions first with <code>requestMediaLibraryPermissionsAsync()</code></li>
+            <li>Returns <code>{'{'}canceled, assets: [{'{'}uri{'}'}, ...]{'}'}</code></li>
+            <li><code>allowsEditing: true, aspect: [4,3], quality: 0.8</code> options</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>expo-location</h4>
+          <ul>
+            <li><code>npx expo install expo-location</code></li>
+            <li><code>requestForegroundPermissionsAsync()</code> — ask user for GPS</li>
+            <li><code>getCurrentPositionAsync({})</code> — one-time location fix</li>
+            <li>Returns <code>coords: {'{'}latitude, longitude, accuracy{'}'}</code></li>
+            <li><code>watchPositionAsync()</code> — live tracking</li>
+            <li>Always check <code>status === 'granted'</code> before calling GPS</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>expo-notifications</h4>
+          <ul>
+            <li><code>npx expo install expo-notifications</code></li>
+            <li>Local notifications: scheduled in-app — no server needed</li>
+            <li><code>scheduleNotificationAsync()</code> — fire at a future time</li>
+            <li>Remote push: requires Expo push token + backend to send</li>
+            <li>Always request permission first: <code>requestPermissionsAsync()</code></li>
+            <li>Add notification handler in App.js root to receive while app is open</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Permissions Best Practices</h4>
+          <ul>
+            <li>Request permissions only when the user triggers the feature — not on app launch</li>
+            <li>Explain why before requesting: "To show your location on the map, we need GPS access"</li>
+            <li>Handle denial gracefully — show a fallback UI, not a crash</li>
+            <li>On iOS, once denied, user must go to Settings — guide them with a helpful message</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="keyword">import</span> * <span class="keyword">as</span> ImagePicker <span class="keyword">from</span> <span class="string">'expo-image-picker'</span>;
+<span class="keyword">import</span> * <span class="keyword">as</span> Location <span class="keyword">from</span> <span class="string">'expo-location'</span>;
+
+<span class="comment">// Camera / gallery picker</span>
+<span class="keyword">async function</span> pickImage() {
+  <span class="keyword">const</span> { status } = <span class="keyword">await</span> ImagePicker.requestMediaLibraryPermissionsAsync();
+  <span class="keyword">if</span> (status !== <span class="string">'granted'</span>) {
+    Alert.alert(<span class="string">'Permission required'</span>, <span class="string">'Allow photo access in Settings to upload images.'</span>);
+    <span class="keyword">return</span>;
+  }
+  <span class="keyword">const</span> result = <span class="keyword">await</span> ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    aspect: [1, 1],
+    quality: 0.8,
+  });
+  <span class="keyword">if</span> (!result.canceled) setImageUri(result.assets[0].uri);
+}
+
+<span class="comment">// Get user's current GPS location</span>
+<span class="keyword">async function</span> getLocation() {
+  <span class="keyword">const</span> { status } = <span class="keyword">await</span> Location.requestForegroundPermissionsAsync();
+  <span class="keyword">if</span> (status !== <span class="string">'granted'</span>) { Alert.alert(<span class="string">'GPS access denied'</span>); <span class="keyword">return</span>; }
+  <span class="keyword">const</span> loc = <span class="keyword">await</span> Location.getCurrentPositionAsync({});
+  setCoords(loc.coords); <span class="comment">// { latitude, longitude, accuracy }</span>
+}</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 7 Key Takeaways</h4>
+        <ul>
+          <li>Expo modules give you native hardware access without writing native code — a huge time saver</li>
+          <li>Always use <code>npx expo install</code> (not plain <code>npm install</code>) for Expo modules — it installs a compatible version</li>
+          <li>Request permissions contextually, not at app launch — users reject blanket permission requests</li>
+          <li>Check <code>status === 'granted'</code> before every native API call, every time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="sm-sec">Week 8 — Data Persistence &amp; Offline-First</div>
+  <div class="week-block" id="w8">
+    <div class="week-head" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <div class="week-head-text">
+        <h3>SQLite, React Query &amp; Offline Patterns</h3>
+        <p>expo-sqlite · useQuery · useMutation · optimistic updates · NetInfo</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Offline-first mindset:</strong> Mobile users go underground, enter lifts, and travel through dead zones constantly. An app that crashes or shows a blank screen offline is a bad app. Design as if connectivity is optional — load from local cache first, sync with the server when back online.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>AsyncStorage vs SQLite</h4>
+          <ul>
+            <li><strong>AsyncStorage:</strong> key-value, JSON strings, great for settings/tokens/small datasets</li>
+            <li><strong>SQLite:</strong> relational database, SQL queries, great for structured data with relationships</li>
+            <li>Use AsyncStorage when: saving preferences, caching a small API response</li>
+            <li>Use SQLite when: tasks with categories, notes with tags, anything needing filtering/sorting</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>expo-sqlite</h4>
+          <ul>
+            <li><code>npx expo install expo-sqlite</code></li>
+            <li><code>openDatabaseAsync('myapp.db')</code> — open or create DB file</li>
+            <li><code>db.execAsync('CREATE TABLE IF NOT EXISTS ...')</code></li>
+            <li><code>db.getAllAsync('SELECT * FROM tasks WHERE done=?', [0])</code></li>
+            <li><code>db.runAsync('INSERT INTO tasks (title) VALUES (?)', [text])</code></li>
+            <li>DB file persists across app restarts automatically</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>React Query (TanStack Query)</h4>
+          <ul>
+            <li><code>npm install @tanstack/react-query</code></li>
+            <li><code>useQuery({'{'}queryKey: ['posts'], queryFn: fetchPosts{'}'})</code></li>
+            <li>Returns <code>{'{'}data, isLoading, isError, refetch{'}'}</code></li>
+            <li>Auto-caches results, re-fetches in background on focus</li>
+            <li><code>useMutation</code> for POST/PUT/DELETE with <code>onSuccess</code> callbacks</li>
+            <li>Eliminates the boilerplate loading/error/data pattern entirely</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>NetInfo — Connectivity Detection</h4>
+          <ul>
+            <li><code>npm install @react-native-community/netinfo</code></li>
+            <li><code>NetInfo.fetch()</code> — one-time connectivity check</li>
+            <li><code>NetInfo.addEventListener(state =&gt; ...)</code> — subscribe to changes</li>
+            <li><code>state.isConnected</code> — boolean</li>
+            <li>Show "Offline Mode" banner when disconnected</li>
+            <li>Queue mutations while offline, replay when reconnected</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="keyword">import</span> { useQuery, useMutation, useQueryClient } <span class="keyword">from</span> <span class="string">'@tanstack/react-query'</span>;
+<span class="keyword">import</span> NetInfo <span class="keyword">from</span> <span class="string">'@react-native-community/netinfo'</span>;
+
+<span class="comment">// useQuery — fetch + cache posts automatically</span>
+<span class="keyword">const</span> { data: posts, isLoading, isError } = useQuery({
+  queryKey: [<span class="string">'posts'</span>],
+  queryFn: () =&gt; api.get(<span class="string">'/posts'</span>).then(r =&gt; r.data),
+  staleTime: 1000 * 60 * 5, <span class="comment">// treat cache as fresh for 5 minutes</span>
+});
+
+<span class="comment">// useMutation — create a new post</span>
+<span class="keyword">const</span> queryClient = useQueryClient();
+<span class="keyword">const</span> createPost = useMutation({
+  mutationFn: (text) =&gt; api.post(<span class="string">'/posts'</span>, { body: text }),
+  onSuccess: () =&gt; queryClient.invalidateQueries({ queryKey: [<span class="string">'posts'</span>] }),
+});
+
+<span class="comment">// Offline banner</span>
+<span class="keyword">const</span> [isOnline, setIsOnline] = useState(true);
+useEffect(() =&gt; {
+  <span class="keyword">return</span> NetInfo.addEventListener(s =&gt; setIsOnline(s.isConnected));
+}, []);
+{!isOnline &amp;&amp; &lt;View style={styles.offlineBanner}&gt;&lt;Text&gt;Offline Mode&lt;/Text&gt;&lt;/View&gt;}</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 8 Key Takeaways</h4>
+        <ul>
+          <li>React Query removes 80% of the boilerplate around API calls — use it in any serious project</li>
+          <li>SQLite is a full relational database on-device — reach for it when you need queries, not just key-value</li>
+          <li>Monitor connectivity with NetInfo and always give users a clear signal when they are offline</li>
+          <li>Optimistic updates (update UI immediately, rollback if server fails) make your app feel faster</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="concept_notes_advanced.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Notes →</a>
+      <a href="lab_guide_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Mobile App Development &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w5');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

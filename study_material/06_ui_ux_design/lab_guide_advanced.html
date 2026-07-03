@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Guide — Advanced | UI/UX Design | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">🔬 Lab Guide — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Labs</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs</a>
+    <a href="concept_notes_advanced.html">Concept Notes</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Advanced Level</h2>
+      <p>Real-world design practice: condensed design sprints, token-based design systems, code implementation, and portfolio-ready case studies.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">Design Sprints</span>
+      <span class="pill">Design Systems Docs</span>
+      <span class="pill">Code Implementation</span>
+      <span class="pill">Case Studies</span>
+      <span class="pill">Portfolio</span>
+    </div>
+  </div>
+
+  <!-- W9 -->
+  <div class="week-block adv" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <span class="week-num wn-adv">Week 9</span>
+      <h3>Condensed Design Sprint</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Experience the GV Design Sprint methodology in a compressed format. Go from problem to tested prototype on a real Indian product in under a week of part-time work.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>The Challenge</h4>
+        <p>Redesign the IRCTC train ticket booking flow specifically for a first-time user — someone booking on IRCTC for the very first time, possibly not tech-savvy.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Sprint</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Day 1 — Map (1 hour)</strong><br>
+            Draw a simple journey map on paper showing the current IRCTC flow:
+            <br><em>User opens app → searches trains → views results → picks a train → fills passenger details → selects berth → makes payment → gets ticket</em>
+            <br><br>Mark each step with: 😊 Easy / 😐 OK / 😤 Frustrating based on your own experience or by asking 2 friends. Circle the <strong>most critical moment</strong> — this is typically the "Pick Train" results screen where users face an overwhelming grid of trains, classes, prices, and availability codes (SL, 3A, 2A, 1A). Write a one-sentence "How Might We" statement: <em>"How might we help a first-time user quickly find the right train at the right price without being overwhelmed?"</em>
+          </li>
+          <li>
+            <strong>Day 2 — Crazy 8s (30 minutes)</strong><br>
+            Fold an A4 paper into 8 equal sections. Set a timer for 8 minutes. Sketch 8 different UI concepts for the "Pick Train" results screen — one per section. Speed matters more than polish here. Try wildly different layouts: list vs cards vs map, sorting prominence, filter placement, price visualisation. Do not self-censor. After the 8 minutes, pick your top 2 by placing a dot sticker (or pen dot) on them.
+          </li>
+          <li>
+            <strong>Day 3 — Storyboard (45 minutes)</strong><br>
+            Pick your best sketch from Crazy 8s. Extend it into a 5-panel storyboard covering the full redesigned booking flow:
+            <ol type="a">
+              <li>Search screen (clear inputs, date picker)</li>
+              <li>Train results (your redesigned layout)</li>
+              <li>Seat class selection (visual, with price + availability)</li>
+              <li>Passenger details (simplified form)</li>
+              <li>Payment + confirmation</li>
+            </ol>
+            Sketch at medium fidelity — enough detail that someone else understands the layout and key interactions.
+          </li>
+          <li>
+            <strong>Day 4 — Prototype in Figma (2 hours)</strong><br>
+            Build a realistic Figma prototype focusing on:
+            <ul>
+              <li><strong>The "Pick Train" results screen:</strong> Use real train names (Rajdhani Express, Shatabdi, Jan Shatabdi), real departure times, real class codes with their full names (SL = Sleeper, 3A = 3rd AC). Show availability visually — green for available, red for waitlisted, grey for not available. Display price prominently.</li>
+              <li><strong>The payment screen:</strong> Show UPI as the most prominent option (highest adoption in India), followed by cards, net banking.</li>
+            </ul>
+            Use real content — fake Latin placeholder text undermines the test. Connect these two screens in prototype mode with at least one interactive element (filter tap, train row tap).
+          </li>
+          <li>
+            <strong>Day 5 — Test (1 hour)</strong><br>
+            Find 3 participants who have NOT used IRCTC recently (ideally someone from a non-tech background). Give them one task: <em>"Book a 3AC seat from Delhi to Mumbai for next Friday under ₹1500."</em>
+            <br><br>Observe without helping. Note:
+            <ul>
+              <li>Do they understand the class codes (3A, SL, etc.)?</li>
+              <li>Can they find a train under ₹1500?</li>
+              <li>Where do they hesitate or tap incorrectly?</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Sprint Deliverable</strong><br>
+            Submit:
+            <ul>
+              <li>Figma file (journey map + prototype) — share view link</li>
+              <li>200-word sprint summary: What problem did you solve? What did you discover in testing? What would you do differently in a full sprint?</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- W10 -->
+  <div class="week-block adv" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <span class="week-num wn-adv">Week 10</span>
+      <h3>Design System Documentation &amp; Tokens</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Elevate your Week 6 design system into a production-ready, token-based system with full developer handoff documentation.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Add a Tokens page to your design system</strong><br>
+            Open your Week 6 Figma file. Add a new page named <em>Tokens</em>. Define all spacing values as multiples of 4px. Create a visual swatch for each:
+            <table class="ref-table">
+              <thead><tr><th>Token Name</th><th>Value</th><th>Use Case</th></tr></thead>
+              <tbody>
+                <tr><td>space-1</td><td>4px</td><td>Icon padding, tight gaps</td></tr>
+                <tr><td>space-2</td><td>8px</td><td>Small component padding</td></tr>
+                <tr><td>space-3</td><td>12px</td><td>Input padding vertical</td></tr>
+                <tr><td>space-4</td><td>16px</td><td>Card inner padding, section gaps</td></tr>
+                <tr><td>space-5</td><td>20px</td><td>Medium component spacing</td></tr>
+                <tr><td>space-6</td><td>24px</td><td>Button padding horizontal</td></tr>
+                <tr><td>space-8</td><td>32px</td><td>Section dividers</td></tr>
+                <tr><td>space-10</td><td>40px</td><td>Large section gaps</td></tr>
+                <tr><td>space-12</td><td>48px</td><td>Page-level padding</td></tr>
+                <tr><td>space-16</td><td>64px</td><td>Hero sections, large gaps</td></tr>
+                <tr><td>space-20</td><td>80px</td><td>Section breaks</td></tr>
+                <tr><td>space-24</td><td>96px</td><td>Page header height</td></tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <strong>Install Tokens Studio for Figma</strong><br>
+            In Figma: Resources (Shift+I) → Plugins → search "Tokens Studio for Figma" → Install. Open the plugin. You will see a JSON token editor.
+          </li>
+          <li>
+            <strong>Create token sets</strong><br>
+            In Tokens Studio, create two token sets:
+            <br><br>
+            <code>global.json</code> — primitive values:
+            <pre><code>{
+  "color": {
+    "navy": {"value": "#1B3A6B", "type": "color"},
+    "gold": {"value": "#C8941A", "type": "color"},
+    "cream": {"value": "#F8F6F0", "type": "color"},
+    "success": {"value": "#2A9D8F", "type": "color"},
+    "warning": {"value": "#E9C46A", "type": "color"},
+    "error": {"value": "#E76F51", "type": "color"}
+  },
+  "spacing": {
+    "1": {"value": "4", "type": "spacing"},
+    "2": {"value": "8", "type": "spacing"},
+    "4": {"value": "16", "type": "spacing"},
+    "6": {"value": "24", "type": "spacing"}
+  }
+}</code></pre>
+            <code>semantic.json</code> — mapped semantic tokens:
+            <pre><code>{
+  "background": {"value": "{color.cream}", "type": "color"},
+  "text-primary": {"value": "{color.navy}", "type": "color"},
+  "primary": {"value": "{color.navy}", "type": "color"},
+  "accent": {"value": "{color.gold}", "type": "color"},
+  "border": {"value": "#D1D5DB", "type": "color"}
+}</code></pre>
+          </li>
+          <li>
+            <strong>Export tokens to CSS custom properties</strong><br>
+            Use Tokens Studio Export → JSON. Then manually convert to CSS:
+            <pre><code>:root {
+  /* Colors */
+  --color-primary: #1B3A6B;
+  --color-accent:  #C8941A;
+  --color-bg:      #F8F6F0;
+  --color-success: #2A9D8F;
+  --color-warning: #E9C46A;
+  --color-error:   #E76F51;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+}</code></pre>
+          </li>
+          <li>
+            <strong>Document each component with Anatomy labels</strong><br>
+            For each of your 8 components, add a documentation block in Figma showing:
+            <ul>
+              <li><strong>Anatomy:</strong> Frame with labelled arrows pointing to each part (e.g. for Button: Container, Label, Leading Icon, Trailing Icon)</li>
+              <li><strong>States diagram:</strong> All states in a row with labels</li>
+              <li><strong>Accessibility notes:</strong> Minimum touch target, colour contrast ratio, keyboard interaction</li>
+              <li><strong>When to use:</strong> 2–3 bullet points</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Developer handoff test</strong><br>
+            Share the design system URL. Pretend you are unavailable for 24 hours. Can a developer build a button from scratch using only your Figma file and the CSS tokens? If not, what is missing? Add it.
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- W11 -->
+  <div class="week-block adv" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <span class="week-num wn-adv">Week 11</span>
+      <h3>Implement Your Design in Code</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Bridge the gap between design and development by implementing one of your Figma screens as pixel-accurate HTML/CSS. This is the single most effective exercise for improving your handoff skills.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Choose your screen</strong><br>
+            Pick your best-designed mobile screen from any previous lab (the Checkout Cart or Confirmation screen works well). This should be a screen you are proud of — you will use it in your portfolio.
+          </li>
+          <li>
+            <strong>Set up the project</strong><br>
+            Create a folder: <code>ux-code-challenge/</code>. Inside: <code>index.html</code>, <code>style.css</code>. No frameworks (no Bootstrap, no Tailwind). The goal is to understand CSS deeply.
+          </li>
+          <li>
+            <strong>Measure from Figma Inspect panel</strong><br>
+            Click each element in Figma, open the Inspect tab (right panel). Extract:
+            <ul>
+              <li>Exact pixel values for padding and margins</li>
+              <li>Font size, weight, line-height, letter-spacing</li>
+              <li>Hex colour codes (copy directly from colour style)</li>
+              <li>Border radius, border width, box-shadow values</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Write CSS custom properties first</strong><br>
+            Before writing any layout CSS, declare all values as variables:
+            <pre><code>:root {
+  --primary: #1B3A6B;
+  --accent:  #C8941A;
+  --text:    #1A1A2E;
+  --muted:   #6B7280;
+  --bg:      #F8F6F0;
+  --radius:  8px;
+  --shadow:  0 4px 16px rgba(0,0,0,.08);
+
+  --font-h3: 600 18px/28px system-ui, sans-serif;
+  --font-body: 400 14px/22px system-ui, sans-serif;
+}</code></pre>
+          </li>
+          <li>
+            <strong>Build the layout in HTML/CSS</strong><br>
+            Target a 390px wide mobile frame. Use:
+            <ul>
+              <li>Flexbox for component interiors (button label + icon, form fields + label)</li>
+              <li>Block flow for vertical page structure</li>
+              <li>Fixed bottom CTA: <code>position: fixed; bottom: 0; left: 0; right: 0;</code></li>
+            </ul>
+          </li>
+          <li>
+            <strong>Side-by-side comparison</strong><br>
+            Take a screenshot of your Figma design. Take a screenshot of your browser at 390px width. Put them side-by-side (in Figma, Canva, or literally on your screen). Measure the differences. Common gaps:
+            <ul>
+              <li><strong>Letter-spacing:</strong> Figma shows it as a number (e.g. 50). CSS uses <code>em</code>: divide by 1000 → <code>letter-spacing: 0.05em</code></li>
+              <li><strong>Line-height:</strong> Figma shows px (28px). CSS prefers unitless ratio: 28/18 = 1.56 → <code>line-height: 1.56</code></li>
+              <li><strong>Font rendering:</strong> slightly different on macOS vs Windows</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Add focus states for accessibility</strong><br>
+            Add to your CSS:
+            <pre><code>:focus-visible {
+  outline: 2px solid #C8941A;
+  outline-offset: 2px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}</code></pre>
+            Test by pressing Tab on your page — every interactive element should show a visible focus indicator.
+          </li>
+          <li>
+            <strong>Lighthouse Accessibility audit</strong><br>
+            In Chrome: F12 → Lighthouse tab → select Accessibility → Analyse page load. Fix all issues until score is <strong>≥ 90</strong>. Common fixes:
+            <ul>
+              <li>Add <code>alt</code> attribute to all <code>&lt;img&gt;</code> tags</li>
+              <li>Add <code>&lt;label&gt;</code> elements for all form inputs</li>
+              <li>Ensure colour contrast ≥ 4.5:1 for body text (check with WebAIM Contrast Checker)</li>
+              <li>Add <code>role="main"</code> or semantic HTML5 elements (<code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>)</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Mobile test in DevTools</strong><br>
+            Chrome DevTools (F12) → click the device toggle icon → select 360×800 (Android common) → check the layout. Does text overflow? Is the CTA button accessible? Do images scale correctly? Fix any issues found.
+          </li>
+        </ol>
+      </div>
+      <div class="sm-sec">
+        <h4>Deliverable Check</h4>
+        <ul>
+          <li>HTML/CSS implementation of one Figma screen (no framework)</li>
+          <li>Side-by-side comparison screenshot showing close match</li>
+          <li>Focus states visible on Tab navigation</li>
+          <li>Lighthouse Accessibility score ≥ 90</li>
+          <li>Renders correctly at 360×800 px</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- W12 -->
+  <div class="week-block adv" id="w12">
+    <div class="week-header" onclick="toggleWeek('w12')">
+      <span class="week-num wn-adv">Week 12</span>
+      <h3>UX Case Study &amp; Portfolio</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Lab Objective</h4>
+        <p>Transform your best project into a published UX case study. Build a portfolio that gets you interviews — not just one that looks nice.</p>
+      </div>
+      <div class="sm-sec">
+        <h4>Step-by-Step Instructions</h4>
+        <ol class="lab-steps">
+          <li>
+            <strong>Choose your best project</strong><br>
+            Select one project from this programme where you have the most complete process documentation: research findings, wireframes, prototypes, and test results. The Mobile Checkout App (Weeks 7–8) or the Design Sprint (Week 9) are strong choices if you have all artefacts.
+          </li>
+          <li>
+            <strong>Write the case study using this exact template</strong><br>
+            <div class="ref-card">
+              <p><strong>Title + 1-line summary</strong><br>
+              Example: <em>Redesigning IRCTC Checkout — Reducing booking time for first-time users by 40%</em></p>
+
+              <p><strong>The Problem</strong> (1 paragraph)<br>
+              Who is the user? What specific problem are they experiencing? Why does it matter?<br>
+              Example: <em>First-time IRCTC users spend an average of 12 minutes booking a ticket because the train results screen shows 8 columns of data with no clear prioritisation. Many abandon the process when they encounter waitlist codes they do not understand.</em></p>
+
+              <p><strong>My Role</strong><br>
+              Your responsibilities, team size (solo or pair), timeline (e.g. 5-day sprint in Week 9)</p>
+
+              <p><strong>Research</strong><br>
+              Methods: usability observation, think-aloud, journey mapping<br>
+              Key Findings (3 bullets): e.g. "6 of 8 participants did not understand 'GNWL' waitlist code"</p>
+
+              <p><strong>Key Insight</strong><br>
+              The single finding that reframed your design direction.<br>
+              Example: <em>"Users were not overwhelmed by the number of trains — they were overwhelmed by having to decode availability codes while also comparing prices. Separating these two decisions fixed 70% of the confusion."</em></p>
+
+              <p><strong>Ideation</strong> — show 3 concepts you explored (Crazy 8s sketches)</p>
+
+              <p><strong>Design Solution</strong> — show final screens with 1-sentence rationale per key decision</p>
+
+              <p><strong>Prototype</strong> — embed Figma link (embed code or clickable link)</p>
+
+              <p><strong>Testing &amp; Iteration</strong> — what you tested, what changed, evidence of improvement</p>
+
+              <p><strong>Outcome</strong> — metrics if available, key lessons, what you would do differently</p>
+            </div>
+          </li>
+          <li>
+            <strong>Publish on Behance</strong><br>
+            Create a free account at behance.net. Click "Create Project". Upload your case study as a series of images (export Figma frames as PNG at 2×). Fill in all project details: title, description, tools used, tags (UX Design, Figma, Usability Testing, Mobile, India). Set visibility to Public.
+          </li>
+          <li>
+            <strong>Create a Notion portfolio as backup</strong><br>
+            notion.so → New page → "Portfolio". Add a gallery view. For each project: cover image, case study content in collapsible sections, embedded Figma link, Behance link. Share as a public page and get the URL.
+          </li>
+          <li>
+            <strong>Apply the portfolio checklist</strong><br>
+            Review your portfolio against these criteria:
+            <ul>
+              <li>✅ First 3 seconds: is it clear who you are and what you do?</li>
+              <li>✅ At least 2 full case studies showing end-to-end process</li>
+              <li>✅ Real process shown — research findings, sketches, iterations</li>
+              <li>✅ Contact information visible on the home page</li>
+              <li>✅ Each case study starts with the problem, not the final screens</li>
+              <li>✅ Metrics or user quotes wherever possible (even from classroom testing)</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Get feedback and revise</strong><br>
+            Share your Behance link with 2 classmates. Ask them: "After reading this, can you tell me what the design problem was? Does my solution make sense? Is anything unclear?" Revise based on at least one piece of their feedback before submitting.
+          </li>
+        </ol>
+      </div>
+      <div class="sm-sec">
+        <h4>Deliverable Check</h4>
+        <ul>
+          <li>Published case study on Behance (public URL)</li>
+          <li>Notion portfolio page as backup (public URL)</li>
+          <li>Case study follows the provided template structure</li>
+          <li>Revised based on peer feedback (note what changed)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

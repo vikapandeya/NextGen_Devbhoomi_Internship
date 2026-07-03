@@ -1,0 +1,820 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lab-card{background:rgba(0,0,0,.03);border-radius:10px;padding:18px 20px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08);}
+.lab-card h4{margin:0 0 8px;display:flex;align-items:center;gap:8px;}
+.lab-meta{display:flex;gap:16px;margin-bottom:14px;font-size:.85rem;color:#666;flex-wrap:wrap;}
+.lab-meta span{background:rgba(0,0,0,.07);border-radius:20px;padding:2px 10px;}
+.step-list{counter-reset:step;list-style:none;padding:0;margin:10px 0;}
+.step-list li{counter-increment:step;padding:8px 0 8px 44px;position:relative;border-bottom:1px dashed rgba(0,0,0,.07);}
+.step-list li:last-child{border-bottom:none;}
+.step-list li::before{content:counter(step);position:absolute;left:0;top:8px;background:var(--clr-accent,#2563eb);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;}
+.tip-box{background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.25);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.9rem;}
+.tip-box strong{color:var(--clr-accent,#2563eb);}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">🔬 Lab Guide — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; LAB GUIDE (BEGINNER)
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Concept Notes</a>
+    <a href="lab_guide_intermediate.html">🔬 Intermediate Labs</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="hero-icon">🔬</div>
+    <div class="hero-text">
+      <h2>Lab Guide — Beginner Level</h2>
+      <p>Hands-on Google Colab notebooks — from first dataset to your first ML classifier and regressor.</p>
+      <div class="hero-pills">
+        <span class="pill">Google Colab</span>
+        <span class="pill">Iris &amp; Titanic</span>
+        <span class="pill">Logistic Regression</span>
+        <span class="pill">Random Forest</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- W1 -->
+  <div class="week-block" id="w1">
+    <div class="week-header" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <h3>Week 1 — Environment Setup &amp; First Dataset</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 1 — Google Colab Setup &amp; Iris Exploration</h4>
+        <div class="lab-meta">
+          <span>⏱ 45 minutes</span>
+          <span>📊 Iris Dataset</span>
+          <span>🎯 Environment, EDA, Visualization</span>
+        </div>
+        <p>Get your ML environment running and perform your first exploratory data analysis on the classic Iris flower dataset.</p>
+        <ol class="step-list">
+          <li>Open <strong>colab.research.google.com</strong> → click <strong>+ New notebook</strong></li>
+          <li>Runtime → Change runtime type → Hardware accelerator → <strong>T4 GPU</strong> → Save</li>
+          <li>Verify GPU: run <code>!nvidia-smi</code> — confirm Tesla T4 appears</li>
+          <li>Import libraries:
+            <pre><code>>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_iris
+print("Libraries ready!")</code></pre>
+          </li>
+          <li>Load dataset:
+            <pre><code>>iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df['species'] = iris.target
+df['species_name'] = df['species'].map({0:'setosa',1:'versicolor',2:'virginica'})
+print(df.shape)   # Should be (150, 6)</code></pre>
+          </li>
+          <li>Explore data:
+            <pre><code>>print(df.head(10))
+print("\nData types:")
+print(df.dtypes)
+print("\nDescriptive statistics:")
+print(df.describe())
+print("\nClass distribution:")
+print(df['species_name'].value_counts())</code></pre>
+          </li>
+          <li>Check for missing values:
+            <pre><code>>print("\nMissing values per column:")
+print(df.isnull().sum())
+# Should be 0 — Iris is perfectly clean</code></pre>
+          </li>
+          <li>Scatter plot — first visualization:
+            <pre><code>>plt.figure(figsize=(8, 5))
+sns.scatterplot(
+    data=df,
+    x='sepal length (cm)',
+    y='sepal width (cm)',
+    hue='species_name',
+    palette='Set2',
+    s=80, alpha=0.8
+)
+plt.title('Iris Dataset — Sepal Dimensions by Species')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Pairplot — see all feature relationships:
+            <pre><code>>g = sns.pairplot(df.drop('species', axis=1),
+                 hue='species_name', palette='Set2',
+                 diag_kind='kde', plot_kws={'alpha':0.6})
+g.fig.suptitle('Iris Pairplot — All Feature Combinations', y=1.02)
+plt.show()
+# Note: petal length and petal width separate species very well!</code></pre>
+          </li>
+          <li>Save notebook: File → Download → Download .ipynb</li>
+        </ol>
+        <div class="tip-box"><strong>Expected outcome:</strong> Scatter plot shows setosa clearly separated from versicolor and virginica. Petal dimensions are more discriminative than sepal dimensions. No missing values — real datasets are rarely this clean!</div>
+      </div>
+
+    </div>
+  </div><!-- /W1 -->
+
+  <!-- W2 -->
+  <div class="week-block" id="w2">
+    <div class="week-header" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <h3>Week 2 — Python for Data Science &amp; EDA</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 2A — pandas DataFrame Fundamentals</h4>
+        <div class="lab-meta">
+          <span>⏱ 40 minutes</span>
+          <span>📊 Titanic Dataset</span>
+          <span>🎯 pandas, Data Cleaning, EDA</span>
+        </div>
+        <p>Work with the Titanic dataset to master the core pandas operations you'll use on every ML project: loading, filtering, grouping, and handling missing values.</p>
+        <ol class="step-list">
+          <li>Load the Titanic dataset via seaborn:
+            <pre><code>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset('titanic')
+print("Shape:", df.shape)
+print("\nFirst 5 rows:")
+print(df.head())</code></pre>
+          </li>
+          <li>Inspect the data types and missing values:
+            <pre><code>print("\nColumn dtypes:")
+print(df.dtypes)
+print("\nMissing values per column:")
+print(df.isnull().sum().sort_values(ascending=False))
+print("\nMissing %:")
+print((df.isnull().sum()/len(df)*100).round(1).sort_values(ascending=False))</code></pre>
+          </li>
+          <li>Filter rows using boolean indexing:
+            <pre><code># Survivors only
+survivors = df[df['survived'] == 1]
+print("Survivors:", len(survivors))
+
+# First class passengers who survived
+fc_survivors = df[(df['pclass'] == 1) & (df['survived'] == 1)]
+print("First class survivors:", len(fc_survivors))
+
+# Women and children
+women_children = df[(df['sex'] == 'female') | (df['age'] < 16)]
+print("Women and children:", len(women_children))</code></pre>
+          </li>
+          <li>GroupBy aggregation — survival rates:
+            <pre><code>print("\nSurvival rate by passenger class:")
+print(df.groupby('pclass')['survived'].mean().round(3))
+
+print("\nSurvival rate by sex:")
+print(df.groupby('sex')['survived'].mean().round(3))
+
+print("\nAverage fare by class and sex:")
+print(df.groupby(['pclass','sex'])['fare'].mean().round(2))</code></pre>
+          </li>
+          <li>Handle missing values:
+            <pre><code># Age has ~20% missing — fill with median by passenger class
+df['age'] = df.groupby('pclass')['age'].transform(
+    lambda x: x.fillna(x.median())
+)
+
+# Embarked has 2 missing — fill with mode
+df['embarked'] = df['embarked'].fillna(df['embarked'].mode()[0])
+
+# Drop 'deck' — 77% missing, not recoverable
+df = df.drop(columns=['deck'])
+
+print("Missing after cleaning:")
+print(df.isnull().sum())</code></pre>
+          </li>
+          <li>Visualize survival by multiple factors:
+            <pre><code>fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+# Survival by class
+df.groupby('pclass')['survived'].mean().plot(kind='bar', ax=axes[0], color=['#e74c3c','#f39c12','#27ae60'])
+axes[0].set_title('Survival Rate by Class')
+axes[0].set_ylabel('Survival Rate')
+axes[0].tick_params(axis='x', rotation=0)
+
+# Survival by sex
+df.groupby('sex')['survived'].mean().plot(kind='bar', ax=axes[1], color=['#3498db','#e74c3c'])
+axes[1].set_title('Survival Rate by Sex')
+axes[1].tick_params(axis='x', rotation=0)
+
+# Age distribution of survivors vs non-survivors
+df[df['survived']==1]['age'].hist(ax=axes[2], alpha=0.6, label='Survived', bins=20, color='green')
+df[df['survived']==0]['age'].hist(ax=axes[2], alpha=0.6, label='Did not survive', bins=20, color='red')
+axes[2].set_title('Age Distribution by Survival')
+axes[2].legend()
+
+plt.tight_layout()
+plt.savefig('titanic_eda.png', bbox_inches='tight')
+plt.show()</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Key findings to note:</strong> First class passengers survived at ~63%, vs ~24% for third class. Women survived at ~74% vs men at ~19%. Young children (age &lt;10) had higher survival rates. These patterns demonstrate why EDA is essential before any ML work — you discover what features actually matter.</div>
+      </div>
+
+      <div class="lab-card">
+        <h4>🧪 Lab 2B — NumPy Vectorized Operations</h4>
+        <div class="lab-meta">
+          <span>⏱ 25 minutes</span>
+          <span>🔢 NumPy Arrays</span>
+          <span>🎯 Array Operations, Speed Comparison</span>
+        </div>
+        <p>Understand why NumPy is the foundation of ML by comparing it to pure Python loops.</p>
+        <ol class="step-list">
+          <li>Create and inspect arrays:
+            <pre><code>import numpy as np
+
+a = np.array([1, 2, 3, 4, 5], dtype=np.float64)
+b = np.arange(1, 101)   # 1 to 100
+c = np.linspace(0, 1, 11)  # 0.0, 0.1, ..., 1.0
+
+print("a:", a, "| dtype:", a.dtype)
+print("b shape:", b.shape, "| sum:", b.sum())
+print("c:", c)</code></pre>
+          </li>
+          <li>Speed test — NumPy vs Python loop:
+            <pre><code>import time
+
+N = 1_000_000
+arr = np.random.rand(N)
+lst = list(arr)
+
+# Python loop
+start = time.time()
+total = sum(x**2 for x in lst)
+print(f"Python loop: {time.time()-start:.4f}s")
+
+# NumPy vectorized
+start = time.time()
+total = np.sum(arr**2)
+print(f"NumPy vectorized: {time.time()-start:.4f}s")
+# NumPy is typically 50-100x faster</code></pre>
+          </li>
+          <li>Matrix operations (used in neural networks):
+            <pre><code>X = np.random.randn(100, 5)    # 100 samples, 5 features
+W = np.random.randn(5, 3)      # weight matrix: 5→3 neurons
+b = np.zeros((1, 3))           # bias
+
+output = X @ W + b   # matrix multiply + broadcast
+print("Input shape:", X.shape)
+print("Weight shape:", W.shape)
+print("Output shape:", output.shape)  # (100, 3)</code></pre>
+          </li>
+          <li>Boolean masking (same concept as pandas filtering):
+            <pre><code>grades = np.array([45, 72, 88, 34, 91, 60, 55, 78])
+passed = grades[grades >= 60]
+print("Passed:", passed)
+print("Pass rate:", (grades >= 60).mean().round(2))</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Why this matters for ML:</strong> Every ML framework (scikit-learn, TensorFlow, PyTorch) represents data as NumPy arrays internally. Understanding array shapes, broadcasting, and vectorization will help you debug dimension errors and understand what your model is doing mathematically.</div>
+      </div>
+
+    </div>
+  </div><!-- /W2 -->
+
+  <!-- W3 -->
+  <div class="week-block" id="w3">
+    <div class="week-header" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <h3>Week 3 — Data Preprocessing Labs</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 2 — Data Preprocessing: Titanic Dataset</h4>
+        <div class="lab-meta">
+          <span>⏱ 60 minutes</span>
+          <span>📊 Titanic (seaborn)</span>
+          <span>🎯 Missing values, encoding, feature selection</span>
+        </div>
+        <p>Clean and prepare the famously messy Titanic dataset for machine learning. This mirrors real-world data preprocessing workflows.</p>
+        <ol class="step-list">
+          <li>Load and audit:
+            <pre><code>>import seaborn as sns
+import pandas as pd
+import numpy as np
+
+df = sns.load_dataset('titanic')
+print(f"Shape: {df.shape}")        # (891, 15)
+print("\nMissing values:")
+print(df.isnull().sum().sort_values(ascending=False))
+print("\nMissing percentage:")
+print((df.isnull().mean()*100).sort_values(ascending=False).round(1))</code></pre>
+          </li>
+          <li>Drop deck column (77% missing — too much to impute):
+            <pre><code>>df.drop(columns=['deck'], inplace=True)
+print(f"Shape after dropping deck: {df.shape}")</code></pre>
+          </li>
+          <li>Remove duplicate rows:
+            <pre><code>>print(f"Duplicates before: {df.duplicated().sum()}")
+df.drop_duplicates(inplace=True)
+print(f"Duplicates after: {df.duplicated().sum()}")</code></pre>
+          </li>
+          <li>Fill age with median (robust to outliers):
+            <pre><code>>age_median = df['age'].median()
+print(f"Age median: {age_median:.1f}")
+df['age'].fillna(age_median, inplace=True)
+print(f"Age nulls remaining: {df['age'].isnull().sum()}")</code></pre>
+          </li>
+          <li>Fill embarked with mode:
+            <pre><code>>emb_mode = df['embarked'].mode()[0]
+print(f"Embarked mode: {emb_mode}")
+df['embarked'].fillna(emb_mode, inplace=True)
+df['embark_town'].fillna(df['embark_town'].mode()[0], inplace=True)</code></pre>
+          </li>
+          <li>Encode sex (binary):
+            <pre><code>>df['sex_enc'] = (df['sex'] == 'male').astype(int)
+print(df[['sex', 'sex_enc']].head(8))</code></pre>
+          </li>
+          <li>One-hot encode embarked:
+            <pre><code>>embarked_dummies = pd.get_dummies(df['embarked'], prefix='emb', drop_first=True)
+df = pd.concat([df, embarked_dummies], axis=1)
+print(df[['embarked','emb_Q','emb_S']].head())</code></pre>
+          </li>
+          <li>Select final feature set:
+            <pre><code>>features = ['pclass','sex_enc','age','sibsp','parch','fare','emb_Q','emb_S']
+X = df[features].copy()
+y = df['survived'].copy()
+print(f"X shape: {X.shape}")
+print(f"y distribution:\n{y.value_counts()}")
+print(f"\nAny remaining nulls in X:\n{X.isnull().sum()}")</code></pre>
+          </li>
+          <li>Visualize feature correlations:
+            <pre><code>>import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 7))
+corr = X.copy()
+corr['survived'] = y
+sns.heatmap(corr.corr(), annot=True, cmap='coolwarm', fmt='.2f', center=0)
+plt.title('Feature Correlation Matrix')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Check class balance:
+            <pre><code>>plt.figure(figsize=(5, 4))
+y.value_counts().plot.bar(color=['coral','steelblue'])
+plt.title('Survival Class Distribution')
+plt.xlabel('Survived (0=No, 1=Yes)')
+plt.ylabel('Count')
+plt.xticks(rotation=0)
+plt.tight_layout()
+plt.show()
+# ~62% died (0), 38% survived (1) — moderately imbalanced</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Key insight:</strong> pclass, sex_enc, and age are the strongest predictors. fare has right-skewed distribution (consider log transform in advanced version). Always visualize correlations before modeling.</div>
+      </div>
+
+    </div>
+  </div><!-- /W3 -->
+
+  <!-- W4 -->
+  <div class="week-block" id="w4">
+    <div class="week-header" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <h3>Week 4 — First ML Models</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="lab-card">
+        <h4>🧪 Lab 3 — First Classifier: Titanic Survival Prediction</h4>
+        <div class="lab-meta">
+          <span>⏱ 75 minutes</span>
+          <span>📊 Titanic (preprocessed)</span>
+          <span>🎯 LogReg, RandomForest, metrics, confusion matrix</span>
+        </div>
+        <p>Train your first ML classifiers on the Titanic dataset and evaluate them properly. Continue from Lab 2's preprocessed data.</p>
+        <ol class="step-list">
+          <li>Split train/test (continue from Lab 2):
+            <pre><code>>from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"Train: {X_train.shape[0]}, Test: {X_test.shape[0]}")
+print(f"Train survival rate: {y_train.mean():.3f}")
+print(f"Test  survival rate: {y_test.mean():.3f}")</code></pre>
+          </li>
+          <li>Train Logistic Regression:
+            <pre><code>>from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
+lr_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('lr', LogisticRegression(max_iter=1000, random_state=42))
+])
+lr_pipe.fit(X_train, y_train)
+y_pred_lr = lr_pipe.predict(X_test)
+print("Logistic Regression trained!")</code></pre>
+          </li>
+          <li>Evaluate Logistic Regression:
+            <pre><code>>from sklearn.metrics import accuracy_score, classification_report
+
+print(f"LR Test Accuracy: {accuracy_score(y_test, y_pred_lr):.3f}")
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred_lr,
+      target_names=['Died', 'Survived']))</code></pre>
+          </li>
+          <li>Plot confusion matrix:
+            <pre><code>>from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+cm = confusion_matrix(y_test, y_pred_lr)
+disp = ConfusionMatrixDisplay(cm, display_labels=['Died', 'Survived'])
+fig, ax = plt.subplots(figsize=(5, 4))
+disp.plot(cmap='Blues', ax=ax)
+plt.title('Logistic Regression — Confusion Matrix')
+plt.tight_layout()
+plt.show()
+print(f"TP={cm[1,1]}, TN={cm[0,0]}, FP={cm[0,1]}, FN={cm[1,0]}")</code></pre>
+          </li>
+          <li>Train Random Forest:
+            <pre><code>>from sklearn.ensemble import RandomForestClassifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
+rf.fit(X_train, y_train)
+y_pred_rf = rf.predict(X_test)
+print(f"RF Test Accuracy: {accuracy_score(y_test, y_pred_rf):.3f}")</code></pre>
+          </li>
+          <li>Compare LR vs RF:
+            <pre><code>>import pandas as pd
+from sklearn.metrics import f1_score, roc_auc_score
+
+results = pd.DataFrame({
+    'Model': ['Logistic Regression', 'Random Forest'],
+    'Accuracy': [accuracy_score(y_test, y_pred_lr),
+                 accuracy_score(y_test, y_pred_rf)],
+    'F1 Score': [f1_score(y_test, y_pred_lr),
+                 f1_score(y_test, y_pred_rf)],
+    'ROC-AUC':  [roc_auc_score(y_test, lr_pipe.predict_proba(X_test)[:,1]),
+                 roc_auc_score(y_test, rf.predict_proba(X_test)[:,1])]
+}).round(3)
+print(results.to_string(index=False))</code></pre>
+          </li>
+          <li>Feature importance plot:
+            <pre><code>>import matplotlib.pyplot as plt
+
+feat_imp = pd.Series(rf.feature_importances_, index=features).sort_values()
+fig, ax = plt.subplots(figsize=(7, 5))
+feat_imp.plot.barh(ax=ax, color='steelblue')
+ax.set_xlabel('Feature Importance (Gini)')
+ax.set_title('Random Forest — Which Features Matter Most?')
+plt.tight_layout()
+plt.show()
+# sex_enc and fare should be among the most important</code></pre>
+          </li>
+          <li>Predict a specific passenger:
+            <pre><code>># Adult male, 3rd class, paid low fare
+passenger_1 = pd.DataFrame([[3, 1, 35, 0, 0, 7.25, 0, 1]], columns=features)
+# Adult female, 1st class, paid high fare
+passenger_2 = pd.DataFrame([[1, 0, 28, 1, 0, 100.0, 0, 0]], columns=features)
+
+for p, name in [(passenger_1, "Male 3rd class"), (passenger_2, "Female 1st class")]:
+    prob = rf.predict_proba(p)[0][1]
+    pred = "SURVIVED" if prob > 0.5 else "DIED"
+    print(f"{name}: {pred} (probability: {prob:.3f})")</code></pre>
+          </li>
+          <li>Save your model:
+            <pre><code>>import joblib
+joblib.dump(lr_pipe, 'titanic_lr_pipeline.pkl')
+joblib.dump(rf,      'titanic_rf_model.pkl')
+print("Models saved!")
+# Load test:
+rf_loaded = joblib.load('titanic_rf_model.pkl')
+print(f"Loaded model accuracy: {rf_loaded.score(X_test,y_test):.3f}")</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Expected results:</strong> Logistic Regression ~79–81% accuracy. Random Forest ~82–85% accuracy. sex_enc should be the most important feature — historically, women and children were rescued first.</div>
+      </div>
+
+      <div class="lab-card">
+        <h4>🧪 Lab 4 — Regression: California House Price Prediction</h4>
+        <div class="lab-meta">
+          <span>⏱ 60 minutes</span>
+          <span>📊 California Housing (sklearn)</span>
+          <span>🎯 LinearRegression, Ridge, RandomForestRegressor</span>
+        </div>
+        <p>Predict median house prices using regression models. Learn the key difference between regression and classification metrics.</p>
+        <ol class="step-list">
+          <li>Load and explore:
+            <pre><code>>from sklearn.datasets import fetch_california_housing
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+housing = fetch_california_housing()
+df = pd.DataFrame(housing.data, columns=housing.feature_names)
+df['price'] = housing.target    # Price in $100K units
+print(f"Shape: {df.shape}")     # (20640, 9)
+print(df.describe().round(3))</code></pre>
+          </li>
+          <li>Plot price distribution:
+            <pre><code>>fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+ax1.hist(df['price'], bins=50, color='steelblue', edgecolor='white')
+ax1.set_title('House Price Distribution (raw)')
+ax1.set_xlabel('Price ($100K)')
+ax2.hist(np.log1p(df['price']), bins=50, color='coral', edgecolor='white')
+ax2.set_title('Log-Price Distribution (more normal)')
+ax2.set_xlabel('log(Price + 1)')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Correlation heatmap:
+            <pre><code>>plt.figure(figsize=(10, 7))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f', center=0)
+plt.title('Feature Correlation with House Price')
+plt.tight_layout()
+plt.show()
+# MedInc (median income) has strongest correlation with price</code></pre>
+          </li>
+          <li>Prepare features:
+            <pre><code>>from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X = df.drop('price', axis=1)
+y = df['price']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s  = scaler.transform(X_test)</code></pre>
+          </li>
+          <li>Train 3 regressors:
+            <pre><code>>from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+
+models = {
+    'Linear Regression': LinearRegression(),
+    'Ridge (alpha=1.0)': Ridge(alpha=1.0),
+    'Random Forest':     RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
+}
+
+results = {}
+for name, model in models.items():
+    if name == 'Random Forest':
+        model.fit(X_train, y_train)    # Trees don't need scaling
+        y_pred = model.predict(X_test)
+    else:
+        model.fit(X_train_s, y_train)
+        y_pred = model.predict(X_test_s)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2   = r2_score(y_test, y_pred)
+    results[name] = {'RMSE': round(rmse, 3), 'R2': round(r2, 3)}
+
+print(pd.DataFrame(results).T.to_string())</code></pre>
+          </li>
+          <li>Visualize best model predictions:
+            <pre><code>>best_model = models['Random Forest']
+y_pred_rf = best_model.predict(X_test)
+
+plt.figure(figsize=(7, 6))
+plt.scatter(y_test, y_pred_rf, alpha=0.3, s=5, color='steelblue')
+plt.plot([y_test.min(), y_test.max()],
+         [y_test.min(), y_test.max()], 'r--', lw=2, label='Perfect prediction')
+plt.xlabel('Actual Price ($100K)')
+plt.ylabel('Predicted Price ($100K)')
+plt.title('Random Forest — Predicted vs Actual')
+plt.legend()
+plt.tight_layout()
+plt.show()
+# Points close to red diagonal = good predictions</code></pre>
+          </li>
+          <li>Analyze prediction errors:
+            <pre><code>>residuals = y_test - y_pred_rf
+plt.figure(figsize=(10, 4))
+plt.subplot(1,2,1)
+plt.hist(residuals, bins=50, color='coral', edgecolor='white')
+plt.xlabel('Residual (Actual - Predicted)')
+plt.title('Residual Distribution')
+
+plt.subplot(1,2,2)
+plt.scatter(y_pred_rf, residuals, alpha=0.2, s=5, color='steelblue')
+plt.axhline(0, color='red', linestyle='--')
+plt.xlabel('Predicted Price')
+plt.ylabel('Residual')
+plt.title('Residual vs Predicted')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+        </ol>
+        <div class="tip-box"><strong>Expected results:</strong> Linear Regression R²≈0.60, RMSE≈0.72. Ridge similar to LR. Random Forest R²≈0.81, RMSE≈0.50. RF does much better because house price relationships are non-linear.</div>
+      </div>
+
+      <div class="lab-card">
+        <h4>🧪 Lab 5 — Mini ML Report: Wine Quality Classification</h4>
+        <div class="lab-meta">
+          <span>⏱ 90 minutes</span>
+          <span>📊 Wine Dataset (sklearn)</span>
+          <span>🎯 Full ML pipeline, 3 models, structured notebook</span>
+        </div>
+        <p>Build a complete, structured ML analysis notebook on the Wine dataset — the kind of report you'd submit to a mentor or include in a portfolio.</p>
+        <ol class="step-list">
+          <li>Load Wine dataset:
+            <pre><code>>from sklearn.datasets import load_wine
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+wine = load_wine()
+df = pd.DataFrame(wine.data, columns=wine.feature_names)
+df['wine_class'] = wine.target
+df['class_name'] = df['wine_class'].map(dict(enumerate(wine.target_names)))
+print(df.shape)    # (178, 14)
+print(df['class_name'].value_counts())</code></pre>
+          </li>
+          <li>Add a Markdown cell — Problem Statement:
+            <pre><code>>## 🍷 Problem: Wine Variety Classification
+# Objective: Classify 178 wine samples into 3 grape varieties
+# using 13 chemical measurements (alcohol, malic acid, ash, etc.)
+#
+# Success metric: F1-macro score (balanced across all 3 classes)
+# Baseline: random classifier = 33.3% accuracy</code></pre>
+          </li>
+          <li>Section 2 — Data Overview:
+            <pre><code>>print("=== Data Overview ===")
+print(f"Samples: {df.shape[0]}, Features: {df.shape[1]-2}")
+print(f"Classes: {list(wine.target_names)}")
+print(f"\nClass distribution:")
+print(df['class_name'].value_counts().to_string())
+print(f"\nFeature types: {df.dtypes.value_counts().to_dict()}")
+print(f"Missing values: {df.isnull().sum().sum()}")
+print(f"\nFeature ranges:")
+print(df.drop(['wine_class','class_name'], axis=1).agg(['min','max','mean']).round(2))</code></pre>
+          </li>
+          <li>Section 3 — EDA (4 charts):
+            <pre><code>>fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Chart 1: Alcohol distribution by class
+for cls in wine.target_names:
+    axes[0,0].hist(df[df['class_name']==cls]['alcohol'],
+                   bins=15, alpha=0.6, label=cls)
+axes[0,0].set_title('Alcohol Distribution by Wine Class')
+axes[0,0].set_xlabel('Alcohol %')
+axes[0,0].legend()
+
+# Chart 2: Flavanoids boxplot by class
+df.boxplot(column='flavanoids', by='class_name', ax=axes[0,1],
+           patch_artist=True)
+axes[0,1].set_title('Flavanoids by Class')
+axes[0,1].set_xlabel('Wine Class')
+plt.sca(axes[0,1])
+plt.title('Flavanoids by Wine Class')
+
+# Chart 3: Correlation heatmap (top 6 features with target)
+top_feats = df.drop(['class_name'],axis=1).corr()['wine_class'].abs()
+top_feats = top_feats.drop('wine_class').nlargest(6).index.tolist()
+sns.heatmap(df[top_feats + ['wine_class']].corr(),
+            annot=True, cmap='coolwarm', fmt='.2f', ax=axes[1,0])
+axes[1,0].set_title('Top Feature Correlations')
+
+# Chart 4: Pairplot subset — alcohol, flavanoids, proline, color_intensity
+sns.scatterplot(data=df, x='alcohol', y='flavanoids',
+                hue='class_name', palette='Set2', ax=axes[1,1], s=60)
+axes[1,1].set_title('Alcohol vs Flavanoids (key separator)')
+
+plt.suptitle('Wine Dataset — EDA', y=1.02, fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.show()</code></pre>
+          </li>
+          <li>Section 4 — Preprocessing with Pipeline:
+            <pre><code>>from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer
+
+X = df.drop(['wine_class','class_name'], axis=1)
+y = df['wine_class']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"Train: {X_train.shape[0]}, Test: {X_test.shape[0]}")
+print(f"Class distribution (train): {pd.Series(y_train).value_counts().to_dict()}")</code></pre>
+          </li>
+          <li>Section 5 — Train 3 Classifiers:
+            <pre><code>>from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+
+classifiers = {
+    'Logistic Regression': Pipeline([
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler()),
+        ('clf', LogisticRegression(max_iter=1000, random_state=42))
+    ]),
+    'Random Forest': Pipeline([
+        ('imputer', SimpleImputer(strategy='median')),
+        ('clf', RandomForestClassifier(n_estimators=100, random_state=42))
+    ]),
+    'KNN (k=5)': Pipeline([
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler()),
+        ('clf', KNeighborsClassifier(n_neighbors=5))
+    ])
+}
+
+for name, pipe in classifiers.items():
+    pipe.fit(X_train, y_train)
+    print(f"{name}: trained")</code></pre>
+          </li>
+          <li>Section 6 — Compare results:
+            <pre><code>>from sklearn.metrics import accuracy_score, f1_score, classification_report
+
+comparison = []
+for name, pipe in classifiers.items():
+    y_pred = pipe.predict(X_test)
+    comparison.append({
+        'Model': name,
+        'Accuracy': round(accuracy_score(y_test, y_pred), 3),
+        'F1 Macro': round(f1_score(y_test, y_pred, average='macro'), 3),
+        'F1 Weighted': round(f1_score(y_test, y_pred, average='weighted'), 3)
+    })
+
+print(pd.DataFrame(comparison).to_string(index=False))
+print()
+best_name = max(comparison, key=lambda x: x['F1 Macro'])['Model']
+print(f"\nBest model: {best_name}")
+best_pipe = classifiers[best_name]
+print(classification_report(y_test, best_pipe.predict(X_test),
+                             target_names=wine.target_names))</code></pre>
+          </li>
+          <li>Section 7 — Write conclusion in Markdown:
+            <pre><code>>## 📝 Conclusion
+
+# Best Model: Random Forest
+# - Accuracy: ~97%, F1-Macro: ~97%
+# - No scaling needed (tree-based)
+# - Wine class 1 (Barolo) and class 2 (Grignolino) are most distinct
+# - Most important features: flavanoids, proline, color_intensity
+#
+# Next steps:
+# 1. Try XGBoost/LightGBM for potentially higher accuracy
+# 2. Hyperparameter tune Random Forest with GridSearchCV
+# 3. Investigate the 1-2 misclassified samples in detail</code></pre>
+          </li>
+          <li>Export: File → Download → Download .html (shareable report)</li>
+        </ol>
+        <div class="tip-box"><strong>Expected results:</strong> Random Forest typically achieves 97–100% accuracy on Wine (a clean, well-separated dataset). This demonstrates how powerful ensemble methods are even on small datasets.</div>
+      </div>
+
+    </div>
+  </div><!-- /W4 -->
+
+  <div class="bottom-nav">
+    <a href="concept_notes_beginner.html" class="btn btn-secondary">← Concept Notes</a>
+    <a href="lab_guide_intermediate.html" class="btn btn-primary">Intermediate Labs →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Lab Guide (Beginner) &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

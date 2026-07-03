@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Reference — Data Science & Analytics | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>@media print{.btn-print,.sm-header,.sm-domain-bar,.sm-footer{display:none;}}</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">⚡ Quick Reference</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; QUICK REFERENCE
+  <div class="dbar-links">
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+    <a href="lab_guide_advanced.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <button class="btn-print" onclick="window.print();return false;" style="float:right;margin-bottom:16px;">🖨️ Print</button>
+
+  <div class="level-hero adv">
+    <div class="lh-icon">⚡</div>
+    <div class="lh-text">
+      <h2>Quick Reference — Data Science &amp; Analytics</h2>
+      <p>Essential commands, patterns, and references for pandas, NumPy, Sklearn, SQL, and Visualization</p>
+      <div class="lh-pills">
+        <span class="lh-pill">pandas</span>
+        <span class="lh-pill">NumPy</span>
+        <span class="lh-pill">Sklearn</span>
+        <span class="lh-pill">SQL</span>
+        <span class="lh-pill">Visualization</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: pandas Essentials -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">1</span>
+      <span class="sm-sec-title">pandas Essentials</span>
+    </div>
+    <pre><code>import pandas as pd
+
+# Load &amp; inspect
+df = pd.read_csv('data.csv')
+df.head(5)      # first 5 rows
+df.tail(3)      # last 3 rows
+df.shape        # (rows, cols)
+df.info()       # dtypes + non-null counts
+df.describe()   # stats summary
+df.dtypes
+df.columns.tolist()
+
+# Select
+df['col']                                        # Series
+df[['col1', 'col2']]                             # DataFrame
+df.loc[0]                                        # by label
+df.iloc[0:5]                                     # by position
+df[df['age'] > 30]                               # filter rows
+df[(df['age'] > 30) &amp; (df['city'] == 'Delhi')]  # multiple conditions
+
+# Transform
+df.groupby('city')['sales'].sum()
+df.sort_values('price', ascending=False)
+df.rename(columns={'old': 'new'})
+df.drop('col', axis=1)
+df['col'] = df['col'].astype('int')
+
+# Missing values
+df.isnull().sum()
+df.dropna(subset=['col'])
+df['col'].fillna(df['col'].median(), inplace=True)
+
+# Export
+df.drop_duplicates(inplace=True)
+df.to_csv('clean.csv', index=False)
+df.to_json('out.json', orient='records')</code></pre>
+  </div>
+
+  <!-- Section 2: NumPy Essentials -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">2</span>
+      <span class="sm-sec-title">NumPy Essentials</span>
+    </div>
+    <pre><code>import numpy as np
+
+a = np.array([1, 2, 3, 4, 5])
+m = np.zeros((3, 4))             # all zeros
+m = np.ones((3, 4))              # all ones
+m = np.eye(3)                    # identity matrix
+r = np.arange(0, 10, 2)         # [0, 2, 4, 6, 8]
+l = np.linspace(0, 1, 5)        # 5 evenly spaced values between 0 and 1
+
+# Operations
+a.mean()       # average
+a.std()        # standard deviation
+a.sum()        # sum
+a.min()        # minimum
+a.max()        # maximum
+a.reshape(1, 5)
+a[a > 2]                         # boolean mask: [3, 4, 5]
+np.dot(a, b)                     # dot product
+np.concatenate([a, b])           # join arrays
+
+# Random
+np.random.seed(42)
+np.random.randn(100)             # standard normal distribution
+np.random.randint(0, 100, 50)   # 50 random ints between 0 and 99</code></pre>
+  </div>
+
+  <!-- Section 3: Visualization -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">3</span>
+      <span class="sm-sec-title">Visualization</span>
+    </div>
+    <pre><code>import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ── Matplotlib ──────────────────────────────────────────────────────────────
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+axes[0].plot(x, y, color='#1B3A6B', linewidth=2, label='Trend')
+axes[1].bar(categories, values, color='#C8941A')
+
+plt.hist(data, bins=30, edgecolor='white', color='steelblue')
+plt.scatter(x, y, alpha=0.6, c=labels, cmap='viridis', s=50)
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Title')
+plt.legend()
+plt.tight_layout()
+plt.savefig('chart.png', dpi=150, bbox_inches='tight')
+plt.show()
+
+# ── Seaborn ──────────────────────────────────────────────────────────────────
+sns.set_theme(style='whitegrid')
+
+sns.histplot(df['col'], kde=True, bins=30)
+sns.boxplot(x='category', y='value', data=df, palette='Set2')
+sns.scatterplot(x='x', y='y', hue='label', data=df)
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f', center=0)
+sns.pairplot(df, hue='target', diag_kind='kde')
+sns.barplot(x='cat', y='val', data=df, errorbar='sd')</code></pre>
+  </div>
+
+  <!-- Section 4: Scikit-learn Pipeline -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">4</span>
+      <span class="sm-sec-title">Scikit-learn Pipeline</span>
+    </div>
+    <pre><code>from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.metrics import (accuracy_score, classification_report,
+                             confusion_matrix, mean_squared_error, r2_score)
+
+# ── Split ────────────────────────────────────────────────────────────────────
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)
+
+# ── Preprocessor ─────────────────────────────────────────────────────────────
+num_pipe = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler',  StandardScaler()),
+])
+cat_pipe = Pipeline([
+    ('imputer', SimpleImputer(strategy='most_frequent')),
+    ('encoder', OneHotEncoder(handle_unknown='ignore')),
+])
+preprocessor = ColumnTransformer([
+    ('num', num_pipe, num_features),
+    ('cat', cat_pipe, cat_features),
+])
+
+# ── Full pipeline ─────────────────────────────────────────────────────────────
+model = Pipeline([
+    ('prep', preprocessor),
+    ('clf',  RandomForestClassifier(random_state=42)),
+])
+
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+# ── Evaluate ──────────────────────────────────────────────────────────────────
+print(accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+cv = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+print(f"CV: {cv.mean():.3f} ± {cv.std():.3f}")
+
+# ── Tune ──────────────────────────────────────────────────────────────────────
+param_grid = {
+    'clf__n_estimators': [100, 200],
+    'clf__max_depth':    [5, 10],
+}
+grid = GridSearchCV(model, param_grid, cv=3)
+grid.fit(X_train, y_train)
+print(grid.best_params_)</code></pre>
+  </div>
+
+  <!-- Section 5: SQL Quick Reference -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">5</span>
+      <span class="sm-sec-title">SQL Quick Reference</span>
+    </div>
+    <div class="table-wrap">
+      <table class="sm-table">
+        <thead>
+          <tr><th>Query Pattern</th><th>SQL</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Select with filter</td>
+            <td><code>SELECT col, COUNT(*) FROM t WHERE col &gt; 10 GROUP BY col HAVING COUNT(*) &gt; 5</code></td>
+          </tr>
+          <tr>
+            <td>JOIN</td>
+            <td><code>SELECT a.*, b.name FROM orders a LEFT JOIN customers b ON a.cust_id = b.id</code></td>
+          </tr>
+          <tr>
+            <td>CTE</td>
+            <td><code>WITH cte AS (SELECT ...) SELECT * FROM cte WHERE ...</code></td>
+          </tr>
+          <tr>
+            <td>Window — rank</td>
+            <td><code>SELECT col, RANK() OVER (PARTITION BY grp ORDER BY val DESC) AS rnk FROM t</code></td>
+          </tr>
+          <tr>
+            <td>Window — lag</td>
+            <td><code>SELECT date, sales, LAG(sales) OVER (ORDER BY date) AS prev_sales FROM t</code></td>
+          </tr>
+          <tr>
+            <td>Subquery</td>
+            <td><code>SELECT * FROM t WHERE id IN (SELECT id FROM t2 WHERE active = 1)</code></td>
+          </tr>
+          <tr>
+            <td>Update</td>
+            <td><code>UPDATE t SET col = val WHERE condition</code></td>
+          </tr>
+          <tr>
+            <td>Upsert (SQLite)</td>
+            <td><code>INSERT OR REPLACE INTO t(id, val) VALUES(?, ?)</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 6: Model Evaluation Metrics -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">6</span>
+      <span class="sm-sec-title">Model Evaluation Metrics</span>
+    </div>
+    <div class="table-wrap">
+      <table class="sm-table">
+        <thead>
+          <tr><th>Metric</th><th>Formula</th><th>Good For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Accuracy</td><td>(TP+TN) / Total</td><td>Balanced classes</td></tr>
+          <tr><td>Precision</td><td>TP / (TP+FP)</td><td>When false positives are costly</td></tr>
+          <tr><td>Recall</td><td>TP / (TP+FN)</td><td>When false negatives are costly</td></tr>
+          <tr><td>F1 Score</td><td>2·P·R / (P+R)</td><td>Imbalanced datasets</td></tr>
+          <tr><td>ROC-AUC</td><td>Area under ROC curve</td><td>Binary classification ranking</td></tr>
+          <tr><td>MAE</td><td>mean(|y − ŷ|)</td><td>Regression, robust to outliers</td></tr>
+          <tr><td>RMSE</td><td>√mean((y − ŷ)²)</td><td>Regression, penalizes large errors</td></tr>
+          <tr><td>R²</td><td>1 − SS_res / SS_tot</td><td>Proportion of variance explained</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 7: Python DS Libraries Table -->
+  <div class="sm-sec">
+    <div class="sm-sec-header">
+      <span class="sm-sec-num">7</span>
+      <span class="sm-sec-title">Python DS Libraries</span>
+    </div>
+    <div class="table-wrap">
+      <table class="sm-table">
+        <thead>
+          <tr><th>Library</th><th>Install</th><th>Key Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>pandas</td><td><code>pip install pandas</code></td><td>DataFrames, CSV/Excel, groupby</td></tr>
+          <tr><td>NumPy</td><td><code>pip install numpy</code></td><td>Arrays, linear algebra, random</td></tr>
+          <tr><td>Matplotlib</td><td><code>pip install matplotlib</code></td><td>Base plotting, subplots</td></tr>
+          <tr><td>Seaborn</td><td><code>pip install seaborn</code></td><td>Statistical charts, themes</td></tr>
+          <tr><td>scikit-learn</td><td><code>pip install scikit-learn</code></td><td>ML models, pipelines, evaluation</td></tr>
+          <tr><td>XGBoost</td><td><code>pip install xgboost</code></td><td>Gradient boosting, tabular data</td></tr>
+          <tr><td>statsmodels</td><td><code>pip install statsmodels</code></td><td>Stats tests, ARIMA, OLS</td></tr>
+          <tr><td>Plotly</td><td><code>pip install plotly</code></td><td>Interactive charts, dashboards</td></tr>
+          <tr><td>Dash</td><td><code>pip install dash</code></td><td>Web dashboards with Python</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <div class="sm-bottom-nav">
+    <a href="career_roadmap.html" class="btn-nav-secondary">← Career Roadmap</a>
+    <a href="../index.html" class="btn-nav-primary">← Study Portal</a>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Quick Reference &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Quick Reference | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.qr-section{margin-bottom:30px;}
+.qr-section h3{font-size:1.05rem;text-transform:uppercase;letter-spacing:.07em;color:#666;border-bottom:2px solid rgba(0,0,0,.1);padding-bottom:6px;margin-bottom:14px;}
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
+.qr-card{background:rgba(0,0,0,.03);border-radius:9px;padding:14px 16px;border:1px solid rgba(0,0,0,.08);}
+.qr-card h4{margin:0 0 6px;font-size:.93rem;}
+table.ref-table{width:100%;border-collapse:collapse;font-size:.87rem;}
+table.ref-table th,table.ref-table td{padding:7px 10px;border:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top;}
+table.ref-table th{background:rgba(0,0,0,.06);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;}
+table.ref-table tr:nth-child(even){background:rgba(0,0,0,.02);}
+.code-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:.83rem;overflow-x:auto;}
+.code-block .comment{color:#6c7086;}
+.code-block .kw{color:#cba6f7;}
+.code-block .fn{color:#89b4fa;}
+.code-block .str{color:#a6e3a1;}
+.formula-box{background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:12px 14px;margin:8px 0;font-size:.9rem;}
+.formula-box code{font-size:.95rem;font-weight:700;color:var(--clr-accent,#2563eb);}
+.btn-print{float:right;margin-bottom:16px;padding:8px 18px;border:1px solid rgba(0,0,0,.2);border-radius:7px;background:#fff;cursor:pointer;font-size:.88rem;font-weight:600;}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;clear:both;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+@media print{.btn-print,.sm-header,.sm-domain-bar,.sm-footer,.bottom-nav{display:none;}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">⚡ Quick Reference</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; QUICK REFERENCE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Beginner Notes</a>
+    <a href="concept_notes_advanced.html">📖 Advanced Notes</a>
+    <a href="career_roadmap.html">🗺️ Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="hero-icon">⚡</div>
+    <div class="hero-text">
+      <h2>Quick Reference — AI &amp; Machine Learning</h2>
+      <p>Everything you need in one place — formulas, sklearn patterns, model selection, metrics, and code snippets.</p>
+      <div class="hero-pills">
+        <span class="pill">Metrics Cheat Sheet</span>
+        <span class="pill">sklearn Patterns</span>
+        <span class="pill">Model Selection</span>
+        <span class="pill">Deep Learning</span>
+        <span class="pill">LLM API</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print();return false;">🖨️ Print</button>
+
+  <!-- Section 1: Key Formulas -->
+  <div class="qr-section">
+    <h3>1. Key Formulas &amp; Definitions</h3>
+    <div class="qr-grid">
+      <div class="qr-card">
+        <h4>Classification Metrics</h4>
+        <div class="formula-box"><code>Accuracy = (TP + TN) / Total</code></div>
+        <div class="formula-box"><code>Precision = TP / (TP + FP)</code></div>
+        <div class="formula-box"><code>Recall = TP / (TP + FN)</code></div>
+        <div class="formula-box"><code>F1 = 2 × (P × R) / (P + R)</code></div>
+        <p style="font-size:.82rem;color:#666;margin:6px 0 0;">TP=True Positive, FP=False Positive, FN=False Negative, TN=True Negative</p>
+      </div>
+
+      <div class="qr-card">
+        <h4>Regression Metrics</h4>
+        <div class="formula-box"><code>MSE = (1/n) Σ(yᵢ − ŷᵢ)²</code></div>
+        <div class="formula-box"><code>RMSE = √MSE</code></div>
+        <div class="formula-box"><code>MAE = (1/n) Σ|yᵢ − ŷᵢ|</code></div>
+        <div class="formula-box"><code>R² = 1 − SS_res/SS_tot</code></div>
+        <p style="font-size:.82rem;color:#666;margin:6px 0 0;">R²=1 perfect, R²=0 predicts mean, R²&lt;0 worse than mean</p>
+      </div>
+
+      <div class="qr-card">
+        <h4>Activation Functions</h4>
+        <div class="formula-box"><code>ReLU: f(x) = max(0, x)</code></div>
+        <div class="formula-box"><code>Sigmoid: σ(x) = 1/(1+e⁻ˣ)</code></div>
+        <div class="formula-box"><code>Tanh: f(x) = (eˣ−e⁻ˣ)/(eˣ+e⁻ˣ)</code></div>
+        <div class="formula-box"><code>Softmax: f(xᵢ) = eˣⁱ/Σeˣʲ</code></div>
+      </div>
+
+      <div class="qr-card">
+        <h4>Transformer Attention</h4>
+        <div class="formula-box"><code>Attention(Q,K,V) = softmax(QKᵀ/√d_k)·V</code></div>
+        <div class="formula-box"><code>TF-IDF(t,d) = TF(t,d) × log(N/df(t))</code></div>
+        <div class="formula-box"><code>Cross-Entropy = −Σyᵢ·log(ŷᵢ)</code></div>
+        <div class="formula-box"><code>Gini = 1 − Σpᵢ²</code></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: sklearn Cheat Sheet -->
+  <div class="qr-section">
+    <h3>2. sklearn API Cheat Sheet</h3>
+    <pre><code>># === LOAD DATA ===
+from sklearn.datasets import load_iris, load_breast_cancer, fetch_california_housing
+X, y = load_iris(return_X_y=True)
+
+# === SPLIT ===
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# === PREPROCESS ===
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.impute import SimpleImputer
+scaler  = StandardScaler()
+imputer = SimpleImputer(strategy='median')
+X_train_s = scaler.fit_transform(X_train)   # fit + transform on train
+X_test_s  = scaler.transform(X_test)        # ONLY transform on test
+
+# === PIPELINE ===
+from sklearn.pipeline import Pipeline
+pipe = Pipeline([('imputer', SimpleImputer()), ('scaler', StandardScaler()), ('clf', LogisticRegression())])
+pipe.fit(X_train, y_train)
+y_pred = pipe.predict(X_test)
+
+# === CROSS-VALIDATION ===
+from sklearn.model_selection import cross_val_score, StratifiedKFold
+scores = cross_val_score(pipe, X, y, cv=StratifiedKFold(5), scoring='roc_auc')
+print(f"{scores.mean():.3f} ± {scores.std():.3f}")
+
+# === TUNING ===
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+grid = GridSearchCV(RandomForestClassifier(), {'n_estimators':[100,200],'max_depth':[5,10]}, cv=5, n_jobs=-1)
+grid.fit(X_train, y_train)
+print(grid.best_params_, grid.best_score_)
+
+# === METRICS ===
+from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,
+                             classification_report, confusion_matrix,
+                             mean_squared_error, r2_score)
+print(classification_report(y_test, y_pred))
+print(f"AUC: {roc_auc_score(y_test, pipe.predict_proba(X_test)[:,1]):.3f}")
+
+# === SAVE/LOAD ===
+import joblib
+joblib.dump(pipe, 'model.pkl')
+loaded = joblib.load('model.pkl')</code></pre>
+  </div>
+
+  <!-- Section 3: Model Selection Guide -->
+  <div class="qr-section">
+    <h3>3. Model Selection Guide</h3>
+    <table class="ref-table">
+      <tr><th>Scenario</th><th>Start With</th><th>If More Accuracy Needed</th><th>Notes</th></tr>
+      <tr>
+        <td>Tabular classification, &lt;10K rows</td>
+        <td>LogisticRegression</td>
+        <td>RandomForestClassifier → XGBoost</td>
+        <td>Always try simplest model first. LR is hard to beat on clean, small data.</td>
+      </tr>
+      <tr>
+        <td>Tabular classification, &gt;10K rows</td>
+        <td>XGBoost / LightGBM</td>
+        <td>Stacking (LR + RF + XGB meta)</td>
+        <td>LightGBM faster on large data. XGBoost more stable. Both need early stopping.</td>
+      </tr>
+      <tr>
+        <td>Tabular regression</td>
+        <td>LinearRegression / Ridge</td>
+        <td>RandomForestRegressor → XGBoost</td>
+        <td>Check for linear relationship first. Log-transform skewed targets.</td>
+      </tr>
+      <tr>
+        <td>Image classification</td>
+        <td>MobileNetV2 (transfer learning)</td>
+        <td>EfficientNetB4 → fine-tuned ResNet</td>
+        <td>Never train CNN from scratch with &lt;10K images. Always use pretrained weights.</td>
+      </tr>
+      <tr>
+        <td>Text classification</td>
+        <td>TF-IDF + LogisticRegression</td>
+        <td>DistilBERT fine-tuned → BERT</td>
+        <td>TF-IDF is fast and interpretable. BERT adds 5–15% accuracy with GPU requirement.</td>
+      </tr>
+      <tr>
+        <td>Sequence generation / chat</td>
+        <td>Hugging Face pipeline (GPT-2)</td>
+        <td>Claude / GPT-4o API</td>
+        <td>For production: use Claude/GPT API. For custom: fine-tune Llama 3 or Mistral.</td>
+      </tr>
+      <tr>
+        <td>Clustering</td>
+        <td>KMeans (+ elbow + silhouette)</td>
+        <td>DBSCAN for non-spherical</td>
+        <td>Scale before KMeans. DBSCAN for outlier detection. Hierarchical for small datasets.</td>
+      </tr>
+      <tr>
+        <td>Anomaly detection</td>
+        <td>IsolationForest</td>
+        <td>DBSCAN (noise points) → AutoEncoder</td>
+        <td>IsolationForest is easy to use, no scaling needed, handles high dimensions well.</td>
+      </tr>
+      <tr>
+        <td>Time series forecasting</td>
+        <td>ARIMA / Prophet</td>
+        <td>XGBoost with lag features → LSTM</td>
+        <td>Feature engineering (lag, rolling stats) often beats complex models on business time series.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 4: Scaling & Encoding Rules -->
+  <div class="qr-section">
+    <h3>4. Scaling &amp; Encoding Quick Rules</h3>
+    <div class="qr-grid">
+      <div class="qr-card">
+        <h4>When to Scale</h4>
+        <table class="ref-table">
+          <tr><th>Algorithm</th><th>Needs Scaling?</th></tr>
+          <tr><td>Logistic Regression</td><td>✅ Yes (StandardScaler)</td></tr>
+          <tr><td>SVM</td><td>✅ Yes (StandardScaler)</td></tr>
+          <tr><td>KNN</td><td>✅ Yes (StandardScaler)</td></tr>
+          <tr><td>KMeans</td><td>✅ Yes (StandardScaler)</td></tr>
+          <tr><td>Neural Networks</td><td>✅ Yes (MinMax or Std)</td></tr>
+          <tr><td>PCA</td><td>✅ Yes (StandardScaler)</td></tr>
+          <tr><td>Decision Tree</td><td>❌ No (splits by threshold)</td></tr>
+          <tr><td>Random Forest</td><td>❌ No</td></tr>
+          <tr><td>XGBoost/LightGBM</td><td>❌ No</td></tr>
+          <tr><td>LinearRegression</td><td>⚠️ For coefficients only</td></tr>
+        </table>
+      </div>
+
+      <div class="qr-card">
+        <h4>Encoding Decision Tree</h4>
+        <ul style="font-size:.88rem;padding-left:16px;margin:0;">
+          <li style="padding:4px 0;"><strong>Binary (Male/Female):</strong> Label encode → 0/1</li>
+          <li style="padding:4px 0;"><strong>Ordinal (S/M/L/XL):</strong> Manual integer mapping {S:0, M:1, L:2, XL:3}</li>
+          <li style="padding:4px 0;"><strong>Nominal, low cardinality (&lt;10):</strong> One-Hot Encode (get_dummies, drop_first=True)</li>
+          <li style="padding:4px 0;"><strong>Nominal, high cardinality (&gt;10):</strong> Target encoding (mean of target per category, with CV to prevent leakage)</li>
+          <li style="padding:4px 0;"><strong>Datetime:</strong> Extract year, month, day_of_week, hour, is_weekend, is_holiday</li>
+          <li style="padding:4px 0;"><strong>Text:</strong> TF-IDF (fast, interpretable) or BERT embeddings (accurate)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Deep Learning Reference -->
+  <div class="qr-section">
+    <h3>5. Keras / PyTorch Quick Patterns</h3>
+    <pre><code>># === KERAS: Basic DNN ===
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+    layers.Dense(256, activation='relu', input_shape=(n_features,)),
+    layers.BatchNormalization(),
+    layers.Dropout(0.3),
+    layers.Dense(128, activation='relu'),
+    layers.Dropout(0.2),
+    layers.Dense(n_classes, activation='softmax')  # or 'sigmoid' for binary
+])
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+history = model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.15,
+                    callbacks=[keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)])
+
+# === KERAS: CNN ===
+model_cnn = keras.Sequential([
+    layers.Conv2D(32, (3,3), activation='relu', padding='same', input_shape=(28,28,1)),
+    layers.MaxPooling2D((2,2)),
+    layers.Conv2D(64, (3,3), activation='relu', padding='same'),
+    layers.GlobalAveragePooling2D(),
+    layers.Dense(10, activation='softmax')
+])
+
+# === KERAS: Transfer Learning ===
+base = keras.applications.MobileNetV2(input_shape=(224,224,3), include_top=False, weights='imagenet')
+base.trainable = False
+x = base.output
+x = layers.GlobalAveragePooling2D()(x)
+x = layers.Dense(256, activation='relu')(x)
+out = layers.Dense(n_classes, activation='softmax')(x)
+model_tl = keras.Model(base.input, out)
+
+# === PYTORCH: Basic Training Loop ===
+import torch, torch.nn as nn, torch.optim as optim
+
+model_pt = nn.Sequential(
+    nn.Linear(n_features, 256), nn.ReLU(), nn.Dropout(0.3),
+    nn.Linear(256, 128), nn.ReLU(),
+    nn.Linear(128, n_classes)
+).to(device)
+
+optimizer = optim.Adam(model_pt.parameters(), lr=1e-3)
+criterion = nn.CrossEntropyLoss()
+
+for epoch in range(epochs):
+    model_pt.train()
+    for X_batch, y_batch in dataloader:
+        X_batch, y_batch = X_batch.to(device), y_batch.to(device)
+        optimizer.zero_grad()
+        loss = criterion(model_pt(X_batch), y_batch)
+        loss.backward()
+        optimizer.step()</code></pre>
+  </div>
+
+  <!-- Section 6: LLM API Reference -->
+  <div class="qr-section">
+    <h3>6. LLM API — Claude &amp; Hugging Face Patterns</h3>
+    <pre><code>># === CLAUDE API (Anthropic) ===
+import anthropic, os
+client = anthropic.Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
+
+# Basic call
+msg = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Your prompt here"}]
+)
+print(msg.content[0].text)
+
+# With system prompt
+msg = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    system="You are an expert ML engineer. Be concise and technical.",
+    messages=[{"role": "user", "content": "Explain gradient descent in 3 bullets."}]
+)
+
+# Multi-turn conversation
+history = []
+history.append({"role": "user", "content": "What is overfitting?"})
+resp = client.messages.create(model="claude-3-5-sonnet-20241022", max_tokens=512, messages=history)
+history.append({"role": "assistant", "content": resp.content[0].text})
+history.append({"role": "user", "content": "How do I fix it?"})
+resp2 = client.messages.create(model="claude-3-5-sonnet-20241022", max_tokens=512, messages=history)
+
+# === HUGGING FACE PIPELINES ===
+from transformers import pipeline
+
+sentiment  = pipeline("sentiment-analysis")
+ner        = pipeline("token-classification", grouped_entities=True)
+qa         = pipeline("question-answering")
+summarizer = pipeline("summarization")
+zero_shot  = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+
+# Usage examples
+print(sentiment("This product is amazing!"))  # [{'label': 'POSITIVE', 'score': 0.999}]
+print(zero_shot("The Fed raised rates by 50bp", ["finance","sports","tech"]))
+print(qa(question="Who founded India?", context="India gained independence under Jawaharlal Nehru..."))
+print(summarizer("Long article text...", max_length=130, min_length=30))
+
+# === SENTENCE EMBEDDINGS ===
+from sentence_transformers import SentenceTransformer
+import numpy as np
+embedder = SentenceTransformer('all-MiniLM-L6-v2')  # 384-dim, fast
+vecs = embedder.encode(["sentence one", "sentence two"])  # shape (2, 384)
+similarity = np.dot(vecs[0], vecs[1]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[1]))</code></pre>
+  </div>
+
+  <!-- Section 7: MLOps Reference -->
+  <div class="qr-section">
+    <h3>7. MLOps Essentials — MLflow, FastAPI, Docker</h3>
+    <pre><code>># === MLFLOW ===
+import mlflow, mlflow.sklearn
+mlflow.set_experiment("my_experiment")
+
+with mlflow.start_run(run_name="rf_tuned"):
+    mlflow.log_params({"n_estimators": 100, "max_depth": 10})
+    mlflow.log_metric("test_auc", 0.923)
+    mlflow.sklearn.log_model(model, "model", registered_model_name="MyModel")
+
+# Compare runs:
+df = mlflow.search_runs(order_by=["metrics.test_auc DESC"])
+# Load model:
+loaded = mlflow.sklearn.load_model("models:/MyModel/1")
+
+# === FASTAPI MINIMAL ===
+from fastapi import FastAPI
+from pydantic import BaseModel
+import joblib
+
+app   = FastAPI()
+model = joblib.load("model.pkl")
+
+class Request(BaseModel):
+    feature1: float
+    feature2: int
+
+@app.post("/predict")
+def predict(req: Request):
+    X = [[req.feature1, req.feature2]]
+    prob = float(model.predict_proba(X)[0][1])
+    return {"probability": round(prob, 4), "prediction": "POSITIVE" if prob > 0.5 else "NEGATIVE"}
+
+@app.get("/health")
+def health(): return {"status": "ok"}
+
+# Run: uvicorn app:app --reload
+# Docs: http://localhost:8000/docs
+
+# === DOCKER ===
+# Dockerfile (minimal):
+# FROM python:3.11-slim
+# WORKDIR /app
+# COPY requirements.txt . && RUN pip install -r requirements.txt
+# COPY app.py model.pkl .
+# EXPOSE 8000
+# CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# Commands:
+# docker build -t myapp:v1 .
+# docker run -p 8000:8000 myapp:v1
+# docker push registry/myapp:v1
+
+# === KEY SKLEARN IMPORTS REFERENCE ===
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, StackingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC, SVR
+from sklearn.cluster import KMeans, DBSCAN
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score,
+                             roc_auc_score, classification_report, confusion_matrix,
+                             mean_squared_error, mean_absolute_error, r2_score,
+                             silhouette_score)
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.inspection import permutation_importance
+import joblib  # save/load models</code></pre>
+  </div>
+
+  <!-- Section 7: Common Errors -->
+  <div class="qr-section">
+    <h3>8. Common Errors &amp; Fixes</h3>
+    <table class="ref-table">
+      <tr><th>Error</th><th>Likely Cause</th><th>Fix</th></tr>
+      <tr>
+        <td><code>ValueError: Expected 2D array, got 1D array</code></td>
+        <td>Passing single sample as 1D array to predict()</td>
+        <td><code>model.predict([[val1, val2]])</code> — wrap in double brackets for 2D</td>
+      </tr>
+      <tr>
+        <td><code>NotFittedError: call fit before predict</code></td>
+        <td>Calling predict() on model/scaler before fit()</td>
+        <td>Always call <code>.fit(X_train, y_train)</code> before <code>.predict(X_test)</code></td>
+      </tr>
+      <tr>
+        <td><code>ConvergenceWarning: Increase max_iter</code></td>
+        <td>Logistic Regression didn't converge in default 100 iterations</td>
+        <td><code>LogisticRegression(max_iter=1000)</code> and StandardScaler your features</td>
+      </tr>
+      <tr>
+        <td>Model 100% train, 50% test accuracy</td>
+        <td>Overfitting — model memorized training data</td>
+        <td>Add max_depth, increase min_samples_leaf, add Dropout, use cross-validation</td>
+      </tr>
+      <tr>
+        <td>Same accuracy for all epochs in Keras</td>
+        <td>Learning rate too high, or wrong loss function</td>
+        <td>Use <code>categorical_crossentropy</code> (one-hot) or <code>sparse_categorical_crossentropy</code> (integer labels), reduce lr</td>
+      </tr>
+      <tr>
+        <td><code>CUDA out of memory</code></td>
+        <td>Batch size too large for GPU memory</td>
+        <td>Halve batch_size (32→16), use gradient checkpointing, or move to CPU</td>
+      </tr>
+      <tr>
+        <td>Model worse after adding more features</td>
+        <td>Curse of dimensionality or irrelevant noisy features</td>
+        <td>Feature selection (permutation importance), correlation threshold, PCA preprocessing</td>
+      </tr>
+      <tr>
+        <td>Data leakage — test accuracy too high</td>
+        <td>Scaler/imputer fit on full data before split</td>
+        <td>Use Pipeline and fit only on X_train. Never touch test data during preprocessing.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="career_roadmap.html" class="btn btn-secondary">← Career Roadmap</a>
+    <a href="../index.html" class="btn btn-primary">Study Portal →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Quick Reference &nbsp;·&nbsp; Batch 2026–27</footer>
+</body>
+</html>
+

@@ -1,0 +1,597 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Concept Notes (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.concept-box{background:rgba(0,0,0,.04);border-left:4px solid var(--clr-accent,#2563eb);border-radius:0 8px 8px 0;padding:14px 16px;margin:12px 0;}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+table.ref-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+table.ref-table th,table.ref-table td{padding:8px 10px;border:1px solid rgba(0,0,0,.15);text-align:left;}
+table.ref-table th{background:rgba(0,0,0,.08);}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">📖 Concept Notes — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; CONCEPT NOTES (ADVANCED)
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">📖 Intermediate Notes</a>
+    <a href="lab_guide_advanced.html">🔬 Lab Guide (Adv)</a>
+    <a href="quick_reference.html">⚡ Quick Reference</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="hero-icon">📖</div>
+    <div class="hero-text">
+      <h2>Concept Notes — Advanced Level</h2>
+      <p>Deep Learning, CNNs, Transformers, LLMs, Generative AI, and MLOps — production-grade AI systems.</p>
+      <div class="hero-pills">
+        <span class="pill">Neural Networks</span>
+        <span class="pill">CNNs &amp; Vision</span>
+        <span class="pill">Transformers &amp; LLMs</span>
+        <span class="pill">MLOps</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- W9 -->
+  <div class="week-block" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <div class="week-num wn-adv">W9</div>
+      <h3>Week 9 — Neural Networks &amp; Deep Learning</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>The Artificial Neuron</h4>
+      <p>A single neuron computes: <strong>output = activation( w₁x₁ + w₂x₂ + ... + wₙxₙ + b )</strong></p>
+      <p>Stacking neurons in layers creates a network that can approximate any continuous function (Universal Approximation Theorem). Depth enables hierarchical feature learning: raw pixels → edges → shapes → object parts → objects.</p>
+
+      <h4>Activation Functions</h4>
+      <ul>
+        <li><strong>ReLU:</strong> f(x) = max(0, x). Default for hidden layers. Computationally trivial, no vanishing gradient for positive x, produces sparse activations. Use in all hidden layers of feedforward and convolutional networks.</li>
+        <li><strong>Leaky ReLU:</strong> f(x) = max(0.01x, x). Fixes "dying ReLU" — neurons that produce 0 for all inputs and never recover during training (all gradients are 0).</li>
+        <li><strong>Sigmoid:</strong> σ(x) = 1/(1+e⁻ˣ). Output 0–1. Used in LSTM/GRU gates, binary classification output layer. Suffers severe vanishing gradients in deep networks.</li>
+        <li><strong>Tanh:</strong> f(x) = (eˣ−e⁻ˣ)/(eˣ+e⁻ˣ). Output −1 to 1. Zero-centered (better gradient flow than sigmoid). Used in RNN hidden states.</li>
+        <li><strong>Softmax:</strong> f(xᵢ) = eˣⁱ/Σeˣʲ. Converts raw logits to probability distribution summing to 1. Always used in multiclass output layer.</li>
+        <li><strong>GELU:</strong> Gaussian Error Linear Unit — smooth approximation of ReLU used in BERT, GPT, and all modern Transformers. Slightly better empirical performance on NLP tasks.</li>
+      </ul>
+
+      <h4>Backpropagation — Chain Rule</h4>
+      <p>Backprop computes ∂Loss/∂w for every weight using the chain rule, propagating gradients from output to input. Then gradient descent updates: <strong>w = w − η × ∂Loss/∂w</strong></p>
+      <pre><code>>import numpy as np
+
+# 2-layer neural net forward + backward pass (educational)
+def relu(x): return np.maximum(0, x)
+def relu_d(x): return (x > 0).astype(float)
+def sigmoid(x): return 1 / (1 + np.exp(-x))
+def sigmoid_d(x): s=sigmoid(x); return s*(1-s)
+
+np.random.seed(42)
+X = np.array([[0.5, 0.3]])   # 1 sample, 2 features
+y = np.array([[1.0]])
+
+W1 = np.random.randn(2, 4) * 0.1   # 2 inputs → 4 hidden
+b1 = np.zeros((1, 4))
+W2 = np.random.randn(4, 1) * 0.1   # 4 hidden → 1 output
+b2 = np.zeros((1, 1))
+lr = 0.01
+
+# Forward pass
+z1 = X @ W1 + b1       # (1,4) pre-activation
+a1 = relu(z1)          # (1,4) hidden layer output
+z2 = a1 @ W2 + b2      # (1,1) output pre-activation
+a2 = sigmoid(z2)       # (1,1) final probability
+
+# Binary Cross-Entropy Loss
+loss = -(y * np.log(a2 + 1e-9) + (1-y) * np.log(1-a2 + 1e-9))
+print(f"Loss before: {loss.item():.4f}")
+
+# Backward pass (chain rule)
+dL_da2 = -(y / a2) + (1-y) / (1-a2)
+dL_dz2 = dL_da2 * sigmoid_d(z2)
+dL_dW2 = a1.T @ dL_dz2
+dL_db2 = dL_dz2
+dL_da1 = dL_dz2 @ W2.T
+dL_dz1 = dL_da1 * relu_d(z1)
+dL_dW1 = X.T @ dL_dz1
+dL_db1 = dL_dz1
+
+# Update weights
+W1 -= lr * dL_dW1; b1 -= lr * dL_db1
+W2 -= lr * dL_dW2; b2 -= lr * dL_db2
+print("Backward pass complete — weights updated.")</code></pre>
+
+      <h4>Optimizers — From SGD to Adam</h4>
+      <ul>
+        <li><strong>SGD:</strong> Update with one random sample's gradient. Noisy but each step is fast. lr=0.01 typical. Converges slowly.</li>
+        <li><strong>SGD + Momentum:</strong> Exponential moving average of gradients. Builds speed in consistent directions, dampens oscillations. momentum=0.9 standard.</li>
+        <li><strong>RMSprop:</strong> Divides gradient by running RMS of squared gradients (per-parameter adaptive LR). Handles non-stationary objectives. Good for RNNs.</li>
+        <li><strong>Adam:</strong> Combines Momentum (first moment m̂) + RMSprop (second moment v̂). Default optimizer for almost all deep learning. β₁=0.9, β₂=0.999, ε=1e-8.</li>
+        <li><strong>AdamW:</strong> Adam + decoupled weight decay (L2 regularization applied separately, not through gradient). Preferred for Transformers. PyTorch's <code>AdamW</code>.</li>
+      </ul>
+
+      <h4>Regularization in Deep Learning</h4>
+      <pre><code>>import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+    layers.Dense(256, input_shape=(100,)),
+
+    # Batch Normalization: normalize layer inputs (mean≈0, std≈1 per batch)
+    # Benefits: faster training, higher learning rate, acts as regularization
+    # Place BEFORE activation (original paper) or after (common practice varies)
+    layers.BatchNormalization(),
+    layers.Activation('relu'),
+
+    # Dropout: randomly zeros p% of neurons during training
+    # Forces network to learn redundant representations → generalizes better
+    # rate=0.2–0.5 for Dense; 0.1–0.3 for Conv
+    layers.Dropout(0.3),
+
+    layers.Dense(128, activation='relu',
+                 kernel_regularizer=keras.regularizers.l2(1e-4)),  # L2 weight decay
+    layers.BatchNormalization(),
+    layers.Dropout(0.2),
+
+    layers.Dense(10, activation='softmax')
+])
+
+model.compile(
+    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+history = model.fit(
+    X_train, y_train, epochs=50, batch_size=32, validation_split=0.15,
+    callbacks=[
+        keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True),
+        keras.callbacks.ReduceLROnPlateau(factor=0.5, patience=3, verbose=1),
+        keras.callbacks.ModelCheckpoint('best_model.keras', save_best_only=True)
+    ]
+)
+print(f"Best val accuracy: {max(history.history['val_accuracy']):.3f}")</code></pre>
+
+    </div>
+  </div><!-- /W9 -->
+
+  <!-- W10 -->
+  <div class="week-block" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <div class="week-num wn-adv">W10</div>
+      <h3>Week 10 — CNNs &amp; Computer Vision</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>Why CNNs for Images?</h4>
+      <p>A 224×224×3 image = 150,528 values. A Dense layer with 1024 neurons needs 154M parameters — expensive and overfitting-prone. CNNs solve this with three key ideas:</p>
+      <ul>
+        <li><strong>Local Feature Detection:</strong> 3×3 or 5×5 filters look at small regions at a time. Early layers learn edges and gradients, middle layers learn shapes and textures, deep layers learn semantic parts (eyes, wheels, fins).</li>
+        <li><strong>Weight Sharing:</strong> The same 3×3 filter (9 weights) slides across the entire image. A 32-filter Conv2D layer needs only 32×9 = 288 parameters regardless of image size.</li>
+        <li><strong>Translation Invariance:</strong> A cat filter activates whether the cat is top-left or bottom-right — same learned features apply everywhere.</li>
+      </ul>
+
+      <h4>CNN Architecture</h4>
+      <pre><code>>import tensorflow as tf
+from tensorflow.keras import layers, models
+
+# CNN for CIFAR-10 (32×32 RGB images, 10 classes)
+model = models.Sequential([
+    # Conv output size: (H − k + 2p)/stride + 1; padding='same' keeps H,W constant
+    layers.Conv2D(32, (3,3), activation='relu', padding='same', input_shape=(32,32,3)),
+    layers.BatchNormalization(),
+    layers.Conv2D(32, (3,3), activation='relu', padding='same'),
+    layers.MaxPooling2D((2,2)),   # 32×32 → 16×16 (halves spatial dims)
+    layers.Dropout(0.2),
+
+    layers.Conv2D(64, (3,3), activation='relu', padding='same'),
+    layers.BatchNormalization(),
+    layers.Conv2D(64, (3,3), activation='relu', padding='same'),
+    layers.MaxPooling2D((2,2)),   # 16×16 → 8×8
+    layers.Dropout(0.3),
+
+    layers.Conv2D(128, (3,3), activation='relu', padding='same'),
+    layers.BatchNormalization(),
+    layers.MaxPooling2D((2,2)),   # 8×8 → 4×4
+    layers.Dropout(0.4),
+
+    layers.Flatten(),             # 4×4×128 = 2048 values → flat vector
+    layers.Dense(256, activation='relu'),
+    layers.BatchNormalization(),
+    layers.Dropout(0.5),
+    layers.Dense(10, activation='softmax')  # 10 CIFAR classes
+])
+model.summary()</code></pre>
+
+      <h4>Transfer Learning</h4>
+      <p>Pre-trained models (ImageNet: 1.2M images, 1000 classes) have learned universal visual features. Fine-tuning repurposes them for your task in hours instead of weeks from scratch.</p>
+      <pre><code>>from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras import layers, models, optimizers
+
+NUM_CLASSES = 5   # Your custom task: 5 flower types
+
+# Phase 1: Feature Extraction — freeze base, train only classification head
+base = MobileNetV2(input_shape=(224,224,3), include_top=False, weights='imagenet')
+base.trainable = False  # Freeze all 154 layers
+
+x = base.output
+x = layers.GlobalAveragePooling2D()(x)   # Better than Flatten for TL
+x = layers.Dense(256, activation='relu')(x)
+x = layers.Dropout(0.3)(x)
+out = layers.Dense(NUM_CLASSES, activation='softmax')(x)
+model = models.Model(base.input, out)
+
+model.compile(optimizer=optimizers.Adam(1e-3),
+              loss='categorical_crossentropy', metrics=['accuracy'])
+model.fit(train_ds, epochs=10, validation_data=val_ds)
+
+# Phase 2: Fine-tuning — unfreeze top layers with lower learning rate
+base.trainable = True
+for layer in base.layers[:-30]:   # Freeze all but last 30 layers
+    layer.trainable = False
+
+model.compile(optimizer=optimizers.Adam(1e-5),  # CRITICAL: 100x lower LR
+              loss='categorical_crossentropy', metrics=['accuracy'])
+model.fit(train_ds, epochs=10, validation_data=val_ds)</code></pre>
+
+      <h4>Pre-trained Model Comparison</h4>
+      <div class="concept-box">
+        <table class="ref-table">
+          <tr><th>Model</th><th>Params</th><th>ImageNet Top-1</th><th>Best For</th></tr>
+          <tr><td>MobileNetV2</td><td>3.4M</td><td>71.8%</td><td>Mobile, edge, low-resource</td></tr>
+          <tr><td>EfficientNetB0</td><td>5.3M</td><td>77.1%</td><td>Best accuracy/size tradeoff</td></tr>
+          <tr><td>ResNet50</td><td>25.6M</td><td>76.0%</td><td>Solid baseline, well-studied</td></tr>
+          <tr><td>EfficientNetB7</td><td>66M</td><td>84.3%</td><td>Maximum accuracy, GPU required</td></tr>
+          <tr><td>VGG16</td><td>138M</td><td>71.3%</td><td>Legacy, interpretability research</td></tr>
+        </table>
+      </div>
+
+      <h4>Data Augmentation</h4>
+      <pre><code>>from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+datagen = ImageDataGenerator(
+    rotation_range=20,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    zoom_range=0.15,
+    horizontal_flip=True,
+    brightness_range=[0.8, 1.2],
+    fill_mode='nearest',
+    validation_split=0.2
+)
+
+train_gen = datagen.flow_from_directory(
+    'data/train/', target_size=(224,224), batch_size=32,
+    class_mode='categorical', subset='training'
+)
+val_gen = datagen.flow_from_directory(
+    'data/train/', target_size=(224,224), batch_size=32,
+    class_mode='categorical', subset='validation'
+)</code></pre>
+
+    </div>
+  </div><!-- /W10 -->
+
+  <!-- W11 -->
+  <div class="week-block" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <div class="week-num wn-adv">W11</div>
+      <h3>Week 11 — Transformers, LLMs &amp; Generative AI</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>The Attention Mechanism</h4>
+      <p>Attention answers: <em>"For understanding this token, which other tokens are most relevant?"</em> This replaced the RNN bottleneck of compressing entire sequences into a single fixed-size vector.</p>
+      <p><strong>Scaled Dot-Product Attention:</strong></p>
+      <p style="font-size:1.1em;padding:8px 0;"><strong>Attention(Q, K, V) = softmax( Q·Kᵀ / √d_k ) · V</strong></p>
+      <ul>
+        <li><strong>Q (Query):</strong> "What am I searching for?" — current token's question vector</li>
+        <li><strong>K (Key):</strong> "What can I offer?" — each position's searchable tag</li>
+        <li><strong>V (Value):</strong> "What is my actual content?" — information to aggregate</li>
+        <li><strong>√d_k scaling:</strong> Prevents very large dot products → unstable softmax → vanishing gradients</li>
+        <li><strong>Multi-Head Attention:</strong> Run attention h times in parallel with different learned projections. h=8 in original Transformer, h=16–32 in large models. Captures different relationship types simultaneously.</li>
+      </ul>
+
+      <h4>BERT vs GPT Architecture</h4>
+      <ul>
+        <li><strong>BERT (Google, 2018):</strong> Bidirectional Encoder — reads the entire sequence simultaneously. Pre-trained with Masked Language Modeling (predict randomly masked tokens). Best for: text classification, NER, QA (extractive), semantic similarity, embeddings.</li>
+        <li><strong>GPT (OpenAI, 2018–2024):</strong> Autoregressive Decoder — generates tokens one at a time, left-to-right. Pre-trained to predict the next token. Best for: text generation, summarization, translation, code, chat, instruction following.</li>
+      </ul>
+
+      <h4>LLM Landscape 2024–2025</h4>
+      <div class="concept-box">
+        <table class="ref-table">
+          <tr><th>Model</th><th>Company</th><th>Strengths</th><th>Context</th></tr>
+          <tr><td>GPT-4o</td><td>OpenAI</td><td>General purpose, multimodal (image/audio/text)</td><td>128K</td></tr>
+          <tr><td>Claude 3.5 Sonnet</td><td>Anthropic</td><td>Coding, analysis, long docs, safety-focused</td><td>200K</td></tr>
+          <tr><td>Gemini 1.5 Pro</td><td>Google</td><td>Ultra-long context, video understanding</td><td>1M</td></tr>
+          <tr><td>Llama 3.1 70B</td><td>Meta (open)</td><td>On-premise deployment, fine-tuning freedom</td><td>128K</td></tr>
+          <tr><td>Mistral Large</td><td>Mistral AI</td><td>European data residency, efficient inference</td><td>32K</td></tr>
+        </table>
+      </div>
+
+      <h4>RAG — Retrieval-Augmented Generation</h4>
+      <p>LLMs have a training data cutoff and can hallucinate facts. RAG grounds responses in real, up-to-date documents by retrieving relevant text before generating.</p>
+      <pre><code>># RAG System Pseudocode (conceptual)
+
+# --- INDEXING PHASE (run once) ---
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import HuggingFaceEmbeddings
+import chromadb
+
+# 1. Load and split documents into ~500-token chunks
+splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+chunks = splitter.split_documents(documents)
+
+# 2. Embed chunks as vectors
+embedder = HuggingFaceEmbeddings(model_name='all-MiniLM-L6-v2')
+
+# 3. Store in vector database
+client = chromadb.PersistentClient(path="./rag_db")
+collection = client.get_or_create_collection("knowledge_base")
+for i, chunk in enumerate(chunks):
+    vec = embedder.embed_query(chunk.page_content)
+    collection.add(ids=[str(i)], embeddings=[vec], documents=[chunk.page_content])
+
+# --- QUERY PHASE (each user request) ---
+import anthropic
+
+def rag_answer(user_query: str) -> str:
+    # 4. Embed user question
+    query_vec = embedder.embed_query(user_query)
+
+    # 5. Retrieve top-5 most relevant chunks
+    results = collection.query(query_embeddings=[query_vec], n_results=5)
+    context = "\n\n".join(results['documents'][0])
+
+    # 6. Augment prompt with retrieved context
+    prompt = f"""Answer based ONLY on the following context.
+If the answer is not in the context, say "I don't have information on that."
+
+Context:
+{context}
+
+Question: {user_query}"""
+
+    # 7. Generate grounded answer
+    client = anthropic.Anthropic()
+    msg = client.messages.create(
+        model="claude-3-5-sonnet-20241022",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return msg.content[0].text</code></pre>
+
+      <h4>Prompt Engineering Techniques</h4>
+      <pre><code>>import anthropic
+client = anthropic.Anthropic()
+
+def call_claude(prompt, max_tokens=1024):
+    return client.messages.create(
+        model="claude-3-5-sonnet-20241022",
+        max_tokens=max_tokens,
+        messages=[{"role": "user", "content": prompt}]
+    ).content[0].text
+
+# 1. Zero-shot: direct task description
+zero_shot = "Classify the sentiment of: 'The delivery was fast but packaging was poor.' Output: Positive, Negative, or Mixed."
+
+# 2. Few-shot: provide labeled examples
+few_shot = """Classify sentiment. Examples:
+"Amazing quality, very happy!" → Positive
+"Completely broken on arrival." → Negative
+"Good product but slow shipping." → Mixed
+
+Classify: "Battery life is great, screen is mediocre." → """
+
+# 3. Chain-of-Thought: explicit reasoning steps
+cot = """Solve step by step:
+A train goes 120km at 60km/h, then 80km at 40km/h.
+What is the average speed?
+Step 1: Calculate time for each leg.
+Step 2: Calculate total time and total distance.
+Step 3: Average speed = total distance / total time."""
+
+# 4. Structured Output: specify exact format
+structured = """Extract job details as JSON:
+"Senior ML Engineer, Flipkart Bangalore. 5+ years. 40-60 LPA. Python, PyTorch, Kubernetes."
+
+JSON format: {"title":...,"company":...,"location":...,"experience_min":...,"salary_lpa":{"min":...,"max":...},"skills":[...]}"""
+
+print(call_claude(structured))</code></pre>
+
+    </div>
+  </div><!-- /W11 -->
+
+  <!-- W12 -->
+  <div class="week-block" id="w12">
+    <div class="week-header" onclick="toggleWeek('w12')">
+      <div class="week-num wn-adv">W12</div>
+      <h3>Week 12 — MLOps &amp; Production AI</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>The Notebook-to-Production Gap</h4>
+      <p>Only 22% of ML models ever reach production (Gartner, 2022). Key challenges: reproducibility (which data version? which library versions?), scalability (1 request in Colab vs 10,000/sec in production), monitoring (model silently degrades), governance (who approved this model?). MLOps addresses all of these systematically.</p>
+
+      <h4>MLflow — Experiment Tracking &amp; Model Registry</h4>
+      <pre><code>>import mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score, roc_auc_score
+
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment("churn_prediction_v2")
+
+with mlflow.start_run(run_name="rf_tuned_300trees"):
+    params = {"n_estimators": 300, "max_depth": 10,
+              "min_samples_leaf": 2, "class_weight": "balanced"}
+    mlflow.log_params(params)
+
+    model = RandomForestClassifier(**params, random_state=42, n_jobs=-1)
+    model.fit(X_train, y_train)
+
+    y_pred  = model.predict(X_test)
+    y_proba = model.predict_proba(X_test)[:, 1]
+    mlflow.log_metric("test_f1",        f1_score(y_test, y_pred))
+    mlflow.log_metric("test_roc_auc",   roc_auc_score(y_test, y_proba))
+    mlflow.log_metric("train_f1",       f1_score(y_train, model.predict(X_train)))
+
+    # Save model with schema and environment info
+    mlflow.sklearn.log_model(
+        model, "churn_model",
+        registered_model_name="ChurnPredictor",
+        input_example=X_test[:3]
+    )
+    mlflow.log_artifact("feature_importance.png")
+    print(f"Run ID: {mlflow.active_run().info.run_id}")
+
+# View: mlflow ui  →  http://localhost:5000</code></pre>
+
+      <h4>FastAPI Model Serving</h4>
+      <pre><code>># app.py
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, validator
+import joblib, numpy as np, logging
+
+logger = logging.getLogger(__name__)
+app = FastAPI(title="Churn Prediction API", version="2.0.0")
+
+model = joblib.load("churn_pipeline.pkl")  # Load at startup
+
+class ChurnRequest(BaseModel):
+    tenure_months:    int
+    monthly_charges:  float
+    total_charges:    float
+    num_products:     int
+    has_internet:     bool
+
+    @validator('monthly_charges', 'total_charges')
+    def must_be_positive(cls, v):
+        if v <= 0: raise ValueError("Charges must be positive")
+        return v
+
+class ChurnResponse(BaseModel):
+    churn_probability: float
+    prediction:        str
+    risk_tier:         str
+
+@app.post("/predict", response_model=ChurnResponse)
+async def predict(req: ChurnRequest):
+    try:
+        features = [[req.tenure_months, req.monthly_charges,
+                     req.total_charges, req.num_products, int(req.has_internet)]]
+        prob = float(model.predict_proba(features)[0][1])
+        pred = "CHURN" if prob > 0.5 else "RETAIN"
+        tier = "HIGH" if prob > 0.7 else "MEDIUM" if prob > 0.4 else "LOW"
+        logger.info(f"predict | {pred} | {prob:.3f}")
+        return ChurnResponse(churn_probability=round(prob,4),
+                             prediction=pred, risk_tier=tier)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/health")
+async def health(): return {"status": "healthy"}
+
+# Run: uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4</code></pre>
+
+      <h4>Docker Containerization</h4>
+      <pre><code>># Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app.py churn_pipeline.pkl ./
+
+RUN useradd -m appuser && chown -R appuser /app
+USER appuser
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=10s \
+  CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+
+# Build:  docker build -t churn-api:v2.0 .
+# Run:    docker run -p 8000:8000 --memory=512m churn-api:v2.0
+# Test:   curl -s -X POST http://localhost:8000/predict \
+#           -H "Content-Type: application/json" \
+#           -d '{"tenure_months":6,"monthly_charges":85.5,"total_charges":513,"num_products":1,"has_internet":true}' | python -m json.tool</code></pre>
+
+      <h4>Model Monitoring with Evidently AI</h4>
+      <pre><code>># pip install evidently
+from evidently.report import Report
+from evidently.metric_preset import DataDriftPreset, TargetDriftPreset
+import pandas as pd
+
+# Reference = training data distribution
+# Current = past 7 days of production traffic
+df_reference = pd.read_parquet("training_data.parquet")
+df_current   = pd.read_parquet("production_last_7_days.parquet")
+
+report = Report(metrics=[
+    DataDriftPreset(),        # Have input feature distributions shifted?
+    TargetDriftPreset()       # Has output distribution changed?
+])
+report.run(reference_data=df_reference, current_data=df_current)
+report.save_html("monitoring_report.html")
+
+# Retraining triggers:
+# PSI (Population Stability Index) > 0.2 on any key feature
+# Prediction distribution KL divergence > threshold
+# Business KPI (churn rate, revenue) drops > 5% week-over-week
+# Model performance (if labels available) drops > 3% from baseline</code></pre>
+
+    </div>
+  </div><!-- /W12 -->
+
+  <div class="bottom-nav">
+    <a href="concept_notes_intermediate.html" class="btn btn-secondary">← Intermediate Notes</a>
+    <a href="lab_guide_advanced.html" class="btn btn-primary">Advanced Lab Guide →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Concept Notes (Advanced) &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Briefs — Mobile App Development | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.project-card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:28px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.proj-header{display:flex;align-items:center;gap:16px;padding:20px 24px;background:linear-gradient(135deg,#1B3A6B 0%,#2d5a9e 100%);color:#fff;}
+.proj-num{font-size:28px;font-weight:900;opacity:0.25;min-width:40px;}
+.proj-title{font-size:1.15rem;font-weight:700;flex:1;}
+.proj-level{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.proj-level.beg{background:#dcfce7;color:#166534;}
+.proj-level.int{background:#dbeafe;color:#1e40af;}
+.proj-level.adv{background:#ede9fe;color:#5b21b6;}
+.proj-body{padding:20px 24px;}
+.proj-tech{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.proj-tech span{background:#f1f5f9;color:#334155;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.proj-desc{font-size:0.92rem;color:#374151;line-height:1.7;margin-bottom:16px;}
+.proj-reqs{margin-bottom:20px;}
+.proj-reqs h4{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6b7280;margin-bottom:8px;}
+.proj-reqs ul{list-style:none;padding:0;margin:0;}
+.proj-reqs li{display:flex;gap:8px;margin-bottom:8px;font-size:0.9rem;color:#374151;line-height:1.55;}
+.proj-reqs li::before{content:'✓';color:#10b981;font-weight:700;min-width:16px;}
+.rubric-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:0.88rem;}
+.rubric-table thead tr{background:#f8fafc;}
+.rubric-table th{text-align:left;padding:8px 12px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;}
+.rubric-table td{padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#4b5563;}
+.rubric-table tr:last-child td{font-weight:700;color:#1B3A6B;background:#eff6ff;}
+.proj-deadline{display:inline-flex;align-items:center;gap:6px;background:#fef3c7;color:#92400e;padding:6px 14px;border-radius:20px;font-size:0.82rem;font-weight:600;margin-top:4px;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📱 Mobile App Development</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 5 OF 9 &nbsp;·&nbsp; MOBILE APP DEVELOPMENT &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Lab ↗</a>
+    <a href="lab_guide_advanced.html">Advanced Lab ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">📋</div>
+    <div class="lh-text">
+      <h2>Project Briefs — Mobile App Development</h2>
+      <p>Three graded projects that grow from beginner to advanced. Each has a full feature specification and a transparent rubric.</p>
+    </div>
+  </div>
+
+  <!-- Project 1 -->
+  <div class="project-card">
+    <div class="proj-header">
+      <div class="proj-num">P1</div>
+      <div class="proj-title">Personal Habit Tracker</div>
+      <span class="proj-level beg">Beginner</span>
+    </div>
+    <div class="proj-body">
+      <div class="proj-tech">
+        <span>React Native (Expo)</span>
+        <span>AsyncStorage</span>
+        <span>React Navigation</span>
+        <span>expo-notifications</span>
+      </div>
+
+      <p class="proj-desc">
+        An app to track daily personal habits — drinking water, exercising, reading, and more.
+        The user adds their own habits, marks completion each day, and sees their current streak.
+        All data is stored locally on the device — no backend required.
+      </p>
+
+      <div class="proj-reqs">
+        <h4>Requirements</h4>
+        <ul>
+          <li>Add and delete custom habits (name + emoji icon)</li>
+          <li>Mark a habit as done for today with a single tap (toggle)</li>
+          <li>Streak counter: counts consecutive days with all habits completed</li>
+          <li>Weekly view: 7-day calendar row showing ✓ / ✗ for each habit</li>
+          <li>Local notification at a user-set time using expo-notifications</li>
+          <li>All data persisted in AsyncStorage — survives app restarts and phone restarts</li>
+          <li>Minimum 3 screens: Home (today's habits), History (weekly view), Settings (add/delete habits, notification time)</li>
+          <li>Clean UI: each habit displayed as a card with color, emoji, name, and today's completion status</li>
+        </ul>
+      </div>
+
+      <h4 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6b7280;margin-bottom:10px;">Marking Rubric</h4>
+      <div class="table-wrap">
+        <table class="rubric-table">
+          <thead>
+            <tr><th>Criterion</th><th style="text-align:center;">Marks</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>UI &amp; Navigation</td><td style="text-align:center;">20</td><td>3+ screens, smooth navigation, clean habit cards</td></tr>
+            <tr><td>Habit CRUD</td><td style="text-align:center;">20</td><td>Add/delete habits, persist to AsyncStorage correctly</td></tr>
+            <tr><td>Streak Logic</td><td style="text-align:center;">20</td><td>Correctly calculates consecutive-day streaks</td></tr>
+            <tr><td>Notifications</td><td style="text-align:center;">20</td><td>Local notification fires at the user-set time</td></tr>
+            <tr><td>Code Quality</td><td style="text-align:center;">20</td><td>Clean structure, meaningful names, no console errors</td></tr>
+            <tr><td>Total / Pass</td><td style="text-align:center;">100 / 60</td><td>Minimum 60 marks required to pass</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="proj-deadline">📅 Deadline: End of Week 4</div>
+    </div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project-card">
+    <div class="proj-header" style="background:linear-gradient(135deg,#1e40af 0%,#2563eb 100%);">
+      <div class="proj-num">P2</div>
+      <div class="proj-title">Recipe Finder App</div>
+      <span class="proj-level int">Intermediate</span>
+    </div>
+    <div class="proj-body">
+      <div class="proj-tech">
+        <span>React Native</span>
+        <span>Expo</span>
+        <span>React Navigation</span>
+        <span>TheMealDB API</span>
+        <span>expo-image-picker</span>
+        <span>AsyncStorage</span>
+      </div>
+
+      <p class="proj-desc">
+        Search and browse recipes from a real public API. Save favourites locally for offline access.
+        Build a shopping list from recipe ingredients, and let users replace recipe photos with their own.
+        This project introduces real-world API integration, proper loading/error state handling, and offline-first design.
+      </p>
+
+      <div class="proj-reqs">
+        <h4>Requirements</h4>
+        <ul>
+          <li>Search recipes by name or ingredient using the real TheMealDB API (themealdb.com/api.php)</li>
+          <li>Browse recipes by category in a grid layout</li>
+          <li>Recipe detail screen: full ingredients list, step-by-step instructions, YouTube video link (open with expo-linking)</li>
+          <li>Favourite recipes: saved in AsyncStorage, accessible offline when there is no internet</li>
+          <li>Shopping list: tap to add all ingredients from any recipe; check off items as you buy them</li>
+          <li>Custom photo: replace the recipe cover image using camera or gallery (expo-image-picker)</li>
+          <li>Pull to refresh on search results</li>
+          <li>Explicit loading and error states on every screen that fetches data</li>
+        </ul>
+      </div>
+
+      <h4 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6b7280;margin-bottom:10px;">Marking Rubric</h4>
+      <div class="table-wrap">
+        <table class="rubric-table">
+          <thead>
+            <tr><th>Criterion</th><th style="text-align:center;">Marks</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>API Integration</td><td style="text-align:center;">20</td><td>Real data from TheMealDB, loading + error states</td></tr>
+            <tr><td>Navigation Structure</td><td style="text-align:center;">20</td><td>Stack + bottom tabs wired and working correctly</td></tr>
+            <tr><td>Favourites &amp; Storage</td><td style="text-align:center;">20</td><td>Favourites and shopping list persist across sessions</td></tr>
+            <tr><td>UI Polish</td><td style="text-align:center;">20</td><td>Consistent design, empty states, smooth transitions</td></tr>
+            <tr><td>Code Quality</td><td style="text-align:center;">20</td><td>Hooks separation, no prop drilling, clean components</td></tr>
+            <tr><td>Total / Pass</td><td style="text-align:center;">100 / 65</td><td>Minimum 65 marks required to pass</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="proj-deadline">📅 Deadline: End of Week 8</div>
+    </div>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="project-card">
+    <div class="proj-header" style="background:linear-gradient(135deg,#3730a3 0%,#6d28d9 100%);">
+      <div class="proj-num">P3</div>
+      <div class="proj-title">Campfire — Community Discussion App</div>
+      <span class="proj-level adv">Advanced</span>
+    </div>
+    <div class="proj-body">
+      <div class="proj-tech">
+        <span>React Native</span>
+        <span>Expo</span>
+        <span>EAS Build</span>
+        <span>React Navigation</span>
+        <span>React Query</span>
+        <span>JWT Auth</span>
+        <span>AsyncStorage</span>
+        <span>Animated API</span>
+      </div>
+
+      <p class="proj-desc">
+        Build <strong>Campfire</strong> — a community discussion app with real user authentication,
+        a post feed with infinite scroll, the ability to create posts with images, comments,
+        and push notifications. This project must be submitted as an installable APK built with EAS Build
+        and must include a CI pipeline via GitHub Actions.
+      </p>
+
+      <div class="proj-reqs">
+        <h4>Requirements</h4>
+        <ul>
+          <li>JWT login + registration (against a provided mock API or your own Express backend)</li>
+          <li>Post feed with infinite scroll (FlatList + pagination — load more on scroll-to-end)</li>
+          <li>Create post: text + optional image selected from camera or gallery</li>
+          <li>Animated like button: scale spring effect (Animated.spring) on press</li>
+          <li>Comments: add new comments and delete your own comments</li>
+          <li>User profile screen: avatar, bio, post count, and a grid of the user's posts</li>
+          <li>Local push notifications: "Someone liked your post!"</li>
+          <li>EAS Build: produce an installable APK submitted to Google Play internal testing</li>
+          <li>GitHub Actions CI: lint + test + EAS build triggered on push to main</li>
+          <li>Test coverage ≥ 60% on all custom hooks and reducers</li>
+          <li>Dark mode toggle stored in AsyncStorage and applied app-wide</li>
+        </ul>
+      </div>
+
+      <h4 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6b7280;margin-bottom:10px;">Marking Rubric</h4>
+      <div class="table-wrap">
+        <table class="rubric-table">
+          <thead>
+            <tr><th>Criterion</th><th style="text-align:center;">Marks</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Auth &amp; Security</td><td style="text-align:center;">20</td><td>JWT working, token in AsyncStorage, protected routes</td></tr>
+            <tr><td>Core Features</td><td style="text-align:center;">25</td><td>Feed, create, like, comment all working</td></tr>
+            <tr><td>Architecture &amp; Tests</td><td style="text-align:center;">25</td><td>Feature folders, hooks pattern, ≥ 60% test coverage</td></tr>
+            <tr><td>CI/CD &amp; Build</td><td style="text-align:center;">15</td><td>GitHub Actions passing, EAS APK produced and installable</td></tr>
+            <tr><td>UI/UX</td><td style="text-align:center;">15</td><td>Like animations, dark mode, consistent polished design</td></tr>
+            <tr><td>Total / Pass</td><td style="text-align:center;">100 / 70</td><td>Minimum 70 marks required to pass</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="proj-deadline">📅 Deadline: End of Week 12</div>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <div class="sm-bottom-nav">
+    <a href="lab_guide_advanced.html" class="btn-nav-secondary">← Advanced Lab</a>
+    <a href="quizzes.html" class="btn-nav-secondary">Quizzes →</a>
+    <a href="../index.html" class="btn-nav-primary">← Study Portal</a>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Mobile App Development &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI/UX Design — Concept Notes (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .analogy-box { background: linear-gradient(135deg, #FDF6E3, #F5E6C0); border: 1px solid var(--gold-light); border-left: 4px solid var(--gold); border-radius: var(--radius-sm); padding: 14px 18px; margin: 14px 0; font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+  .analogy-box strong { color: var(--navy); }
+  .jtbd-card { background: var(--purple-light); border-left: 3px solid var(--purple); border-radius: var(--radius-sm); padding: 14px 18px; margin: 12px 0; font-size: 13px; color: var(--text-mid); line-height: 1.7; font-style: italic; }
+  .career-path { display: flex; gap: 0; margin: 16px 0; flex-wrap: wrap; }
+  .career-path-step { flex: 1; min-width: 140px; text-align: center; padding: 16px 10px; background: var(--paper); border-right: 1px solid var(--border-light); }
+  .career-path-step:last-child { border-right: none; }
+  .career-path-step .cp-icon { font-size: 22px; margin-bottom: 6px; }
+  .career-path-step h5 { font-size: 11px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .career-path-step p { font-size: 10px; color: var(--gray); line-height: 1.4; }
+  .voice-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+  .voice-table th { background: var(--navy); color: white; padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+  .voice-table td { padding: 8px 12px; border-bottom: 1px solid var(--border-light); }
+  .voice-table tr:hover td { background: var(--paper); }
+  .voice-table .vt-do { color: var(--green); font-weight: 600; }
+  .voice-table .vt-dont { color: var(--red); text-decoration: line-through; }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">📖 Concept Notes — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; CONCEPT NOTES (ADVANCED)
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate ↗</a>
+    <a href="lab_guide_advanced.html">Lab Guide ↗</a>
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero adv">
+    <div class="lh-icon">🎨</div>
+    <h1>Concept Notes — Advanced</h1>
+    <p class="lh-sub">Weeks 9–12: Research strategy, advanced Figma, UX writing, design leadership, and portfolio development. This level prepares you to work as a professional designer, not just a practitioner.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 9–12</span>
+      <span class="lh-pill">Research Strategy · Advanced Figma · UX Writing · Leadership</span>
+      <span class="lh-pill gold">Advanced Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Intermediate level complete</li>
+        <li>Figma design system built</li>
+        <li>Interactive prototype complete</li>
+        <li>Accessibility audit done</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Tools This Level</h4>
+      <ul>
+        <li>Figma Variables</li>
+        <li>Tokens Studio plugin</li>
+        <li>Figma Dev Mode</li>
+        <li>Behance / Notion (portfolio)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>What You Will Produce</h4>
+      <ul>
+        <li>Design sprint artifacts</li>
+        <li>Developer handoff package</li>
+        <li>UX writing guide</li>
+        <li>Published UX case study</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Assessment</h4>
+      <ul>
+        <li>Weekly quiz W9–W12</li>
+        <li>Lab 1–5 submissions</li>
+        <li>Project 3 — End-to-End Handoff</li>
+        <li>Portfolio published</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="sm-sec">Week 9 — Advanced Research &amp; Strategy</div>
+  <div class="week-block open" id="w9">
+    <div class="week-head" onclick="toggleWeek('w9')">
+      <div class="week-num wn-adv">W9</div>
+      <div class="week-head-text">
+        <h3>Advanced Research &amp; Strategy</h3>
+        <p>JTBD · Mental Models · Competitor Analysis · Kano Model · HEART · UX ROI</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Write a JTBD statement for a given user scenario</li>
+          <li>Conduct a heuristic competitor analysis on 2 products</li>
+          <li>Categorise features using the Kano model</li>
+          <li>Define UX metrics using the HEART framework</li>
+          <li>Build a business case for UX investment (basic UX ROI)</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Jobs To Be Done (JTBD)</h4>
+          <ul>
+            <li>Created by Clayton Christensen. The insight: people don't buy products — they hire them to do a job</li>
+            <li>Framework: "When I _____ [situation], I want to _____ [motivation], so I can _____ [outcome]"</li>
+            <li>Goes deeper than personas — captures the functional, emotional, and social dimensions of a need</li>
+            <li>Example: "When I'm commuting, I want to listen to curated playlists without choosing each song, so I can arrive at work in a focused headspace"</li>
+            <li>Use JTBD to define what the product must do at its core — not the features, but the job</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Mental Models</h4>
+          <ul>
+            <li>A mental model is how a user expects something to work, based on past experience</li>
+            <li>When the product matches the mental model → easy to learn. When it contradicts it → confusion and errors</li>
+            <li>Example: users expect the Back button to undo their last action. Apps that use Back to go to the home screen instead of the previous screen violate this model</li>
+            <li>Research technique: ask users to draw how they think the system works before using it</li>
+            <li>Your job: map your design to users' existing mental models wherever possible</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Competitor Analysis — UX Benchmarking</h4>
+          <ul>
+            <li>Evaluate 3 competitors using Nielsen's 10 heuristics — gives you a comparative UX score</li>
+            <li>Document: screenshots of the key flow, heuristic violations (severity 0–4), unique strengths</li>
+            <li>Competitive matrix: list features/qualities in rows, competitors in columns — identify gaps</li>
+            <li>Distinguish between "table stakes" (features every competitor has) and "differentiators" (where you can stand out)</li>
+            <li>Share findings with stakeholders: a short competitor UX audit is an extremely persuasive strategic document</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Kano Model — Feature Prioritisation</h4>
+          <ul>
+            <li>Created by Noriaki Kano. Three feature categories:</li>
+            <li><strong>Basic (must-have):</strong> Users expect these. Their absence causes dissatisfaction. Their presence causes no delight. Example: a working checkout</li>
+            <li><strong>Performance (more = better):</strong> More of this → more satisfaction. Loading speed, number of payment options</li>
+            <li><strong>Delighters (excitement):</strong> Unexpected features that create delight. Users didn't ask for them but love them. Example: Swiggy's delivery person real-time map</li>
+            <li>Apply: get basics right first, then invest in performance, then add delighters</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>HEART Framework — UX Metrics</h4>
+          <ul>
+            <li>Developed by Google. Five categories for measuring UX at scale:</li>
+            <li><strong>Happiness:</strong> Attitudinal — NPS, satisfaction surveys, app store ratings</li>
+            <li><strong>Engagement:</strong> Behavioral — sessions per user per week, feature adoption rate</li>
+            <li><strong>Adoption:</strong> New users who complete onboarding and use the product at least once</li>
+            <li><strong>Retention:</strong> Users who return after 1 day, 7 days, 30 days (D1/D7/D30 retention)</li>
+            <li><strong>Task Success:</strong> Task completion rate, time on task, error rate per task</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>UX ROI — The Business Case</h4>
+          <ul>
+            <li>Every ₹1 invested in UX returns ₹100 in development savings (Forrester Research)</li>
+            <li>Poor UX costs: support ticket volume, cart abandonment, low activation, negative reviews</li>
+            <li>Build the case: calculate the value of a 10% improvement in task completion on the checkout flow → multiply by conversion value × users per month</li>
+            <li>Stakeholder language: use revenue, retention, and support cost — not "user delight" or "beautiful design"</li>
+            <li>Show before/after data from a completed redesign — one clear data point wins more than ten principles</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="jtbd-card">
+        Practice writing JTBD statements: "When I receive my salary, I want to invest a small amount automatically without having to think about which fund, so I can build savings without financial anxiety." This is richer than "The user wants to invest money" — it captures the trigger (salary), the emotional barrier (anxiety around decisions), and the real desired outcome (peace of mind, not investment returns).
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 9</h4>
+        <ul>
+          <li>JTBD reframes design from "what does the user want" to "what job are they hiring this product for" — a fundamentally more useful question.</li>
+          <li>Kano model gives you a prioritisation framework: basics first, then performance, then delight.</li>
+          <li>HEART provides the metrics language to talk to executives about UX — use it for every project debrief.</li>
+          <li>A competitor UX audit is the fastest way to earn stakeholder trust with evidence.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="sm-sec">Week 10 — Advanced Figma &amp; Prototyping</div>
+  <div class="week-block" id="w10">
+    <div class="week-head" onclick="toggleWeek('w10')">
+      <div class="week-num wn-adv">W10</div>
+      <div class="week-head-text">
+        <h3>Advanced Figma &amp; Prototyping</h3>
+        <p>Nested Auto Layout · Figma Variables · Conditional Prototypes · Dev Mode · Design Tokens Export</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Build a carousel component using Figma Variables</li>
+          <li>Create a theme-switching prototype using boolean variables</li>
+          <li>Explain Smart Animate requirements and spring easing</li>
+          <li>Use Figma Dev Mode for a complete developer handoff</li>
+          <li>Export design tokens to JSON using Tokens Studio</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Advanced Auto Layout</h4>
+          <ul>
+            <li><strong>Nested auto layouts:</strong> A row of cards (horizontal auto layout) where each card is a vertical auto layout. The parent controls spacing between cards; each card controls its own internal spacing</li>
+            <li><strong>Absolute positioning within auto layout:</strong> Pin an element (e.g., a badge) to a corner of an auto layout frame without it affecting the layout flow. Right-click layer → Edit → set position to Absolute</li>
+            <li><strong>Fill container:</strong> Make a child element stretch to fill the width of its auto layout parent (useful for full-width input fields inside a form)</li>
+            <li>Mastery of nested auto layouts = components that work at any content length</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Figma Variables</h4>
+          <ul>
+            <li>Variables store values that can be reused and changed across a design: numbers, booleans, strings, colors</li>
+            <li><strong>Number variables:</strong> Spacing tokens — define --space-md once, apply everywhere</li>
+            <li><strong>Boolean variables:</strong> Show/hide layers in a prototype conditionally. "isLoggedIn = true" shows the dashboard; false shows the login screen</li>
+            <li><strong>String variables:</strong> Content overrides — change user name or label text across multiple screens by editing one variable</li>
+            <li><strong>Color variables:</strong> Light/dark mode switching — define "surface" as #FFFFFF in light mode and #1A1A2E in dark mode, switch with one click</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Complex Components</h4>
+          <ul>
+            <li><strong>Accordion:</strong> Boolean variable controls expanded/collapsed state. Smart Animate transitions the height change. Match layer names in both states</li>
+            <li><strong>Stepper (multi-step form):</strong> Number variable tracks current step. Each step is a variant. Prototype arrows advance the variable on button click</li>
+            <li><strong>Carousel:</strong> Horizontal frame with overflow hidden. Number variable tracks active index. Navigation arrows increment/decrement the variable</li>
+            <li>Rule: the more realistic the prototype, the earlier you catch real usability issues</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Smart Animate — Requirements</h4>
+          <ul>
+            <li>Smart Animate works by finding layers with matching names in the origin and destination frames and animating the difference</li>
+            <li>Layer must have the same name in both frames — if the name differs, Figma treats it as a different element and dissolves instead of morphing</li>
+            <li><strong>Spring easing:</strong> More natural than ease-in-out for UI motion. Mimics physics — the element overshoots slightly and settles back. Use for modals appearing and drawers opening</li>
+            <li><strong>Reduced motion:</strong> In your live implementation, always check prefers-reduced-motion and disable non-essential animation for users who have it enabled</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Figma Dev Mode</h4>
+          <ul>
+            <li>A dedicated view for developers (not designers) to inspect designs</li>
+            <li>Shows: exact CSS values for every property, spacing between elements, font details, component annotations</li>
+            <li>Export assets: click any image or icon → Export → choose SVG/PNG/WebP + scale</li>
+            <li>Code Connect (advanced): link Figma components to real code components — Dev Mode shows the actual React/Vue component name instead of CSS</li>
+            <li>Reduce back-and-forth by annotating your frames: use the Annotations feature to add written notes developers can read in Dev Mode</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Design Tokens with Tokens Studio</h4>
+          <ul>
+            <li>Tokens Studio is a free Figma plugin that manages design tokens as JSON</li>
+            <li>Define tokens in the plugin (color, spacing, typography, shadow, border-radius)</li>
+            <li>Export to JSON → run through Style Dictionary (Node.js tool) to generate CSS custom properties, SCSS variables, iOS Swift, Android XML simultaneously</li>
+            <li>Benefit: one source of truth for design and engineering — update the token in Figma, the code updates automatically</li>
+            <li>Token naming convention: semantic names (--color-primary) not value names (--blue-600)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 10</h4>
+        <ul>
+          <li>Figma Variables are the most powerful new feature for prototyping — master conditionals and your prototypes become near-functional.</li>
+          <li>Smart Animate requires matching layer names. Name your layers before building any animated prototype.</li>
+          <li>Dev Mode is how design gets to engineering without a meeting. Annotate everything.</li>
+          <li>Design tokens are the bridge between Figma and code. Use semantic names, not value names.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="sm-sec">Week 11 — UX Writing &amp; Content Design</div>
+  <div class="week-block" id="w11">
+    <div class="week-head" onclick="toggleWeek('w11')">
+      <div class="week-num wn-adv">W11</div>
+      <div class="week-head-text">
+        <h3>UX Writing &amp; Content Design</h3>
+        <p>Microcopy · Button Labels · Error Messages · Tone of Voice · Localization · Content Audit</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Distinguish UX writing from copywriting with 3 examples</li>
+          <li>Rewrite 3 bad button labels and 2 bad error messages</li>
+          <li>Create a tone of voice chart with do/don't examples</li>
+          <li>Explain what designing for RTL languages requires in Figma</li>
+          <li>Annotate a Figma design with UX copy notes for developers</li>
+        </ul>
+      </div>
+
+      <div class="analogy-box">
+        <strong>UX Writing vs Copywriting:</strong> A copywriter writes the homepage hero: "Reach millions of customers instantly." A UX writer writes what the button says when you hover: "Send message." Copywriting sells the product from the outside. UX writing serves the user inside the product — it is the words on every button, label, tooltip, empty state, error message, and confirmation toast. Both matter. They require different skills.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Principles of Good UX Writing</h4>
+          <ul>
+            <li><strong>Clear:</strong> The user knows exactly what will happen when they tap this button</li>
+            <li><strong>Concise:</strong> Remove every word that doesn't serve the user's task. "Click here to proceed to the next step" → "Continue"</li>
+            <li><strong>Useful:</strong> Copy helps the user complete a task. It is not decoration. Every word earns its place</li>
+            <li><strong>Conversational:</strong> Write the way a helpful colleague would speak, not a legal document</li>
+            <li><strong>Consistent:</strong> If you call it "Save" in one screen, never call it "Submit" in another for the same action</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Writing for UI Elements</h4>
+          <ul>
+            <li><strong>Button labels:</strong> Use verb + noun. "Save changes" not "OK". "Delete account" not "Confirm". Be specific about what happens</li>
+            <li><strong>Error messages:</strong> Three parts: what went wrong + why + how to fix it. "Your session expired. Please log in again to continue."</li>
+            <li><strong>Empty states:</strong> Explain why it is empty + invite action. "No orders yet. Browse our menu to place your first order." + CTA button</li>
+            <li><strong>Onboarding:</strong> Teach by doing. Don't front-load instructions — surface help at the moment of action</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Localization Considerations</h4>
+          <ul>
+            <li><strong>RTL languages (Arabic, Hebrew, Urdu):</strong> Text direction flips; UI layout mirrors. Buttons move from right to left. Back arrows point right. Design RTL-ready from the start if these markets matter</li>
+            <li><strong>Text expansion:</strong> German translations average 30% longer than English. Hindi/Bengali average 20% longer. Design flexible layouts (Auto Layout) that handle expansion</li>
+            <li><strong>Indian languages:</strong> Devanagari, Tamil, Telugu scripts need larger line heights and correct font support — test your fonts with regional scripts before launch</li>
+            <li>Always design with real translated text — never test with English if the product ships in Hindi</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Content Audit</h4>
+          <ul>
+            <li>An inventory of all UI strings in a product: labels, headings, error messages, tooltips, empty states</li>
+            <li>Audit for: consistency (same action = same label), clarity (no jargon), completeness (every state has copy)</li>
+            <li>Spreadsheet format: Screen | Element | Current copy | Issue | Proposed copy | Priority</li>
+            <li>Run a content audit when: redesigning a product, preparing for localization, onboarding a new UX writer</li>
+            <li>In Figma: use the Annotations feature to add copy notes that appear in Dev Mode</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sm-sec-label">Tone of Voice — Do vs Don't Examples</div>
+      <table class="voice-table">
+        <thead><tr><th>Situation</th><th>Write This</th><th>Not This</th></tr></thead>
+        <tbody>
+          <tr><td>Delete confirmation</td><td class="vt-do">Delete this post? This cannot be undone.</td><td class="vt-dont">Are you sure you want to permanently delete this item?</td></tr>
+          <tr><td>Payment success</td><td class="vt-do">₹1,200 paid. Your order is confirmed.</td><td class="vt-dont">Transaction completed successfully. Reference ID: TXN8842.</td></tr>
+          <tr><td>Password error</td><td class="vt-do">Password must be 8+ characters and include a number.</td><td class="vt-dont">Invalid password. Please try again.</td></tr>
+          <tr><td>Empty inbox</td><td class="vt-do">No messages yet. When someone sends you a message, it will appear here.</td><td class="vt-dont">Your inbox is empty.</td></tr>
+          <tr><td>Loading state</td><td class="vt-do">Finding the best routes for you…</td><td class="vt-dont">Please wait. Loading.</td></tr>
+          <tr><td>Account deletion</td><td class="vt-do">Before you go — your data will be permanently deleted in 30 days.</td><td class="vt-dont">Warning: Account deletion is irreversible. Proceed?</td></tr>
+        </tbody>
+      </table>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 11</h4>
+        <ul>
+          <li>UX writing is not "the words in the design" — it is a design discipline. Treat every label as a design decision.</li>
+          <li>Button labels are verb + noun: "Save draft", "Send message", "Delete account". Never "Submit" for everything.</li>
+          <li>Error messages must explain what went wrong AND how to fix it. "Error" alone is useless.</li>
+          <li>Design with real translated text from day one if you ship in multiple languages. Auto Layout handles expansion.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 12 -->
+  <div class="sm-sec">Week 12 — UX Leadership &amp; Portfolio</div>
+  <div class="week-block" id="w12">
+    <div class="week-head" onclick="toggleWeek('w12')">
+      <div class="week-num wn-adv">W12</div>
+      <div class="week-head-text">
+        <h3>UX Leadership &amp; Portfolio</h3>
+        <p>Case Study Structure · What Hiring Managers Look For · Portfolio Platforms · Design Critique · Agile UX · Career Paths</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Structure a complete UX case study (10-part format)</li>
+          <li>Deliver a 5-minute portfolio walkthrough confidently</li>
+          <li>Give a critique using the "I like / I wish / What if" format</li>
+          <li>Explain how design works in an Agile sprint cycle</li>
+          <li>Describe 3 career paths in UX and their progression milestones</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>UX Case Study Structure</h4>
+          <ul>
+            <li><strong>1. Title + Context:</strong> What product, what company, when, what was your role</li>
+            <li><strong>2. Problem statement:</strong> "How might we _____ for _____ so they can _____?"</li>
+            <li><strong>3. Your role + team + timeline</strong></li>
+            <li><strong>4. Research:</strong> Methods used, 3 key findings</li>
+            <li><strong>5. Synthesis:</strong> The insight that drove the design direction</li>
+            <li><strong>6. Ideation:</strong> 3 concepts you considered (not just the final one)</li>
+            <li><strong>7. Design:</strong> Final screens with rationale for key decisions</li>
+            <li><strong>8. Prototype:</strong> Link to interactive prototype</li>
+            <li><strong>9. Testing:</strong> What you tested, what you changed, why</li>
+            <li><strong>10. Outcome:</strong> Metrics (if available) — TCR, NPS, conversion lift</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>What Hiring Managers Look For</h4>
+          <ul>
+            <li><strong>Problem framing:</strong> Did you solve the right problem? Research evidence, not assumptions</li>
+            <li><strong>Decision rationale:</strong> Why did you choose this approach over alternatives? Show your thinking</li>
+            <li><strong>Iteration evidence:</strong> Before/after showing how testing changed your design</li>
+            <li><strong>Metrics:</strong> Even rough data ("TCR improved from 60% to 87%") beats no data</li>
+            <li><strong>Communication:</strong> Can you explain your work clearly to a non-designer? Try your portfolio on a family member</li>
+            <li>Portfolios with 2 great case studies beat portfolios with 10 shallow ones</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Design Critique Culture</h4>
+          <ul>
+            <li>Good critique is specific, actionable, and respectful. It critiques the work, never the person</li>
+            <li><strong>"I like":</strong> What is working and why. Specific: "I like how the CTA has high contrast" not just "looks good"</li>
+            <li><strong>"I wish":</strong> A gap or problem framed as a wish, not a command. "I wish the empty state explained what users can do next"</li>
+            <li><strong>"What if":</strong> Offer an alternative to explore. "What if the error message appeared inline instead of as a toast?"</li>
+            <li>Set up a weekly design crit in your team. Show work early and often — critique at lo-fi saves time at hi-fi</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Working in Agile</h4>
+          <ul>
+            <li>Designers work 1–2 sprints ahead of developers — design sprint n+1 while devs build sprint n</li>
+            <li><strong>Grooming sessions:</strong> Review upcoming user stories with developers — clarify design requirements, agree on edge cases</li>
+            <li><strong>Design debt:</strong> Quick-and-dirty designs made under time pressure that need rework later. Track it. Pay it down deliberately</li>
+            <li><strong>Definition of Done (UX):</strong> Screen has all states (loading/empty/error), annotations are complete, accessibility is checked, developer questions are answered</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sm-sec-label">Career Paths in UX</div>
+      <div class="career-path">
+        <div class="career-path-step">
+          <div class="cp-icon">🌱</div>
+          <h5>Junior Designer</h5>
+          <p>0–1 yr · Learn tools, shadow seniors, ship small features</p>
+        </div>
+        <div class="career-path-step">
+          <div class="cp-icon">⚡</div>
+          <h5>UI/UX Designer</h5>
+          <p>1–3 yr · Own flows end-to-end, present to stakeholders</p>
+        </div>
+        <div class="career-path-step">
+          <div class="cp-icon">🔧</div>
+          <h5>Product Designer</h5>
+          <p>2–5 yr · Strategy + design, cross-functional leadership</p>
+        </div>
+        <div class="career-path-step">
+          <div class="cp-icon">🚀</div>
+          <h5>Senior Designer</h5>
+          <p>4–7 yr · System ownership, mentor juniors, design ops</p>
+        </div>
+        <div class="career-path-step">
+          <div class="cp-icon">💼</div>
+          <h5>Design Lead / Director</h5>
+          <p>7+ yr · Team leadership, hiring, executive alignment</p>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 12</h4>
+        <ul>
+          <li>A portfolio is not a gallery — it is evidence of how you think. Start with the problem, not the pretty screens.</li>
+          <li>Case studies need decision rationale. "I chose this because the research showed..." beats "I chose this because I liked it."</li>
+          <li>Design critique is the culture that separates great teams from average ones. Do it regularly. Do it respectfully.</li>
+          <li>In Agile, design runs one sprint ahead. Never start a sprint without designs that are ready. Design debt compounds.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sm-page -->
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Concept Notes (Advanced) &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id) {
+  const b = document.getElementById(id);
+  b.classList.toggle('open');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  const w = document.getElementById('w9');
+  if (w) w.classList.add('open');
+});
+</script>
+</body>
+</html>

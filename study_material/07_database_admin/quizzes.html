@@ -1,0 +1,478 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">🧩 Quizzes</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; QUIZZES
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes</a>
+    <a href="lab_guide_beginner.html">Lab Guides</a>
+    <a href="project_briefs.html">Projects</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🧩</div>
+    <div class="lh-text">
+      <h2>Database Administration Quizzes</h2>
+      <p>Five weekly knowledge checks covering database basics, SQL queries, schema design, indexing, and transactions. Complete each week's content before attempting the quiz.</p>
+    </div>
+  </div>
+
+  <!-- W1 Quiz -->
+  <div class="quiz-block" data-domain="database_admin" data-quiz-id="d7-w1" data-week="1" id="quiz-d7-w1">
+    <div class="quiz-header">
+      <h3>Week 1 — Database Basics</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-question" data-qid="d7-w1-q1">
+        <p class="q-text">1. ACID stands for:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w1-q1" value="a"> Asynchronous, Concurrent, Independent, Durable</label>
+          <label><input type="radio" name="d7-w1-q1" value="b"> Atomicity, Consistency, Isolation, Durability</label>
+          <label><input type="radio" name="d7-w1-q1" value="c"> Agile, CI/CD, Integration, Deployment</label>
+          <label><input type="radio" name="d7-w1-q1" value="d"> Access, Control, Index, Data</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">ACID ensures reliable database transactions even in failure scenarios: Atomicity (all-or-nothing), Consistency (valid state), Isolation (concurrent safety), Durability (committed data persists).</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w1-q2">
+        <p class="q-text">2. A PRIMARY KEY must be:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w1-q2" value="a"> A numeric data type</label>
+          <label><input type="radio" name="d7-w1-q2" value="b"> Unique and NOT NULL</label>
+          <label><input type="radio" name="d7-w1-q2" value="c"> Always set to AUTO_INCREMENT</label>
+          <label><input type="radio" name="d7-w1-q2" value="d"> The first column defined in the table</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Primary key uniquely identifies each row and cannot be NULL. It can be any data type — strings (ISBN, email) are valid primary keys when they are naturally unique.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w1-q3">
+        <p class="q-text">3. Which SQL statement is used to retrieve data from a table?</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w1-q3" value="a"> INSERT</label>
+          <label><input type="radio" name="d7-w1-q3" value="b"> UPDATE</label>
+          <label><input type="radio" name="d7-w1-q3" value="c"> SELECT</label>
+          <label><input type="radio" name="d7-w1-q3" value="d"> CREATE</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="c">SELECT is DML (Data Manipulation Language) used to query/retrieve data. INSERT adds rows, UPDATE modifies rows, CREATE is DDL that defines structure.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w1-q4">
+        <p class="q-text">4. A FOREIGN KEY constraint ensures:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w1-q4" value="a"> Column values are unique</label>
+          <label><input type="radio" name="d7-w1-q4" value="b"> Referential integrity between two related tables</label>
+          <label><input type="radio" name="d7-w1-q4" value="c"> Data is encrypted in transit</label>
+          <label><input type="radio" name="d7-w1-q4" value="d"> Queries on this column are faster</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Foreign key prevents orphaned rows — you cannot insert an order with customer_id=999 if no customer with id=999 exists. This enforces referential integrity.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w1-q5">
+        <p class="q-text">5. Running DELETE without a WHERE clause:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w1-q5" value="a"> Deletes only the first row in the table</label>
+          <label><input type="radio" name="d7-w1-q5" value="b"> Has no effect — DELETE requires a WHERE clause</label>
+          <label><input type="radio" name="d7-w1-q5" value="c"> Deletes ALL rows in the table</label>
+          <label><input type="radio" name="d7-w1-q5" value="d"> Drops the entire table including its structure</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="c">DELETE without WHERE removes every row (but keeps the table structure). Always run a SELECT with the same WHERE first to verify what you are about to delete. Use TRUNCATE to quickly delete all rows.</div>
+      </div>
+
+      <button class="quiz-submit-btn" onclick="submitQuiz('d7-w1')">Submit Answers</button>
+      <div class="quiz-result" id="result-d7-w1" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- W2 Quiz -->
+  <div class="quiz-block" data-domain="database_admin" data-quiz-id="d7-w2" data-week="2" id="quiz-d7-w2">
+    <div class="quiz-header">
+      <h3>Week 2 — SQL Queries</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-question" data-qid="d7-w2-q1">
+        <p class="q-text">1. HAVING is used to filter:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w2-q1" value="a"> Individual rows before they are grouped</label>
+          <label><input type="radio" name="d7-w2-q1" value="b"> Groups after GROUP BY has been applied</label>
+          <label><input type="radio" name="d7-w2-q1" value="c"> Joined tables based on a condition</label>
+          <label><input type="radio" name="d7-w2-q1" value="d"> NULL values in a column</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">WHERE filters rows before grouping. HAVING filters groups after GROUP BY. You cannot use aggregate functions (COUNT, SUM) in WHERE — use HAVING instead.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w2-q2">
+        <p class="q-text">2. <code>SELECT COUNT(*) FROM orders WHERE status='pending'</code> returns:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w2-q2" value="a"> All pending orders with their details</label>
+          <label><input type="radio" name="d7-w2-q2" value="b"> The number of pending orders (a single integer)</label>
+          <label><input type="radio" name="d7-w2-q2" value="c"> The IDs of all pending orders</label>
+          <label><input type="radio" name="d7-w2-q2" value="d"> The total amount of pending orders</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">COUNT(*) returns a single integer — the count of rows matching the WHERE condition. To get total amount, use SUM(total) instead of COUNT(*).</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w2-q3">
+        <p class="q-text">3. LEFT JOIN returns:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w2-q3" value="a"> Only rows that have matching values in both tables</label>
+          <label><input type="radio" name="d7-w2-q3" value="b"> All rows from the left table, with NULL for non-matching rows from the right</label>
+          <label><input type="radio" name="d7-w2-q3" value="c"> All rows from the right table, with NULL for non-matching rows from the left</label>
+          <label><input type="radio" name="d7-w2-q3" value="d"> Only rows that do NOT match (exclusive)</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">LEFT JOIN: every row from the left table appears in the result. If no matching row exists in the right table, the right table columns show NULL. Useful for finding records without a match (customers with no orders).</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w2-q4">
+        <p class="q-text">4. <code>COALESCE(phone, 'Not Provided')</code> returns:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w2-q4" value="a"> NULL if the phone column is NULL</label>
+          <label><input type="radio" name="d7-w2-q4" value="b"> 'Not Provided' if phone is NULL; otherwise the phone value</label>
+          <label><input type="radio" name="d7-w2-q4" value="c"> The phone value multiplied by zero</label>
+          <label><input type="radio" name="d7-w2-q4" value="d"> An error if phone is NULL</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">COALESCE returns the first non-NULL argument. It is essential for replacing NULLs with meaningful defaults in reports and user-facing output.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w2-q5">
+        <p class="q-text">5. <code>ORDER BY price DESC LIMIT 5</code> returns:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w2-q5" value="a"> The 5 cheapest (lowest price) products</label>
+          <label><input type="radio" name="d7-w2-q5" value="b"> The 5 most expensive (highest price) products</label>
+          <label><input type="radio" name="d7-w2-q5" value="c"> All products where price equals 5</label>
+          <label><input type="radio" name="d7-w2-q5" value="d"> A random selection of 5 products</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">DESC = descending = highest first. So ORDER BY price DESC gives the most expensive at the top. LIMIT 5 keeps only the first 5 rows of that sorted result.</div>
+      </div>
+
+      <button class="quiz-submit-btn" onclick="submitQuiz('d7-w2')">Submit Answers</button>
+      <div class="quiz-result" id="result-d7-w2" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- W3 Quiz -->
+  <div class="quiz-block" data-domain="database_admin" data-quiz-id="d7-w3" data-week="3" id="quiz-d7-w3">
+    <div class="quiz-header">
+      <h3>Week 3 — Database Design</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-question" data-qid="d7-w3-q1">
+        <p class="q-text">1. Third Normal Form (3NF) eliminates:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w3-q1" value="a"> Repeating groups (solved by 1NF)</label>
+          <label><input type="radio" name="d7-w3-q1" value="b"> Transitive dependencies (non-key column depending on another non-key column)</label>
+          <label><input type="radio" name="d7-w3-q1" value="c"> Multi-valued columns</label>
+          <label><input type="radio" name="d7-w3-q1" value="d"> All NULL values from the database</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">3NF removes transitive dependencies: if A → B → C (non-key B determines non-key C), then B and C should be in a separate table. Example: zip_code → city → state should be in a zip_codes lookup table.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w3-q2">
+        <p class="q-text">2. A one-to-many relationship between departments and employees means:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w3-q2" value="a"> One employee can belong to many departments</label>
+          <label><input type="radio" name="d7-w3-q2" value="b"> One department can have many employees</label>
+          <label><input type="radio" name="d7-w3-q2" value="c"> Employees and departments are unrelated data</label>
+          <label><input type="radio" name="d7-w3-q2" value="d"> One employee IS a department</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">1:N (one-to-many): the "one" side (department) has a primary key, the "many" side (employees) has a foreign key pointing to the department. Each employee belongs to one department; each department has many employees.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w3-q3">
+        <p class="q-text">3. Denormalisation in a database is done primarily to:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w3-q3" value="a"> Remove all data redundancy from the schema</label>
+          <label><input type="radio" name="d7-w3-q3" value="b"> Improve read query performance at the cost of introducing some controlled redundancy</label>
+          <label><input type="radio" name="d7-w3-q3" value="c"> Fix broken foreign key constraints</label>
+          <label><input type="radio" name="d7-w3-q3" value="d"> Comply with GDPR data minimisation requirements</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Analytics and reporting databases (data warehouses) often use denormalised star/snowflake schemas — storing pre-computed aggregates or repeated data to avoid expensive JOINs on every query.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w3-q4">
+        <p class="q-text">4. Which data type is best for storing currency amounts?</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w3-q4" value="a"> FLOAT</label>
+          <label><input type="radio" name="d7-w3-q4" value="b"> DOUBLE</label>
+          <label><input type="radio" name="d7-w3-q4" value="c"> DECIMAL(10,2)</label>
+          <label><input type="radio" name="d7-w3-q4" value="d"> INT</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="c">FLOAT and DOUBLE use binary floating point, which cannot exactly represent most decimal fractions — 0.1 + 0.2 ≠ 0.3 in binary. DECIMAL stores exact values and is mandatory for financial data.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w3-q5">
+        <p class="q-text">5. An ER (Entity-Relationship) diagram shows:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w3-q5" value="a"> Server infrastructure and network topology</label>
+          <label><input type="radio" name="d7-w3-q5" value="b"> Entities (tables), their attributes (columns), and relationships between them</label>
+          <label><input type="radio" name="d7-w3-q5" value="c"> Network request/response flow for an API</label>
+          <label><input type="radio" name="d7-w3-q5" value="d"> API endpoints and HTTP methods</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">An ER diagram is the visual blueprint of a database before writing SQL. It shows entities, attributes, and the cardinality of relationships (1:1, 1:N, M:N).</div>
+      </div>
+
+      <button class="quiz-submit-btn" onclick="submitQuiz('d7-w3')">Submit Answers</button>
+      <div class="quiz-result" id="result-d7-w3" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- W4 Quiz -->
+  <div class="quiz-block" data-domain="database_admin" data-quiz-id="d7-w4" data-week="4" id="quiz-d7-w4">
+    <div class="quiz-header">
+      <h3>Week 4 — Indexing</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-question" data-qid="d7-w4-q1">
+        <p class="q-text">1. An index primarily improves:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w4-q1" value="a"> Write performance (INSERT, UPDATE, DELETE)</label>
+          <label><input type="radio" name="d7-w4-q1" value="b"> Read and lookup performance (SELECT, JOIN, WHERE)</label>
+          <label><input type="radio" name="d7-w4-q1" value="c"> Disk space usage (indexes compress data)</label>
+          <label><input type="radio" name="d7-w4-q1" value="d"> Data integrity (prevents invalid values)</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Indexes dramatically speed up SELECT queries at the cost of slightly slower writes (the index must also be updated) and additional storage. This trade-off is almost always worth it for frequently-queried columns.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w4-q2">
+        <p class="q-text">2. EXPLAIN shows <code>type=ALL</code> for a query. This means:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w4-q2" value="a"> All available indexes are being used</label>
+          <label><input type="radio" name="d7-w4-q2" value="b"> A full table scan is happening — every row is read to find matches</label>
+          <label><input type="radio" name="d7-w4-q2" value="c"> All WHERE conditions are satisfied</label>
+          <label><input type="radio" name="d7-w4-q2" value="d"> The query returns all columns (SELECT *)</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">type=ALL is the worst case — MySQL reads every single row in the table. For large tables, this is very slow. Adding an appropriate index changes this to type=ref or type=range.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w4-q3">
+        <p class="q-text">3. A composite index on <code>(col1, col2)</code> helps queries that filter on:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w4-q3" value="a"> col2 alone</label>
+          <label><input type="radio" name="d7-w4-q3" value="b"> col1 alone, or col1 combined with col2</label>
+          <label><input type="radio" name="d7-w4-q3" value="c"> col2 first, then col1</label>
+          <label><input type="radio" name="d7-w4-q3" value="d"> Neither column individually</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">The "leftmost prefix" rule: a composite index (A, B, C) helps queries filtering on A, or A+B, or A+B+C. It does NOT help queries filtering on B alone, C alone, or B+C without A.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w4-q4">
+        <p class="q-text">4. Which column is LEAST suitable for indexing?</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w4-q4" value="a"> email (unique value per user)</label>
+          <label><input type="radio" name="d7-w4-q4" value="b"> customer_id (FK in orders table)</label>
+          <label><input type="radio" name="d7-w4-q4" value="c"> is_deleted BOOLEAN (only 2 possible values)</label>
+          <label><input type="radio" name="d7-w4-q4" value="d"> created_at (used in date range queries)</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="c">Low-cardinality columns (is_deleted, gender, boolean flags) make poor index candidates. When half the rows match WHERE is_deleted=0, a full table scan is often faster than using an index and then fetching half the table's rows.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w4-q5">
+        <p class="q-text">5. A UNIQUE INDEX prevents:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w4-q5" value="a"> NULL values from being inserted</label>
+          <label><input type="radio" name="d7-w4-q5" value="b"> Duplicate values from being inserted in that column</label>
+          <label><input type="radio" name="d7-w4-q5" value="c"> Rows from being deleted</label>
+          <label><input type="radio" name="d7-w4-q5" value="d"> The table from being dropped</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">UNIQUE INDEX enforces uniqueness + provides fast lookups. Note: unlike PRIMARY KEY, UNIQUE allows NULL values (and multiple NULLs are permitted since NULL ≠ NULL).</div>
+      </div>
+
+      <button class="quiz-submit-btn" onclick="submitQuiz('d7-w4')">Submit Answers</button>
+      <div class="quiz-result" id="result-d7-w4" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- W5 Quiz -->
+  <div class="quiz-block" data-domain="database_admin" data-quiz-id="d7-w5" data-week="5" id="quiz-d7-w5">
+    <div class="quiz-header">
+      <h3>Week 5 — Transactions</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-question" data-qid="d7-w5-q1">
+        <p class="q-text">1. If a transaction fails midway and you run ROLLBACK:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w5-q1" value="a"> The partial changes are committed permanently</label>
+          <label><input type="radio" name="d7-w5-q1" value="b"> All changes made since START TRANSACTION are reverted</label>
+          <label><input type="radio" name="d7-w5-q1" value="c"> The entire table is deleted</label>
+          <label><input type="radio" name="d7-w5-q1" value="d"> The transaction is paused and can be resumed</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">ROLLBACK undoes ALL changes made within the current transaction — this is the Atomicity guarantee of ACID. The database returns to its state exactly as it was before BEGIN/START TRANSACTION.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w5-q2">
+        <p class="q-text">2. The READ COMMITTED isolation level prevents:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w5-q2" value="a"> Phantom reads</label>
+          <label><input type="radio" name="d7-w5-q2" value="b"> Dirty reads</label>
+          <label><input type="radio" name="d7-w5-q2" value="c"> Non-repeatable reads</label>
+          <label><input type="radio" name="d7-w5-q2" value="d"> All concurrency anomalies</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Dirty read: reading data that another transaction has modified but not yet committed — that transaction might ROLLBACK, making your read invalid. READ COMMITTED prevents this by only reading committed data.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w5-q3">
+        <p class="q-text">3. A database deadlock occurs when:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w5-q3" value="a"> A query takes longer than the configured timeout</label>
+          <label><input type="radio" name="d7-w5-q3" value="b"> Two transactions each hold a lock that the other needs, creating a circular wait</label>
+          <label><input type="radio" name="d7-w5-q3" value="c"> The database server runs out of available memory</label>
+          <label><input type="radio" name="d7-w5-q3" value="d"> Two users attempt to log in at the same moment</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Deadlock prevention: always acquire locks in the same order across all transactions. MySQL detects deadlocks automatically and kills the lower-cost transaction (victim), which your application should catch and retry.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w5-q4">
+        <p class="q-text">4. <code>BEGIN</code> / <code>START TRANSACTION</code> starts:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w5-q4" value="a"> A stored procedure execution</label>
+          <label><input type="radio" name="d7-w5-q4" value="b"> An explicit transaction — changes are not permanent until COMMIT is called</label>
+          <label><input type="radio" name="d7-w5-q4" value="c"> A scheduled database job</label>
+          <label><input type="radio" name="d7-w5-q4" value="d"> A new database connection from the pool</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Without an explicit transaction, MySQL runs in autocommit mode — each statement commits immediately. BEGIN disables autocommit for that session until COMMIT or ROLLBACK.</div>
+      </div>
+
+      <div class="quiz-question" data-qid="d7-w5-q5">
+        <p class="q-text">5. Connection pooling in a database-backed application is used to:</p>
+        <div class="q-options">
+          <label><input type="radio" name="d7-w5-q5" value="a"> Encrypt database connections for security</label>
+          <label><input type="radio" name="d7-w5-q5" value="b"> Reuse existing open connections instead of creating a new one per request</label>
+          <label><input type="radio" name="d7-w5-q5" value="c"> Load balance requests across multiple database servers</label>
+          <label><input type="radio" name="d7-w5-q5" value="d"> Restrict which users can access the database</label>
+        </div>
+        <div class="q-explanation" style="display:none;" data-correct="b">Creating a new DB connection per request takes 50–200ms and is expensive. A pool of 10 pre-warmed connections handles 10 concurrent requests instantly. Most Node.js DB libraries (mysql2, pg) provide built-in pool support.</div>
+      </div>
+
+      <button class="quiz-submit-btn" onclick="submitQuiz('d7-w5')">Submit Answers</button>
+      <div class="quiz-result" id="result-d7-w5" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Locked Quizzes -->
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 6 — Views &amp; Stored Procedures</h4>
+    <p>Complete Week 6 content to unlock</p>
+  </div>
+
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 7 — Query Optimisation</h4>
+    <p>Complete Week 7 content to unlock</p>
+  </div>
+
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 8 — Triggers &amp; Events</h4>
+    <p>Complete Week 8 content to unlock</p>
+  </div>
+
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 9 — PostgreSQL Advanced</h4>
+    <p>Complete Week 9 content to unlock</p>
+  </div>
+
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 10 — MongoDB</h4>
+    <p>Complete Week 10 content to unlock</p>
+  </div>
+
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 11 — Redis</h4>
+    <p>Complete Week 11 content to unlock</p>
+  </div>
+
+  <div class="quiz-locked">
+    <div class="quiz-lock-icon">🔒</div>
+    <h4>Week 12 — Cloud Databases</h4>
+    <p>Complete Week 12 content to unlock</p>
+  </div>
+
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Quizzes &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+(function(){
+  /* submitQuiz for radio-button style quiz blocks (D6/D7) */
+  window.submitQuiz = function(quizId) {
+    var block = document.getElementById('quiz-' + quizId);
+    if (!block) return;
+    var questions = block.querySelectorAll('.quiz-question');
+    var correct = 0, total = questions.length;
+    questions.forEach(function(q){
+      var qid = q.getAttribute('data-qid');
+      var sel = q.querySelector('input[name="'+qid+'"]:checked');
+      var expDiv = q.querySelector('.q-explanation');
+      var correctVal = expDiv ? expDiv.getAttribute('data-correct') : null;
+      if (expDiv) expDiv.style.display = 'block';
+      if (sel && correctVal) {
+        var allLabels = q.querySelectorAll('.q-options label');
+        allLabels.forEach(function(lbl){
+          var inp = lbl.querySelector('input');
+          if (inp && inp.value === correctVal) { lbl.style.fontWeight='700'; lbl.style.color='#2E7D32'; }
+          else if (inp && sel && inp.value === sel.value && inp.value !== correctVal) { lbl.style.color='#C62828'; }
+        });
+        if (sel.value === correctVal) correct++;
+      }
+      q.querySelectorAll('input[type="radio"]').forEach(function(r){ r.disabled=true; });
+    });
+    var pct = total > 0 ? Math.round(correct/total*100) : 0;
+    var btn = block.querySelector('.quiz-submit-btn');
+    var prev = btn ? btn.previousElementSibling : null;
+    if (!prev || !prev.classList.contains('quiz-score-result')) {
+      var sc = document.createElement('div');
+      sc.className = 'quiz-score-result';
+      sc.style.cssText = 'margin:12px 0;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:700;background:'+(pct>=60?'#E8F5E9;color:#2E7D32':'#FFEBEE;color:#C62828');
+      sc.textContent = correct+'/'+total+' correct ('+pct+'%) — '+(pct>=60?'✅ Passed!':'❌ Keep studying and retry');
+      if (btn) btn.parentNode.insertBefore(sc, btn);
+    }
+    if (btn) btn.style.display = 'none';
+    // Save to progress tracker localStorage
+    try {
+      var domain = block.getAttribute('data-domain');
+      var storageKey = 'ndfi_quiz_'+domain+'_'+quizId;
+      var attempts = JSON.parse(localStorage.getItem(storageKey)||'[]');
+      attempts.unshift({score:correct,total:total,pct:pct,date:new Date().toISOString()});
+      if (attempts.length>10) attempts.splice(10);
+      localStorage.setItem(storageKey, JSON.stringify(attempts));
+    } catch(e){}
+  };
+})();
+</script><script src="../shared/level_filter.js"></script>
+<script src="../shared/quiz_engine.js"></script>
+</body>
+</html>
+
+
+

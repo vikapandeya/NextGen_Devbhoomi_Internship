@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Lab Guide (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">🧪 Lab Guide — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="lab_guide_intermediate.html">Intermediate Labs ↗</a>
+    <a href="concept_notes_advanced.html">Concept Notes ↗</a>
+    <a href="project_briefs.html">Projects ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero adv">
+    <div class="lh-icon">🧪</div>
+    <h1>Advanced Lab Guide — Cyber Security</h1>
+    <p class="lh-sub">4 labs: CTF challenges on TryHackMe, AWS security audit, building a SIEM with ELK Stack, and a capstone red team exercise.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">Weeks 9–12</span>
+      <span class="lh-pill">TryHackMe · AWS · ELK · Red Team</span>
+      <span class="lh-pill gold">Advanced Level</span>
+    </div>
+  </div>
+
+  <!-- LAB 9 -->
+  <div class="sm-sec">Lab 9 (Week 9) — HackTheBox / TryHackMe CTF</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Create TryHackMe Account &amp; Complete Pre-Security Path</h3>
+      <span>~2–3 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Create a free account at <strong>tryhackme.com</strong>. Navigate to Learning Paths → <strong>Pre-Security</strong>. Complete this path — it covers networking fundamentals, Linux basics, and web fundamentals. This path is required before attacking machines. All rooms run in your browser — no local VM needed.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Complete the OWASP Top 10 Room</h3>
+      <span>~3–4 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Search for and start the <strong>"OWASP Top 10"</strong> room on TryHackMe. This guided room walks you through each of the 10 categories with a vulnerable machine for each. Complete all tasks and answer all questions within TryHackMe's guided interface. This reinforces the Week 5 concepts with hands-on practice.</p>
+      <div class="lab-tip">
+        <strong>Tip:</strong> Connect to TryHackMe via their browser-based AttackBox — no VPN setup required. Or download the OpenVPN configuration from your account and connect from Kali Linux if you have it.
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Complete "Pickle Rick" CTF Room</h3>
+      <span>~1–2 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Search for and start the <strong>"Pickle Rick"</strong> room — a beginner-friendly CTF. Objective: find 3 flags (text strings) hidden on the machine. No hints for this one — figure it out. Approach: enumerate the web server, find hidden files, use web vulnerabilities to execute commands.</p>
+      <p>Document each flag you find: which vulnerability you used to find it, what commands or techniques you ran, what you learned from each step.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Complete the "Blue" Room (EternalBlue)</h3>
+      <span>~1–2 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Start the <strong>"Blue"</strong> room on TryHackMe — this targets a Windows machine vulnerable to EternalBlue (MS17-010), the exploit used in the WannaCry ransomware outbreak. Follow the guided steps to: scan with Nmap, identify the vulnerability, exploit with Metasploit, escalate privileges, and crack the password hashes.</p>
+      <div class="lab-warn">
+        <strong>Note:</strong> This exploit is performed on a controlled TryHackMe virtual machine in an isolated environment. This is not your local network or any real machine.
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Document All Findings</h3>
+      <span>~30 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Screenshots of each flag found (3 from Pickle Rick, completion badge from OWASP Top 10 room, root flag from Blue). For each flag, a 2–3 sentence explanation: what vulnerability was exploited, what technique/command was used, and what the defender should have done to prevent it.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 10 -->
+  <div class="sm-sec">Lab 10 (Week 10) — AWS Security Audit</div>
+
+  <div class="lab-warn">
+    <strong>Prerequisite:</strong> You need an AWS account for this lab. Use a personal account with no production resources. AWS Free Tier is sufficient for all steps. These commands audit YOUR account only.
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Run AWS Trusted Advisor Security Checks</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>In the AWS Console, search for <strong>Trusted Advisor</strong>. Navigate to the Security category. Free tier includes checks for: MFA on root account, S3 bucket permissions, security groups with unrestricted access, IAM use, and exposed access keys. Review every finding and note which are flagged as warnings or errors.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Generate and Audit the IAM Credential Report</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Using AWS CLI (configured with your credentials), run:</p>
+      <pre>aws iam generate-credential-report
+aws iam get-credential-report \
+  --query 'Content' --output text | base64 -d</pre>
+      <p>This produces a CSV report of all IAM users. For each user, audit: has console access (should have MFA), has access keys (should be rotated in last 90 days), last used date (unused accounts should be deleted or disabled).</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Audit S3 Buckets for Public Access</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>List all S3 buckets and check their public access block settings:</p>
+      <pre><span class="comment"># List all buckets</span>
+aws s3api list-buckets --query 'Buckets[].Name'
+
+<span class="comment"># Check public access block for each bucket</span>
+aws s3api get-public-access-block --bucket YOUR_BUCKET_NAME</pre>
+      <p>Every bucket should have all four Block Public Access settings set to <code>true</code> unless intentionally public (static website hosting). Document any buckets that are not fully blocked.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Review CloudTrail and Recent API Activity</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Verify CloudTrail is enabled in your account. Review recent API calls:</p>
+      <pre>aws cloudtrail lookup-events \
+  --max-results 20 \
+  --query 'Events[*].{User:Username,Event:EventName,Time:EventTime}'</pre>
+      <p>Look for any unexpected events — API calls from unfamiliar IPs, calls at unusual hours, or high-risk calls like <code>DeleteBucket</code>, <code>CreateUser</code>, or <code>AttachUserPolicy</code>.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Enable GuardDuty and Review Findings</h3>
+      <span>~10 min setup, 24 hours monitoring</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Enable Amazon GuardDuty in your account — it's free for the first 30 days:</p>
+      <pre>aws guardduty create-detector --enable --finding-publishing-frequency FIFTEEN_MINUTES</pre>
+      <p>Wait 24 hours, then check for findings: AWS Console → GuardDuty → Findings. For each finding, research the finding type on AWS documentation to understand what it means and how severe it is.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Screenshot of IAM credential report showing users and their MFA/access key status + screenshot of GuardDuty findings (or confirmation of "no findings after 24 hours") + a 10-row findings table from your audit with Severity (High/Medium/Low/Info) and Remediation for each finding.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 11 -->
+  <div class="sm-sec">Lab 11 (Week 11) — Building a Simple SIEM with ELK Stack</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Create Docker Compose File for ELK</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Create a file named <code>docker-compose.yml</code> with the following ELK stack configuration:</p>
+      <pre><span class="comment"># docker-compose.yml — ELK SIEM stack</span>
+version: '3.8'
+services:
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports: ["9200:9200"]
+    volumes: ["esdata:/usr/share/elasticsearch/data"]
+
+  kibana:
+    image: kibana:8.11.0
+    ports: ["5601:5601"]
+    depends_on: [elasticsearch]
+
+  logstash:
+    image: logstash:8.11.0
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on: [elasticsearch]
+
+  nginx:
+    image: nginx:latest
+    ports: ["8081:80"]
+    volumes: ["./nginx_logs:/var/log/nginx"]
+
+volumes:
+  esdata:</pre>
+      <p>Run: <code>docker compose up -d</code></p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Configure Logstash Pipeline for Nginx Logs</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Create <code>logstash.conf</code> to parse Nginx access logs:</p>
+      <pre><span class="comment"># logstash.conf</span>
+input {
+  file {
+    path => "/var/log/nginx/access.log"
+    start_position => "beginning"
+  }
+}
+
+filter {
+  grok {
+    match => {
+      "message" => '%{COMBINEDAPACHELOG}'
+    }
+  }
+  date {
+    match => [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
+  }
+  mutate {
+    convert => { "response" => "integer" }
+    convert => { "bytes" => "integer" }
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["elasticsearch:9200"]
+    index => "nginx-logs-%{+YYYY.MM.dd}"
+  }
+}</pre>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Generate Test Traffic and Explore in Kibana</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Generate some test traffic to the Nginx container: <code>for i in {1..50}; do curl http://localhost:8081/; curl http://localhost:8081/nonexistent; done</code></p>
+      <p>Open Kibana at <strong>http://localhost:5601</strong>. Go to Stack Management → Index Patterns. Create a pattern for <code>nginx-logs-*</code>. Go to Discover — you should see log entries being parsed with individual fields (response code, client IP, request path, bytes).</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Create a Kibana Alert for Scanning Activity</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>In Kibana → Alerting → Create rule → Elasticsearch query. Configure an alert that triggers when the count of log entries where <code>response:404</code> exceeds 10 within a 1-minute window. This simulates detecting a web scanner or directory enumeration attack.</p>
+      <p>Set the alert action to write to a log file (connector: log) for simplicity — in production this would be Slack/PagerDuty/email.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Screenshot of Kibana Discover showing parsed nginx log fields + screenshot of the alert rule configuration showing the 404 threshold condition + a 1-paragraph explanation of how this detection would help a SOC analyst identify a potential scanning attack.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 12 -->
+  <div class="sm-sec">Lab 12 (Week 12) — Capstone Red Team Exercise (Authorized)</div>
+
+  <div class="lab-warn">
+    <strong>⚠️ Scope:</strong> This lab targets ONLY the DVWA Docker container running on localhost on YOUR machine. No other targets. No external IPs. No scanning beyond localhost:80.
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Plan the Attack</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Before touching any tools, write your attack plan. Define: target (localhost DVWA container only), objective (gain administrator access and read simulated flag.txt), tools to use (Nmap, Burp Suite, DVWA at Low security), phases (recon → scan → exploit → report). A professional attacker plans before acting — improvised attacks miss things and destroy evidence.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Reconnaissance &amp; Scanning</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Run service version detection against localhost:</p>
+      <pre>nmap -sV -sC -p 80 localhost</pre>
+      <p>Document: open ports, service versions detected, any banners or version information disclosed. Version disclosure itself is an information leakage finding — note the Apache/PHP version in your report.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Vulnerability Assessment with Burp Suite</h3>
+      <span>~30 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>With Burp Suite proxy running, browse every page of DVWA. Burp's passive scanner will log all requests and identify input points. Identify: all pages accepting user input, all GET/POST parameters, cookies and session tokens. This is your target map for exploitation.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Exploitation Chain</h3>
+      <span>~45 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Using techniques from Labs 5–7:</p>
+      <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;line-height:2;">
+        <li>SQL injection → dump all users and password hashes</li>
+        <li>Stored XSS → inject a script that exfiltrates a simulated session cookie to an alert box</li>
+        <li>File upload → upload a PHP file that reads the directory listing</li>
+      </ul>
+      <p>Screenshot every step with timestamps. A professional pen test must be reproducible — another tester must be able to follow your steps and get the same result.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Write the Full Penetration Test Report</h3>
+      <span>~2–3 hours</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Using the template from Lab 8, write a complete professional report. Minimum structure: Executive Summary (1 page), Scope &amp; Methodology (1 page), Findings (minimum 5 vulnerabilities, full detail for each with CVSS v3.1 scores), Remediation Roadmap (prioritized by risk), Appendix (all screenshots numbered and referenced).</p>
+      <div class="lab-goal">
+        <strong>Final Deliverable:</strong> Complete penetration test report (minimum 10 pages) submitted to mentor for evaluation. This is your capstone document for Cyber Security. It will be evaluated as if submitted to a real client. Treat it accordingly.
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_intermediate.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Intermediate Labs</a>
+    <div style="display:flex;gap:12px;">
+      <a href="project_briefs.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Projects →</a>
+      <a href="career_roadmap.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Career Roadmap →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps &amp; Cloud — Project Briefs | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Lab Guide ↗</a>
+    <a href="career_roadmap.html">Career Roadmap ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">📋</div>
+    <h1>Project Briefs — DevOps &amp; Cloud Engineering</h1>
+    <p class="lh-sub">Three capstone projects demonstrating container deployment, CI/CD automation, and cloud infrastructure management. Each builds on the last — complete them in order.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">3 Projects</span>
+      <span class="lh-pill">Beginner · Intermediate · Advanced</span>
+      <span class="lh-pill gold">Portfolio Projects</span>
+    </div>
+  </div>
+
+  <!-- ── PROJECT 1 ── -->
+  <div class="sm-sec">Project 1 — Beginner Level</div>
+  <div class="project-card">
+    <div class="project-head proj-beg">
+      <div>
+        <h2>Dockerized Portfolio Deployment</h2>
+        <p>Docker · Nginx · AWS EC2 · Security Groups</p>
+      </div>
+      <span class="ph-badge">Beginner · Due End Week 4</span>
+    </div>
+    <div class="project-body">
+
+      <div class="proj-meta">
+        <div class="proj-meta-item">
+          <div class="pm-label">Stack</div>
+          <div class="pm-val">Docker · Nginx · EC2</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Deadline</div>
+          <div class="pm-val">End of Week 4</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Pass Mark</div>
+          <div class="pm-val">60 / 100</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Submission</div>
+          <div class="pm-val">GitHub Repo + EC2 URL</div>
+        </div>
+      </div>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">Project Description</h4>
+      <p style="font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:20px;">Take your existing portfolio website and containerize it using Nginx as a web server. Deploy it both locally using Docker and on AWS EC2. The goal is to demonstrate that the same container image works identically in both environments — this is the core promise of Docker.</p>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">Requirements</h4>
+      <ul class="deliverable-list">
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Write a production-ready Dockerfile using <code>nginx:alpine</code> as the base image</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Include a <code>.dockerignore</code> file excluding dev files</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Container must serve the website on port 80</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> <code>docker run</code> command documented in README with explanation of each flag</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Deploy to AWS EC2 t2.micro (Free Tier) in ap-south-1</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Website accessible via the EC2 public IP address</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Security Group restricts SSH (port 22) to your IP only — not 0.0.0.0/0</li>
+      </ul>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:20px 0 10px;">Evaluation Rubric</h4>
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>Points</th><th>What We Look For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dockerfile quality</td><td class="pts">20</td><td>nginx:alpine base, COPY is clean, no unnecessary layers</td></tr>
+          <tr><td>Security Group configuration</td><td class="pts">15</td><td>Port 22 restricted to your IP, port 80 open to all</td></tr>
+          <tr><td>EC2 deployment</td><td class="pts">20</td><td>Container running on EC2, website loads via public IP</td></tr>
+          <tr><td>Documentation</td><td class="pts">20</td><td>README explains Docker commands and EC2 setup steps clearly</td></tr>
+          <tr><td>Running container proof</td><td class="pts">25</td><td>Screenshot of <code>docker ps</code> showing running container + browser screenshot</td></tr>
+          <tr style="font-weight:700;"><td>Total</td><td class="pts">100</td><td>Pass mark: 60</td></tr>
+        </tbody>
+      </table>
+
+      <div class="lab-tip"><strong>Tip:</strong> Build the image locally first with <code>docker build -t portfolio:v1 .</code> and test it before touching EC2. The most common mistake is copying the build step to EC2 before verifying it works locally.</div>
+    </div>
+  </div>
+
+  <!-- ── PROJECT 2 ── -->
+  <div class="sm-sec">Project 2 — Intermediate Level</div>
+  <div class="project-card">
+    <div class="project-head proj-int">
+      <div>
+        <h2>Full CI/CD Pipeline for a Microservice</h2>
+        <p>Node.js · Docker · GitHub Actions · AWS ECR · EC2</p>
+      </div>
+      <span class="ph-badge">Intermediate · Due End Week 8</span>
+    </div>
+    <div class="project-body">
+
+      <div class="proj-meta">
+        <div class="proj-meta-item">
+          <div class="pm-label">Stack</div>
+          <div class="pm-val">Node.js · Docker · GitHub Actions</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Deadline</div>
+          <div class="pm-val">End of Week 8</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Pass Mark</div>
+          <div class="pm-val">65 / 100</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Submission</div>
+          <div class="pm-val">GitHub Repo + Live API URL</div>
+        </div>
+      </div>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">Project Description</h4>
+      <p style="font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:20px;">Build a REST API microservice with a health check and two data endpoints, containerize it, push to AWS Elastic Container Registry (ECR) via a GitHub Actions CI/CD pipeline, and configure the pipeline to auto-deploy to your EC2 instance on every push to the main branch.</p>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">Requirements</h4>
+      <ul class="deliverable-list">
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Express API with <code>/health</code> and <code>/api/data</code> endpoints responding with JSON</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Unit tests with Jest — minimum 60% code coverage</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Dockerfile using <code>node:20-alpine</code> + <code>.dockerignore</code></li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> GitHub Actions workflow: test → docker build → push to ECR → SSH deploy to EC2</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> All secrets (AWS keys, SSH key) stored in GitHub Secrets — never hardcoded</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Deployed API accessible via EC2 public URL (<code>http://&lt;ip&gt;:3000/health</code>)</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> README includes architecture diagram (ASCII is acceptable) explaining the full pipeline</li>
+      </ul>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:20px 0 10px;">Evaluation Rubric</h4>
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>Points</th><th>What We Look For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>API + Tests</td><td class="pts">20</td><td>Both endpoints work, tests pass, coverage ≥60%</td></tr>
+          <tr><td>Dockerfile quality</td><td class="pts">15</td><td>Alpine base, .dockerignore present, no secrets in image</td></tr>
+          <tr><td>CI/CD pipeline</td><td class="pts">30</td><td>All 4 stages work: test → build → push to ECR → deploy to EC2</td></tr>
+          <tr><td>ECR + EC2 deployment</td><td class="pts">25</td><td>Image in ECR, container running on EC2, API responds live</td></tr>
+          <tr><td>Documentation</td><td class="pts">10</td><td>Architecture diagram, setup instructions, pipeline explanation</td></tr>
+          <tr style="font-weight:700;"><td>Total</td><td class="pts">100</td><td>Pass mark: 65</td></tr>
+        </tbody>
+      </table>
+
+      <div class="lab-warn"><strong>Security rule:</strong> If your GitHub Actions YAML contains an AWS access key or SSH private key as plain text, the project will be failed regardless of other scores. Use <code>${{ secrets.SECRET_NAME }}</code> syntax exclusively.</div>
+    </div>
+  </div>
+
+  <!-- ── PROJECT 3 ── -->
+  <div class="sm-sec">Project 3 — Advanced Level</div>
+  <div class="project-card">
+    <div class="project-head proj-adv">
+      <div>
+        <h2>Production-Grade Kubernetes Infrastructure</h2>
+        <p>Terraform · Kubernetes (EKS / minikube) · Prometheus · Grafana · GitHub Actions</p>
+      </div>
+      <span class="ph-badge">Advanced · Due End Week 12</span>
+    </div>
+    <div class="project-body">
+
+      <div class="proj-meta">
+        <div class="proj-meta-item">
+          <div class="pm-label">Stack</div>
+          <div class="pm-val">Terraform · EKS · Prometheus · Grafana</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Deadline</div>
+          <div class="pm-val">End of Week 12</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Pass Mark</div>
+          <div class="pm-val">70 / 100</div>
+        </div>
+        <div class="proj-meta-item">
+          <div class="pm-label">Submission</div>
+          <div class="pm-val">GitHub Repo + Grafana Screenshot + Live URL</div>
+        </div>
+      </div>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">Project Description</h4>
+      <p style="font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:20px;">Provision an EKS cluster with Terraform (or minikube for local development), deploy a multi-service application (frontend + backend + database), set up monitoring with Prometheus and Grafana, and implement a complete CI/CD pipeline that deploys to Kubernetes on every merge to main.</p>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;">Requirements</h4>
+      <ul class="deliverable-list">
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Terraform: VPC + EKS cluster provisioned as code (or minikube as documented alternative)</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Kubernetes: Deployment + Service + ConfigMap + Ingress for each service</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Horizontal Pod Autoscaler configured and demonstrated with load test</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Prometheus scraping application metrics via <code>/metrics</code> endpoint</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Grafana dashboard showing live request rate, error rate, and pod count</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> GitHub Actions deploys to Kubernetes via <code>kubectl apply</code> on push to main</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> All secrets in Kubernetes Secrets or AWS Secrets Manager — zero plain text secrets in code</li>
+        <li><div class="dl-check" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'';" title="Mark complete"></div> Runbook in README: how to deploy, rollback, and scale the application</li>
+      </ul>
+
+      <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:20px 0 10px;">Evaluation Rubric</h4>
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>Points</th><th>What We Look For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Terraform IaC</td><td class="pts">20</td><td>VPC + cluster as code, variables used, state committed</td></tr>
+          <tr><td>Kubernetes manifests</td><td class="pts">25</td><td>All resource types present, HPA configured, health probes set</td></tr>
+          <tr><td>Monitoring setup</td><td class="pts">20</td><td>Prometheus collecting metrics, Grafana showing real traffic data</td></tr>
+          <tr><td>CI/CD pipeline</td><td class="pts">25</td><td>Automated deploy to K8s on push to main with rollback tested</td></tr>
+          <tr><td>Documentation + runbook</td><td class="pts">10</td><td>Architecture diagram, operational runbook, decision rationale</td></tr>
+          <tr style="font-weight:700;"><td>Total</td><td class="pts">100</td><td>Pass mark: 70</td></tr>
+        </tbody>
+      </table>
+
+      <div class="lab-goal"><strong>Career note:</strong> This project is the one that gets you interviews. A GitHub repo with a working EKS deployment, Grafana dashboards, and a CI/CD badge on the README tells a hiring manager more than any certification. Document every architecture decision you made and why.</div>
+    </div>
+  </div>
+
+</div><!-- /.sm-page -->
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

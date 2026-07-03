@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body { display:block; animation:fadeIn .2s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .analogy-box { background:linear-gradient(135deg,#FDF6E3,#F5E6C0); border:1px solid var(--gold-light); border-left:4px solid var(--gold); border-radius:var(--radius-sm); padding:14px 18px; margin:14px 0; font-size:13px; color:var(--text-mid); line-height:1.7; }
+  .analogy-box strong { color:var(--navy); }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">← Beginner</a>
+    <a href="concept_notes_advanced.html">Advanced ↗</a>
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">⚡</div>
+    <h1>Intermediate Level — Concept Notes</h1>
+    <p class="lh-sub">Weeks 5–8: React.js, Node.js with Express, REST APIs, and database integration. You move from static pages to full-stack dynamic web applications.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 5–8</span>
+      <span class="lh-pill">React · Node · Express · MySQL</span>
+      <span class="lh-pill">Full-Stack Basics</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card"><h4>Prerequisites</h4><ul><li>HTML5 + CSS3 (Beginner done)</li><li>JavaScript: variables, functions</li><li>DOM manipulation basics</li><li>GitHub account set up</li></ul></div>
+    <div class="info-card"><h4>New Tools</h4><ul><li>Node.js + npm</li><li>React (via Vite)</li><li>Postman (API testing)</li><li>MySQL / XAMPP</li></ul></div>
+    <div class="info-card"><h4>Key Concepts</h4><ul><li>Component-based UI</li><li>State management</li><li>REST API design</li><li>CRUD operations</li></ul></div>
+    <div class="info-card"><h4>End Goal</h4><ul><li>Full-stack task manager app</li><li>REST API you built yourself</li><li>Deployed on Render/Vercel</li><li>Ready for Advanced level</li></ul></div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="sm-sec">Week 5 — React.js Fundamentals</div>
+  <div class="week-block open" id="w5">
+    <div class="week-head" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <div class="week-head-text"><h3>React.js — Component-Based UI</h3><p>JSX · Components · Props · State · Hooks</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> Think of React components like LEGO bricks. Each brick is a small, reusable piece. You assemble them to build complex UIs. Change one brick's design, and everywhere it's used updates automatically.</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why React?</h4>
+          <ul>
+            <li>Built by Facebook (Meta) in 2013</li>
+            <li>#1 most-used frontend framework in 2026</li>
+            <li>Component-based: reuse UI pieces across pages</li>
+            <li>Virtual DOM: only updates what changed (fast)</li>
+            <li>Massive job market demand</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>JSX — JavaScript + HTML</h4>
+          <ul>
+            <li>JSX lets you write HTML-like syntax inside JavaScript</li>
+            <li><code>className</code> not <code>class</code> (class is a JS keyword)</li>
+            <li><code>htmlFor</code> not <code>for</code></li>
+            <li>Every JSX expression must return one root element</li>
+            <li>Use <code>&lt;&gt;...&lt;/&gt;</code> (Fragment) to wrap without a div</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Components &amp; Props</h4>
+          <ul>
+            <li>Component = a function that returns JSX</li>
+            <li>Component names must start with capital letter</li>
+            <li>Props = data passed from parent to child</li>
+            <li>Props are read-only — never modify them</li>
+            <li>Use <code>{ }</code> to embed JavaScript in JSX</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>useState Hook</h4>
+          <ul>
+            <li><code>const [count, setCount] = useState(0)</code></li>
+            <li><code>count</code> is the current value</li>
+            <li><code>setCount</code> updates the value</li>
+            <li>When state changes, React re-renders the component</li>
+            <li>Never mutate state directly — always use setter</li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment">// A complete React component with state</span>
+import { useState } from 'react';
+
+function Counter({ title }) {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(count - 1)}&gt;-&lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+
+export default Counter;
+
+<span class="comment">// Using the component with props</span>
+&lt;Counter title="My Counter" /&gt;</pre>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>useEffect Hook</h4>
+          <ul>
+            <li>Runs code after the component renders</li>
+            <li>Use for: API calls, timers, subscriptions</li>
+            <li>Second argument = dependency array</li>
+            <li><code>[]</code> empty array = run only once (on mount)</li>
+            <li><code>[id]</code> = run when <code>id</code> changes</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Rendering Lists</h4>
+          <ul>
+            <li>Use <code>.map()</code> to render arrays</li>
+            <li>Each item needs a unique <code>key</code> prop</li>
+            <li>Use the item's ID as key, not the index</li>
+            <li>Keys help React update the DOM efficiently</li>
+          </ul>
+        </div>
+      </div>
+      <div class="key-takeaway">
+        <h4>Week 5 Key Takeaways</h4>
+        <ul>
+          <li>Components are just functions that return JSX — start simple</li>
+          <li><code>useState</code> is your most-used hook — master it first</li>
+          <li>Never mutate state directly: always use the setter function</li>
+          <li><code>useEffect(fn, [])</code> = run once on mount — perfect for initial API calls</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="week-block" id="w6">
+    <div class="week-head" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <div class="week-head-text"><h3>Node.js &amp; Express — Backend Basics</h3><p>Node runtime · Express server · Routing · Middleware</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="analogy-box"><strong>Analogy:</strong> A restaurant: React is the dining room (what customers see), Node/Express is the kitchen (where orders are processed). The kitchen never talks directly to customers — it sends food (data) to the dining room through a defined menu (REST API).</div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>What is Node.js?</h4>
+          <ul>
+            <li>JavaScript runtime built on Chrome's V8 engine</li>
+            <li>Run JavaScript on the server (not just browsers)</li>
+            <li>Non-blocking, event-driven I/O — handles many requests</li>
+            <li>npm: world's largest package registry</li>
+            <li>Same language on front and back end</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Express.js</h4>
+          <ul>
+            <li>Minimal web framework for Node.js</li>
+            <li>Handles HTTP routes: GET, POST, PUT, DELETE</li>
+            <li>Middleware: functions that run between request and response</li>
+            <li><code>app.use()</code> registers middleware globally</li>
+            <li>Most popular Node.js framework by far</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>HTTP Methods</h4>
+          <ul>
+            <li><code>GET</code> — retrieve data (safe, no body)</li>
+            <li><code>POST</code> — create new data (sends body)</li>
+            <li><code>PUT</code> — replace existing data</li>
+            <li><code>PATCH</code> — update partial data</li>
+            <li><code>DELETE</code> — remove data</li>
+            <li>REST uses these methods + URLs together</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Middleware Concept</h4>
+          <ul>
+            <li>Middleware = function(req, res, next)</li>
+            <li>Runs before your route handler</li>
+            <li>Must call <code>next()</code> to pass to next middleware</li>
+            <li>Common: body-parser, cors, auth, logging</li>
+            <li>Order matters — middleware runs top to bottom</li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment">// Minimal Express server</span>
+const express = require('express');
+const app = express();
+
+app.use(express.json()); <span class="comment">// parse JSON bodies</span>
+
+const tasks = [
+  { id: 1, title: 'Learn React', done: false },
+  { id: 2, title: 'Build API', done: false },
+];
+
+<span class="comment">// GET /api/tasks — return all tasks</span>
+app.get('/api/tasks', (req, res) =&gt; {
+  res.json(tasks);
+});
+
+<span class="comment">// POST /api/tasks — create new task</span>
+app.post('/api/tasks', (req, res) =&gt; {
+  const { title } = req.body;
+  const task = { id: Date.now(), title, done: false };
+  tasks.push(task);
+  res.status(201).json(task); <span class="comment">// 201 = Created</span>
+});
+
+app.listen(3001, () =&gt; console.log('Server on port 3001'));</pre>
+      <div class="key-takeaway">
+        <h4>Week 6 Key Takeaways</h4>
+        <ul>
+          <li>Express routes map HTTP method + URL to a handler function</li>
+          <li>Always use <code>app.use(express.json())</code> before reading <code>req.body</code></li>
+          <li>Return correct HTTP status codes: 200=OK, 201=Created, 404=Not Found, 500=Server Error</li>
+          <li>Test every API endpoint in Postman before connecting your frontend</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="week-block" id="w7">
+    <div class="week-head" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <div class="week-head-text"><h3>REST APIs &amp; Database Integration</h3><p>MySQL · SQL CRUD · API + DB connection · Async/Await</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>REST API Design Principles</h4>
+          <ul>
+            <li>Resources as nouns in URLs: <code>/users</code>, <code>/tasks</code></li>
+            <li>HTTP methods as verbs (GET, POST, DELETE)</li>
+            <li>Stateless: each request is self-contained</li>
+            <li>Return JSON with consistent structure</li>
+            <li>Use plural nouns: <code>/tasks</code> not <code>/task</code></li>
+            <li>Nest for relationships: <code>/users/5/tasks</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>MySQL Basics</h4>
+          <ul>
+            <li>Relational database — data in tables with rows/columns</li>
+            <li>SQL: Structured Query Language</li>
+            <li><code>SELECT * FROM tasks WHERE done = 0</code></li>
+            <li><code>INSERT INTO tasks (title) VALUES ('Learn SQL')</code></li>
+            <li><code>UPDATE tasks SET done = 1 WHERE id = 5</code></li>
+            <li><code>DELETE FROM tasks WHERE id = 5</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Async/Await</h4>
+          <ul>
+            <li>Database calls are asynchronous (take time)</li>
+            <li><code>async function</code> enables <code>await</code> inside</li>
+            <li><code>await</code> pauses until the promise resolves</li>
+            <li>Wrap in <code>try/catch</code> for error handling</li>
+            <li>Cleaner than nested .then().then() chains</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Environment Variables</h4>
+          <ul>
+            <li>Never hardcode passwords in your code</li>
+            <li>Store secrets in <code>.env</code> file</li>
+            <li>Add <code>.env</code> to <code>.gitignore</code> — never commit it</li>
+            <li>Use <code>dotenv</code> package: <code>require('dotenv').config()</code></li>
+            <li>Access: <code>process.env.DB_PASSWORD</code></li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment">// Express route with MySQL + async/await</span>
+const mysql = require('mysql2/promise');
+
+const db = await mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+});
+
+app.get('/api/tasks', async (req, res) =&gt; {
+  try {
+    const [rows] = await db.query('SELECT * FROM tasks ORDER BY id DESC');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database error' });
+  }
+});</pre>
+      <div class="key-takeaway">
+        <h4>Week 7 Key Takeaways</h4>
+        <ul>
+          <li>NEVER hardcode database credentials — always use <code>.env</code> + <code>process.env</code></li>
+          <li>Always add <code>.env</code> to <code>.gitignore</code> before your first commit</li>
+          <li>Use parameterised queries (<code>?</code> placeholders) to prevent SQL injection</li>
+          <li>Return meaningful error messages to the client, but log full errors on the server</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="week-block" id="w8">
+    <div class="week-head" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <div class="week-head-text"><h3>React + API Integration &amp; Deployment</h3><p>Fetch API · CORS · Vercel + Render deployment · Auth intro</p></div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Fetching Data in React</h4>
+          <ul>
+            <li>Use <code>fetch()</code> or <code>axios</code> library</li>
+            <li>Call API in <code>useEffect</code> with <code>[]</code></li>
+            <li>Track three states: loading, data, error</li>
+            <li>Show spinner while loading, error UI on failure</li>
+            <li>axios: cleaner syntax, auto JSON parse, interceptors</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>CORS</h4>
+          <ul>
+            <li>Browser blocks requests between different origins</li>
+            <li>Enable in Express: <code>app.use(cors())</code></li>
+            <li>Install: <code>npm install cors</code></li>
+            <li>In production: restrict to your frontend's domain only</li>
+            <li>CORS is a browser security feature, not a server bug</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Deploying Frontend (Vercel)</h4>
+          <ul>
+            <li>Push code to GitHub</li>
+            <li>Import repo at vercel.com</li>
+            <li>Vercel auto-detects React/Vite, builds, deploys</li>
+            <li>Every push = auto-redeploy</li>
+            <li>Free tier is enough for internship projects</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Deploying Backend (Render)</h4>
+          <ul>
+            <li>Push Express app to GitHub</li>
+            <li>Create Web Service at render.com</li>
+            <li>Add environment variables in Render dashboard</li>
+            <li>Free tier: sleeps after 15 min inactivity</li>
+            <li>Add start script: <code>"start": "node index.js"</code></li>
+          </ul>
+        </div>
+      </div>
+      <pre><span class="comment">// React: fetch tasks from Express API</span>
+import { useState, useEffect } from 'react';
+
+function TaskList() {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    fetch('https://your-api.onrender.com/api/tasks')
+      .then(res =&gt; {
+        if (!res.ok) throw new Error('API error');
+        return res.json();
+      })
+      .then(data =&gt; { setTasks(data); setLoading(false); })
+      .catch(err =&gt; { setError(err.message); setLoading(false); });
+  }, []);
+
+  if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;
+  if (error)   return &lt;p&gt;Error: {error}&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {tasks.map(t =&gt; &lt;li key={t.id}&gt;{t.title}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}</pre>
+      <div class="key-takeaway">
+        <h4>Week 8 Key Takeaways</h4>
+        <ul>
+          <li>Always handle three states in your data-fetching components: loading, success, error</li>
+          <li>Add <code>cors()</code> middleware to Express before any routes — frontend will silently fail without it</li>
+          <li>Store your API base URL in a React environment variable (<code>VITE_API_URL</code>) not hardcoded</li>
+          <li>Set up Vercel + Render deployments early — deploying often catches bugs that local dev hides</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_intermediate.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+      <a href="concept_notes_advanced.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Notes →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w5');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

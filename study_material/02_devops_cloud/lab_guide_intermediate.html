@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps & Cloud — Lab Guide (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .lab-section{margin-bottom:40px;}
+  .lab-num-badge{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:16px;}
+  .deliverable-box{background:var(--blue-light);border:1px solid var(--blue);border-radius:var(--radius-sm);padding:14px 18px;margin-top:16px;font-size:13px;color:var(--text-mid);}
+  .deliverable-box strong{color:var(--blue);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">🧪 Lab Guide — Intermediate Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Concept Notes ↗</a>
+    <a href="lab_guide_beginner.html">Beginner Labs ↗</a>
+    <a href="lab_guide_advanced.html">Advanced Labs ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">⚡</div>
+    <h1>Intermediate Lab Guide — DevOps &amp; Cloud</h1>
+    <p class="lh-sub">4 labs: Dockerize an Express app, build a CI/CD pipeline, deploy to AWS EC2, and write Terraform to provision cloud infrastructure.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">Docker · GitHub Actions · EC2 · Terraform</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>All 4 beginner labs done</li>
+        <li>Docker Desktop installed</li>
+        <li>AWS CLI configured</li>
+        <li>Node.js 20 installed</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>What You'll Build</h4>
+      <ul>
+        <li>Dockerized Express API</li>
+        <li>GitHub Actions CI/CD pipeline</li>
+        <li>Live app on AWS EC2</li>
+        <li>Terraform S3+EC2 script</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Time Estimate</h4>
+      <ul>
+        <li>Lab 5: ~2 hours</li>
+        <li>Lab 6: ~2 hours</li>
+        <li>Lab 7: ~2.5 hours</li>
+        <li>Lab 8: ~2 hours</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Submission</h4>
+      <ul>
+        <li>GitHub repo links</li>
+        <li>Screenshot of live deployments</li>
+        <li>Terraform apply output</li>
+        <li>Deadline: end of Week 8</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="sm-sec">Lab 5 — Dockerize a Node.js App</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 05 · WEEK 5</div>
+    <div class="lab-goal"><strong>Goal:</strong> Take a Node.js Express app, write a production-ready Dockerfile, and run it locally alongside a Redis cache using docker-compose.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Create the Express Application</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Write a minimal Express server with a health check endpoint. This is the application you'll containerize.</p>
+<pre><span class="comment"># server.js</span>
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', time: new Date(), version: '1.0' });
+});
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Devbhoomi App running in Docker!' });
+});
+
+app.listen(PORT, () => console.log(`Server on port ${PORT}`));
+
+<span class="comment"># package.json — add start script</span>
+npm init -y
+npm install express
+<span class="comment"># In package.json: "start": "node server.js"</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Write the Dockerfile</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Write a production-quality Dockerfile. Every line has a reason — understand each one before moving on.</p>
+<pre>FROM node:20-alpine
+<span class="comment"># alpine = small image (~50MB vs ~900MB for full node)</span>
+
+WORKDIR /app
+<span class="comment"># separate COPY for package.json enables Docker layer caching</span>
+COPY package*.json ./
+RUN npm ci --production
+<span class="comment"># ci installs exact versions from package-lock.json</span>
+
+COPY . .
+<span class="comment"># Don't run as root in containers</span>
+USER node
+
+EXPOSE 3000
+CMD ["node", "server.js"]</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Create .dockerignore</h3>
+        <span>~5 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Prevent unnecessary files from being copied into the image. This keeps images small and secure.</p>
+<pre><span class="comment"># .dockerignore</span>
+node_modules
+.env
+*.md
+.git
+.gitignore
+npm-debug.log</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Build and Run the Container</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># Build the image</span>
+docker build -t myapp:v1 .
+docker images                <span class="comment"># confirm it appears in list</span>
+
+<span class="comment"># Run the container in detached mode</span>
+docker run -d -p 3000:3000 --name myapp myapp:v1
+
+<span class="comment"># Test the health endpoint</span>
+curl http://localhost:3000/health
+
+<span class="comment"># Check logs</span>
+docker logs myapp
+docker ps                    <span class="comment"># should show container as running</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Multi-Container with docker-compose</h3>
+        <span>~30 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Add Redis as a second service. The two containers communicate by service name inside Docker's network.</p>
+<pre><span class="comment"># docker-compose.yml</span>
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+<span class="comment"># Start everything</span>
+docker-compose up -d
+docker-compose ps            <span class="comment"># both services should show "Up"</span>
+docker-compose logs -f app   <span class="comment"># follow app logs</span>
+docker-compose down          <span class="comment"># stop and remove containers</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of <code>curl http://localhost:3000/health</code> showing the JSON response + screenshot of <code>docker ps</code> showing both app and redis containers running.</div>
+  </div>
+
+  <!-- LAB 6 -->
+  <div class="sm-sec">Lab 6 — GitHub Actions CI/CD Pipeline</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 06 · WEEK 6</div>
+    <div class="lab-goal"><strong>Goal:</strong> Build an automated CI pipeline that tests your code, builds the Docker image, and confirms everything passes before any merge is allowed.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Push Docker App to GitHub</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre>git init
+git add .
+git commit -m "Initial Express app with Docker setup"
+git remote add origin https://github.com/YOUR_USERNAME/devbhoomi-docker-app.git
+git push -u origin main</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Create the CI Workflow</h3>
+        <span>~30 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Create the workflows directory and write the CI pipeline. It runs on every push to any branch.</p>
+<pre><span class="comment"># .github/workflows/ci.yml</span>
+name: CI Pipeline
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t myapp:${{ github.sha }} .
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx eslint . --ext .js || true</pre>
+        <div class="lab-tip"><strong>Tip:</strong> The <code>needs: test</code> line means the build job only starts if test passes. Jobs without <code>needs</code> run in parallel.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Add a Failing Test to Verify the Pipeline</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Install Jest and add a test that intentionally fails. Push it and confirm the pipeline blocks the build.</p>
+<pre>npm install --save-dev jest supertest
+
+<span class="comment"># server.test.js — intentionally failing test</span>
+const request = require('supertest');
+const app = require('./server');
+
+test('health endpoint returns status ok', async () => {
+  const res = await request(app).get('/health');
+  expect(res.body.status).toBe('wrong-value'); <span class="comment">// this will fail</span>
+});
+
+<span class="comment"># In package.json: "test": "jest"</span>
+git add . &amp;&amp; git commit -m "Add failing test"
+git push                     <span class="comment"># watch pipeline fail in GitHub Actions tab</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Fix the Test and Verify Pipeline Passes</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># Fix server.test.js</span>
+expect(res.body.status).toBe('ok'); <span class="comment">// correct value</span>
+
+git add . &amp;&amp; git commit -m "Fix: correct expected value in health test"
+git push</pre>
+        <p>Go to the Actions tab on GitHub and watch all three jobs turn green.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Add GitHub Secrets for AWS</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>These secrets will be used by the deploy job in a later lab. Add them now so the pipeline is ready.</p>
+        <p>Go to: Repository → Settings → Secrets and variables → Actions → New repository secret.</p>
+        <p>Add: <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, <code>AWS_REGION</code> (value: <code>ap-south-1</code>), <code>EC2_HOST</code> (leave empty for now).</p>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Link to a GitHub Actions run showing all three jobs (test, build, lint) with green checkmarks. Also screenshot the run that failed when you pushed the broken test.</div>
+  </div>
+
+  <!-- LAB 7 -->
+  <div class="sm-sec">Lab 7 — Deploy to AWS EC2</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 07 · WEEK 7</div>
+    <div class="lab-goal"><strong>Goal:</strong> Launch an EC2 instance, SSH into it, install Docker, run your container, and confirm the app is reachable from the public internet.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Launch EC2 Instance</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>In the AWS Console: EC2 → Launch Instance. Configure as below — every setting matters for this lab.</p>
+        <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;margin-bottom:12px;line-height:2;">
+          <li>Name: <code>devbhoomi-app-server</code></li>
+          <li>AMI: Ubuntu Server 22.04 LTS (Free Tier)</li>
+          <li>Instance type: <code>t2.micro</code> (Free Tier)</li>
+          <li>Key pair: Create new → name it <code>devbhoomi-key</code> → download the .pem file</li>
+          <li>Security Group: Allow SSH (22) from My IP only, HTTP (80) from anywhere (0.0.0.0/0)</li>
+        </ul>
+        <div class="lab-warn"><strong>Warning:</strong> Move the downloaded .pem key file to a safe location. <code>chmod 400 devbhoomi-key.pem</code> immediately — SSH will refuse to use keys that are too open.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>SSH into the Instance</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre>chmod 400 ~/Downloads/devbhoomi-key.pem
+ssh -i ~/Downloads/devbhoomi-key.pem ubuntu@&lt;EC2-PUBLIC-IP&gt;
+<span class="comment"># Find the public IP in EC2 Console → Instances → your instance</span>
+<span class="comment"># Accept the fingerprint prompt with "yes" the first time</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Install Docker on EC2</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Run these commands inside your EC2 SSH session. The last command adds your user to the docker group so you don't need <code>sudo</code> each time.</p>
+<pre>sudo apt update
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker ubuntu
+<span class="comment"># Log out and back in for group change to take effect</span>
+exit
+ssh -i ~/Downloads/devbhoomi-key.pem ubuntu@&lt;EC2-PUBLIC-IP&gt;
+docker --version             <span class="comment"># confirm it works without sudo</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Run Your Docker Image on EC2</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Push your image to Docker Hub first, then pull and run it on EC2. Port 80 on EC2 maps to port 3000 inside the container.</p>
+<pre><span class="comment"># On your local machine — push image to Docker Hub</span>
+docker login
+docker tag myapp:v1 YOUR_DOCKERHUB_USERNAME/myapp:v1
+docker push YOUR_DOCKERHUB_USERNAME/myapp:v1
+
+<span class="comment"># On EC2 — pull and run</span>
+docker pull YOUR_DOCKERHUB_USERNAME/myapp:v1
+docker run -d -p 80:3000 --name myapp YOUR_DOCKERHUB_USERNAME/myapp:v1
+docker ps                    <span class="comment"># confirm it's running</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Verify the App is Live</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Open your browser and navigate to your EC2 instance's public IP. Your containerized app is now running on cloud infrastructure.</p>
+<pre>http://&lt;EC2-PUBLIC-IP&gt;/health
+<span class="comment"># Should return: {"status":"ok","time":"...","version":"1.0"}</span>
+
+<span class="comment"># Also test from your local terminal</span>
+curl http://&lt;EC2-PUBLIC-IP&gt;/health</pre>
+        <div class="lab-tip"><strong>Tip:</strong> Stop your EC2 instance in the AWS Console when not in use — stopped instances don't incur compute charges (you only pay for the attached EBS storage).</div>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of your browser showing the <code>/health</code> response from your EC2 public IP address. The IP in the browser bar must be visible in the screenshot.</div>
+  </div>
+
+  <!-- LAB 8 -->
+  <div class="sm-sec">Lab 8 — Terraform — Provision AWS Infrastructure</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 08 · WEEK 8</div>
+    <div class="lab-goal"><strong>Goal:</strong> Write Terraform code to provision an S3 bucket and EC2 instance. Practice the init/plan/apply/destroy workflow and understand infrastructure as code.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Install Terraform</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># On Ubuntu/WSL</span>
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor \
+  -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+  https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+  sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+sudo apt update &amp;&amp; sudo apt install terraform
+terraform --version          <span class="comment"># should show Terraform v1.x.x</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Write main.tf</h3>
+        <span>~25 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Create a new directory called <code>terraform-lab</code> and write your infrastructure files.</p>
+<pre><span class="comment"># main.tf</span>
+terraform {
+  required_providers {
+    aws = { source = "hashicorp/aws", version = "~> 5.0" }
+  }
+}
+
+provider "aws" {
+  region = var.region
+}
+
+resource "aws_s3_bucket" "lab_bucket" {
+  bucket = var.bucket_name
+  tags = {
+    Project     = "devbhoomi-internship"
+    Environment = var.environment
+    Batch       = "2026-27"
+  }
+}
+
+resource "aws_s3_bucket_versioning" "lab_bucket_versioning" {
+  bucket = aws_s3_bucket.lab_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Create variables.tf and outputs.tf</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># variables.tf</span>
+variable "region" {
+  description = "AWS region"
+  default     = "ap-south-1"
+}
+
+variable "bucket_name" {
+  description = "Globally unique S3 bucket name — include your name"
+}
+
+variable "environment" {
+  description = "dev / staging / prod"
+  default     = "dev"
+}
+
+<span class="comment"># outputs.tf</span>
+output "bucket_arn" {
+  value = aws_s3_bucket.lab_bucket.arn
+}
+
+output "bucket_name" {
+  value = aws_s3_bucket.lab_bucket.bucket
+}</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Run the Terraform Workflow</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre>terraform init
+<span class="comment"># Downloads the AWS provider plugin — run once per new project</span>
+
+terraform plan -var="bucket_name=YOUR_NAME-devbhoomi-tf-lab"
+<span class="comment"># Read the output carefully — it shows exactly what will be created</span>
+<span class="comment"># + indicates a new resource, ~ indicates a change, - indicates deletion</span>
+
+terraform apply -var="bucket_name=YOUR_NAME-devbhoomi-tf-lab"
+<span class="comment"># Type "yes" when prompted</span>
+<span class="comment"># Wait for the "Apply complete!" message</span>
+
+<span class="comment"># Verify bucket appears in AWS Console (S3 → Buckets)</span>
+aws s3 ls | grep devbhoomi</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Destroy and Clean Up</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Always destroy lab resources when you're done. S3 buckets themselves are free, but data stored in them is billed.</p>
+<pre>terraform destroy -var="bucket_name=YOUR_NAME-devbhoomi-tf-lab"
+<span class="comment"># Type "yes" to confirm</span>
+<span class="comment"># Terraform will delete every resource it created</span>
+
+<span class="comment"># Verify it's gone in AWS Console</span>
+<span class="comment"># Note: terraform.tfstate still exists locally — this is expected</span></pre>
+        <div class="lab-warn"><strong>Warning:</strong> Never run <code>terraform destroy</code> on a production environment without a formal approval process. Add a confirmation gate to your pipeline for any destructive Terraform operations.</div>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of the terminal showing the <code>terraform apply</code> output with "Apply complete! Resources: 2 added" + screenshot of the AWS Console showing the S3 bucket before you destroyed it.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Labs</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_advanced.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Labs →</a>
+      <a href="../index.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Study Portal →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{});
+</script>
+</body>
+</html>

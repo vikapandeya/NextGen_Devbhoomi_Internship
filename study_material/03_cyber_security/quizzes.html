@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Quizzes | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .locked-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  .locked-card { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 20px; text-align: center; opacity: 0.65; }
+  .locked-card .lock-icon { font-size: 28px; margin-bottom: 8px; }
+  .locked-card h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .locked-card p { font-size: 11px; color: var(--gray); }
+  .locked-card .lock-badge { display: inline-block; margin-top: 8px; background: var(--border-light); color: var(--gray); padding: 3px 10px; border-radius: 4px; font-size: 10px; font-weight: 700; font-family: var(--mono); }
+  @media (max-width: 640px) { .locked-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">❓ Quizzes</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; QUIZZES (ALL LEVELS)
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="quick_reference.html">Quick Reference ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">❓</div>
+    <h1>Quizzes — Cyber Security</h1>
+    <p class="lh-sub">12 weekly quizzes covering CIA Triad, attacks, OWASP, penetration testing, incident response, and cloud security. Your answers are saved locally. Retry anytime.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">12 Quizzes</span>
+      <span class="lh-pill">60 Questions</span>
+      <span class="lh-pill gold">Auto-Scored · Retryable</span>
+    </div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="sm-sec">Week 1 Quiz — The CIA Triad &amp; Security Fundamentals</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d3-w1" data-domain="cyber_security" data-week="1">
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. What does CIA stand for in cyber security?</p>
+        <div class="quiz-opt" data-value="a">A) Central Intelligence Agency</div>
+        <div class="quiz-opt" data-value="b">B) Confidentiality, Integrity, Availability</div>
+        <div class="quiz-opt" data-value="c">C) Control, Inspect, Audit</div>
+        <div class="quiz-opt" data-value="d">D) Cyber Incident Analysis</div>
+        <div class="quiz-explanation"><strong>CIA Triad</strong> is the foundational model of information security. Confidentiality = only authorized users see data. Integrity = data hasn't been tampered with. Availability = system is accessible when needed. Every security decision maps to one or more of these three pillars.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="c">
+        <p class="quiz-question">2. Which threat actor is typically motivated by political or ideological causes?</p>
+        <div class="quiz-opt" data-value="a">A) Script kiddie</div>
+        <div class="quiz-opt" data-value="b">B) Cybercriminal</div>
+        <div class="quiz-opt" data-value="c">C) Hacktivist</div>
+        <div class="quiz-opt" data-value="d">D) Insider threat</div>
+        <div class="quiz-explanation"><strong>Hacktivists</strong> (e.g. Anonymous) hack for ideological or political reasons. Cybercriminals are financially motivated. Script kiddies use existing tools for fun or notoriety. Insider threats have legitimate internal access and may be motivated by grievance or financial incentive.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. What is Defense in Depth?</p>
+        <div class="quiz-opt" data-value="a">A) Relying on one strong security control</div>
+        <div class="quiz-opt" data-value="b">B) Multiple layers of security controls so one failure doesn't compromise everything</div>
+        <div class="quiz-opt" data-value="c">C) Deep background checks on all employees</div>
+        <div class="quiz-opt" data-value="d">D) Defending the database layer first</div>
+        <div class="quiz-explanation"><strong>Defense in Depth</strong> means if one control fails (e.g. the firewall is bypassed), others still protect the system (e.g. endpoint detection, network segmentation, MFA). No single control is 100% reliable — layering is what makes a system resilient.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. What is an "attack surface"?</p>
+        <div class="quiz-opt" data-value="a">A) The physical screen of a compromised computer</div>
+        <div class="quiz-opt" data-value="b">B) All possible points where an attacker could enter or extract data from a system</div>
+        <div class="quiz-opt" data-value="c">C) The space behind a server rack</div>
+        <div class="quiz-opt" data-value="d">D) The visible user interface of a web application</div>
+        <div class="quiz-explanation"><strong>Attack surface</strong> = every login page, API endpoint, employee, physical door, USB port, and third-party integration. Reducing attack surface (disabling unused services, removing unused accounts, closing unnecessary ports) is a primary security strategy.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="c">
+        <p class="quiz-question">5. Which property is NOT part of the CIA Triad?</p>
+        <div class="quiz-opt" data-value="a">A) Confidentiality</div>
+        <div class="quiz-opt" data-value="b">B) Integrity</div>
+        <div class="quiz-opt" data-value="c">C) Authentication</div>
+        <div class="quiz-opt" data-value="d">D) Availability</div>
+        <div class="quiz-explanation"><strong>Authentication</strong> is important but not part of the CIA Triad. It is a mechanism that supports Confidentiality (by ensuring only the right people can access data), but it is not itself a pillar of the triad. The three pillars are Confidentiality, Integrity, and Availability.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="sm-sec">Week 2 Quiz — Common Attack Types</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d3-w2" data-domain="cyber_security" data-week="2">
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. What is spear phishing?</p>
+        <div class="quiz-opt" data-value="a">A) Generic mass phishing emails sent to thousands of people</div>
+        <div class="quiz-opt" data-value="b">B) Targeted phishing at a specific individual or organization with personalized content</div>
+        <div class="quiz-opt" data-value="c">C) Phishing conducted over phone calls</div>
+        <div class="quiz-opt" data-value="d">D) Phishing conducted via SMS messages</div>
+        <div class="quiz-explanation"><strong>Spear phishing</strong> is personalized — attackers research their target (name, role, colleagues, recent company news) to make the email convincing. It is far more effective than generic mass phishing and is the technique used in most major corporate breaches.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="d">
+        <p class="quiz-question">2. Which type of malware encrypts your files and demands payment to restore access?</p>
+        <div class="quiz-opt" data-value="a">A) Spyware</div>
+        <div class="quiz-opt" data-value="b">B) Adware</div>
+        <div class="quiz-opt" data-value="c">C) Trojan</div>
+        <div class="quiz-opt" data-value="d">D) Ransomware</div>
+        <div class="quiz-explanation"><strong>Ransomware</strong> (e.g. WannaCry, LockBit, REvil) encrypts victim files making them inaccessible, then demands cryptocurrency payment for the decryption key. Regular offline backups are the primary defense — they allow recovery without paying the ransom.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. What is "pretexting" in social engineering?</p>
+        <div class="quiz-opt" data-value="a">A) Reading the fine print before signing a contract</div>
+        <div class="quiz-opt" data-value="b">B) Creating a fabricated scenario to manipulate someone into giving up information</div>
+        <div class="quiz-opt" data-value="c">C) Testing systems with pre-defined test data</div>
+        <div class="quiz-opt" data-value="d">D) Setting up a honeypot to attract attackers</div>
+        <div class="quiz-explanation"><strong>Pretexting</strong> = inventing a believable story to gain trust and extract information. Example: calling the IT helpdesk pretending to be a new employee who forgot their password. Training staff and having robust verification procedures defend against it.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="c">
+        <p class="quiz-question">4. DDoS attacks primarily target which component of the CIA Triad?</p>
+        <div class="quiz-opt" data-value="a">A) Confidentiality</div>
+        <div class="quiz-opt" data-value="b">B) Integrity</div>
+        <div class="quiz-opt" data-value="c">C) Availability</div>
+        <div class="quiz-opt" data-value="d">D) Authentication</div>
+        <div class="quiz-explanation"><strong>DDoS (Distributed Denial of Service)</strong> floods servers with traffic from many sources, making them unavailable to legitimate users — a direct attack on Availability. It does not steal or modify data; it simply prevents access to the service.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="b">
+        <p class="quiz-question">5. What is the BEST way to check if a link in an email is safe before clicking it?</p>
+        <div class="quiz-opt" data-value="a">A) Click it quickly and immediately close the tab</div>
+        <div class="quiz-opt" data-value="b">B) Hover over the link to reveal the real URL in the browser status bar without clicking</div>
+        <div class="quiz-opt" data-value="c">C) Forward the email to a friend to test for you</div>
+        <div class="quiz-opt" data-value="d">D) Search for the company name in Google to find the real site</div>
+        <div class="quiz-explanation"><strong>Hovering</strong> reveals the actual destination URL in the browser status bar. The visible text of a link can say anything — it's the <code>href</code> destination that matters. If the actual URL domain doesn't match the claimed sender's domain, it's phishing.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="sm-sec">Week 3 Quiz — Network Security Basics</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d3-w3" data-domain="cyber_security" data-week="3">
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. What does a stateful firewall track that a stateless firewall does not?</p>
+        <div class="quiz-opt" data-value="a">A) User passwords</div>
+        <div class="quiz-opt" data-value="b">B) The state of active network connections</div>
+        <div class="quiz-opt" data-value="c">C) File access logs</div>
+        <div class="quiz-opt" data-value="d">D) CPU usage of connected devices</div>
+        <div class="quiz-explanation">A <strong>stateful firewall</strong> tracks active connections — it knows if a packet is part of an established, expected connection or a new unexpected one. This lets it block unexpected inbound packets even if they use an allowed port. Stateless firewalls only check each packet in isolation against static rules.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="c">
+        <p class="quiz-question">2. What does HTTPS provide that HTTP does not?</p>
+        <div class="quiz-opt" data-value="a">A) Faster page loading speeds</div>
+        <div class="quiz-opt" data-value="b">B) More colorful website rendering</div>
+        <div class="quiz-opt" data-value="c">C) Encryption of data in transit between browser and server</div>
+        <div class="quiz-opt" data-value="d">D) Better SEO ranking automatically</div>
+        <div class="quiz-explanation"><strong>HTTPS</strong> adds TLS encryption to HTTP, preventing network eavesdroppers from reading or modifying data in transit. HTTP sends everything — including passwords and session tokens — as readable plain text. Anyone on the same network (café WiFi, ISP) can intercept it.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="c">
+        <p class="quiz-question">3. What is the primary security purpose of a VPN?</p>
+        <div class="quiz-opt" data-value="a">A) Speed up internet connection</div>
+        <div class="quiz-opt" data-value="b">B) Block advertisements on websites</div>
+        <div class="quiz-opt" data-value="c">C) Encrypt traffic between your device and the VPN server, protecting it from local interception</div>
+        <div class="quiz-opt" data-value="d">D) Bypass download speed limits imposed by ISPs</div>
+        <div class="quiz-explanation">A <strong>VPN</strong> creates an encrypted tunnel for your traffic. This is especially important on public WiFi where an attacker on the same network could perform a man-in-the-middle attack to intercept unencrypted communications. Note: VPN protects you from the local network, not from the VPN provider itself.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. What does asymmetric encryption use?</p>
+        <div class="quiz-opt" data-value="a">A) The same key for both encrypting and decrypting</div>
+        <div class="quiz-opt" data-value="b">B) A public key to encrypt and a separate private key to decrypt</div>
+        <div class="quiz-opt" data-value="c">C) A shared secret negotiated between both parties in advance</div>
+        <div class="quiz-opt" data-value="d">D) A physical hardware key card</div>
+        <div class="quiz-explanation"><strong>Asymmetric encryption</strong> uses a key pair: the public key (shared with anyone) encrypts data; only the private key (kept secret) can decrypt it. HTTPS uses this to securely exchange a symmetric session key, then switches to faster symmetric encryption for the session data.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="c">
+        <p class="quiz-question">5. You see a padlock icon in your browser address bar. What does this confirm?</p>
+        <div class="quiz-opt" data-value="a">A) The website is safe and can be trusted completely</div>
+        <div class="quiz-opt" data-value="b">B) The website is a legitimate business and not a scam</div>
+        <div class="quiz-opt" data-value="c">C) Traffic between your browser and the server is encrypted with TLS</div>
+        <div class="quiz-opt" data-value="d">D) The website has been scanned and contains no malware</div>
+        <div class="quiz-explanation">The padlock <strong>only confirms TLS encryption</strong> — it does NOT verify the site is legitimate, safe, or run by who it claims. Phishing sites routinely obtain TLS certificates (they're free via Let's Encrypt). Never trust a site just because it has a padlock — check the domain name carefully.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="sm-sec">Week 4 Quiz — Account Security &amp; Safe Practices</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d3-w4" data-domain="cyber_security" data-week="4">
+
+      <div class="quiz-q" data-q-index="0" data-correct="d">
+        <p class="quiz-question">1. What is the minimum recommended password length according to NIST 2024 guidelines?</p>
+        <div class="quiz-opt" data-value="a">A) 6 characters</div>
+        <div class="quiz-opt" data-value="b">B) 8 characters</div>
+        <div class="quiz-opt" data-value="c">C) 12 characters</div>
+        <div class="quiz-opt" data-value="d">D) 16+ characters</div>
+        <div class="quiz-explanation">NIST SP 800-63B (2024 revision) recommends <strong>15+ characters</strong> minimum. Length beats complexity — "correct-horse-battery-staple" (28 chars) is exponentially stronger than "P@ssw0rd!" (9 chars). Use a password manager to generate and store long random passwords so you don't have to remember them.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="c">
+        <p class="quiz-question">2. Which type of MFA is considered the most secure for everyday accounts?</p>
+        <div class="quiz-opt" data-value="a">A) SMS one-time passwords (OTP)</div>
+        <div class="quiz-opt" data-value="b">B) Email one-time passwords (OTP)</div>
+        <div class="quiz-opt" data-value="c">C) TOTP authenticator app (e.g. Google Authenticator, Aegis)</div>
+        <div class="quiz-opt" data-value="d">D) Security questions</div>
+        <div class="quiz-explanation"><strong>TOTP apps</strong> generate codes locally on your device — they cannot be intercepted via SS7 attacks (which affect SMS) or email compromise. Security questions are actually weaker than a password — they're guessable and publicly researched. Hardware keys (YubiKey) are even stronger than TOTP for critical accounts.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. What is the Principle of Least Privilege?</p>
+        <div class="quiz-opt" data-value="a">A) Use the least expensive security software available</div>
+        <div class="quiz-opt" data-value="b">B) Grant users only the minimum access they need to do their specific job</div>
+        <div class="quiz-opt" data-value="c">C) Use the fewest number of security controls possible</div>
+        <div class="quiz-opt" data-value="d">D) Hire the least experienced staff to save budget</div>
+        <div class="quiz-explanation"><strong>Least Privilege</strong> limits the blast radius when an account is compromised. A database analyst only needs SELECT, not DROP TABLE. An intern shouldn't have admin rights. If a low-privilege account is breached, the attacker's access is limited. Review and remove unnecessary access regularly — access creep is a real risk.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="d">
+        <p class="quiz-question">4. According to Microsoft's research, what percentage of automated account attacks does MFA block?</p>
+        <div class="quiz-opt" data-value="a">A) 40%</div>
+        <div class="quiz-opt" data-value="b">B) 65%</div>
+        <div class="quiz-opt" data-value="c">C) 80%</div>
+        <div class="quiz-opt" data-value="d">D) 99.9%</div>
+        <div class="quiz-explanation">Microsoft's research (confirmed in 2019 and 2023 reports) shows MFA blocks <strong>99.9%</strong> of automated credential-stuffing and password-spray attacks. This makes it the single highest-impact security control for user accounts. The remaining 0.1% are targeted attacks that specifically bypass MFA (e.g. real-time phishing proxies).</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="b">
+        <p class="quiz-question">5. What does a password manager primarily do?</p>
+        <div class="quiz-opt" data-value="a">A) A person employed to manage passwords for an organization</div>
+        <div class="quiz-opt" data-value="b">B) Software that generates cryptographically random passwords and stores them encrypted</div>
+        <div class="quiz-opt" data-value="c">C) A secure text file where you write down all your passwords</div>
+        <div class="quiz-opt" data-value="d">D) A browser feature that auto-fills saved passwords</div>
+        <div class="quiz-explanation"><strong>Password managers</strong> (Bitwarden, 1Password) generate random passwords and store them encrypted. You only need to remember one master passphrase. They also detect phishing sites by checking if the saved domain matches the current URL — they won't autofill credentials on a fake site.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="sm-sec">Week 5 Quiz — OWASP Top 10</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d3-w5" data-domain="cyber_security" data-week="5">
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. What is SQL Injection?</p>
+        <div class="quiz-opt" data-value="a">A) Physically inserting a needle into a SQL server</div>
+        <div class="quiz-opt" data-value="b">B) Injecting malicious SQL code into input fields that gets executed by the database</div>
+        <div class="quiz-opt" data-value="c">C) A type of database backup procedure</div>
+        <div class="quiz-opt" data-value="d">D) Adding new valid SQL records to a database</div>
+        <div class="quiz-explanation"><strong>SQL Injection</strong> occurs when user input is directly embedded in an SQL query. Input like <code>' OR '1'='1</code> can bypass login entirely. <strong>Parameterized queries</strong> (prepared statements) prevent it 100% by ensuring user input is treated as data, never as executable SQL code.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="c">
+        <p class="quiz-question">2. According to OWASP Top 10 2021, what is the #1 most common web vulnerability category?</p>
+        <div class="quiz-opt" data-value="a">A) SQL Injection</div>
+        <div class="quiz-opt" data-value="b">B) Cryptographic Failures</div>
+        <div class="quiz-opt" data-value="c">C) Broken Access Control</div>
+        <div class="quiz-opt" data-value="d">D) Security Misconfiguration</div>
+        <div class="quiz-explanation"><strong>Broken Access Control (A01:2021)</strong> moved to #1 because of how widespread IDOR, privilege escalation, and missing authorization checks are. Users accessing data or functions they shouldn't — by simply changing a number in a URL — is the most common class of web vulnerability.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. What does IDOR stand for?</p>
+        <div class="quiz-opt" data-value="a">A) Insecure Database Object Records</div>
+        <div class="quiz-opt" data-value="b">B) Insecure Direct Object Reference</div>
+        <div class="quiz-opt" data-value="c">C) Internal Data Object Repository</div>
+        <div class="quiz-opt" data-value="d">D) Integrated Defense Object Routing</div>
+        <div class="quiz-explanation"><strong>IDOR (Insecure Direct Object Reference)</strong> = accessing another user's data by changing an identifier in a request (e.g. changing <code>/user/123/profile</code> to <code>/user/124/profile</code>). The fix: check server-side that the requesting user is authorized to access the specific resource on every request.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. What is Cross-Site Scripting (XSS)?</p>
+        <div class="quiz-opt" data-value="a">A) Copying CSS styles between different websites</div>
+        <div class="quiz-opt" data-value="b">B) Injecting malicious JavaScript into web pages that other users view and execute</div>
+        <div class="quiz-opt" data-value="c">C) Cross-browser CSS compatibility issues</div>
+        <div class="quiz-opt" data-value="d">D) Server-side script injection into database records</div>
+        <div class="quiz-explanation"><strong>XSS (Cross-Site Scripting)</strong> injects JavaScript into a page served to other users. <strong>Stored XSS</strong> is the most dangerous — the script is saved in the database and runs for every visitor automatically. Prevention: output encoding (never insert user data directly into HTML), and Content Security Policy (CSP) headers.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="c">
+        <p class="quiz-question">5. Which OWASP category covers using a library or framework with a known, unpatched vulnerability?</p>
+        <div class="quiz-opt" data-value="a">A) A01 Broken Access Control</div>
+        <div class="quiz-opt" data-value="b">B) A03 Injection</div>
+        <div class="quiz-opt" data-value="c">C) A06 Vulnerable and Outdated Components</div>
+        <div class="quiz-opt" data-value="d">D) A09 Security Logging and Monitoring Failures</div>
+        <div class="quiz-explanation"><strong>A06 Vulnerable and Outdated Components</strong> covers using npm packages, pip libraries, or frameworks with known CVEs. Use <code>npm audit</code> or tools like Snyk to detect them. The 2017 Equifax breach (147 million records exposed) was caused by an unpatched Apache Struts vulnerability — a textbook A06 failure.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+  </div>
+
+  <!-- LOCKED WEEKS 6-12 -->
+  <div class="sm-sec">Weeks 6–12 Quizzes — Complete When Ready</div>
+  <div class="locked-grid">
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 6 Quiz</h4>
+      <p>Penetration Testing Methodology</p>
+      <span class="lock-badge">STUDY FIRST</span>
+    </div>
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 7 Quiz</h4>
+      <p>Web Application Security Testing</p>
+      <span class="lock-badge">STUDY FIRST</span>
+    </div>
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 8 Quiz</h4>
+      <p>Incident Response Lifecycle</p>
+      <span class="lock-badge">STUDY FIRST</span>
+    </div>
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 9 Quiz</h4>
+      <p>Red Team vs Blue Team &amp; MITRE ATT&amp;CK</p>
+      <span class="lock-badge">ADVANCED</span>
+    </div>
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 10 Quiz</h4>
+      <p>Threat Intelligence &amp; IOCs</p>
+      <span class="lock-badge">ADVANCED</span>
+    </div>
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 11 Quiz</h4>
+      <p>Cloud Security &amp; AWS</p>
+      <span class="lock-badge">ADVANCED</span>
+    </div>
+    <div class="locked-card">
+      <div class="lock-icon">🔒</div>
+      <h4>Week 12 Quiz</h4>
+      <p>Security Architecture &amp; Compliance</p>
+      <span class="lock-badge">ADVANCED</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="../index.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Study Portal</a>
+    <div style="display:flex;gap:12px;">
+      <a href="concept_notes_beginner.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Concept Notes →</a>
+      <a href="quick_reference.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Quick Reference →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Quizzes &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script src="../shared/level_filter.js"></script>
+<script src="../shared/quiz_engine.js"></script>
+</body>
+</html>
+
+

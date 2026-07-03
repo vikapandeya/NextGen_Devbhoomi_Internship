@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Guide — Advanced | Mobile App Development | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.week-body{display:none;}
+.week-block{border:1px solid #e2e8f0;border-radius:10px;margin-bottom:16px;overflow:hidden;}
+.week-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;background:#f8fafc;transition:background .15s;}
+.week-header:hover{background:#eef2ff;}
+.wn-adv .week-header{background:linear-gradient(90deg,#1e1b4b 0%,#312e81 100%);color:#fff;}
+.wn-adv .week-header:hover{background:linear-gradient(90deg,#312e81 0%,#4338ca 100%);}
+.week-num{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.2);color:#fff;}
+.week-title{font-weight:700;font-size:1rem;flex:1;}
+.week-toggle{font-size:18px;transition:transform .2s;}
+.week-block.open .week-toggle{transform:rotate(90deg);}
+.week-body{padding:20px 24px;border-top:1px solid #e2e8f0;}
+.step-list{list-style:none;padding:0;margin:0 0 16px;}
+.step-list li{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.step-num{min-width:28px;height:28px;border-radius:50%;background:#4338ca;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.step-text{padding-top:4px;font-size:0.92rem;line-height:1.6;color:#374151;}
+.lab-note{background:#eff6ff;border-left:4px solid #3b82f6;padding:10px 14px;border-radius:0 6px 6px 0;font-size:0.88rem;color:#1e40af;margin:12px 0;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📱 Mobile App Development</div>
+      <div class="bc-file">🔬 Lab Guide — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 5 OF 9 &nbsp;·&nbsp; MOBILE APP DEVELOPMENT &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Lab ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Lab ↗</a>
+    <a href="project_briefs.html">Project Briefs ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero adv">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Advanced Level</h2>
+      <p>Weeks 9–12: Custom Hook Architecture, Full Testing Suite, EAS Build &amp; CI/CD, and Capstone Project</p>
+      <div class="lh-pills">
+        <span class="lh-pill">Animations</span>
+        <span class="lh-pill">Testing</span>
+        <span class="lh-pill">EAS Build</span>
+        <span class="lh-pill">Architecture</span>
+        <span class="lh-pill">Capstone</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Week 9 -->
+  <div class="week-block wn-adv" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <span class="week-num">W9</span>
+      <span class="week-title">Week 9 — Custom Hooks &amp; Clean Architecture</span>
+      <span class="week-toggle">▶</span>
+    </div>
+    <div class="week-body">
+      <p style="color:#374151;margin-bottom:16px;">Refactor mixed-concern components into lean custom hooks. Each hook owns one responsibility; components just call hooks and render UI.</p>
+
+      <ol class="step-list">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Take any component from your previous labs that has mixed concerns — state management, API calls, and business logic all tangled in one file.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Create a <code>src/hooks/</code> folder in your project.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Extract <strong>useAuth.js</strong> — manages login/logout, token storage in AsyncStorage, exposes <code>&#123;user, login, logout, isLoading&#125;</code>.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Extract <strong>usePosts.js</strong> — fetches posts from API, exposes <code>&#123;posts, loading, error, refetch, addPost, deletePost&#125;</code>.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">Extract <strong>useDebounce.js</strong> — <code>function useDebounce(value, delay)</code> — use useEffect + clearTimeout to delay state updates.</span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Each component now <em>only</em> calls hooks and renders UI — no direct API calls or AsyncStorage access inside components.</span>
+        </li>
+        <li>
+          <span class="step-num">7</span>
+          <span class="step-text">Add JSDoc comments to each hook documenting its parameters, return shape, and side effects.</span>
+        </li>
+        <li>
+          <span class="step-num">8</span>
+          <span class="step-text">Write unit tests for the pure logic in each hook using <code>@testing-library/react-hooks</code>.</span>
+        </li>
+      </ol>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">useAuth.js</span></div>
+      <pre><code>/**
+ * useAuth — manages authentication state and token storage.
+ * @returns &#123;Object&#125; &#123; user, login, logout, isLoading &#125;
+ */
+import &#123; useState, useEffect &#125; from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../api/api';
+
+export function useAuth() &#123;
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() =&gt; &#123;
+    (async () =&gt; &#123;
+      const raw = await AsyncStorage.getItem('user');
+      if (raw) setUser(JSON.parse(raw));
+      setIsLoading(false);
+    &#125;)();
+  &#125;, []);
+
+  /**
+   * @param &#123;&#123;email: string, password: string&#125;&#125; credentials
+   */
+  const login = async (credentials) =&gt; &#123;
+    const &#123; data &#125; = await api.post('/auth/login', credentials);
+    setUser(data.user);
+    await AsyncStorage.setItem('user', JSON.stringify(data.user));
+    await AsyncStorage.setItem('token', data.token);
+  &#125;;
+
+  const logout = async () =&gt; &#123;
+    setUser(null);
+    await AsyncStorage.multiRemove(['user', 'token']);
+  &#125;;
+
+  return &#123; user, login, logout, isLoading &#125;;
+&#125;</code></pre>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">usePosts.js</span></div>
+      <pre><code>/**
+ * usePosts — fetches and manages a list of posts.
+ * @returns &#123;Object&#125; &#123; posts, loading, error, refetch, addPost, deletePost &#125;
+ */
+import &#123; useState, useCallback &#125; from 'react';
+import api from '../api/api';
+
+export function usePosts() &#123;
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const refetch = useCallback(async () =&gt; &#123;
+    setLoading(true);
+    setError(null);
+    try &#123;
+      const &#123; data &#125; = await api.get('/posts');
+      setPosts(data);
+    &#125; catch (err) &#123;
+      setError(err.message);
+    &#125; finally &#123;
+      setLoading(false);
+    &#125;
+  &#125;, []);
+
+  /** @param &#123;&#123;title: string, body: string&#125;&#125; postData */
+  const addPost = async (postData) =&gt; &#123;
+    const &#123; data &#125; = await api.post('/posts', postData);
+    setPosts(prev =&gt; [data, ...prev]);
+  &#125;;
+
+  /** @param &#123;number&#125; id */
+  const deletePost = async (id) =&gt; &#123;
+    await api.delete(`/posts/$&#123;id&#125;`);
+    setPosts(prev =&gt; prev.filter(p =&gt; p.id !== id));
+  &#125;;
+
+  return &#123; posts, loading, error, refetch, addPost, deletePost &#125;;
+&#125;</code></pre>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">useDebounce.js</span></div>
+      <pre><code>/**
+ * useDebounce — delays a value update by a given delay.
+ * @param &#123;any&#125; value   The value to debounce
+ * @param &#123;number&#125; delay  Milliseconds to wait
+ * @returns &#123;any&#125; debouncedValue
+ */
+import &#123; useState, useEffect &#125; from 'react';
+
+export function useDebounce(value, delay = 400) &#123;
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() =&gt; &#123;
+    const timer = setTimeout(() =&gt; setDebouncedValue(value), delay);
+    return () =&gt; clearTimeout(timer);   // cleanup on next keystroke
+  &#125;, [value, delay]);
+
+  return debouncedValue;
+&#125;</code></pre>
+    </div>
+  </div>
+
+  <!-- Week 10 -->
+  <div class="week-block wn-adv" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <span class="week-num">W10</span>
+      <span class="week-title">Week 10 — Writing Tests for React Native</span>
+      <span class="week-toggle">▶</span>
+    </div>
+    <div class="week-body">
+      <p style="color:#374151;margin-bottom:16px;">Build a real test suite: pure unit tests for reducers, hook tests, and component tests with @testing-library/react-native.</p>
+
+      <ol class="step-list">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text"><strong>Set up Jest:</strong> Jest ships with Expo. Confirm it's configured by running <code>npx jest --listTests</code> from your project root.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text"><strong>Mock AsyncStorage:</strong> Add to your <code>package.json</code> Jest config: <code>"setupFilesAfterEnv": ["@react-native-async-storage/async-storage/jest/async-storage-mock"]</code></span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text"><strong>Unit test — reducer:</strong> Test pure reducer functions with zero imports of React Native.</span>
+        </li>
+      </ol>
+
+      <pre><code>// __tests__/todoReducer.test.js
+import &#123; todoReducer &#125; from '../src/reducers/todoReducer';
+
+test('ADD_TODO adds item to list', () =&gt; &#123;
+  const state = &#123; todos: [] &#125;;
+  const next = todoReducer(state, &#123; type: 'ADD_TODO', payload: &#123; id: 1, text: 'Buy milk' &#125; &#125;);
+  expect(next.todos).toHaveLength(1);
+  expect(next.todos[0].text).toBe('Buy milk');
+&#125;);
+
+test('DELETE_TODO removes correct item', () =&gt; &#123;
+  const state = &#123; todos: [&#123; id: 1, text: 'A' &#125;, &#123; id: 2, text: 'B' &#125;] &#125;;
+  const next = todoReducer(state, &#123; type: 'DELETE_TODO', payload: 1 &#125;);
+  expect(next.todos).toHaveLength(1);
+  expect(next.todos[0].id).toBe(2);
+&#125;);</code></pre>
+
+      <ol class="step-list" style="margin-top:16px;">
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text"><strong>Component test</strong> with <code>@testing-library/react-native</code>:</span>
+        </li>
+      </ol>
+
+      <pre><code>// __tests__/TodoItem.test.js
+import &#123; render, fireEvent &#125; from '@testing-library/react-native';
+import TodoItem from '../src/components/TodoItem';
+
+test('renders todo text', () =&gt; &#123;
+  const &#123; getByText &#125; = render(
+    &lt;TodoItem todo=&#123;&#123; id: 1, text: 'Buy milk', done: false &#125;&#125; onDelete=&#123;jest.fn()&#125; /&gt;
+  );
+  expect(getByText('Buy milk')).toBeTruthy();
+&#125;);
+
+test('calls onDelete when delete pressed', () =&gt; &#123;
+  const mockDelete = jest.fn();
+  const &#123; getByTestId &#125; = render(
+    &lt;TodoItem todo=&#123;&#123; id: 1, text: 'Buy milk', done: false &#125;&#125; onDelete=&#123;mockDelete&#125; /&gt;
+  );
+  fireEvent.press(getByTestId('delete-btn'));
+  expect(mockDelete).toHaveBeenCalledWith(1);
+&#125;);</code></pre>
+
+      <ol class="step-list" style="margin-top:16px;">
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">Run with coverage: <code>npx jest --coverage</code></span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Target: <strong>70%+ coverage</strong> on your hooks and reducer files. The coverage report will show uncovered branches in red — focus there first.</span>
+        </li>
+      </ol>
+
+      <div class="lab-note">💡 If you see "Cannot find module 'react-native'" in tests, ensure your Jest preset is set to <code>"preset": "jest-expo"</code> in package.json.</div>
+    </div>
+  </div>
+
+  <!-- Week 11 -->
+  <div class="week-block wn-adv" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <span class="week-num">W11</span>
+      <span class="week-title">Week 11 — CI/CD for Mobile Apps</span>
+      <span class="week-toggle">▶</span>
+    </div>
+    <div class="week-body">
+      <p style="color:#374151;margin-bottom:16px;">Set up EAS Build to produce a real APK, then wire up GitHub Actions so every push runs lint and tests automatically.</p>
+
+      <ol class="step-list">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Install EAS CLI globally: <code>npm install -g eas-cli</code></span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Log in: <code>eas login</code> (create a free account at <strong>expo.dev</strong> if you don't have one)</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Configure: <code>eas build:configure</code> — this creates <code>eas.json</code> with build profiles (development, preview, production)</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Update <code>app.json</code>: set <code>name</code>, <code>slug</code>, <code>version: "1.0.0"</code>, add <code>icon</code> and <code>splash</code> image paths</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span class="step-text">Build a preview APK for Android: <code>eas build -p android --profile preview</code></span>
+        </li>
+        <li>
+          <span class="step-num">6</span>
+          <span class="step-text">Monitor the build at <strong>expo.dev/builds</strong> — takes 5–15 minutes on Expo's free tier</span>
+        </li>
+        <li>
+          <span class="step-num">7</span>
+          <span class="step-text">Download the APK → share via QR code with testers or send the direct download link</span>
+        </li>
+        <li>
+          <span class="step-num">8</span>
+          <span class="step-text">Create GitHub Actions CI workflow at <code>.github/workflows/ci.yml</code>:</span>
+        </li>
+      </ol>
+
+      <pre><code># .github/workflows/ci.yml
+name: Mobile CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx eslint src/ --ext .js,.jsx
+      - run: npx jest --coverage --passWithNoTests</code></pre>
+
+      <ol class="step-list" style="margin-top:16px;">
+        <li>
+          <span class="step-num">9</span>
+          <span class="step-text">Push an OTA (Over-The-Air) update when you fix a JS bug — no app store review needed: <code>eas update --branch production --message "Fix login bug"</code></span>
+        </li>
+        <li>
+          <span class="step-num">10</span>
+          <span class="step-text"><strong>OTA explained:</strong> EAS Update pushes a new JavaScript bundle to your users' installed app within seconds. Native code changes (new SDK version, new native module) still require a full EAS Build and store submission.</span>
+        </li>
+      </ol>
+
+      <div class="lab-note">💡 For the GitHub Actions job to also trigger an EAS Build, add an <code>EXPO_TOKEN</code> secret to your GitHub repo (Settings → Secrets) and add <code>eas build --non-interactive</code> as a final step.</div>
+    </div>
+  </div>
+
+  <!-- Week 12 -->
+  <div class="week-block wn-adv" id="w12">
+    <div class="week-header" onclick="toggleWeek('w12')">
+      <span class="week-num">W12</span>
+      <span class="week-title">Week 12 — Capstone: DevFeed Social App</span>
+      <span class="week-toggle">▶</span>
+    </div>
+    <div class="week-body">
+      <p style="color:#374151;margin-bottom:16px;">Build <strong>DevFeed</strong> — a developer community feed app demonstrating every skill from the programme. Full spec below.</p>
+
+      <div class="sm-sec-header"><span class="sm-sec-num">→</span><span class="sm-sec-title">Screen Specifications</span></div>
+      <ol class="step-list">
+        <li><span class="step-num">1</span><span class="step-text"><strong>SplashScreen:</strong> Show logo, check AsyncStorage for token, redirect to Login or Home automatically</span></li>
+        <li><span class="step-num">2</span><span class="step-text"><strong>LoginScreen:</strong> Email + password fields, JWT auth API call, store token in AsyncStorage</span></li>
+        <li><span class="step-num">3</span><span class="step-text"><strong>RegisterScreen:</strong> Name, email, password, confirm password — validate match before submit</span></li>
+        <li><span class="step-num">4</span><span class="step-text"><strong>HomeScreen (TabBar):</strong> FlatList of posts with author avatar, text, timestamp, like count, comment count. Pull to refresh. Floating + button to create post</span></li>
+        <li><span class="step-num">5</span><span class="step-text"><strong>CreatePostScreen (Stack):</strong> TextInput for text, TouchableOpacity to add image from gallery, submit to API</span></li>
+        <li><span class="step-num">6</span><span class="step-text"><strong>PostDetailScreen:</strong> Full post + comments list + add comment TextInput at the bottom</span></li>
+        <li><span class="step-num">7</span><span class="step-text"><strong>ProfileScreen (TabBar):</strong> User avatar, name, bio, their posts in a 3-column grid</span></li>
+      </ol>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">Architecture &amp; Technical Requirements</span></div>
+      <div class="table-wrap">
+        <table class="sm-table">
+          <thead><tr><th>Folder</th><th>Contents</th></tr></thead>
+          <tbody>
+            <tr><td><code>src/screens/</code></td><td>All screen components</td></tr>
+            <tr><td><code>src/hooks/</code></td><td>useAuth, useFeed, usePost</td></tr>
+            <tr><td><code>src/components/</code></td><td>PostCard, CommentItem, Avatar, LoadingSpinner</td></tr>
+            <tr><td><code>src/navigation/</code></td><td>RootNavigator.js (stack wrapping tab navigator)</td></tr>
+            <tr><td><code>src/api/</code></td><td>api.js — Axios instance with baseURL + token interceptor</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul style="margin:16px 0 16px 20px;color:#374151;font-size:0.92rem;line-height:1.8;">
+        <li>Context for auth state (AuthContext)</li>
+        <li>React Query for feed (useQuery + useMutation)</li>
+        <li>Animated like button: scale spring on press (Animated.spring)</li>
+        <li>AsyncStorage for token persistence</li>
+        <li>Error boundaries for graceful crash handling</li>
+        <li>Tests: useAuth hook test + PostCard component test</li>
+      </ul>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">Navigation Setup — RootNavigator.js</span></div>
+      <pre><code>// src/navigation/RootNavigator.js
+import React from 'react';
+import &#123; NavigationContainer &#125; from '@react-navigation/native';
+import &#123; createNativeStackNavigator &#125; from '@react-navigation/native-stack';
+import &#123; createBottomTabNavigator &#125; from '@react-navigation/bottom-tabs';
+import &#123; useAuth &#125; from '../hooks/useAuth';
+
+// Screens
+import SplashScreen    from '../screens/SplashScreen';
+import LoginScreen     from '../screens/LoginScreen';
+import RegisterScreen  from '../screens/RegisterScreen';
+import HomeScreen      from '../screens/HomeScreen';
+import ProfileScreen   from '../screens/ProfileScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
+import PostDetailScreen from '../screens/PostDetailScreen';
+
+const Stack = createNativeStackNavigator();
+const Tab   = createBottomTabNavigator();
+
+function MainTabs() &#123;
+  return (
+    &lt;Tab.Navigator screenOptions=&#123;&#123;
+      tabBarActiveTintColor: '#1B3A6B',
+      tabBarStyle: &#123; backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#e5e7eb' &#125;,
+      headerShown: false,
+    &#125;&#125;&gt;
+      &lt;Tab.Screen name="Home" component=&#123;HomeScreen&#125;
+        options=&#123;&#123; tabBarLabel: 'Feed', tabBarIcon: () =&gt; '🏠' &#125;&#125; /&gt;
+      &lt;Tab.Screen name="Profile" component=&#123;ProfileScreen&#125;
+        options=&#123;&#123; tabBarLabel: 'Profile', tabBarIcon: () =&gt; '👤' &#125;&#125; /&gt;
+    &lt;/Tab.Navigator&gt;
+  );
+&#125;
+
+export default function RootNavigator() &#123;
+  const &#123; user, isLoading &#125; = useAuth();
+  if (isLoading) return &lt;SplashScreen /&gt;;
+
+  return (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator screenOptions=&#123;&#123; headerShown: false &#125;&#125;&gt;
+        &#123;user ? (
+          &lt;&gt;
+            &lt;Stack.Screen name="Main"       component=&#123;MainTabs&#125; /&gt;
+            &lt;Stack.Screen name="CreatePost" component=&#123;CreatePostScreen&#125;
+              options=&#123;&#123; presentation: 'modal', headerShown: true, title: 'New Post' &#125;&#125; /&gt;
+            &lt;Stack.Screen name="PostDetail" component=&#123;PostDetailScreen&#125;
+              options=&#123;&#123; headerShown: true, title: 'Post' &#125;&#125; /&gt;
+          &lt;/&gt;
+        ) : (
+          &lt;&gt;
+            &lt;Stack.Screen name="Login"    component=&#123;LoginScreen&#125; /&gt;
+            &lt;Stack.Screen name="Register" component=&#123;RegisterScreen&#125; /&gt;
+          &lt;/&gt;
+        )&#125;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+&#125;</code></pre>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">api.js — Axios with Token Interceptor</span></div>
+      <pre><code>// src/api/api.js
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const api = axios.create(&#123;
+  baseURL: 'https://api.devfeed.example.com/v1',
+  timeout: 8000,
+  headers: &#123; 'Content-Type': 'application/json' &#125;,
+&#125;);
+
+// Attach token to every request
+api.interceptors.request.use(async (config) =&gt; &#123;
+  const token = await AsyncStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer $&#123;token&#125;`;
+  return config;
+&#125;);
+
+// Handle 401 globally — clear token and let auth state update
+api.interceptors.response.use(
+  (response) =&gt; response,
+  async (error) =&gt; &#123;
+    if (error.response?.status === 401) &#123;
+      await AsyncStorage.multiRemove(['user', 'token']);
+    &#125;
+    return Promise.reject(error);
+  &#125;
+);
+
+export default api;</code></pre>
+
+      <div class="sm-sec-header" style="margin-top:20px;"><span class="sm-sec-num">→</span><span class="sm-sec-title">PostCard with Animated Like Button</span></div>
+      <pre><code>// src/components/PostCard.js
+import React, &#123; useRef &#125; from 'react';
+import &#123; View, Text, TouchableOpacity, Animated, StyleSheet &#125; from 'react-native';
+import Avatar from './Avatar';
+
+export default function PostCard(&#123; post, onLike &#125;) &#123;
+  const scale = useRef(new Animated.Value(1)).current;
+
+  const handleLike = () =&gt; &#123;
+    Animated.sequence([
+      Animated.spring(scale, &#123; toValue: 1.35, useNativeDriver: true, speed: 50 &#125;),
+      Animated.spring(scale, &#123; toValue: 1,    useNativeDriver: true, speed: 30 &#125;),
+    ]).start();
+    onLike(post.id);
+  &#125;;
+
+  return (
+    &lt;View style=&#123;styles.card&#125;&gt;
+      &lt;View style=&#123;styles.header&#125;&gt;
+        &lt;Avatar uri=&#123;post.author.avatar&#125; size=&#123;38&#125; /&gt;
+        &lt;View style=&#123;&#123; marginLeft: 10 &#125;&#125;&gt;
+          &lt;Text style=&#123;styles.authorName&#125;&gt;&#123;post.author.name&#125;&lt;/Text&gt;
+          &lt;Text style=&#123;styles.timestamp&#125;&gt;&#123;post.createdAt&#125;&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+
+      &lt;Text style=&#123;styles.body&#125;&gt;&#123;post.text&#125;&lt;/Text&gt;
+
+      &lt;View style=&#123;styles.footer&#125;&gt;
+        &lt;TouchableOpacity onPress=&#123;handleLike&#125; style=&#123;styles.actionBtn&#125;&gt;
+          &lt;Animated.Text style=&#123;[styles.actionIcon, &#123; transform: [&#123; scale &#125;] &#125;]&#125;&gt;
+            &#123;post.likedByMe ? '❤️' : '🤍'&#125;
+          &lt;/Animated.Text&gt;
+          &lt;Text style=&#123;styles.actionLabel&#125;&gt;&#123;post.likeCount&#125;&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+
+        &lt;TouchableOpacity style=&#123;styles.actionBtn&#125;&gt;
+          &lt;Text style=&#123;styles.actionIcon&#125;&gt;💬&lt;/Text&gt;
+          &lt;Text style=&#123;styles.actionLabel&#125;&gt;&#123;post.commentCount&#125;&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+&#125;
+
+const styles = StyleSheet.create(&#123;
+  card:        &#123; backgroundColor: '#fff', borderRadius: 12, padding: 16, marginBottom: 12,
+                  shadowColor: '#000', shadowOffset: &#123; width: 0, height: 2 &#125;,
+                  shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 &#125;,
+  header:      &#123; flexDirection: 'row', alignItems: 'center', marginBottom: 10 &#125;,
+  authorName:  &#123; fontWeight: '700', fontSize: 14, color: '#1B3A6B' &#125;,
+  timestamp:   &#123; fontSize: 11, color: '#9ca3af', marginTop: 2 &#125;,
+  body:        &#123; fontSize: 14, color: '#374151', lineHeight: 22, marginBottom: 12 &#125;,
+  footer:      &#123; flexDirection: 'row', gap: 20 &#125;,
+  actionBtn:   &#123; flexDirection: 'row', alignItems: 'center', gap: 4 &#125;,
+  actionIcon:  &#123; fontSize: 18 &#125;,
+  actionLabel: &#123; fontSize: 13, color: '#6b7280' &#125;,
+&#125;);</code></pre>
+
+      <div class="lab-note">🎯 Submission checklist: APK installs on Android, all 7 screens work, like animation plays, tests pass with ≥70% coverage on hooks, GitHub Actions CI passes on your main branch.</div>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <div class="sm-bottom-nav">
+    <a href="lab_guide_intermediate.html" class="btn-nav-secondary">← Intermediate Lab</a>
+    <a href="project_briefs.html" class="btn-nav-secondary">Project Briefs →</a>
+    <a href="../index.html" class="btn-nav-primary">← Study Portal</a>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Mobile App Development &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id) &#123;
+  const b = document.getElementById(id);
+  b.classList.toggle('open');
+&#125;
+document.addEventListener('DOMContentLoaded', () =&gt; &#123;
+  const w = document.getElementById('w9');
+  if (w) w.classList.add('open');
+&#125;);
+</script>
+</body>
+</html>

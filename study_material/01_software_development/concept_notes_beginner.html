@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Concept Notes (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .analogy-box {
+    background: linear-gradient(135deg, #FDF6E3, #F5E6C0);
+    border: 1px solid var(--gold-light); border-left: 4px solid var(--gold);
+    border-radius: var(--radius-sm); padding: 14px 18px; margin: 14px 0;
+    font-size: 13px; color: var(--text-mid); line-height: 1.7;
+  }
+  .analogy-box strong { color: var(--navy); }
+  .further-reading {
+    background: var(--paper); border-radius: var(--radius-sm);
+    padding: 14px 18px; margin-top: 16px;
+  }
+  .further-reading h5 { font-size: 11px; font-weight: 700; color: var(--gold);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .further-reading ul { list-style: none; }
+  .further-reading ul li { font-size: 12px; color: var(--gray); padding: 3px 0;
+    display: flex; align-items: center; gap: 6px; }
+  .further-reading ul li::before { content: '→'; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">📖 Concept Notes — Beginner Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; CONCEPT NOTES
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate ↗</a>
+    <a href="lab_guide_beginner.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <!-- LEVEL HERO -->
+  <div class="level-hero beg">
+    <div class="lh-icon">🌱</div>
+    <h1>Beginner Level — Concept Notes</h1>
+    <p class="lh-sub">4 weeks of foundational software development knowledge. You will learn HTML5, CSS3, responsive design, and core JavaScript — the three building blocks every developer uses every single day.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Weeks</span>
+      <span class="lh-pill">HTML · CSS · JavaScript</span>
+      <span class="lh-pill">Static Web Development</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <!-- INFO ROW -->
+  <div class="info-row">
+    <div class="info-card">
+      <h4>What You Will Learn</h4>
+      <ul>
+        <li>Build web pages with HTML5</li>
+        <li>Style with CSS3 &amp; Flexbox</li>
+        <li>Make pages responsive</li>
+        <li>JavaScript DOM manipulation</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Tools Used</h4>
+      <ul>
+        <li>VS Code (editor)</li>
+        <li>Chrome DevTools</li>
+        <li>GitHub &amp; GitHub Pages</li>
+        <li>Live Server extension</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Learning Approach</h4>
+      <ul>
+        <li>Read notes (30 min/week)</li>
+        <li>Complete lab exercises</li>
+        <li>Take weekly quiz</li>
+        <li>Build your portfolio site</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>End Goal</h4>
+      <ul>
+        <li>Live portfolio website</li>
+        <li>GitHub profile set up</li>
+        <li>Beginner certificate</li>
+        <li>Ready for Intermediate</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- OBJECTIVES -->
+  <div class="objectives">
+    <h4>Learning Objectives — By Week 4 You Will Be Able To</h4>
+    <ul>
+      <li>Write semantic HTML5 with correct tag usage</li>
+      <li>Build layouts using CSS Flexbox and Grid</li>
+      <li>Create fully responsive pages with media queries</li>
+      <li>Write JavaScript for DOM manipulation and events</li>
+      <li>Deploy a live website on GitHub Pages / Netlify</li>
+      <li>Use Chrome DevTools to inspect and debug code</li>
+    </ul>
+  </div>
+
+  <!-- ═══ WEEK 1 ═══ -->
+  <div class="sm-sec">Week 1 — HTML5 Foundations</div>
+  <div class="week-block open" id="w1">
+    <div class="week-head" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <div class="week-head-text">
+        <h3>HTML5 — Structure of the Web</h3>
+        <p>Semantic tags · Document structure · Forms · Accessibility basics</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> Think of an HTML document like a house blueprint. HTML provides the structure — walls, rooms, doors — but no decoration yet. CSS adds the paint and furniture later. JavaScript makes the doors open and lights turn on.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>What is HTML?</h4>
+          <ul>
+            <li>HyperText Markup Language</li>
+            <li>Describes the structure of web pages</li>
+            <li>Uses tags like <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;div&gt;</code></li>
+            <li>NOT a programming language — it's a markup language</li>
+            <li>Current version: HTML5 (2014, still evolving)</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Document Structure</h4>
+          <ul>
+            <li><code>&lt;!DOCTYPE html&gt;</code> — tells browser this is HTML5</li>
+            <li><code>&lt;html lang="en"&gt;</code> — root element, language declared</li>
+            <li><code>&lt;head&gt;</code> — metadata, title, CSS links (not visible)</li>
+            <li><code>&lt;body&gt;</code> — everything the user sees</li>
+            <li>Always close every tag you open</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Semantic HTML5 Tags</h4>
+          <ul>
+            <li><code>&lt;header&gt;</code> — top section of a page or section</li>
+            <li><code>&lt;nav&gt;</code> — navigation links</li>
+            <li><code>&lt;main&gt;</code> — primary page content (use once)</li>
+            <li><code>&lt;section&gt;</code> — a thematic grouping</li>
+            <li><code>&lt;article&gt;</code> — self-contained content</li>
+            <li><code>&lt;footer&gt;</code> — bottom of page/section</li>
+            <li><code>&lt;aside&gt;</code> — sidebar content</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Why Semantic Tags Matter</h4>
+          <ul>
+            <li>Screen readers use them for accessibility</li>
+            <li>Google uses them for SEO ranking</li>
+            <li>Easier for other developers to read your code</li>
+            <li><code>&lt;div&gt;</code> has no meaning — use it only for layout</li>
+            <li>Industry standard — companies require it</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="comment">&lt;!-- A well-structured HTML5 page --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;My Portfolio&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;nav&gt;
+      &lt;a href="#about"&gt;About&lt;/a&gt;
+      &lt;a href="#projects"&gt;Projects&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;section id="about"&gt;
+      &lt;h1&gt;Hi, I am Priya&lt;/h1&gt;
+      &lt;p&gt;A frontend developer from Uttarakhand.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;p&gt;© 2026 Priya Sharma&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>HTML Forms</h4>
+          <ul>
+            <li><code>&lt;form action="" method="post"&gt;</code></li>
+            <li><code>&lt;input type="text"&gt;</code> — text input</li>
+            <li><code>&lt;input type="email"&gt;</code> — validates email format</li>
+            <li><code>&lt;textarea&gt;</code> — multi-line input</li>
+            <li><code>&lt;button type="submit"&gt;</code> — submit button</li>
+            <li>Always add <code>label</code> for accessibility</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Important HTML Attributes</h4>
+          <ul>
+            <li><code>id</code> — unique identifier (one per page)</li>
+            <li><code>class</code> — reusable group identifier</li>
+            <li><code>href</code> — link destination on <code>&lt;a&gt;</code></li>
+            <li><code>src</code> — file source on <code>&lt;img&gt;</code></li>
+            <li><code>alt</code> — image description (required for accessibility)</li>
+            <li><code>placeholder</code> — hint text in inputs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Week 1 Key Takeaways</h4>
+        <ul>
+          <li>Always declare <code>&lt;!DOCTYPE html&gt;</code> at the very top</li>
+          <li>Use semantic tags (<code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) instead of <code>&lt;div&gt;</code> for structure</li>
+          <li>Every <code>&lt;img&gt;</code> must have an <code>alt</code> attribute</li>
+          <li>The <code>&lt;head&gt;</code> is for the browser, <code>&lt;body&gt;</code> is for the user</li>
+          <li>Validate your HTML at <strong>validator.w3.org</strong> before submitting any work</li>
+        </ul>
+      </div>
+
+      <div class="further-reading">
+        <h5>Further Reading</h5>
+        <ul>
+          <li>MDN Web Docs — HTML basics (developer.mozilla.org)</li>
+          <li>W3C HTML5 specification overview</li>
+          <li>WebAIM — Introduction to Web Accessibility</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WEEK 2 ═══ -->
+  <div class="week-block" id="w2">
+    <div class="week-head" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <div class="week-head-text">
+        <h3>CSS3 — Styling &amp; Layout</h3>
+        <p>Box model · Flexbox · Colors · Typography · CSS variables</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> If HTML is the house's blueprint (walls and rooms), CSS is the interior decorator — choosing paint colors, furniture placement, and the size of everything. The same HTML can look completely different with different CSS.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>The CSS Box Model</h4>
+          <ul>
+            <li>Every element is a rectangular box</li>
+            <li><strong>Content</strong> — the actual text/image inside</li>
+            <li><strong>Padding</strong> — space inside the border</li>
+            <li><strong>Border</strong> — line around padding</li>
+            <li><strong>Margin</strong> — space outside the border</li>
+            <li>Use <code>box-sizing: border-box</code> always — it makes sizing predictable</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>CSS Selectors</h4>
+          <ul>
+            <li><code>p</code> — selects all paragraphs</li>
+            <li><code>.card</code> — selects elements with class "card"</li>
+            <li><code>#hero</code> — selects element with id "hero"</li>
+            <li><code>nav a</code> — selects links inside nav</li>
+            <li><code>button:hover</code> — selects hovered buttons</li>
+            <li>Be specific but not over-specific</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>CSS Flexbox</h4>
+          <ul>
+            <li><code>display: flex</code> on parent activates flex</li>
+            <li><code>justify-content</code> — horizontal alignment</li>
+            <li><code>align-items</code> — vertical alignment</li>
+            <li><code>gap</code> — space between items</li>
+            <li><code>flex-wrap: wrap</code> — items wrap on small screens</li>
+            <li>Most useful for navigation bars and card grids</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>CSS Variables (Custom Properties)</h4>
+          <ul>
+            <li>Defined at <code>:root { --color-navy: #1B3A6B; }</code></li>
+            <li>Used as <code>color: var(--color-navy);</code></li>
+            <li>Change once at <code>:root</code>, updates everywhere</li>
+            <li>Industry standard — all professional codebases use them</li>
+            <li>Dark mode = just update the variables</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="comment">/* Professional CSS structure */</span>
+:root {
+  --color-primary: #1B3A6B;
+  --color-accent:  #C8941A;
+  --font-body:     'Segoe UI', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; <span class="comment">/* always include this */</span>
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}</pre>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Typography in CSS</h4>
+          <ul>
+            <li><code>font-family</code> — typeface name</li>
+            <li><code>font-size</code> — use <code>rem</code> (relative to root, accessible)</li>
+            <li><code>font-weight</code> — 400 = normal, 700 = bold</li>
+            <li><code>line-height</code> — 1.5–1.7 for body text</li>
+            <li><code>letter-spacing</code> — for headings and labels</li>
+            <li>Import Google Fonts with <code>@import url(...)</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Colors in CSS</h4>
+          <ul>
+            <li>Hex: <code>#1B3A6B</code> — most common</li>
+            <li>RGB: <code>rgb(27, 58, 107)</code></li>
+            <li>RGBA: <code>rgba(27, 58, 107, 0.5)</code> — with transparency</li>
+            <li>HSL: <code>hsl(220, 60%, 26%)</code> — easiest to adjust</li>
+            <li>Always check contrast ratio ≥ 4.5:1 for text</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Week 2 Key Takeaways</h4>
+        <ul>
+          <li>Always put <code>*, *::before, *::after { box-sizing: border-box; }</code> at the top of every stylesheet</li>
+          <li>Use CSS variables (<code>--variable-name</code>) from day one — it's the professional way</li>
+          <li>Flexbox solves 80% of layout problems — master <code>justify-content</code> and <code>align-items</code></li>
+          <li>Use <code>rem</code> for font sizes, not <code>px</code> — it respects the user's browser settings</li>
+          <li>Chrome DevTools (F12 → Elements) is your best debugging tool for CSS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WEEK 3 ═══ -->
+  <div class="week-block" id="w3">
+    <div class="week-head" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <div class="week-head-text">
+        <h3>Responsive Design &amp; CSS Grid</h3>
+        <p>Media queries · CSS Grid · Mobile-first · Viewport units</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> Responsive design is like water — it takes the shape of its container. Your page should look great whether viewed on a 5-inch phone or a 27-inch monitor. In 2026, 60% of web traffic is mobile. Non-responsive sites are unprofessional.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Mobile-First Approach</h4>
+          <ul>
+            <li>Start by writing CSS for the smallest screen</li>
+            <li>Then use <code>@media (min-width: ...)</code> to scale up</li>
+            <li>Why? It forces you to focus on essential content first</li>
+            <li>Mobile-first = better performance by default</li>
+            <li>Industry standard since 2012 — all companies use it</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Media Query Breakpoints</h4>
+          <ul>
+            <li><code>480px</code> — small phones</li>
+            <li><code>640px</code> — large phones</li>
+            <li><code>768px</code> — tablets</li>
+            <li><code>1024px</code> — small laptops</li>
+            <li><code>1200px</code> — desktops</li>
+            <li>Use logical breakpoints, not device names</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>CSS Grid</h4>
+          <ul>
+            <li><code>display: grid</code> on parent</li>
+            <li><code>grid-template-columns: repeat(3, 1fr)</code> — 3 equal columns</li>
+            <li><code>gap</code> — space between rows and columns</li>
+            <li>Use Grid for 2-dimensional layouts (rows + columns)</li>
+            <li>Use Flexbox for 1-dimensional (only rows OR columns)</li>
+            <li><code>auto-fill</code> + <code>minmax()</code> = responsive without queries</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Viewport Units</h4>
+          <ul>
+            <li><code>vw</code> — percentage of viewport width</li>
+            <li><code>vh</code> — percentage of viewport height</li>
+            <li><code>100vh</code> = full screen height (hero sections)</li>
+            <li><code>min()</code>, <code>max()</code>, <code>clamp()</code> for fluid sizing</li>
+            <li><code>clamp(1rem, 4vw, 2rem)</code> — fluid typography</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="comment">/* Mobile-first responsive card grid */</span>
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr; <span class="comment">/* 1 column on mobile */</span>
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr); <span class="comment">/* 2 on tablets */</span>
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr); <span class="comment">/* 3 on desktop */</span>
+  }
+}
+
+<span class="comment">/* Or let CSS handle it automatically: */</span>
+.card-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 3 Key Takeaways</h4>
+        <ul>
+          <li>Always add <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> — without it, responsive CSS won't work on mobile</li>
+          <li>Write mobile styles first (no media query), then add <code>min-width</code> queries for larger screens</li>
+          <li>CSS Grid for 2D layouts (cards, page structure), Flexbox for 1D (nav, button groups)</li>
+          <li><code>repeat(auto-fill, minmax(250px, 1fr))</code> creates a responsive grid with zero media queries</li>
+          <li>Test every page in Chrome DevTools device mode before submitting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WEEK 4 ═══ -->
+  <div class="week-block" id="w4">
+    <div class="week-head" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <div class="week-head-text">
+        <h3>JavaScript Basics &amp; DOM</h3>
+        <p>Variables · Functions · Events · DOM manipulation · Deployment</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> If HTML is the house structure and CSS is the decoration, JavaScript is the electricity — it makes things interactive. Lights that switch on, doors that open, appliances that run. Without JavaScript, a web page is just a static document.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>JavaScript Variables</h4>
+          <ul>
+            <li><code>const</code> — value that won't change (use by default)</li>
+            <li><code>let</code> — value that will change</li>
+            <li><code>var</code> — old way, avoid in modern code</li>
+            <li>Data types: string, number, boolean, array, object</li>
+            <li>Template literals: <code>`Hello ${name}`</code></li>
+            <li>Always declare variables before using them</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Functions</h4>
+          <ul>
+            <li>Traditional: <code>function greet(name) { ... }</code></li>
+            <li>Arrow: <code>const greet = (name) =&gt; { ... }</code></li>
+            <li>Arrow functions are shorter and common in modern JS</li>
+            <li>Parameters go in <code>()</code>, code runs in <code>{ }</code></li>
+            <li><code>return</code> sends back a value</li>
+            <li>Functions are reusable blocks of logic</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>DOM Manipulation</h4>
+          <ul>
+            <li>DOM = Document Object Model (the page as a JS object)</li>
+            <li><code>document.querySelector('.btn')</code> — find one element</li>
+            <li><code>document.querySelectorAll('li')</code> — find all matching</li>
+            <li><code>element.textContent = 'Hello'</code> — change text</li>
+            <li><code>element.classList.add('active')</code> — add CSS class</li>
+            <li><code>element.style.display = 'none'</code> — hide element</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Event Listeners</h4>
+          <ul>
+            <li><code>element.addEventListener('click', handler)</code></li>
+            <li>Common events: <code>click</code>, <code>input</code>, <code>submit</code>, <code>keydown</code></li>
+            <li>Handler = the function that runs when event fires</li>
+            <li><code>event.preventDefault()</code> — stops form from reloading page</li>
+            <li><code>event.target</code> — the element that was clicked</li>
+            <li>Never use <code>onclick=""</code> in HTML — use addEventListener</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="comment">// Real-world example: interactive navigation menu</span>
+
+const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+
+menuBtn.addEventListener('click', () =&gt; {
+  navLinks.classList.toggle('open'); <span class="comment">// add or remove class</span>
+});
+
+<span class="comment">// Form validation example</span>
+const form = document.querySelector('#contact-form');
+
+form.addEventListener('submit', (event) =&gt; {
+  event.preventDefault(); <span class="comment">// stop page refresh</span>
+
+  const name = document.querySelector('#name').value.trim();
+
+  if (name === '') {
+    alert('Please enter your name');
+    return;
+  }
+
+  console.log('Form submitted:', name);
+});</pre>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Deploying to GitHub Pages</h4>
+          <ul>
+            <li>Create a GitHub account at github.com</li>
+            <li>Create a new repository (name it your-username.github.io)</li>
+            <li>Upload your HTML/CSS/JS files</li>
+            <li>Go to Settings → Pages → Source: main branch</li>
+            <li>Your site is live at <code>https://your-username.github.io</code></li>
+            <li>Free, instant, professional URL</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Chrome DevTools for JS</h4>
+          <ul>
+            <li>Press F12 → Console tab</li>
+            <li><code>console.log(value)</code> — print to console (debugging)</li>
+            <li>Red errors = your JS has a bug</li>
+            <li>Sources tab → set breakpoints to pause execution</li>
+            <li>Network tab → see what files load</li>
+            <li>Never use <code>alert()</code> in real projects — use console</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Week 4 Key Takeaways</h4>
+        <ul>
+          <li>Use <code>const</code> by default, <code>let</code> only when you need to reassign — never use <code>var</code></li>
+          <li>Arrow functions (<code>() =&gt; {}</code>) are the modern standard — use them for event handlers</li>
+          <li>Always use <code>addEventListener</code> — never write <code>onclick=""</code> directly in HTML</li>
+          <li><code>querySelector</code> is more flexible than <code>getElementById</code> — learn it well</li>
+          <li>Deploy to GitHub Pages before your Week 4 submission — a live URL is part of your grade</li>
+        </ul>
+      </div>
+
+      <div class="further-reading">
+        <h5>Further Reading</h5>
+        <ul>
+          <li>javascript.info — The Modern JavaScript Tutorial (free, complete)</li>
+          <li>MDN Web Docs — DOM Introduction</li>
+          <li>CSS-Tricks — A Complete Guide to Flexbox</li>
+          <li>CSS-Tricks — A Complete Guide to Grid</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION BOTTOM -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:48px; padding-top:24px; border-top:1px solid var(--border);">
+    <a href="../index.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Study Portal</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_beginner.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Next: Lab Guide →</a>
+      <a href="quizzes.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Take Quiz →</a>
+    </div>
+  </div>
+
+</div><!-- /sm-page -->
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Concept Notes — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id) {
+  const block = document.getElementById(id);
+  block.classList.toggle('open');
+}
+// Open W1 by default on load
+document.addEventListener('DOMContentLoaded', () => {
+  const w1 = document.getElementById('w1');
+  if (w1) w1.classList.add('open');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept Notes — Intermediate | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner</a>
+    <a href="concept_notes_advanced.html">Advanced</a>
+    <a href="lab_guide_intermediate.html">Lab Guide</a>
+    <a href="quizzes.html">Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🗄️</div>
+    <div class="lh-text">
+      <h2>Concept Notes — Intermediate Level</h2>
+      <p>Database design with normalisation, indexing for performance, transaction management, and programmable database objects including views, stored procedures, and triggers.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">Normalisation</span>
+      <span class="pill">Indexing</span>
+      <span class="pill">Transactions</span>
+      <span class="pill">Stored Procedures</span>
+      <span class="pill">Triggers</span>
+    </div>
+  </div>
+
+  <!-- W5 -->
+  <div class="week-block int" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <span class="week-num wn-int">Week 5</span>
+      <h3>Database Design &amp; Normalisation</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Entity-Relationship (ER) Diagrams</h4>
+        <p>An ER diagram is a visual blueprint of the database structure before writing any SQL. It shows:</p>
+        <ul>
+          <li><strong>Entities:</strong> things the database tracks (Customer, Product, Order)</li>
+          <li><strong>Attributes:</strong> properties of each entity (Customer has name, email, phone)</li>
+          <li><strong>Relationships:</strong> how entities connect (Customer PLACES Order)</li>
+          <li><strong>Cardinality:</strong> how many instances of each entity relate
+            <ul>
+              <li>1:1 — one passport per person</li>
+              <li>1:N — one customer, many orders</li>
+              <li>M:N — many students enrol in many courses (requires a junction table)</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Tool recommendation: dbdiagram.io (free, web-based, generates SQL from diagram).</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Normalisation Goals</h4>
+        <p>Normalisation eliminates data anomalies:</p>
+        <ul>
+          <li><strong>Update anomaly:</strong> change customer's city → must update 10,000 order rows</li>
+          <li><strong>Insert anomaly:</strong> can't add a course until a student enrols in it</li>
+          <li><strong>Delete anomaly:</strong> delete the only student in a course → course data is lost</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Normal Forms</h4>
+        <p><strong>1NF (First Normal Form):</strong> Each cell contains exactly one atomic value. No repeating groups (no "phone1, phone2, phone3" columns; use a separate phones table instead).</p>
+        <pre><code>-- Violates 1NF: comma-separated tags in one column
+-- ✗ product_id=1, tags='electronics,mobile,android'
+-- ✓ product_tags(product_id, tag) with one row per tag</code></pre>
+
+        <p><strong>2NF (Second Normal Form):</strong> 1NF + no partial dependencies. Every non-key column depends on the entire primary key (applies when you have a composite primary key).</p>
+        <pre><code>-- Violates 2NF: composite PK (order_id, product_id)
+-- product_name depends only on product_id, not the full PK
+-- ✗ order_items(order_id, product_id, product_name, quantity)
+-- ✓ separate products table; order_items has only order-item-specific data</code></pre>
+
+        <p><strong>3NF (Third Normal Form):</strong> 2NF + no transitive dependencies. Non-key columns depend only on the primary key, not on other non-key columns.</p>
+        <pre><code>-- Violates 3NF: zip_code → city → state (transitive)
+-- ✗ customers(id, name, zip_code, city, state)
+--   (city and state depend on zip_code, not on id)
+-- ✓ zip_codes(zip_code, city, state) + customers references zip_code FK</code></pre>
+
+        <p><strong>BCNF (Boyce-Codd Normal Form):</strong> Every determinant is a candidate key. Stricter than 3NF — handles edge cases with multiple overlapping candidate keys.</p>
+
+        <p><strong>Denormalisation:</strong> Intentional reversal — add some redundancy to speed up read-heavy analytical queries. Analytics dashboards often use denormalised "star schema" data warehouses because reporting joins hurt performance.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Physical Design Choices</h4>
+        <ul>
+          <li>Use <code>INT</code> for IDs &lt; 2 billion rows; <code>BIGINT</code> for larger tables (social networks, IoT data)</li>
+          <li>Use <code>VARCHAR</code> for short variable strings; <code>TEXT</code> only for truly long content (blog posts)</li>
+          <li>Use <code>DECIMAL(10,2)</code> for money — never FLOAT or DOUBLE (binary floating point loses pennies)</li>
+          <li>Use <code>ENUM</code> sparingly — adding new values requires ALTER TABLE; a lookup table is more flexible</li>
+          <li>Store timestamps as <code>DATETIME</code> (local time stored as-is) or <code>TIMESTAMP</code> (auto-converted UTC, limited to 2038)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- W6 -->
+  <div class="week-block int" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <span class="week-num wn-int">Week 6</span>
+      <h3>Indexing &amp; Performance</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>What is an Index?</h4>
+        <p>An index is a separate data structure (usually a B-tree) maintained alongside the table. It stores a sorted copy of the indexed column values with pointers to the corresponding rows. Just as a book's index tells you which page a topic is on without reading every page, a database index lets MySQL find rows without scanning the whole table.</p>
+        <p><strong>Cost:</strong> Indexes take disk space and slow down INSERT/UPDATE/DELETE (the index must be updated). The trade-off is almost always worth it for columns used in WHERE, JOIN, and ORDER BY.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Types of Indexes</h4>
+        <pre><code>-- Primary index: automatically created on PRIMARY KEY
+-- Cannot be dropped (dropping PK drops the index)
+
+-- Secondary index
+CREATE INDEX idx_customer_email ON customers(email);
+
+-- Composite index: multi-column, ORDER MATTERS
+-- This index helps queries that filter on (order_id) OR (order_id AND product_id)
+-- It does NOT help queries that filter on (product_id) alone
+CREATE INDEX idx_order_product ON order_items(order_id, product_id);
+
+-- Covering index: includes all columns needed by the query
+-- Query: SELECT name, email FROM users WHERE status='active'
+-- Covering index: (status, name, email) -- query never touches the main table
+CREATE INDEX idx_active_users ON users(status, name, email);
+
+-- Unique index (also enforces uniqueness)
+CREATE UNIQUE INDEX idx_unique_email ON users(email);
+
+-- Show all indexes on a table
+SHOW INDEXES FROM orders;
+
+-- Drop an index
+DROP INDEX idx_customer_email ON customers;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>When NOT to Index</h4>
+        <ul>
+          <li><strong>Write-heavy tables:</strong> audit_logs, event_streams — every INSERT updates all indexes</li>
+          <li><strong>Low-cardinality columns:</strong> <code>is_active</code> (2 values), <code>status</code> with 3 values — a full table scan is often faster because MySQL must read half the table anyway</li>
+          <li><strong>Small tables:</strong> (&lt;10,000 rows) — full scan fits in memory, index overhead exceeds benefit</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Reading EXPLAIN</h4>
+        <pre><code>-- Before adding index
+EXPLAIN SELECT * FROM orders WHERE customer_id = 42;
+-- type: ALL (full table scan — reads every row)
+-- key: NULL (no index used)
+-- rows: 50000 (estimated rows scanned)
+
+CREATE INDEX idx_cust ON orders(customer_id);
+
+-- After adding index
+EXPLAIN SELECT * FROM orders WHERE customer_id = 42;
+-- type: ref (index lookup — only matching rows read)
+-- key: idx_cust (this index was used)
+-- rows: 3 (only 3 rows scanned!)</code></pre>
+        <p>EXPLAIN output key fields:</p>
+        <ul>
+          <li><code>type=ALL</code> — full table scan (almost always bad for large tables)</li>
+          <li><code>type=ref</code> — index used for non-unique match (good)</li>
+          <li><code>type=eq_ref</code> — index used for unique/PK match (very good)</li>
+          <li><code>type=const</code> — single row retrieved via PK (best possible)</li>
+          <li><code>key=NULL</code> — no index used</li>
+          <li><code>rows</code> — estimated rows scanned (lower = faster)</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Query Optimisation Tips</h4>
+        <pre><code>-- ✗ Avoid: function on indexed column in WHERE (disables index use)
+SELECT * FROM orders WHERE YEAR(created_at) = 2024;
+
+-- ✓ Better: use range condition (index can be used)
+SELECT * FROM orders WHERE created_at BETWEEN '2024-01-01' AND '2024-12-31';
+
+-- ✗ Avoid: leading wildcard (can't use index)
+SELECT * FROM customers WHERE email LIKE '%@gmail.com';
+
+-- ✓ Better: trailing wildcard (index is used)
+SELECT * FROM customers WHERE email LIKE 'priya%';
+
+-- ✗ Avoid: SELECT * (fetches unnecessary columns, prevents covering index)
+SELECT * FROM orders WHERE customer_id = 1;
+
+-- ✓ Better: select only needed columns
+SELECT id, total, status FROM orders WHERE customer_id = 1;
+
+-- Pagination: OFFSET gets slow at high pages (scans and discards N rows)
+-- ✗ Slow for page 5000: LIMIT 10 OFFSET 49990
+-- ✓ Keyset pagination: WHERE id > last_seen_id LIMIT 10</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- W7 -->
+  <div class="week-block int" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <span class="week-num wn-int">Week 7</span>
+      <h3>Transactions &amp; Concurrency</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Transaction Lifecycle</h4>
+        <pre><code>START TRANSACTION;
+  -- or BEGIN; (synonym in MySQL)
+
+  UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+
+  -- If anything fails above, run:
+  ROLLBACK;   -- reverts ALL changes since START TRANSACTION
+
+  -- If everything succeeded:
+COMMIT;       -- permanently saves changes</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Isolation Levels</h4>
+        <p>Isolation levels control how much a transaction can "see" of other concurrent transactions' work:</p>
+        <table class="ref-table">
+          <thead><tr><th>Level</th><th>Dirty Read</th><th>Non-Repeatable Read</th><th>Phantom Read</th></tr></thead>
+          <tbody>
+            <tr><td>READ UNCOMMITTED</td><td>Possible</td><td>Possible</td><td>Possible</td></tr>
+            <tr><td>READ COMMITTED</td><td>Prevented</td><td>Possible</td><td>Possible</td></tr>
+            <tr><td>REPEATABLE READ (MySQL default)</td><td>Prevented</td><td>Prevented</td><td>Possible*</td></tr>
+            <tr><td>SERIALIZABLE</td><td>Prevented</td><td>Prevented</td><td>Prevented</td></tr>
+          </tbody>
+        </table>
+        <ul>
+          <li><strong>Dirty Read:</strong> reading uncommitted data from another transaction — dangerous, that transaction may ROLLBACK</li>
+          <li><strong>Non-Repeatable Read:</strong> same row gives different values when read twice in one transaction (another transaction committed a change in between)</li>
+          <li><strong>Phantom Read:</strong> same query returns different rows when run twice (another transaction inserted/deleted rows in between)</li>
+        </ul>
+        <pre><code>SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Deadlock</h4>
+        <p>A deadlock occurs when two transactions each hold a lock that the other needs:</p>
+        <ul>
+          <li>Transaction A locks row 1, waits for row 2</li>
+          <li>Transaction B locks row 2, waits for row 1</li>
+          <li>Neither can proceed — they wait forever</li>
+        </ul>
+        <p>MySQL detects this automatically and kills one transaction (the "victim"), rolling it back. Your application should catch the error and retry.</p>
+        <p><strong>Prevention:</strong> Always lock rows in the same order across all transactions (always lock customer row before order row, never the reverse).</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Locking &amp; SAVEPOINTs</h4>
+        <pre><code>-- Pessimistic locking: lock rows for update immediately
+SELECT * FROM products WHERE id = 5 FOR UPDATE;
+-- Other transactions that try to UPDATE this row will WAIT until you COMMIT or ROLLBACK
+
+-- Optimistic locking: use a version column
+-- Check that version hasn't changed before updating
+UPDATE products SET stock = stock-1, version = version+1
+WHERE id = 5 AND version = 3;
+-- If 0 rows updated, another transaction changed it first — retry
+
+-- SAVEPOINT: partial rollback
+START TRANSACTION;
+  INSERT INTO orders (customer_id, total) VALUES (1, 299.99);
+  SAVEPOINT after_order;
+
+  INSERT INTO order_items VALUES (...);  -- this fails
+  ROLLBACK TO after_order;              -- order stays, item reverted
+
+  -- continue with corrected data
+COMMIT;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Connection Pooling</h4>
+        <p>Opening a new database connection per HTTP request is expensive — it takes 50–200ms. Connection pooling maintains a pool of open connections that are reused:</p>
+        <ul>
+          <li>Application requests a connection from the pool</li>
+          <li>Pool checks out an existing open connection (instant)</li>
+          <li>Application uses it, returns it to pool when done</li>
+          <li>Pool keeps connections warm, ready for the next request</li>
+        </ul>
+        <p>Node.js: <code>mysql2</code> with <code>createPool()</code>, <code>pg</code> with <code>Pool</code>. Set <code>connectionLimit: 10</code> for most apps. Too many connections overwhelm the database.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- W8 -->
+  <div class="week-block int" id="w8">
+    <div class="week-header" onclick="toggleWeek('w8')">
+      <span class="week-num wn-int">Week 8</span>
+      <h3>Stored Procedures, Views &amp; Triggers</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Views</h4>
+        <p>A view is a saved SELECT query that behaves like a virtual table. You query it like a table, but no data is physically stored — the query runs on access.</p>
+        <pre><code>-- Create a view for monthly sales (complex query saved once)
+CREATE VIEW monthly_sales AS
+SELECT
+  DATE_FORMAT(created_at, '%Y-%m') AS month,
+  COUNT(*)                          AS order_count,
+  SUM(total)                        AS revenue
+FROM orders
+WHERE status = 'delivered'
+GROUP BY DATE_FORMAT(created_at, '%Y-%m');
+
+-- Now use it simply
+SELECT * FROM monthly_sales WHERE month = '2024-06';
+
+-- Drop a view
+DROP VIEW IF EXISTS monthly_sales;</code></pre>
+        <p><strong>Use cases:</strong> simplify complex multi-table queries for reporting, restrict columns visible to certain users (grant SELECT on view but not underlying table).</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Stored Procedures</h4>
+        <p>Pre-compiled SQL blocks with parameters, stored on the server. Reduce network round-trips — the application calls the procedure name rather than sending a large SQL string.</p>
+        <pre><code>DELIMITER //
+CREATE PROCEDURE get_customer_orders(IN cust_id INT)
+BEGIN
+  SELECT
+    o.id,
+    o.total,
+    o.status,
+    o.created_at
+  FROM orders o
+  WHERE o.customer_id = cust_id
+  ORDER BY o.created_at DESC;
+END //
+DELIMITER ;
+
+-- Call from application or CLI:
+CALL get_customer_orders(42);
+
+-- Procedure with OUT parameter
+DELIMITER //
+CREATE PROCEDURE count_pending_orders(OUT total INT)
+BEGIN
+  SELECT COUNT(*) INTO total FROM orders WHERE status = 'pending';
+END //
+DELIMITER ;
+
+CALL count_pending_orders(@result);
+SELECT @result;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Triggers</h4>
+        <p>A trigger is a stored procedure that MySQL executes automatically when a specific event (INSERT, UPDATE, DELETE) happens on a table.</p>
+        <pre><code>-- AFTER INSERT trigger: write to audit log when order is placed
+DELIMITER //
+CREATE TRIGGER after_order_insert
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+  INSERT INTO audit_log (action, table_name, record_id, created_at)
+  VALUES ('ORDER_PLACED', 'orders', NEW.id, NOW());
+END //
+DELIMITER ;
+
+-- BEFORE DELETE trigger: prevent deleting products with active orders
+DELIMITER //
+CREATE TRIGGER before_product_delete
+BEFORE DELETE ON products
+FOR EACH ROW
+BEGIN
+  DECLARE order_count INT;
+  SELECT COUNT(*) INTO order_count
+  FROM order_items WHERE product_id = OLD.id;
+
+  IF order_count > 0 THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'Cannot delete product with existing orders';
+  END IF;
+END //
+DELIMITER ;</code></pre>
+        <p><strong>Pitfalls:</strong> Triggers are invisible to application developers — bugs in triggers are hard to find. Use them selectively for audit logs and referential integrity. Avoid business logic in triggers.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Event Scheduler</h4>
+        <p>MySQL's built-in scheduler runs SQL tasks on a schedule (like cron, inside the database).</p>
+        <pre><code>-- Enable event scheduler
+SET GLOBAL event_scheduler = ON;
+
+-- Delete old audit logs older than 90 days, runs daily at midnight
+CREATE EVENT cleanup_old_logs
+ON SCHEDULE EVERY 1 DAY STARTS '2024-01-01 00:00:00'
+DO
+  DELETE FROM audit_log WHERE created_at < DATE_SUB(NOW(), INTERVAL 90 DAY);</code></pre>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w5');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

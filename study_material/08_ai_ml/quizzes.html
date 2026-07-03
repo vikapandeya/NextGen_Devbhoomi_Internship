@@ -1,0 +1,571 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Quizzes | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.quiz-block{background:#fff;border-radius:12px;padding:20px 22px;margin-bottom:20px;border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.quiz-block-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,.08);}
+.q-badge{background:var(--clr-accent,#2563eb);color:#fff;border-radius:8px;padding:4px 12px;font-size:.82rem;font-weight:700;}
+.quiz-q{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed rgba(0,0,0,.08);}
+.quiz-q:last-of-type{border-bottom:none;}
+.q-text{margin:0 0 10px;font-size:.97rem;}
+.q-options{display:flex;flex-direction:column;gap:6px;}
+.q-options label{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:7px;cursor:pointer;border:1px solid rgba(0,0,0,.1);transition:background .15s;}
+.q-options label:hover{background:rgba(37,99,235,.06);}
+.q-options input[type=radio]{width:16px;height:16px;accent-color:var(--clr-accent,#2563eb);}
+.q-explanation{display:none;margin-top:10px;padding:10px 14px;border-radius:7px;background:#f0fdf4;border:1px solid #86efac;font-size:.9rem;color:#166534;}
+.q-explanation.wrong{background:#fef2f2;border-color:#fca5a5;color:#991b1b;}
+.quiz-actions{display:flex;gap:10px;margin-top:14px;align-items:center;flex-wrap:wrap;}
+.btn-quiz{padding:9px 20px;border:none;border-radius:8px;font-size:.92rem;font-weight:600;cursor:pointer;}
+.btn-submit{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-reset{background:rgba(0,0,0,.08);color:inherit;}
+.quiz-score{font-size:1rem;font-weight:700;padding:6px 14px;border-radius:20px;background:rgba(0,0,0,.06);}
+.quiz-score.pass{background:#d1fae5;color:#065f46;}
+.quiz-score.fail{background:#fee2e2;color:#991b1b;}
+.locked-card{background:rgba(0,0,0,.04);border:1px dashed rgba(0,0,0,.2);border-radius:10px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;color:#888;}
+.lock-icon{font-size:1.8rem;flex-shrink:0;}
+.locked-info h4{margin:0 0 4px;color:#666;font-size:.97rem;}
+.locked-info p{margin:0;font-size:.85rem;}
+.section-title{font-size:1.1rem;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid rgba(0,0,0,.08);}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">🧩 Quizzes</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; QUIZZES
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Concept Notes</a>
+    <a href="project_briefs.html">📋 Projects</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="hero-icon">🧩</div>
+    <div class="hero-text">
+      <h2>AI &amp; Machine Learning — Quizzes</h2>
+      <p>Test your knowledge week by week. Each quiz has 5 questions — aim for 4/5 before moving on.</p>
+      <div class="hero-pills">
+        <span class="pill">5 Active Quizzes</span>
+        <span class="pill">25 Questions</span>
+        <span class="pill">Instant Feedback</span>
+        <span class="pill">W6–W12 Unlocking</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Active Quizzes — Weeks 1–5</div>
+
+  <!-- QUIZ W1 -->
+  <div class="quiz-block" data-quiz="d8-w1">
+    <div class="quiz-block-header">
+      <span class="q-badge">W1</span>
+      <div>
+        <strong>Week 1 — AI Fundamentals</strong>
+        <div style="font-size:.85rem;color:#666;margin-top:2px;">5 questions · AI types, ethics, timeline</div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q1.</strong> Which of the following BEST describes the relationship between AI, Machine Learning, and Deep Learning?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w1q1" value="a"> a) They are three completely independent fields with no overlap</label>
+        <label><input type="radio" name="d8-w1q1" value="b"> b) Deep Learning is a subset of Machine Learning, which is a subset of Artificial Intelligence</label>
+        <label><input type="radio" name="d8-w1q1" value="c"> c) Machine Learning is a subset of Deep Learning, which is a subset of AI</label>
+        <label><input type="radio" name="d8-w1q1" value="d"> d) AI and Machine Learning are the same thing; Deep Learning is a completely different field</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! The hierarchy is: AI (broadest) → Machine Learning (subset of AI) → Deep Learning (subset of ML using neural networks). Every DL system is an ML system is an AI system, but not vice versa.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q2.</strong> A bank's credit scoring system assigns loan approval probabilities. What type of machine learning is this?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w1q2" value="a"> a) Unsupervised Learning — clustering customers by behavior</label>
+        <label><input type="radio" name="d8-w1q2" value="b"> b) Reinforcement Learning — the model gets rewards for correct approvals</label>
+        <label><input type="radio" name="d8-w1q2" value="c"> c) Supervised Learning — trained on historical loans with known default outcomes</label>
+        <label><input type="radio" name="d8-w1q2" value="d"> d) Semi-supervised Learning — some loans have outcomes, most don't</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! Credit scoring is supervised learning — the model is trained on historical loan data where each application has a known outcome (defaulted or repaid). The labeled data directly teaches the model which patterns predict default.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q3.</strong> India's Digital Personal Data Protection (DPDP) Act 2023 requires organizations to do which of the following?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w1q3" value="a"> a) Store all data exclusively on government servers</label>
+        <label><input type="radio" name="d8-w1q3" value="b"> b) Obtain explicit consent before collecting personal data and allow erasure requests</label>
+        <label><input type="radio" name="d8-w1q3" value="c"> c) Ban all use of personal data for machine learning</label>
+        <label><input type="radio" name="d8-w1q3" value="d"> d) Share data with international partners for improving global AI models</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! DPDP Act 2023 mandates: explicit consent before collection, purpose limitation (use only for stated purpose), right to erasure, data breach notification within 72 hours, and fines up to ₹250 crore for violations.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q4.</strong> Which event in 2012 is widely considered the beginning of the modern Deep Learning revolution?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w1q4" value="a"> a) AlphaGo defeating the world Go champion</label>
+        <label><input type="radio" name="d8-w1q4" value="b"> b) ChatGPT reaching 100 million users</label>
+        <label><input type="radio" name="d8-w1q4" value="c"> c) AlexNet winning the ImageNet competition with dramatically better accuracy using GPUs</label>
+        <label><input type="radio" name="d8-w1q4" value="d"> d) Google Brain publishing the Word2Vec paper</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! In 2012, AlexNet (Geoffrey Hinton's team at Toronto) achieved 15.3% error on ImageNet vs. 26% for the second-place entry — a 41% improvement. This demonstrated that deep CNNs trained on GPUs were dramatically superior, triggering massive investment in deep learning research.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q5.</strong> In the context of AI ethics, what is "algorithmic bias"?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w1q5" value="a"> a) When an AI system deliberately cheats to get better performance scores</label>
+        <label><input type="radio" name="d8-w1q5" value="b"> b) When an AI model systematically produces unfair or prejudiced outputs, often reflecting biases in its training data</label>
+        <label><input type="radio" name="d8-w1q5" value="c"> c) When programmers consciously add preferences for certain outcomes in the code</label>
+        <label><input type="radio" name="d8-w1q5" value="d"> d) The mathematical variance in a model's predictions across different runs</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! Algorithmic bias occurs when an AI system produces systematically prejudiced results — often because training data reflects historical inequalities. Example: Amazon's hiring AI penalized resumes mentioning "women's" organizations because historical hiring data was male-dominated.</div>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="btn-quiz btn-submit" onclick="submitQuiz('d8-w1', 5)">Submit Answers</button>
+      <button class="btn-quiz btn-reset" onclick="resetQuiz('d8-w1', 5)">Reset</button>
+      <span class="quiz-score" id="score-d8-w1" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- QUIZ W2 -->
+  <div class="quiz-block" data-quiz="d8-w2">
+    <div class="quiz-block-header">
+      <span class="q-badge">W2</span>
+      <div>
+        <strong>Week 2 — Python &amp; ML Workflow</strong>
+        <div style="font-size:.85rem;color:#666;margin-top:2px;">5 questions · sklearn, train-test split, ML pipeline</div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q1.</strong> What is the purpose of setting <code>stratify=y</code> in <code>train_test_split()</code>?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w2q1" value="a"> a) To make the training set larger than the test set</label>
+        <label><input type="radio" name="d8-w2q1" value="b"> b) To ensure each class appears proportionally in both train and test sets</label>
+        <label><input type="radio" name="d8-w2q1" value="c"> c) To shuffle the data randomly before splitting</label>
+        <label><input type="radio" name="d8-w2q1" value="d"> d) To normalize the target variable y</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! stratify=y preserves the class distribution from the full dataset in both train and test splits. Without it, on an imbalanced dataset (e.g., 95% class 0, 5% class 1), the test set might randomly contain no class 1 examples, giving a misleading 100% accuracy.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q2.</strong> In sklearn's ML API, what do <code>fit()</code> and <code>transform()</code> do respectively for a StandardScaler?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w2q2" value="a"> a) fit() trains the model; transform() converts input features to predictions</label>
+        <label><input type="radio" name="d8-w2q2" value="b"> b) fit() learns the mean and standard deviation from data; transform() applies the learned scaling</label>
+        <label><input type="radio" name="d8-w2q2" value="c"> c) fit() scales the features; transform() fits the downstream model</label>
+        <label><input type="radio" name="d8-w2q2" value="d"> d) They are identical — fit() and transform() do the same thing</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! fit() computes statistics from the training data (mean and std for StandardScaler). transform() applies those learned statistics to scale the data. On test data, you only call transform() (never fit()) to avoid data leakage.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q3.</strong> What shape should the feature matrix X be when passed to a sklearn model?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w2q3" value="a"> a) 1D array of shape (n_samples,)</label>
+        <label><input type="radio" name="d8-w2q3" value="b"> b) 2D array of shape (n_features, n_samples)</label>
+        <label><input type="radio" name="d8-w2q3" value="c"> c) 2D array of shape (n_samples, n_features)</label>
+        <label><input type="radio" name="d8-w2q3" value="d"> d) 3D array of shape (n_samples, n_features, 1)</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! sklearn expects X to be a 2D array (or DataFrame) of shape (n_samples, n_features) — rows are samples, columns are features. The target y is 1D with shape (n_samples,). A common error is accidentally passing a 1D array, which causes a ValueError.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q4.</strong> In Google Colab, how do you enable GPU acceleration for faster model training?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w2q4" value="a"> a) Run <code>!pip install gpu</code> in the first cell</label>
+        <label><input type="radio" name="d8-w2q4" value="b"> b) Runtime → Change runtime type → Hardware accelerator → T4 GPU → Save</label>
+        <label><input type="radio" name="d8-w2q4" value="c"> c) Add <code>%use_gpu</code> magic command at the top of the notebook</label>
+        <label><input type="radio" name="d8-w2q4" value="d"> d) Import TensorFlow — it automatically detects and uses available GPUs</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! In Google Colab, GPU must be explicitly enabled via Runtime menu → Change runtime type → Hardware accelerator → T4 GPU → Save. Verify with !nvidia-smi to see the GPU details. The free tier provides a Tesla T4 with ~15GB VRAM.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q5.</strong> Which step in the ML workflow is MOST important for preventing a model from "looking good in testing but failing in production"?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w2q5" value="a"> a) Using the most complex model available (bigger is always better)</label>
+        <label><input type="radio" name="d8-w2q5" value="b"> b) Training on 100% of available data to maximize model learning</label>
+        <label><input type="radio" name="d8-w2q5" value="c"> c) Proper train-test split with no data leakage, ensuring the model has never seen test data during training</label>
+        <label><input type="radio" name="d8-w2q5" value="d"> d) Normalizing all features to the range [0, 1]</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! Proper train-test separation (no data leakage) is the most critical step. Data leakage causes models to appear much better in testing than they perform in production, because they've indirectly "seen" the test data during training. Use sklearn Pipeline to enforce this.</div>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="btn-quiz btn-submit" onclick="submitQuiz('d8-w2', 5)">Submit Answers</button>
+      <button class="btn-quiz btn-reset" onclick="resetQuiz('d8-w2', 5)">Reset</button>
+      <span class="quiz-score" id="score-d8-w2" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- QUIZ W3 -->
+  <div class="quiz-block" data-quiz="d8-w3">
+    <div class="quiz-block-header">
+      <span class="q-badge">W3</span>
+      <div>
+        <strong>Week 3 — Data Preprocessing</strong>
+        <div style="font-size:.85rem;color:#666;margin-top:2px;">5 questions · missing values, encoding, scaling</div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q1.</strong> A dataset column "City" has 500 unique values. You need to encode it for a Logistic Regression model. What is the BEST approach?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w3q1" value="a"> a) LabelEncoder — assign a number 0–499 to each city</label>
+        <label><input type="radio" name="d8-w3q1" value="b"> b) OneHotEncoder without any limits — create 500 binary columns</label>
+        <label><input type="radio" name="d8-w3q1" value="c"> c) Target encoding — replace each city with the mean of the target variable for that city (using cross-validation to prevent leakage)</label>
+        <label><input type="radio" name="d8-w3q1" value="d"> d) Drop the column entirely — high-cardinality categoricals are never useful</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! For high-cardinality categoricals (many unique values), target encoding is preferred. LabelEncoder implies a false ordinal relationship (Mumbai=0 &lt; Delhi=1). OneHotEncoding 500 cities creates 500 sparse, mostly-useless columns. Target encoding captures the categorical's relationship with the target while staying compact.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q2.</strong> When should you use <code>MinMaxScaler</code> instead of <code>StandardScaler</code>?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w3q2" value="a"> a) When the data is normally distributed (bell curve shape)</label>
+        <label><input type="radio" name="d8-w3q2" value="b"> b) When you need values in a bounded [0, 1] range, such as for neural network pixel inputs; but note it's sensitive to outliers</label>
+        <label><input type="radio" name="d8-w3q2" value="c"> c) When training Random Forest or XGBoost models</label>
+        <label><input type="radio" name="d8-w3q2" value="d"> d) When the number of features exceeds 100</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! MinMaxScaler maps all values to [0, 1] and is preferred for neural networks with sigmoid/tanh activations that expect bounded inputs, or image pixel normalization (0–255 → 0–1). However, it's highly sensitive to outliers — one extreme value compresses all other values into a tiny range. StandardScaler is more robust for most ML use cases.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q3.</strong> Your dataset has 30% of values missing in the "income" column. What is the BEST strategy?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w3q3" value="a"> a) Drop all rows with missing income (removes 30% of data)</label>
+        <label><input type="radio" name="d8-w3q3" value="b"> b) Fill all missing income values with the global mean</label>
+        <label><input type="radio" name="d8-w3q3" value="c"> c) Impute with the median (robust to outliers), then add a binary "income_was_missing" indicator feature</label>
+        <label><input type="radio" name="d8-w3q3" value="d"> d) Drop the entire income column (too many missing values to be useful)</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! The best approach: impute missing values with median (robust to income outliers unlike mean), AND add a binary indicator column "income_was_missing" = 1. This preserves information about the missingness itself — the pattern of who has missing income may be predictive.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q4.</strong> Why does sklearn's Pipeline prevent data leakage in cross-validation?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w3q4" value="a"> a) Pipeline automatically shuffles data randomly before each fold</label>
+        <label><input type="radio" name="d8-w3q4" value="b"> b) Pipeline ensures preprocessing steps (like StandardScaler) are fit only on the training fold and applied to the validation fold — never fitting on validation data</label>
+        <label><input type="radio" name="d8-w3q4" value="c"> c) Pipeline removes all duplicate rows before splitting</label>
+        <label><input type="radio" name="d8-w3q4" value="d"> d) Pipeline always uses 80/20 split regardless of the cv parameter</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! When cross_val_score runs a Pipeline, in each fold the Pipeline's fit_transform is called on the training fold only, and transform (no fit) is called on the validation fold. This mirrors production deployment and prevents validation data statistics from contaminating the preprocessing step.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q5.</strong> A dataset for fraud detection has 99% non-fraud and 1% fraud. A model that always predicts "no fraud" achieves 99% accuracy. What metric should you use instead?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w3q5" value="a"> a) MSE — mean squared error is always the right metric</label>
+        <label><input type="radio" name="d8-w3q5" value="b"> b) Accuracy — 99% is excellent and the model is working perfectly</label>
+        <label><input type="radio" name="d8-w3q5" value="c"> c) F1 score (especially on the minority class) or Precision-Recall AUC — these penalize models that ignore the minority class</label>
+        <label><input type="radio" name="d8-w3q5" value="d"> d) R-squared — it adjusts for class imbalance automatically</label>
+      </div>
+      <div class="q-explanation" data-correct="c">Correct! On imbalanced datasets, accuracy is misleading. A model predicting "no fraud" always gets 99% accuracy but catches 0% of actual fraud. F1 score and PR-AUC both heavily penalize this. PR-AUC is particularly good because it focuses on the rare positive class performance rather than the majority class.</div>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="btn-quiz btn-submit" onclick="submitQuiz('d8-w3', 5)">Submit Answers</button>
+      <button class="btn-quiz btn-reset" onclick="resetQuiz('d8-w3', 5)">Reset</button>
+      <span class="quiz-score" id="score-d8-w3" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- QUIZ W4 -->
+  <div class="quiz-block" data-quiz="d8-w4">
+    <div class="quiz-block-header">
+      <span class="q-badge">W4</span>
+      <div>
+        <strong>Week 4 — First ML Models</strong>
+        <div style="font-size:.85rem;color:#666;margin-top:2px;">5 questions · logistic regression, metrics, bias-variance</div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q1.</strong> A medical test for a rare disease has 99% sensitivity (recall) but only 10% precision. What does this mean in practice?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w4q1" value="a"> a) The test correctly identifies 99% of sick patients, but 90% of positive test results are actually healthy people (false alarms)</label>
+        <label><input type="radio" name="d8-w4q1" value="b"> b) The test is 99% accurate overall and has 10% false negatives</label>
+        <label><input type="radio" name="d8-w4q1" value="c"> c) 10% of sick patients are correctly identified, and 99% of healthy people pass the test</label>
+        <label><input type="radio" name="d8-w4q1" value="d"> d) The test correctly diagnoses 99% of all cases with only 10% uncertainty</label>
+      </div>
+      <div class="q-explanation" data-correct="a">Correct! 99% recall (sensitivity) = catches 99% of true sick patients (very few false negatives). 10% precision = of all patients flagged positive, only 10% are actually sick (90% are healthy false alarms). This happens with rare diseases — even a fairly accurate test overwhelms true positives with false alarms on a mostly-healthy population.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q2.</strong> What does the R² score of 0.75 mean for a regression model?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w4q2" value="a"> a) The model is 75% accurate (makes an error on 25% of predictions)</label>
+        <label><input type="radio" name="d8-w4q2" value="b"> b) The model explains 75% of the variance in the target variable (25% unexplained)</label>
+        <label><input type="radio" name="d8-w4q2" value="c"> c) The model has 75% of training samples within the correct range</label>
+        <label><input type="radio" name="d8-w4q2" value="d"> d) The correlation between predictions and actual values is 0.75</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! R² (coefficient of determination) measures the proportion of variance in the target variable explained by the model. R²=0.75 means the model accounts for 75% of the variance — better than simply predicting the mean (R²=0). R²=1.0 is perfect. R²&lt;0 means the model is worse than predicting the mean.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q3.</strong> A model has 100% training accuracy but only 60% test accuracy on the same problem. This is a case of:</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w4q3" value="a"> a) Underfitting (high bias) — the model is too simple</label>
+        <label><input type="radio" name="d8-w4q3" value="b"> b) Overfitting (high variance) — the model memorized training data but doesn't generalize</label>
+        <label><input type="radio" name="d8-w4q3" value="c"> c) Perfect performance — 60% test accuracy is excellent</label>
+        <label><input type="radio" name="d8-w4q3" value="d"> d) Data leakage — the training and test sets must overlap</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! This is classic overfitting (high variance). The large gap between 100% training and 60% test accuracy indicates the model memorized training data including noise and outliers, but failed to learn the underlying patterns. Fix: regularization (dropout, L2 penalty), simpler model, more training data, or cross-validation based hyperparameter tuning.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q4.</strong> The sigmoid function outputs a value of 0.85 for a logistic regression model predicting loan default. With a threshold of 0.5, what does the model predict?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w4q4" value="a"> a) No default (class 0) — 0.85 is far from 1.0 so the model is uncertain</label>
+        <label><input type="radio" name="d8-w4q4" value="b"> b) Default (class 1) — probability 0.85 exceeds the threshold of 0.5</label>
+        <label><input type="radio" name="d8-w4q4" value="c"> c) The model cannot decide — 0.85 is in the ambiguous zone</label>
+        <label><input type="radio" name="d8-w4q4" value="d"> d) Default with 85% certainty, meaning 15% chance of no default — both are reported</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! With threshold=0.5, the model predicts class 1 (Default) for any probability above 0.5. Since 0.85 > 0.5, the prediction is Default. The model also conveys its confidence: 85% probability of default is quite high. The threshold can be adjusted — a bank might use 0.3 to be more conservative (catch more potential defaults at the cost of more false alarms).</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q5.</strong> Which of the following is a correct way to fix underfitting in a neural network?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w4q5" value="a"> a) Add more Dropout layers to prevent the model from memorizing</label>
+        <label><input type="radio" name="d8-w4q5" value="b"> b) Add more hidden layers or increase neurons per layer (increase model capacity)</label>
+        <label><input type="radio" name="d8-w4q5" value="c"> c) Collect more training data (underfitting is always caused by insufficient data)</label>
+        <label><input type="radio" name="d8-w4q5" value="d"> d) Use a smaller batch size during training</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! Underfitting means the model lacks capacity to learn the patterns (high bias). The fix is to increase model complexity: add more layers, add more neurons, use a more powerful architecture, remove excessive regularization, or train for more epochs. Note: Dropout increases regularization (which helps overfitting, not underfitting). More data helps when the model has sufficient capacity but insufficient examples.</div>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="btn-quiz btn-submit" onclick="submitQuiz('d8-w4', 5)">Submit Answers</button>
+      <button class="btn-quiz btn-reset" onclick="resetQuiz('d8-w4', 5)">Reset</button>
+      <span class="quiz-score" id="score-d8-w4" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- QUIZ W5 -->
+  <div class="quiz-block" data-quiz="d8-w5">
+    <div class="quiz-block-header">
+      <span class="q-badge">W5</span>
+      <div>
+        <strong>Week 5 — Ensemble Methods</strong>
+        <div style="font-size:.85rem;color:#666;margin-top:2px;">5 questions · Random Forest, XGBoost, SHAP</div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q1.</strong> What is the key difference between Random Forest (bagging) and Gradient Boosting?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w5q1" value="a"> a) Random Forest uses decision trees; Gradient Boosting uses linear models</label>
+        <label><input type="radio" name="d8-w5q1" value="b"> b) Random Forest builds trees in parallel independently; Gradient Boosting builds trees sequentially where each tree corrects errors of the previous</label>
+        <label><input type="radio" name="d8-w5q1" value="c"> c) Random Forest is for regression only; Gradient Boosting handles classification</label>
+        <label><input type="radio" name="d8-w5q1" value="d"> d) Both are identical algorithms with different names from different companies</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! This is the fundamental distinction: Random Forest builds N trees independently in parallel (bagging) and averages their predictions — reducing variance. Gradient Boosting builds trees sequentially, with each new tree focusing on the residual errors of the current ensemble — reducing bias. Both use decision trees but with opposite ensemble strategies.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q2.</strong> In XGBoost, what does <code>early_stopping_rounds=20</code> do?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w5q2" value="a"> a) Trains exactly 20 trees regardless of performance</label>
+        <label><input type="radio" name="d8-w5q2" value="b"> b) Stops training if the validation metric doesn't improve for 20 consecutive rounds, saving the best model</label>
+        <label><input type="radio" name="d8-w5q2" value="c"> c) Uses the first 20 training samples to initialize the model</label>
+        <label><input type="radio" name="d8-w5q2" value="d"> d) Restarts training 20 times with different random seeds</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! early_stopping_rounds monitors validation metric (e.g., AUC) after each boosting round. If the metric doesn't improve for 20 consecutive rounds, training stops and the model with the best validation score is restored. This prevents overfitting without manual n_estimators tuning — a critical technique for gradient boosting in production.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q3.</strong> A feature with a high positive SHAP value for a specific prediction means:</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w5q3" value="a"> a) The feature has the highest value in that row of the dataset</label>
+        <label><input type="radio" name="d8-w5q3" value="b"> b) This feature pushed the model's output higher than average for this specific prediction</label>
+        <label><input type="radio" name="d8-w5q3" value="c"> c) The feature is globally the most important in the entire dataset</label>
+        <label><input type="radio" name="d8-w5q3" value="d"> d) The feature value is positive (greater than zero)</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! SHAP values explain individual predictions by showing each feature's contribution relative to the model's base rate. A high positive SHAP value for a feature means "this feature's value pushed the prediction ABOVE the average prediction for this specific sample." SHAP is local (per-prediction), not global (unlike feature_importances_ which describes overall model behavior).</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q4.</strong> When training a Random Forest, what does the "out-of-bag" (OOB) score estimate?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w5q4" value="a"> a) The model's performance on the training data (same as training accuracy)</label>
+        <label><input type="radio" name="d8-w5q4" value="b"> b) A free cross-validation-like estimate: each tree predicts on the ~36.8% of samples it wasn't trained on</label>
+        <label><input type="radio" name="d8-w5q4" value="c"> c) The number of trees needed before adding more has no benefit</label>
+        <label><input type="radio" name="d8-w5q4" value="d"> d) The time required to train each tree (latency estimate)</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! Bootstrap sampling means each tree only sees ~63.2% of training data. The remaining ~36.8% are "out-of-bag" for that tree. By averaging each sample's predictions across all trees it was OOB for, Random Forest gets a nearly free cross-validation estimate of generalization performance without needing a separate validation set. Set oob_score=True in sklearn.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text"><strong>Q5.</strong> Why does LightGBM often train faster than XGBoost on large datasets?</p>
+      <div class="q-options">
+        <label><input type="radio" name="d8-w5q5" value="a"> a) LightGBM uses fewer trees than XGBoost</label>
+        <label><input type="radio" name="d8-w5q5" value="b"> b) LightGBM uses leaf-wise (best-first) tree growth, growing the most promising leaf instead of all leaves at a level — reducing computation for the same model complexity</label>
+        <label><input type="radio" name="d8-w5q5" value="c"> c) LightGBM trains on a random sample of features (like Random Forest)</label>
+        <label><input type="radio" name="d8-w5q5" value="d"> d) LightGBM uses simpler decision stumps (depth-1 trees) instead of full trees</label>
+      </div>
+      <div class="q-explanation" data-correct="b">Correct! XGBoost uses level-wise growth (splits all leaves at the same depth simultaneously). LightGBM uses leaf-wise growth — it finds and splits the single leaf that reduces loss the most, regardless of level. This achieves lower loss with fewer splits. LightGBM also uses histogram-based splits (GOSS gradient-based sampling) that dramatically reduce memory and computation on large datasets.</div>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="btn-quiz btn-submit" onclick="submitQuiz('d8-w5', 5)">Submit Answers</button>
+      <button class="btn-quiz btn-reset" onclick="resetQuiz('d8-w5', 5)">Reset</button>
+      <span class="quiz-score" id="score-d8-w5" style="display:none;"></span>
+    </div>
+  </div>
+
+  <!-- Locked Quizzes -->
+  <div class="section-title">Upcoming Quizzes — Unlock as You Progress</div>
+
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 6 — Model Evaluation &amp; Hyperparameter Tuning</h4>
+      <p>Cross-validation, GridSearchCV, learning curves, early stopping. Unlocks after W5 quiz (score ≥ 4/5).</p>
+    </div>
+  </div>
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 7 — Natural Language Processing</h4>
+      <p>TF-IDF, word embeddings, text classification, Hugging Face. Unlocks after W6 quiz.</p>
+    </div>
+  </div>
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 8 — Unsupervised Learning</h4>
+      <p>K-Means, DBSCAN, PCA, t-SNE, silhouette score. Unlocks after W7 quiz.</p>
+    </div>
+  </div>
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 9 — Neural Networks &amp; Deep Learning</h4>
+      <p>Backpropagation, optimizers, Keras Sequential, regularization. Unlocks after W8 quiz.</p>
+    </div>
+  </div>
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 10 — CNNs &amp; Computer Vision</h4>
+      <p>Conv2D, MaxPooling, transfer learning, data augmentation. Unlocks after W9 quiz.</p>
+    </div>
+  </div>
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 11 — Transformers, LLMs &amp; Generative AI</h4>
+      <p>Attention mechanism, BERT vs GPT, RAG, prompt engineering. Unlocks after W10 quiz.</p>
+    </div>
+  </div>
+  <div class="locked-card">
+    <div class="lock-icon">🔒</div>
+    <div class="locked-info">
+      <h4>Week 12 — MLOps &amp; Production AI</h4>
+      <p>MLflow, FastAPI, Docker, model monitoring, drift detection. Unlocks after W11 quiz.</p>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="project_briefs.html" class="btn btn-secondary">← Project Briefs</a>
+    <a href="career_roadmap.html" class="btn btn-primary">Career Roadmap →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Quizzes &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function submitQuiz(quizId, numQuestions) {
+  const answers = {
+    'd8-w1': {q1:'b',q2:'c',q3:'b',q4:'c',q5:'b'},
+    'd8-w2': {q1:'b',q2:'b',q3:'c',q4:'b',q5:'c'},
+    'd8-w3': {q1:'c',q2:'b',q3:'c',q4:'b',q5:'c'},
+    'd8-w4': {q1:'a',q2:'b',q3:'b',q4:'b',q5:'b'},
+    'd8-w5': {q1:'b',q2:'b',q3:'b',q4:'b',q5:'b'}
+  };
+  const correct = answers[quizId];
+  if (!correct) return;
+  let score = 0;
+  for (let i = 1; i <= numQuestions; i++) {
+    const qKey = 'q' + i;
+    const sel = document.querySelector('input[name="' + quizId + qKey + '"]:checked');
+    const expDiv = document.querySelector('[name="' + quizId + qKey + '"]')
+                     ? document.querySelector('[name="' + quizId + qKey + '"]').closest('.quiz-q').querySelector('.q-explanation')
+                     : null;
+    if (expDiv) {
+      expDiv.style.display = 'block';
+      if (sel && sel.value === correct[qKey]) {
+        score++;
+        expDiv.classList.remove('wrong');
+        expDiv.innerHTML = '✅ ' + expDiv.innerHTML.replace(/^[✅❌]\s*/, '');
+      } else {
+        expDiv.classList.add('wrong');
+        expDiv.innerHTML = '❌ ' + expDiv.innerHTML.replace(/^[✅❌]\s*/, '');
+      }
+    }
+  }
+  const scoreEl = document.getElementById('score-' + quizId);
+  if (scoreEl) {
+    scoreEl.style.display = 'inline-block';
+    const pct = Math.round(score / numQuestions * 100);
+    scoreEl.textContent = score + ' / ' + numQuestions + ' (' + pct + '%)';
+    scoreEl.className = 'quiz-score ' + (score >= Math.ceil(numQuestions * 0.6) ? 'pass' : 'fail');
+  }
+  // Save to progress tracker
+  try {
+    const pct = Math.round(score / numQuestions * 100);
+    const storageKey = 'ndfi_quiz_ai_ml_' + quizId;
+    const attempts = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    attempts.unshift({ score: score, total: numQuestions, pct: pct, date: new Date().toISOString() });
+    if (attempts.length > 10) attempts.splice(10);
+    localStorage.setItem(storageKey, JSON.stringify(attempts));
+  } catch(e) {}
+}
+
+function resetQuiz(quizId, numQuestions) {
+  for (let i = 1; i <= numQuestions; i++) {
+    const qKey = 'q' + i;
+    document.querySelectorAll('input[name="' + quizId + qKey + '"]').forEach(r => r.checked = false);
+    const expDivs = document.querySelectorAll('input[name="' + quizId + qKey + '"]');
+    if (expDivs.length) {
+      const exp = expDivs[0].closest('.quiz-q').querySelector('.q-explanation');
+      if (exp) {
+        exp.style.display = 'none';
+        exp.classList.remove('wrong');
+        exp.innerHTML = exp.innerHTML.replace(/^[✅❌]\s*/, '');
+      }
+    }
+  }
+  const scoreEl = document.getElementById('score-' + quizId);
+  if (scoreEl) scoreEl.style.display = 'none';
+}
+</script>
+<script src="../shared/level_filter.js"></script>
+<script src="../shared/quiz_engine.js"></script>
+</body>
+</html>
+
+

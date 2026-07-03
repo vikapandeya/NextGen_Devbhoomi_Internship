@@ -1,0 +1,683 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.workflow-steps{display:grid;gap:8px;margin:12px 0;}
+.wf-step{display:flex;gap:12px;background:rgba(0,0,0,.03);border-radius:8px;padding:10px 14px;align-items:flex-start;}
+.wf-num{background:var(--clr-accent,#2563eb);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.concept-box{background:rgba(0,0,0,.04);border-left:4px solid var(--clr-accent,#2563eb);border-radius:0 8px 8px 0;padding:14px 16px;margin:12px 0;}
+.concept-box.warning{border-color:#d97706;}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; CONCEPT NOTES (INTERMEDIATE)
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Beginner Notes</a>
+    <a href="lab_guide_intermediate.html">🔬 Lab Guide (Int)</a>
+    <a href="concept_notes_advanced.html">📖 Advanced Notes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="hero-icon">📖</div>
+    <div class="hero-text">
+      <h2>Concept Notes — Intermediate Level</h2>
+      <p>Ensemble methods, model evaluation, NLP, and unsupervised learning — the core of production ML.</p>
+      <div class="hero-pills">
+        <span class="pill">Tree Ensembles</span>
+        <span class="pill">Hyperparameter Tuning</span>
+        <span class="pill">NLP</span>
+        <span class="pill">Clustering</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- W5 -->
+  <div class="week-block" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <h3>Week 5 — Tree-Based Models &amp; Ensembles</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>Decision Tree — Building Blocks</h4>
+      <p>A Decision Tree recursively splits data by asking binary questions about features, creating a hierarchy of decisions. At each node it chooses the feature and threshold that best separates the classes according to a purity metric.</p>
+      <ul>
+        <li><strong>Gini Impurity:</strong> Gini = 1 − Σpᵢ². Lower = purer node. Range 0 (all same class) to 0.5 (perfectly mixed).</li>
+        <li><strong>Entropy (Information Gain):</strong> H = −Σpᵢ·log₂(pᵢ). Choose split that maximizes information gain. Similar results to Gini, slightly slower.</li>
+        <li><strong>Recursive Binary Splits:</strong> At each node choose best (feature, threshold) pair → split into left/right child → repeat until stopping criterion (max_depth, min_samples_leaf).</li>
+        <li><strong>Overfitting Control:</strong> Without constraints, tree memorizes every training sample. max_depth=3–10 is usually optimal.</li>
+      </ul>
+      <pre><code>>from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+X, y = load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+dt = DecisionTreeClassifier(
+    criterion='gini',
+    max_depth=4,
+    min_samples_split=5,  # Minimum samples to attempt a split
+    min_samples_leaf=2,   # Minimum samples required to be a leaf
+    random_state=42
+)
+dt.fit(X_train, y_train)
+print(f"Test Accuracy: {dt.score(X_test, y_test):.3f}")
+print(export_text(dt, feature_names=list(load_iris().feature_names)))</code></pre>
+
+      <h4>Random Forest — Bagging + Feature Randomness</h4>
+      <p>Random Forest builds N independent decision trees on random subsets of the data (bootstrap sampling) using random subsets of features at each split. Final prediction = majority vote (classification) or average (regression). Dramatically reduces variance vs a single tree.</p>
+      <ul>
+        <li><strong>Bootstrap Sampling:</strong> Each tree trains on ~63.2% of data (sampled with replacement). Remaining ~36.8% = "out-of-bag" (OOB) samples used as free validation.</li>
+        <li><strong>Feature Randomness:</strong> At each split, only √n_features are considered (classification). Decorrelates trees so averaging reduces variance.</li>
+        <li><strong>Robust to Outliers:</strong> Outliers affect only some trees. The majority vote is not swayed by a few extreme predictions.</li>
+      </ul>
+      <pre><code>>from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import matplotlib.pyplot as plt
+
+rf = RandomForestClassifier(
+    n_estimators=200,    # Number of trees (more = better, diminishing returns >500)
+    max_depth=None,      # Trees grow fully — RF handles overfitting via averaging
+    max_features='sqrt', # √n_features per split (default for classification)
+    n_jobs=-1,           # Use all CPU cores
+    oob_score=True,      # Free out-of-bag validation
+    random_state=42
+)
+rf.fit(X_train, y_train)
+print(f"Test Accuracy: {rf.score(X_test, y_test):.3f}")
+print(f"OOB Score:     {rf.oob_score_:.3f}")   # Unbiased estimate of test accuracy
+
+# Feature importances (Mean Decrease in Impurity)
+feat_imp = pd.Series(rf.feature_importances_,
+                     index=load_iris().feature_names).sort_values(ascending=True)
+feat_imp.plot.barh(color='steelblue')
+plt.title('Random Forest Feature Importances')
+plt.xlabel('Importance (Mean Decrease in Impurity)')
+plt.tight_layout()
+plt.show()</code></pre>
+
+      <h4>Gradient Boosting — Sequential Error Correction</h4>
+      <p>Unlike Random Forest (parallel trees), Gradient Boosting builds trees <strong>sequentially</strong>. Each new tree corrects the residual errors of the previous ensemble — gradient descent in function space.</p>
+      <ul>
+        <li><strong>Learning Rate (η):</strong> How much each tree contributes. Low LR + many trees = better generalization but slower training. lr=0.03–0.1 is common.</li>
+        <li><strong>XGBoost:</strong> Level-wise (breadth-first) tree growth, L1/L2 regularization, native missing value handling. Industry standard since dominating Kaggle in 2016.</li>
+        <li><strong>LightGBM:</strong> Leaf-wise (depth-first) growth — grows the leaf that reduces loss most. Faster on large datasets (>100K rows), lower memory usage.</li>
+        <li><strong>CatBoost:</strong> Native categorical feature support (no encoding needed), ordered boosting to prevent target leakage. Best for datasets with many categorical columns.</li>
+      </ul>
+      <pre><code>>from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+
+# XGBoost
+xgb = XGBClassifier(
+    n_estimators=300, learning_rate=0.05,
+    max_depth=6, subsample=0.8,
+    colsample_bytree=0.8,
+    eval_metric='logloss', random_state=42
+)
+xgb.fit(X_train, y_train,
+        eval_set=[(X_test, y_test)],
+        early_stopping_rounds=20,
+        verbose=50)
+print(f"Best iteration: {xgb.best_iteration}")
+print(f"XGBoost Accuracy: {xgb.score(X_test, y_test):.3f}")
+
+# LightGBM
+lgbm = LGBMClassifier(
+    n_estimators=500, learning_rate=0.03,
+    num_leaves=31,          # Main complexity param for leaf-wise growth
+    subsample=0.8, colsample_bytree=0.8,
+    random_state=42
+)
+lgbm.fit(X_train, y_train)
+print(f"LightGBM Accuracy: {lgbm.score(X_test, y_test):.3f}")</code></pre>
+
+      <h4>Feature Importance Methods</h4>
+      <pre><code>>from sklearn.inspection import permutation_importance
+import pandas as pd
+import shap  # pip install shap
+
+feature_names = load_iris().feature_names
+
+# Method 1: Built-in (Mean Decrease Impurity)
+# Fast but biased — favors high-cardinality and continuous features
+mdi_imp = pd.Series(rf.feature_importances_, index=feature_names)
+print("MDI Importances:\n", mdi_imp.sort_values(ascending=False))
+
+# Method 2: Permutation Importance
+# Shuffle each feature, measure accuracy drop. Slower but unbiased.
+result = permutation_importance(rf, X_test, y_test, n_repeats=10, random_state=42)
+perm_imp = pd.Series(result.importances_mean, index=feature_names)
+print("Permutation Importances:\n", perm_imp.sort_values(ascending=False))
+
+# Method 3: SHAP Values (most accurate — explains individual predictions)
+explainer   = shap.TreeExplainer(rf)
+shap_values = explainer.shap_values(X_test)
+shap.summary_plot(shap_values[1], X_test, feature_names=list(feature_names))
+# Red = positive contribution (pushes toward class 1)
+# Blue = negative contribution (pushes toward class 0)</code></pre>
+
+      <h4>Stacking Ensemble</h4>
+      <pre><code>>from sklearn.ensemble import StackingClassifier, RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+
+# Base models (level-0)
+estimators = [
+    ('rf',   RandomForestClassifier(n_estimators=100, random_state=42)),
+    ('xgb',  XGBClassifier(n_estimators=100, random_state=42)),
+    ('lgbm', LGBMClassifier(n_estimators=100, random_state=42))
+]
+
+# Meta-model (level-1): uses base model predictions as its input features
+stacker = StackingClassifier(
+    estimators=estimators,
+    final_estimator=LogisticRegression(),
+    cv=5,           # Base models cross-validated to prevent leakage
+    passthrough=False  # Don't pass original features to meta-model
+)
+stacker.fit(X_train, y_train)
+print(f"Stacker Accuracy: {stacker.score(X_test, y_test):.3f}")</code></pre>
+
+    </div>
+  </div><!-- /W5 -->
+
+  <!-- W6 -->
+  <div class="week-block" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <h3>Week 6 — Model Evaluation &amp; Hyperparameter Tuning</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>Cross-Validation — More Reliable Than Single Split</h4>
+      <p>A single 80/20 split gives a noisy estimate (the test accuracy depends heavily on which samples ended up in the test set). Cross-validation uses ALL data for evaluation without leakage.</p>
+      <pre><code>>from sklearn.model_selection import (cross_val_score, StratifiedKFold,
+                                      cross_validate, learning_curve)
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+
+# Standard k-Fold: splits data into k equal folds
+scores = cross_val_score(rf, X, y, cv=5, scoring='accuracy')
+print(f"5-Fold CV Accuracy: {scores.mean():.3f} ± {scores.std():.3f}")
+print(f"Individual folds: {scores.round(3)}")
+
+# Stratified k-Fold: preserves class ratios in every fold — always use for classification
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+scores_skf = cross_val_score(rf, X, y, cv=skf, scoring='f1_macro')
+print(f"Stratified F1 macro: {scores_skf.mean():.3f} ± {scores_skf.std():.3f}")
+
+# Multiple metrics simultaneously
+cv_results = cross_validate(rf, X, y, cv=skf,
+    scoring=['accuracy', 'f1_macro', 'roc_auc_ovr'],
+    return_train_score=True, n_jobs=-1)
+import pandas as pd
+print(pd.DataFrame(cv_results)[['test_accuracy','test_f1_macro','test_roc_auc_ovr']].mean())</code></pre>
+
+      <h4>GridSearchCV — Exhaustive Hyperparameter Search</h4>
+      <pre><code>>from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+param_grid = {
+    'n_estimators':     [100, 200, 300],
+    'max_depth':        [None, 5, 10, 15],
+    'min_samples_leaf': [1, 2, 5],
+    'max_features':     ['sqrt', 'log2']
+}
+# Total combos: 3 × 4 × 3 × 2 = 72 models × 5 folds = 360 fits
+
+grid_search = GridSearchCV(
+    RandomForestClassifier(random_state=42),
+    param_grid,
+    cv=5,
+    scoring='roc_auc_ovr',
+    n_jobs=-1,
+    verbose=2,
+    refit=True   # Retrain best model on full train set
+)
+grid_search.fit(X_train, y_train)
+print(f"Best params:   {grid_search.best_params_}")
+print(f"Best CV score: {grid_search.best_score_:.3f}")
+print(f"Test score:    {grid_search.score(X_test, y_test):.3f}")
+
+# Access best model
+best_model = grid_search.best_estimator_</code></pre>
+
+      <h4>RandomizedSearchCV — Faster Alternative</h4>
+      <pre><code>>from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint, uniform
+from xgboost import XGBClassifier
+
+# Sample from distributions — much faster than exhaustive grid
+param_dist = {
+    'n_estimators':     randint(100, 500),      # Sample integer 100–500
+    'max_depth':        randint(3, 20),
+    'learning_rate':    uniform(0.01, 0.29),    # Uniform float 0.01–0.30
+    'subsample':        uniform(0.6, 0.4),      # Float 0.6–1.0
+    'colsample_bytree': uniform(0.6, 0.4),
+    'min_child_weight': randint(1, 10)
+}
+
+rand_search = RandomizedSearchCV(
+    XGBClassifier(random_state=42),
+    param_dist,
+    n_iter=50,        # Try 50 random combos (vs 360 for full grid)
+    cv=5,
+    scoring='roc_auc_ovr',
+    n_jobs=-1,
+    random_state=42
+)
+rand_search.fit(X_train, y_train)
+print(f"Best CV AUC: {rand_search.best_score_:.3f}")</code></pre>
+
+      <h4>Learning Curves — Diagnosing Bias vs Variance</h4>
+      <pre><code>>from sklearn.model_selection import learning_curve
+import matplotlib.pyplot as plt
+import numpy as np
+
+train_sizes, train_scores, val_scores = learning_curve(
+    RandomForestClassifier(max_depth=5, random_state=42),
+    X, y,
+    train_sizes=np.linspace(0.1, 1.0, 10),
+    cv=5, scoring='accuracy', n_jobs=-1
+)
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(train_sizes, train_scores.mean(axis=1), 'b-o', label='Training Accuracy')
+ax.fill_between(train_sizes,
+    train_scores.mean(axis=1) - train_scores.std(axis=1),
+    train_scores.mean(axis=1) + train_scores.std(axis=1),
+    alpha=0.15, color='blue')
+ax.plot(train_sizes, val_scores.mean(axis=1), 'r-o', label='Validation Accuracy')
+ax.fill_between(train_sizes,
+    val_scores.mean(axis=1) - val_scores.std(axis=1),
+    val_scores.mean(axis=1) + val_scores.std(axis=1),
+    alpha=0.15, color='red')
+ax.set_xlabel('Training Set Size')
+ax.set_ylabel('Accuracy')
+ax.set_title('Learning Curve')
+ax.legend()
+plt.tight_layout()
+plt.show()
+# Both converge at HIGH accuracy → well-fitted
+# Both converge at LOW accuracy → high bias → add features / complex model
+# Large GAP between curves → high variance → more data / regularization</code></pre>
+
+      <h4>Early Stopping in XGBoost/LightGBM</h4>
+      <pre><code>>from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split
+
+# Need a held-out validation set (separate from test!)
+X_tr, X_val, y_tr, y_val = train_test_split(X_train, y_train,
+    test_size=0.15, random_state=42)
+
+xgb = XGBClassifier(
+    n_estimators=1000,   # Set high — early stopping determines actual count
+    learning_rate=0.05,
+    max_depth=6,
+    eval_metric='auc',
+    random_state=42
+)
+xgb.fit(
+    X_tr, y_tr,
+    eval_set=[(X_val, y_val)],
+    early_stopping_rounds=30,  # Stop if AUC doesn't improve for 30 rounds
+    verbose=100
+)
+print(f"Best iteration: {xgb.best_iteration}")   # e.g., 247 (not 1000)
+print(f"Best val AUC:   {xgb.best_score:.3f}")</code></pre>
+
+      <div class="concept-box warning">
+        <strong>Avoiding Data Leakage</strong> — the #1 mistake in ML:
+        <ul>
+          <li>Never fit scalers/imputers on the full dataset before splitting — use Pipeline</li>
+          <li>Never tune hyperparameters on the final test set — use a separate validation set or CV</li>
+          <li>Never use future data as a feature (e.g., next day's price to predict today's direction)</li>
+          <li>Never include the target variable or a proxy of it as a feature</li>
+        </ul>
+      </div>
+
+    </div>
+  </div><!-- /W6 -->
+
+  <!-- W7 -->
+  <div class="week-block" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <h3>Week 7 — Natural Language Processing Basics</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>The Text-to-Numbers Pipeline</h4>
+      <p>ML models require numeric input. Raw text must be transformed through a sequence of steps before it reaches the algorithm.</p>
+      <div class="workflow-steps">
+        <div class="wf-step"><span class="wf-num">1</span><div><strong>Raw Text:</strong> "I absolutely loved this movie! Amazing acting and story."</div></div>
+        <div class="wf-step"><span class="wf-num">2</span><div><strong>Tokenize:</strong> Split into tokens: ["I", "absolutely", "loved", "this", "movie", "!", "Amazing", "acting", "and", "story", "."]</div></div>
+        <div class="wf-step"><span class="wf-num">3</span><div><strong>Normalize:</strong> Lowercase, remove punctuation &amp; stopwords → ["absolutely", "loved", "movie", "amazing", "acting", "story"]</div></div>
+        <div class="wf-step"><span class="wf-num">4</span><div><strong>Vectorize:</strong> Bag-of-Words, TF-IDF, or Word Embeddings → numeric array that captures meaning</div></div>
+        <div class="wf-step"><span class="wf-num">5</span><div><strong>Model:</strong> Logistic Regression, Naive Bayes, XGBoost, or fine-tuned Transformer</div></div>
+      </div>
+
+      <h4>Bag of Words (BoW)</h4>
+      <pre><code>>from sklearn.feature_extraction.text import CountVectorizer
+
+reviews = [
+    "This movie was amazing and fantastic",
+    "The film was terrible and boring",
+    "Amazing cinematography but slow pacing",
+    "Best movie I have ever seen this year"
+]
+
+vectorizer = CountVectorizer(
+    max_features=1000,    # Keep only top 1000 most frequent words
+    stop_words='english', # Remove "the", "is", "a", "was" etc.
+    min_df=2,             # Ignore words in fewer than 2 documents
+    lowercase=True,
+    ngram_range=(1, 1)    # Unigrams; (1,2) adds bigrams like "not good"
+)
+
+X_bow = vectorizer.fit_transform(reviews)
+print(f"Shape: {X_bow.shape}")  # (4, vocab_size) — sparse matrix
+print(f"Vocabulary: {vectorizer.get_feature_names_out()}")
+# Sparse matrix: most entries are 0 (word not in that document)
+# Limitation: ignores word order and meaning (amazing vs terrible have equal weight)</code></pre>
+
+      <h4>TF-IDF — Better Than Raw Counts</h4>
+      <p><strong>TF-IDF = TF(t,d) × IDF(t)</strong> where IDF = log(N / df(t)). Words appearing in every document (like "the") get IDF≈0. Rare but informative words ("extraordinary") get high TF-IDF scores.</p>
+      <pre><code>>from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import cross_val_score
+
+texts  = ["great product amazing quality", "terrible quality very disappointed",
+          "love it amazing fast delivery", "worst purchase ever complete waste",
+          "highly recommend excellent service", "awful experience never again",
+          "fantastic product exceeded expectations", "disappointing very slow shipping"]
+labels = [1, 0, 1, 0, 1, 0, 1, 0]  # 1=positive, 0=negative
+
+pipe = Pipeline([
+    ('tfidf', TfidfVectorizer(
+        ngram_range=(1, 2),   # Unigrams + bigrams ("not good", "highly recommend")
+        max_features=5000,
+        sublinear_tf=True     # Apply log(TF+1) to reduce effect of very frequent terms
+    )),
+    ('clf', LogisticRegression(C=1.0, max_iter=1000))
+])
+
+scores = cross_val_score(pipe, texts, labels, cv=4, scoring='accuracy')
+print(f"CV Accuracy: {scores.mean():.3f}")
+
+pipe.fit(texts, labels)
+new = ["absolutely fantastic product!", "really bad quality disappointing"]
+print("Predictions:   ", pipe.predict(new))
+print("Probabilities: ", pipe.predict_proba(new).round(3))</code></pre>
+
+      <h4>Word Embeddings — Words as Vectors</h4>
+      <p>Word embeddings map words to dense 50–300 dimensional vectors where semantically similar words have similar vectors. Trained on billions of words.</p>
+      <ul>
+        <li><strong>king − man + woman ≈ queen</strong> — famous Word2Vec arithmetic</li>
+        <li><strong>Paris − France + India ≈ Delhi</strong> — captures geopolitical relationships</li>
+        <li><strong>doctor − hospital + school ≈ teacher</strong> — captures professional domain relationships</li>
+      </ul>
+      <pre><code>># Using pre-trained GloVe embeddings via gensim
+# pip install gensim
+import gensim.downloader as api
+
+# 50-dimensional GloVe trained on Wikipedia (lighter than Word2Vec-300d)
+model = api.load('glove-wiki-gigaword-50')
+
+print(model.similarity('king', 'queen'))     # ~0.65
+print(model.similarity('happy', 'joyful'))   # ~0.75
+print(model.similarity('india', 'china'))    # ~0.70
+
+print(model.most_similar('india', topn=5))
+# [('china', 0.70), ('pakistan', 0.67), ('bangladesh', 0.65), ...]
+
+# Word arithmetic
+result = model.most_similar(
+    positive=['woman', 'king'], negative=['man'], topn=1
+)
+print(result)  # [('queen', 0.77)]
+
+# Sentence embedding: average word embeddings (simple baseline)
+def sentence_embedding(text):
+    words = text.lower().split()
+    vecs = [model[w] for w in words if w in model]
+    return sum(vecs) / len(vecs) if vecs else [0]*50</code></pre>
+
+      <h4>Hugging Face Transformers — State-of-the-Art NLP</h4>
+      <pre><code>>from transformers import pipeline
+
+# Sentiment Analysis — pretrained BERT/DistilBERT
+sentiment_pipe = pipeline("sentiment-analysis")
+reviews = ["This phone has an incredible camera and long battery life!",
+           "Worst purchase ever. Stopped working after 2 days."]
+results = sentiment_pipe(reviews)
+for r, res in zip(reviews, results):
+    print(f"'{r[:40]}...' → {res['label']} ({res['score']:.3f})")
+
+# Zero-shot Classification — no training needed!
+clf = pipeline("zero-shot-classification",
+               model="facebook/bart-large-mnli")
+text = "The central bank raised interest rates by 50 basis points today"
+labels = ["finance", "sports", "technology", "politics", "health"]
+result = clf(text, candidate_labels=labels)
+print(f"\nText: '{text}'")
+for label, score in zip(result['labels'][:3], result['scores'][:3]):
+    print(f"  {label}: {score:.3f}")
+
+# Named Entity Recognition
+ner = pipeline("token-classification", model="dbmdz/bert-large-cased-finetuned-conll03-english")
+entities = ner("Satya Nadella is the CEO of Microsoft based in Redmond, Washington.")
+for entity in entities:
+    print(f"{entity['word']:20s} → {entity['entity_group']}")</code></pre>
+
+    </div>
+  </div><!-- /W7 -->
+
+  <!-- W8 -->
+  <div class="week-block" id="w8">
+    <div class="week-header" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <h3>Week 8 — Unsupervised Learning</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>K-Means Clustering</h4>
+      <p>K-Means partitions n samples into k clusters. Algorithm: 1) randomly initialize k centroids, 2) assign each point to nearest centroid, 3) update each centroid to mean of assigned points, 4) repeat until convergence. Minimizes within-cluster sum of squared distances (inertia).</p>
+      <pre><code>>from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Synthetic customer RFM data: [recency_days, purchase_count]
+np.random.seed(42)
+X = np.vstack([
+    np.random.randn(100, 2) + [1, 8],    # VIP: recent + frequent
+    np.random.randn(100, 2) + [-2, 3],   # Occasional: less recent
+    np.random.randn(100, 2) + [3, 1],    # Churned: old + rare
+])
+
+# K-Means is distance-based — ALWAYS scale first
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Elbow Method: find optimal k
+inertias = []
+for k in range(1, 11):
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    km.fit(X_scaled)
+    inertias.append(km.inertia_)
+
+plt.figure(figsize=(8, 4))
+plt.plot(range(1, 11), inertias, 'bo-')
+plt.xlabel('Number of Clusters (k)')
+plt.ylabel('Inertia (WCSS)')
+plt.title('Elbow Method — Find the "kink"')
+plt.tight_layout()
+plt.show()  # Look for the "elbow" where inertia stops dropping sharply
+
+# Train with optimal k
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+labels  = kmeans.fit_predict(X_scaled)
+centers = kmeans.cluster_centers_
+
+print(f"Cluster sizes:   {np.bincount(labels)}")   # [100, 100, 100]
+print(f"Inertia:         {kmeans.inertia_:.2f}")
+print(f"Cluster centers (scaled):\n{centers.round(3)}")</code></pre>
+
+      <h4>Silhouette Score</h4>
+      <pre><code>>from sklearn.metrics import silhouette_score
+
+# Silhouette score: how similar a point is to its own cluster vs neighboring clusters
+# Range: -1 (assigned to wrong cluster) to +1 (perfectly separated)
+
+for k in range(2, 8):
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labels = km.fit_predict(X_scaled)
+    s = silhouette_score(X_scaled, labels)
+    print(f"k={k}: silhouette={s:.3f}  inertia={km.inertia_:.1f}")
+
+# Rule of thumb: choose k where silhouette is highest AND elbow occurs
+# Neither metric alone is sufficient — use both together</code></pre>
+
+      <h4>DBSCAN — Density-Based Clustering</h4>
+      <p>DBSCAN finds clusters of arbitrary shape by connecting densely packed points. Points in low-density regions are labeled as outliers (noise, label = −1). Unlike K-Means: no need to specify k, handles non-spherical clusters, detects outliers automatically.</p>
+      <pre><code>>from sklearn.cluster import DBSCAN
+import numpy as np
+
+# Parameters:
+# eps: max distance between two points to be "neighbors"
+# min_samples: min points to form a dense "core point"
+
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+labels = dbscan.fit_predict(X_scaled)
+
+n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
+n_noise    = list(labels).count(-1)
+
+print(f"Clusters found: {n_clusters}")
+print(f"Noise points:   {n_noise}")
+print(f"Unique labels:  {np.unique(labels)}")  # -1, 0, 1, 2, ...
+
+# Use cases:
+# Geospatial: identify crime hotspots, customer location clusters
+# Anomaly detection: isolated noise points = anomalies
+# Non-spherical: C-shaped clusters, ring-shaped distributions</code></pre>
+
+      <h4>PCA — Dimensionality Reduction</h4>
+      <pre><code>>from sklearn.decomposition import PCA
+from sklearn.datasets import load_digits
+import matplotlib.pyplot as plt
+import numpy as np
+
+X_dig, y_dig = load_digits(return_X_y=True)
+print(f"Original shape: {X_dig.shape}")   # (1797, 64)
+
+# Reduce to 2D for visualization
+pca2 = PCA(n_components=2, random_state=42)
+X_2d = pca2.fit_transform(X_dig)
+print(f"Variance explained by 2 PCs: {pca2.explained_variance_ratio_.sum():.3f}")
+
+# Auto-select n_components for 95% variance retention
+pca95 = PCA(n_components=0.95, random_state=42)
+X_95  = pca95.fit_transform(X_dig)
+print(f"Components for 95% variance: {pca95.n_components_}")  # ~29 vs 64
+
+# Scree plot
+pca_full = PCA().fit(X_dig)
+cumvar = np.cumsum(pca_full.explained_variance_ratio_)
+plt.figure(figsize=(8, 4))
+plt.plot(cumvar)
+plt.axhline(0.95, color='red', linestyle='--', label='95% threshold')
+plt.xlabel('Number of Components')
+plt.ylabel('Cumulative Variance Explained')
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+
+      <h4>t-SNE — Non-linear Visualization</h4>
+      <pre><code>>from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+
+# t-SNE maps high-dimensional data to 2D while preserving LOCAL structure
+# NOT for preprocessing — non-deterministic, no inverse transform
+# USE FOR: visualizing clusters, understanding data geometry
+
+tsne = TSNE(
+    n_components=2,
+    perplexity=30,       # Roughly: number of nearest neighbors to balance
+    learning_rate=200,
+    n_iter=1000,
+    random_state=42
+)
+# Tip: run PCA to 50 dimensions first for speed (reduces noise)
+from sklearn.decomposition import PCA
+X_pca50 = PCA(n_components=50).fit_transform(X_dig)
+X_tsne  = tsne.fit_transform(X_pca50)
+
+plt.figure(figsize=(10, 8))
+scatter = plt.scatter(X_tsne[:, 0], X_tsne[:, 1],
+                      c=y_dig, cmap='tab10', alpha=0.6, s=8)
+plt.colorbar(scatter, label='Digit Class (0–9)')
+plt.title('t-SNE: Handwritten Digits (64D → 2D)')
+plt.tight_layout()
+plt.show()
+# Well-separated islands = easy classification task
+# Overlapping clusters = hard boundaries, expect lower accuracy</code></pre>
+
+    </div>
+  </div><!-- /W8 -->
+
+  <div class="bottom-nav">
+    <a href="concept_notes_beginner.html" class="btn btn-secondary">← Beginner Notes</a>
+    <a href="concept_notes_advanced.html" class="btn btn-primary">Advanced Notes →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Concept Notes (Intermediate) &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking &amp; Sysadmin — Lab Guide Advanced | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.level-hero{padding:2rem 2rem 1.6rem;border-radius:12px;margin-bottom:2rem;background:linear-gradient(135deg,#2d1b69 0%,#11998e 100%);color:#fff;display:flex;align-items:center;gap:1.2rem;}
+.level-hero .hero-icon{font-size:2.8rem;line-height:1;}
+.level-hero h2{margin:0 0 .3rem;font-size:1.6rem;font-weight:700;}
+.level-hero p{margin:0;opacity:.88;font-size:.95rem;}
+.level-badge{display:inline-block;padding:.2rem .7rem;border-radius:20px;background:rgba(255,255,255,.18);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-top:.4rem;}
+
+.week-block{border:1px solid #e2e8f0;border-radius:10px;margin-bottom:1.2rem;overflow:hidden;}
+.week-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;background:#f8fafc;cursor:pointer;user-select:none;gap:.8rem;}
+.week-header:hover{background:#f1f5f9;}
+.week-header h3{margin:0;font-size:1.05rem;font-weight:700;color:#1e293b;flex:1;}
+.week-toggle{font-size:1.1rem;color:#64748b;transition:transform .2s;}
+.week-block.open .week-toggle{transform:rotate(180deg);}
+.week-body{display:none;padding:1.4rem 1.4rem 1.6rem;}
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+
+.obj-list{background:#f0fdf4;border-left:4px solid #22c55e;border-radius:0 8px 8px 0;padding:.9rem 1rem;margin-bottom:1.4rem;}
+.obj-list p{margin:0 0 .4rem;font-weight:600;color:#166534;font-size:.9rem;}
+.obj-list ul{margin:0;padding-left:1.4rem;}
+.obj-list li{color:#15803d;font-size:.9rem;margin-bottom:.2rem;}
+
+.step-block{margin-bottom:1.8rem;}
+.step-block h4{font-size:.95rem;font-weight:700;color:#1e293b;margin:0 0 .6rem;display:flex;align-items:center;gap:.5rem;}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;border-radius:50%;background:#6d28d9;color:#fff;font-size:.72rem;font-weight:700;flex-shrink:0;}
+
+pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:1rem 1.1rem;overflow-x:auto;font-size:.83rem;line-height:1.6;margin:.6rem 0;}
+code{font-family:'Cascadia Code','Fira Code','Consolas',monospace;}
+.file-tree{background:#1e293b;color:#cbd5e1;border-radius:8px;padding:1rem 1.1rem;font-family:'Cascadia Code','Fira Code','Consolas',monospace;font-size:.83rem;line-height:1.7;margin:.6rem 0;}
+
+.checkpoint-box{background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:1rem 1.1rem;margin-top:1.4rem;}
+.checkpoint-box strong{color:#92400e;display:block;margin-bottom:.4rem;font-size:.9rem;}
+.checkpoint-box ul{margin:0;padding-left:1.4rem;}
+.checkpoint-box li{color:#78350f;font-size:.88rem;margin-bottom:.25rem;}
+
+.topology-box{background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;}
+.topology-box strong{color:#1e40af;font-size:.88rem;display:block;margin-bottom:.5rem;}
+.topology-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem;margin-top:.5rem;}
+.topo-node{background:#fff;border:1px solid #bfdbfe;border-radius:6px;padding:.5rem .7rem;font-size:.82rem;color:#1e3a8a;}
+.topo-node strong{display:block;font-weight:700;color:#1e40af;}
+
+.info-note{background:#f0f9ff;border-left:3px solid #38bdf8;padding:.7rem .9rem;border-radius:0 6px 6px 0;margin:.8rem 0;font-size:.88rem;color:#0369a1;}
+
+.wn-adv .week-header{border-left:4px solid #7c3aed;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">🚀 Lab Guide — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_advanced.html">Concept Notes ↗</a>
+    <a href="project_briefs.html">Project Briefs ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+
+  <div class="level-hero">
+    <div class="hero-icon">🚀</div>
+    <div>
+      <h2>Advanced Lab Guide — Weeks 9–12</h2>
+      <p>Automation, High Availability, Cloud Infrastructure &amp; Kubernetes Networking</p>
+      <span class="level-badge">Advanced Level</span>
+    </div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="week-block wn-adv" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <h3>⚙️ Week 9 Lab — Ansible Automation with Roles</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="obj-list">
+        <p>🎯 Objectives</p>
+        <ul>
+          <li>Write a complete Ansible playbook using roles to configure web servers</li>
+          <li>Implement nginx install, template deployment, UFW, user creation, and service management</li>
+          <li>Use Ansible Vault to protect sensitive variables</li>
+          <li>Verify idempotency — second run must show zero changes</li>
+        </ul>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">1</span> Project Directory Structure</h4>
+        <p>Create the following layout before writing any YAML. This structure follows the standard Ansible roles convention.</p>
+        <div class="file-tree">ansible-project/
+├── inventory
+├── playbook.yml
+├── ansible.cfg
+├── group_vars/
+│   └── webservers.yml
+└── roles/
+    └── nginx/
+        ├── tasks/
+        │   └── main.yml
+        ├── handlers/
+        │   └── main.yml
+        ├── templates/
+        │   ├── nginx.conf.j2
+        │   └── index.html.j2
+        ├── files/
+        └── vars/
+            └── main.yml</div>
+        <pre><code># Create the structure in one command:
+mkdir -p ansible-project/{group_vars,roles/nginx/{tasks,handlers,templates,files,vars}}
+cd ansible-project</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">2</span> inventory file</h4>
+        <p>Define your three web server targets. Adjust <code>ansible_host</code> IPs to match your VirtualBox network.</p>
+        <pre><code>[webservers]
+web1 ansible_host=192.168.56.11 ansible_user=ubuntu
+web2 ansible_host=192.168.56.12 ansible_user=ubuntu
+web3 ansible_host=192.168.56.13 ansible_user=ubuntu
+
+[webservers:vars]
+ansible_ssh_private_key_file=~/.ssh/lab_key
+ansible_python_interpreter=/usr/bin/python3</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">3</span> ansible.cfg</h4>
+        <p>Project-level configuration that overrides global defaults. Place in the project root.</p>
+        <pre><code>[defaults]
+inventory = inventory
+remote_user = ubuntu
+host_key_checking = False
+roles_path = roles
+retry_files_enabled = False</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">4</span> group_vars/webservers.yml</h4>
+        <p>Group variables are automatically loaded for any host in the <code>[webservers]</code> group. These variables are available in all tasks and templates.</p>
+        <pre><code>nginx_port: 80
+admin_user: webadmin
+site_name: "Lab Web Server"
+allowed_ports:
+  - 22
+  - 80
+  - 443</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">5</span> roles/nginx/vars/main.yml</h4>
+        <p>Role variables that reference Vault-encrypted values. Vault variables use the <code>vault_</code> prefix convention.</p>
+        <pre><code>---
+db_password: "{{ vault_db_password }}"
+app_secret_key: "{{ vault_app_secret_key }}"</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">6</span> roles/nginx/tasks/main.yml</h4>
+        <p>The main task file for the nginx role. Tasks run top-to-bottom. Notice how <code>notify</code> triggers handlers, and <code>loop</code> iterates over the allowed_ports list.</p>
+        <pre><code>---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+  notify: restart nginx
+
+- name: Deploy nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: '0644'
+  notify: reload nginx
+
+- name: Deploy index page
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: www-data
+    group: www-data
+    mode: '0644'
+
+- name: Create admin user
+  user:
+    name: "{{ admin_user }}"
+    groups: sudo
+    shell: /bin/bash
+    create_home: yes
+    state: present
+
+- name: Set up SSH key for admin user
+  authorized_key:
+    user: "{{ admin_user }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/lab_key.pub') }}"
+
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Configure UFW rules
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ allowed_ports }}"
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+
+- name: Ensure nginx is enabled and started
+  service:
+    name: nginx
+    state: started
+    enabled: yes</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">7</span> roles/nginx/handlers/main.yml</h4>
+        <p>Handlers run <strong>once at the end</strong> of a play, only if notified. Multiple tasks can notify the same handler — it still runs only once.</p>
+        <pre><code>---
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">8</span> templates/nginx.conf.j2</h4>
+        <p>Jinja2 template. Variables in <code>{{ }}</code> are replaced at deploy time with values from inventory, group_vars, and role vars.</p>
+        <pre><code>server {
+    listen {{ nginx_port }};
+    server_name {{ inventory_hostname }};
+    root /var/www/html;
+    index index.html;
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">9</span> templates/index.html.j2</h4>
+        <p>Ansible facts (<code>ansible_hostname</code>, <code>ansible_default_ipv4</code>, <code>ansible_date_time</code>) are automatically gathered unless <code>gather_facts: no</code> is set.</p>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;{{ site_name }}&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;{{ site_name }}&lt;/h1&gt;
+  &lt;p&gt;Hostname: {{ ansible_hostname }}&lt;/p&gt;
+  &lt;p&gt;IP: {{ ansible_default_ipv4.address }}&lt;/p&gt;
+  &lt;p&gt;Deployed by Ansible on {{ ansible_date_time.date }}&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">10</span> playbook.yml</h4>
+        <p>The top-level playbook simply maps hosts to roles. Keep playbooks thin — the real work lives in roles.</p>
+        <pre><code>---
+- name: Configure Web Servers
+  hosts: webservers
+  become: yes
+  roles:
+    - nginx</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">11</span> Ansible Vault — Encrypting Secrets</h4>
+        <p>Never commit plaintext passwords. Ansible Vault encrypts secrets files at rest. The vault password is supplied at runtime.</p>
+        <pre><code># Create and encrypt the secrets file:
+ansible-vault encrypt group_vars/secrets.yml
+
+# Inside the file, add vault-prefixed variables:
+vault_db_password: "SecurePass123"
+vault_app_secret_key: "MyAppSecret456"
+
+# Run playbook with vault decryption:
+ansible-playbook playbook.yml --ask-vault-pass
+
+# Or use a vault password file (recommended for CI):
+echo "MyVaultPass" > .vault_pass
+chmod 600 .vault_pass
+ansible-playbook playbook.yml --vault-password-file .vault_pass</code></pre>
+        <div class="info-note">⚠️ Add <code>.vault_pass</code> to your <code>.gitignore</code>. Never commit the vault password file to version control.</div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">12</span> Run and Verify Idempotency</h4>
+        <p>Idempotency is the hallmark of well-written Ansible. The first run makes changes; subsequent runs should show <code>changed=0</code>.</p>
+        <pre><code># First run (verbose):
+ansible-playbook playbook.yml -i inventory -v
+
+# Expected output (first run):
+# PLAY RECAP ****
+# web1 : ok=12 changed=8 unreachable=0 failed=0
+# web2 : ok=12 changed=8 unreachable=0 failed=0
+# web3 : ok=12 changed=8 unreachable=0 failed=0
+
+# Second run (idempotency test):
+ansible-playbook playbook.yml -i inventory -v
+
+# Expected output (second run — this is what we want!):
+# PLAY RECAP ****
+# web1 : ok=12 changed=0 unreachable=0 failed=0
+# web2 : ok=12 changed=0 unreachable=0 failed=0
+# web3 : ok=12 changed=0 unreachable=0 failed=0</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">13</span> Ad-Hoc Commands — Quick Checks</h4>
+        <p>Ad-hoc commands let you run single tasks without writing a playbook. Useful for quick checks and one-off operations.</p>
+        <pre><code># Ping all webservers:
+ansible webservers -m ping
+
+# Check nginx version on all servers:
+ansible webservers -m command -a "nginx -v"
+
+# Restart nginx on all servers (with privilege escalation):
+ansible webservers -m service -a "name=nginx state=restarted" -b
+
+# Check disk usage on all servers:
+ansible webservers -m shell -a "df -h" -b
+
+# Gather all facts about web1:
+ansible web1 -m setup</code></pre>
+      </div>
+
+      <div class="checkpoint-box">
+        <strong>✅ Week 9 Checkpoint — All of these must be true:</strong>
+        <ul>
+          <li>All 3 web servers (web1, web2, web3) serve a custom index page via nginx</li>
+          <li>UFW is enabled on all servers with only ports 22, 80, 443 allowed</li>
+          <li>Admin user <code>webadmin</code> exists with sudo access and SSH key authentication</li>
+          <li>Second playbook run shows <code>changed=0</code> on all hosts (idempotency verified)</li>
+          <li>Ad-hoc <code>ansible webservers -m ping</code> returns SUCCESS for all 3 hosts</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="week-block wn-adv" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <h3>⚖️ Week 10 Lab — HAProxy + Keepalived High Availability</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="obj-list">
+        <p>🎯 Objectives</p>
+        <ul>
+          <li>Deploy HAProxy as a load balancer across two backend web servers</li>
+          <li>Configure Keepalived with VRRP for a floating VIP (Virtual IP)</li>
+          <li>Demonstrate automatic failover when the MASTER load balancer fails</li>
+          <li>Enable and use the HAProxy statistics page for monitoring</li>
+        </ul>
+      </div>
+
+      <div class="topology-box">
+        <strong>🗺️ Lab Topology</strong>
+        <div class="topology-grid">
+          <div class="topo-node"><strong>web1</strong>192.168.56.11<br>Backend (nginx)</div>
+          <div class="topo-node"><strong>web2</strong>192.168.56.12<br>Backend (nginx)</div>
+          <div class="topo-node"><strong>lb1 — MASTER</strong>192.168.56.20<br>HAProxy + Keepalived</div>
+          <div class="topo-node"><strong>lb2 — BACKUP</strong>192.168.56.21<br>HAProxy + Keepalived</div>
+          <div class="topo-node"><strong>VIP</strong>192.168.56.100<br>Floating (VRRP)</div>
+        </div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">1</span> Prepare Backend Web Servers</h4>
+        <p>Each backend server must serve a unique page so you can confirm round-robin is working. Run on each respective server.</p>
+        <pre><code># On web1 (192.168.56.11):
+echo "&lt;h1&gt;Backend Server 1 - $(hostname)&lt;/h1&gt;" | sudo tee /var/www/html/index.html
+
+# On web2 (192.168.56.12):
+echo "&lt;h1&gt;Backend Server 2 - $(hostname)&lt;/h1&gt;" | sudo tee /var/www/html/index.html
+
+# Verify both are serving:
+curl http://192.168.56.11
+curl http://192.168.56.12</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">2</span> Install HAProxy on lb1 and lb2</h4>
+        <p>Run this on both lb1 and lb2.</p>
+        <pre><code>sudo apt update &amp;&amp; sudo apt install haproxy -y
+haproxy -v  # Verify version: 2.4+</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">3</span> HAProxy Configuration — /etc/haproxy/haproxy.cfg</h4>
+        <p>Apply this configuration to <strong>both</strong> lb1 and lb2. The configuration is identical on both nodes — Keepalived handles which one is active.</p>
+        <pre><code>global
+    log /dev/log local0
+    maxconn 50000
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5s
+    timeout client 30s
+    timeout server 30s
+    retries 3
+
+frontend http_front
+    bind *:80
+    default_backend http_back
+    option forwardfor
+    http-request set-header X-Forwarded-Proto http
+
+backend http_back
+    balance roundrobin
+    option httpchk GET /
+    http-check expect status 200
+    server web1 192.168.56.11:80 check inter 2s fall 3 rise 2
+    server web2 192.168.56.12:80 check inter 2s fall 3 rise 2
+    cookie SERVERID insert nocache
+
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 10s
+    stats auth admin:haproxy123
+    stats show-legends</code></pre>
+        <div class="info-note">
+          <strong>Key parameters explained:</strong><br>
+          <code>check inter 2s</code> — health check every 2 seconds<br>
+          <code>fall 3</code> — mark server DOWN after 3 consecutive failures<br>
+          <code>rise 2</code> — mark server UP after 2 consecutive successes<br>
+          <code>balance roundrobin</code> — distribute requests sequentially across backends
+        </div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">4</span> Keepalived on lb1 (MASTER)</h4>
+        <p>Install and configure Keepalived on lb1. Replace <code>enp0s8</code> with your actual interface name (<code>ip addr</code> to check).</p>
+        <pre><code>sudo apt install keepalived -y</code></pre>
+        <p>Edit <code>/etc/keepalived/keepalived.conf</code> on lb1:</p>
+        <pre><code>global_defs {
+   router_id LB1
+}
+
+vrrp_script chk_haproxy {
+    script "pidof haproxy"
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface enp0s8
+    virtual_router_id 51
+    priority 101
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass secret123
+    }
+    virtual_ipaddress {
+        192.168.56.100/24
+    }
+    track_script {
+        chk_haproxy
+    }
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">5</span> Keepalived on lb2 (BACKUP)</h4>
+        <p>The BACKUP configuration is identical except for <code>state</code> and <code>priority</code>. lb2 takes over if lb1 fails.</p>
+        <pre><code>global_defs {
+   router_id LB2
+}
+
+vrrp_script chk_haproxy {
+    script "pidof haproxy"
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface enp0s8
+    virtual_router_id 51
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass secret123
+    }
+    virtual_ipaddress {
+        192.168.56.100/24
+    }
+    track_script {
+        chk_haproxy
+    }
+}</code></pre>
+        <div class="info-note">Priority 101 (MASTER) &gt; 100 (BACKUP). The node with the highest priority wins the VIP. Both must have the same <code>virtual_router_id</code> and <code>auth_pass</code>.</div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">6</span> Enable Services on Both lb1 and lb2</h4>
+        <pre><code>sudo systemctl enable --now haproxy keepalived
+sudo systemctl status haproxy keepalived
+
+# Verify VIP is on lb1:
+ip addr show enp0s8 | grep 192.168.56.100
+# Should show the VIP on lb1 only</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">7</span> Test Load Balancing</h4>
+        <p>From a client machine, send 10 requests through the VIP. You should see responses alternating between Server 1 and Server 2.</p>
+        <pre><code>for i in {1..10}; do
+  curl -s http://192.168.56.100 | grep "Backend Server"
+done
+
+# Expected output (alternating):
+# &lt;h1&gt;Backend Server 1 - web1&lt;/h1&gt;
+# &lt;h1&gt;Backend Server 2 - web2&lt;/h1&gt;
+# &lt;h1&gt;Backend Server 1 - web1&lt;/h1&gt;
+# &lt;h1&gt;Backend Server 2 - web2&lt;/h1&gt;
+# ...</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">8</span> Failover Test — The Critical Demo</h4>
+        <p>This is the most important test. Simulate lb1 failure and verify the VIP migrates to lb2 within 3 seconds.</p>
+        <pre><code># === On lb1: simulate haproxy failure ===
+sudo systemctl stop haproxy
+
+# === On lb2: verify it acquired the VIP ===
+ip addr show enp0s8
+# Should now show: inet 192.168.56.100/24
+
+# === On client: continue accessing via VIP — should still work ===
+for i in {1..5}; do
+  curl -s http://192.168.56.100 | grep "Backend"
+  sleep 1
+done
+# No interruption after 1-3 seconds (VRRP advertisement interval)
+
+# === Restore lb1 ===
+sudo systemctl start haproxy
+# After ~2-3 seconds, lb1 reclaims the VIP (preemptive mode)
+ip addr show enp0s8  # VIP back on lb1</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">9</span> HAProxy Statistics Page</h4>
+        <p>Access the stats dashboard to monitor backend health in real time.</p>
+        <pre><code># In browser:
+http://192.168.56.100:8404/stats
+# Login: admin / haproxy123
+
+# Via curl (check backend status):
+curl -u admin:haproxy123 http://192.168.56.100:8404/stats;csv | grep "http_back"</code></pre>
+        <div class="info-note">The stats page shows: green/red server status, current sessions, request rates, bytes in/out, and health check results. A green row means the backend is UP.</div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">10</span> Sticky Sessions Test</h4>
+        <p>Verify that <code>SERVERID</code> cookie causes the client to always hit the same backend.</p>
+        <pre><code># First request — sets the sticky cookie:
+curl -c cookies.txt -b cookies.txt http://192.168.56.100 -I
+# Look for: Set-Cookie: SERVERID=web1
+
+# Subsequent requests — same backend every time:
+for i in {1..5}; do
+  curl -c cookies.txt -b cookies.txt -s http://192.168.56.100 | grep "Backend Server"
+done
+# All responses should say "Backend Server 1" (or whichever web1 serves)</code></pre>
+      </div>
+
+      <div class="checkpoint-box">
+        <strong>✅ Week 10 Checkpoint — All of these must be true:</strong>
+        <ul>
+          <li>Round-robin load balancing working: alternate responses from web1 and web2</li>
+          <li>VIP (192.168.56.100) is held by lb1 in normal operation</li>
+          <li>Stopping HAProxy on lb1 causes lb2 to acquire the VIP within 3 seconds</li>
+          <li>Traffic continues via VIP during failover (no connection refused)</li>
+          <li>HAProxy stats page accessible at :8404/stats showing both backends green</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="week-block wn-adv" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <h3>☁️ Week 11 Lab — AWS VPC Architecture with Terraform</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="obj-list">
+        <p>🎯 Objectives</p>
+        <ul>
+          <li>Use Terraform to provision a complete AWS VPC with public and private subnets across 2 AZs</li>
+          <li>Deploy an Application Load Balancer and EC2 instances in private subnets</li>
+          <li>Configure Route 53 health checks and failover routing</li>
+          <li>Use remote state stored in S3 with DynamoDB locking</li>
+        </ul>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">1</span> Project Directory Structure</h4>
+        <div class="file-tree">terraform-vpc/
+├── main.tf
+├── variables.tf
+├── outputs.tf
+├── vpc.tf
+├── subnets.tf
+├── security_groups.tf
+├── ec2.tf
+├── alb.tf
+├── route53.tf
+└── terraform.tfvars</div>
+        <pre><code>mkdir terraform-vpc &amp;&amp; cd terraform-vpc</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">2</span> variables.tf — Input Variables</h4>
+        <pre><code>variable "aws_region" {
+  description = "AWS region to deploy resources"
+  default     = "ap-south-1"
+}
+
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+  default     = "10.0.0.0/16"
+}
+
+variable "project_name" {
+  description = "Project name prefix for all resources"
+  default     = "ndfi-lab"
+}
+
+variable "environment" {
+  description = "Deployment environment"
+  default     = "staging"
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">3</span> vpc.tf — VPC + Internet Gateway</h4>
+        <pre><code>provider "aws" {
+  region = var.aws_region
+}
+
+resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+
+  tags = {
+    Name        = "${var.project_name}-vpc"
+    Environment = var.environment
+  }
+}
+
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.project_name}-igw"
+  }
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">4</span> subnets.tf — 2 Public + 2 Private Subnets, NAT Gateway, Route Tables</h4>
+        <pre><code># Public Subnets
+resource "aws_subnet" "public_1" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "${var.aws_region}a"
+  map_public_ip_on_launch = true
+  tags = { Name = "${var.project_name}-public-1" }
+}
+
+resource "aws_subnet" "public_2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "${var.aws_region}b"
+  map_public_ip_on_launch = true
+  tags = { Name = "${var.project_name}-public-2" }
+}
+
+# Private Subnets
+resource "aws_subnet" "private_1" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.10.0/24"
+  availability_zone = "${var.aws_region}a"
+  tags = { Name = "${var.project_name}-private-1" }
+}
+
+resource "aws_subnet" "private_2" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.11.0/24"
+  availability_zone = "${var.aws_region}b"
+  tags = { Name = "${var.project_name}-private-2" }
+}
+
+# NAT Gateway (requires Elastic IP)
+resource "aws_eip" "nat" {
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public_1.id
+  tags = { Name = "${var.project_name}-nat" }
+  depends_on = [aws_internet_gateway.main]
+}
+
+# Route Tables
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
+  tags = { Name = "${var.project_name}-public-rt" }
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.main.id
+  }
+  tags = { Name = "${var.project_name}-private-rt" }
+}
+
+# Route Table Associations
+resource "aws_route_table_association" "public_1" {
+  subnet_id      = aws_subnet.public_1.id
+  route_table_id = aws_route_table.public.id
+}
+resource "aws_route_table_association" "public_2" {
+  subnet_id      = aws_subnet.public_2.id
+  route_table_id = aws_route_table.public.id
+}
+resource "aws_route_table_association" "private_1" {
+  subnet_id      = aws_subnet.private_1.id
+  route_table_id = aws_route_table.private.id
+}
+resource "aws_route_table_association" "private_2" {
+  subnet_id      = aws_subnet.private_2.id
+  route_table_id = aws_route_table.private.id
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">5</span> security_groups.tf — ALB and EC2 Security Groups</h4>
+        <p>The EC2 security group only accepts HTTP from the ALB security group (not from the internet directly). This is a key security pattern.</p>
+        <pre><code>resource "aws_security_group" "alb" {
+  name   = "${var.project_name}-alb-sg"
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = { Name = "${var.project_name}-alb-sg" }
+}
+
+resource "aws_security_group" "ec2" {
+  name   = "${var.project_name}-ec2-sg"
+  vpc_id = aws_vpc.main.id
+
+  # Only accept HTTP from the ALB (not the internet)
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
+  }
+  # SSH only from within VPC (bastion or VPN)
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = { Name = "${var.project_name}-ec2-sg" }
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">6</span> ec2.tf — EC2 Instances in Private Subnets</h4>
+        <pre><code>data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+}
+
+resource "aws_instance" "web_1" {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.private_1.id
+  vpc_security_group_ids = [aws_security_group.ec2.id]
+
+  user_data = &lt;&lt;-EOF
+    #!/bin/bash
+    apt-get update
+    apt-get install -y nginx
+    echo "&lt;h1&gt;${var.project_name} - Server 1&lt;/h1&gt;" &gt; /var/www/html/index.html
+    systemctl start nginx
+  EOF
+
+  tags = { Name = "${var.project_name}-web-1" }
+}
+
+resource "aws_instance" "web_2" {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.private_2.id
+  vpc_security_group_ids = [aws_security_group.ec2.id]
+
+  user_data = &lt;&lt;-EOF
+    #!/bin/bash
+    apt-get update
+    apt-get install -y nginx
+    echo "&lt;h1&gt;${var.project_name} - Server 2&lt;/h1&gt;" &gt; /var/www/html/index.html
+    systemctl start nginx
+  EOF
+
+  tags = { Name = "${var.project_name}-web-2" }
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">7</span> alb.tf — Application Load Balancer</h4>
+        <pre><code>resource "aws_lb" "main" {
+  name               = "${var.project_name}-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = [aws_subnet.public_1.id, aws_subnet.public_2.id]
+  tags = { Name = "${var.project_name}-alb" }
+}
+
+resource "aws_lb_target_group" "main" {
+  name     = "${var.project_name}-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    enabled             = true
+    path                = "/"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 3
+  }
+}
+
+resource "aws_lb_target_group_attachment" "web_1" {
+  target_group_arn = aws_lb_target_group.main.arn
+  target_id        = aws_instance.web_1.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "web_2" {
+  target_group_arn = aws_lb_target_group.main.arn
+  target_id        = aws_instance.web_2.id
+  port             = 80
+}
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+}</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">8</span> Remote State Backend — main.tf</h4>
+        <p>Remote state prevents conflicts when multiple team members run Terraform. DynamoDB provides state locking.</p>
+        <pre><code>terraform {
+  required_version = "&gt;= 1.5.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~&gt; 5.0"
+    }
+  }
+
+  backend "s3" {
+    bucket         = "ndfi-terraform-state"
+    key            = "networking/staging/terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "ndfi-terraform-locks"
+    encrypt        = true
+  }
+}</code></pre>
+        <div class="info-note">Create the S3 bucket and DynamoDB table manually <strong>before</strong> running <code>terraform init</code>, or use a bootstrap script. The state bucket itself cannot be managed by Terraform in the same config.</div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">9</span> Route 53 Health Check + Failover</h4>
+        <pre><code># route53.tf
+resource "aws_route53_health_check" "primary" {
+  fqdn              = aws_lb.main.dns_name
+  port              = 80
+  type              = "HTTP"
+  resource_path     = "/"
+  failure_threshold = 3
+  request_interval  = 30
+
+  tags = { Name = "${var.project_name}-health-check" }
+}
+
+# For failover routing, you need a hosted zone:
+# resource "aws_route53_record" "www" {
+#   zone_id = var.hosted_zone_id
+#   name    = "www.ndfi-lab.example.com"
+#   type    = "A"
+#   set_identifier = "primary"
+#   failover_routing_policy { type = "PRIMARY" }
+#   health_check_id = aws_route53_health_check.primary.id
+#   alias {
+#     name                   = aws_lb.main.dns_name
+#     zone_id                = aws_lb.main.zone_id
+#     evaluate_target_health = true
+#   }
+# }</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">10</span> outputs.tf and Terraform Command Sequence</h4>
+        <pre><code># outputs.tf
+output "alb_dns_name" {
+  value       = aws_lb.main.dns_name
+  description = "DNS name of the Application Load Balancer"
+}
+
+output "vpc_id" {
+  value = aws_vpc.main.id
+}
+
+output "private_subnet_ids" {
+  value = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+}</code></pre>
+        <pre><code># Full command sequence:
+terraform init                       # Download providers, configure backend
+terraform fmt                        # Format all .tf files
+terraform validate                   # Syntax and logic check
+terraform plan -out=staging.tfplan   # Preview changes, save plan
+terraform apply staging.tfplan       # Apply exactly what was planned
+terraform output alb_dns_name        # Show the ALB DNS name
+
+# Test the deployment:
+curl http://$(terraform output -raw alb_dns_name)
+
+# IMPORTANT: Always destroy after demos to avoid charges:
+terraform destroy</code></pre>
+        <div class="info-note">⚠️ The NAT Gateway costs ~$32/month. Always run <code>terraform destroy</code> after completing the lab to avoid unexpected AWS charges.</div>
+      </div>
+
+      <div class="checkpoint-box">
+        <strong>✅ Week 11 Checkpoint — All of these must be true:</strong>
+        <ul>
+          <li><code>terraform plan</code> shows no errors, <code>terraform apply</code> completes successfully</li>
+          <li>VPC created with 2 public + 2 private subnets across 2 AZs</li>
+          <li><code>curl http://$(terraform output -raw alb_dns_name)</code> returns HTML from EC2</li>
+          <li>EC2 instances are in private subnets (no public IPs)</li>
+          <li>Route 53 health check shows HEALTHY in AWS console</li>
+          <li>State file visible in S3 bucket</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 12 -->
+  <div class="week-block wn-adv" id="w12">
+    <div class="week-header" onclick="toggleWeek('w12')">
+      <h3>☸️ Week 12 Lab — Kubernetes Networking, NetworkPolicy &amp; Monitoring</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="obj-list">
+        <p>🎯 Objectives</p>
+        <ul>
+          <li>Deploy a 3-tier application (frontend/backend/database) on Kubernetes</li>
+          <li>Implement NetworkPolicy to isolate the database tier</li>
+          <li>Configure nginx Ingress for path-based routing</li>
+          <li>Install kube-prometheus-stack via Helm for full cluster monitoring</li>
+        </ul>
+      </div>
+
+      <div class="topology-box">
+        <strong>🗺️ Application Architecture</strong>
+        <div class="topology-grid">
+          <div class="topo-node"><strong>Frontend</strong>nginx · port 80<br>NodePort :30080</div>
+          <div class="topo-node"><strong>Backend</strong>Node.js API · port 3000<br>ClusterIP</div>
+          <div class="topo-node"><strong>Database</strong>PostgreSQL · port 5432<br>ClusterIP (isolated)</div>
+          <div class="topo-node"><strong>Ingress</strong>nginx controller<br>ndfi.lab.local</div>
+        </div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">1</span> Create Namespace</h4>
+        <pre><code># namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ndfi-app
+  labels:
+    app: ndfi</code></pre>
+        <pre><code>kubectl apply -f namespace.yaml
+kubectl get ns ndfi-app</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">2</span> Database Secrets + PostgreSQL Deployment</h4>
+        <pre><code># Create secret first:
+kubectl create secret generic db-secret \
+  --namespace ndfi-app \
+  --from-literal=username=ndfiuser \
+  --from-literal=password=ndfipass123
+
+# db-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: ndfi-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+        tier: database
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_DB
+          value: ndfidb
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+        ports:
+        - containerPort: 5432
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: ndfi-app
+spec:
+  selector:
+    app: postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">3</span> Backend Deployment + ClusterIP Service</h4>
+        <pre><code># backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: ndfi-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+        tier: backend
+    spec:
+      containers:
+      - name: backend
+        image: node:20-alpine
+        command: ["node", "-e", "require('http').createServer((req,res)=>{res.end(JSON.stringify({status:'ok',host:process.env.HOSTNAME}))}).listen(3000)"]
+        ports:
+        - containerPort: 3000
+        resources:
+          requests: { memory: "128Mi", cpu: "100m" }
+          limits:   { memory: "256Mi", cpu: "250m" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: ndfi-app
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: ClusterIP</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">4</span> Frontend Deployment + NodePort Service</h4>
+        <pre><code># frontend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: ndfi-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:1.25-alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests: { memory: "64Mi", cpu: "50m" }
+          limits:   { memory: "128Mi", cpu: "100m" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: ndfi-app
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30080
+  type: NodePort</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">5</span> Ingress — Path-Based Routing</h4>
+        <pre><code># ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ndfi-ingress
+  namespace: ndfi-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ndfi.lab.local
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">6</span> NetworkPolicy — Isolate Database</h4>
+        <p>This policy ensures <strong>only the backend pods</strong> can connect to PostgreSQL on port 5432. All other ingress is denied.</p>
+        <pre><code># networkpolicy-db.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-isolation
+  namespace: ndfi-app
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: backend
+    ports:
+    - protocol: TCP
+      port: 5432
+  egress:
+  - {}  # Allow all egress (for DNS resolution)</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">7</span> NetworkPolicy — Restrict Backend Ingress</h4>
+        <p>The backend only accepts connections from frontend pods and the ingress-nginx namespace. Blocks direct internet access to the API.</p>
+        <pre><code># networkpolicy-backend.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-policy
+  namespace: ndfi-app
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3000</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">8</span> Install nginx Ingress Controller</h4>
+        <pre><code># Install the ingress controller:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+
+# Wait for it to be ready (up to 2 minutes):
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
+
+# Get the ingress controller external IP:
+kubectl get svc -n ingress-nginx ingress-nginx-controller
+INGRESS_IP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">9</span> Install Monitoring — kube-prometheus-stack via Helm</h4>
+        <pre><code># Add the Prometheus community Helm repo:
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+# Install kube-prometheus-stack:
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --create-namespace \
+  --set grafana.adminPassword=admin123 \
+  --set prometheus.prometheusSpec.scrapeInterval=15s
+
+# Wait for pods to be ready:
+kubectl get pods -n monitoring -w
+
+# Port-forward Grafana to localhost:
+kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 3000:80 &amp;
+# Access: http://localhost:3000  (admin / admin123)
+
+# Port-forward Prometheus:
+kubectl port-forward -n monitoring svc/kube-prometheus-stack-prometheus 9090:9090 &amp;
+# Access: http://localhost:9090</code></pre>
+        <div class="info-note">kube-prometheus-stack automatically installs Prometheus, Grafana, Alertmanager, node-exporter, and kube-state-metrics. Pre-built dashboards for node and cluster metrics are included.</div>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">10</span> Verify All Networking</h4>
+        <pre><code># Check all pods are Running with IPs:
+kubectl get pods -n ndfi-app -o wide
+
+# Test DNS resolution from backend — postgres service should resolve:
+kubectl exec -n ndfi-app deploy/backend -- nslookup postgres
+
+# Test Ingress routing:
+curl -H "Host: ndfi.lab.local" http://${INGRESS_IP}/
+curl -H "Host: ndfi.lab.local" http://${INGRESS_IP}/api/health
+
+# Test NetworkPolicy enforcement:
+# From frontend pod, trying to reach postgres SHOULD FAIL (policy blocks it):
+kubectl exec -n ndfi-app deploy/frontend -- nc -zv postgres 5432
+# Expected: Connection refused or timeout
+
+# From backend pod, reaching postgres SHOULD SUCCEED:
+kubectl exec -n ndfi-app deploy/backend -- nc -zv postgres 5432
+# Expected: Connection to postgres 5432 port [tcp/postgresql] succeeded!</code></pre>
+      </div>
+
+      <div class="step-block">
+        <h4><span class="step-num">11</span> Terraform EKS Module (Cloud Deployment)</h4>
+        <p>For production deployment on AWS, use the official EKS Terraform module:</p>
+        <pre><code># eks.tf
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~&gt; 20.0"
+
+  cluster_name    = "${var.project_name}-cluster"
+  cluster_version = "1.29"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  cluster_endpoint_public_access = true
+
+  eks_managed_node_groups = {
+    main = {
+      min_size       = 2
+      max_size       = 5
+      desired_size   = 3
+      instance_types = ["t3.medium"]
+
+      labels = {
+        Environment = var.environment
+        Project     = var.project_name
+      }
+    }
+  }
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+  }
+}
+
+# Update kubeconfig after cluster creation:
+# aws eks update-kubeconfig --region ap-south-1 --name ndfi-lab-cluster</code></pre>
+      </div>
+
+      <div class="checkpoint-box">
+        <strong>✅ Week 12 Checkpoint — All of these must be true:</strong>
+        <ul>
+          <li>All 3 tiers (frontend, backend, postgres) running with healthy pods</li>
+          <li>Ingress routes <code>/</code> to frontend and <code>/api</code> to backend correctly</li>
+          <li>Frontend pod CANNOT connect to postgres (NetworkPolicy blocks it)</li>
+          <li>Backend pod CAN connect to postgres (NetworkPolicy allows it)</li>
+          <li>Grafana accessible at localhost:3000 showing cluster metrics</li>
+          <li>Prometheus at localhost:9090 shows all kube-state-metrics targets UP</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+<script>
+function toggleWeek(id){
+  const b = document.getElementById(id);
+  b.classList.toggle('open');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const w = document.getElementById('w9');
+  if (w) w.classList.add('open');
+});
+</script>
+
+</body>
+</html>

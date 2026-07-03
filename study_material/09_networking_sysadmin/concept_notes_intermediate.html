@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking & Sysadmin — Concept Notes Intermediate | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">🖧 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner Notes ↗</a>
+    <a href="concept_notes_advanced.html">Advanced Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🖧</div>
+    <div class="lh-text">
+      <h2>Concept Notes — Intermediate</h2>
+      <p>Weeks 5–8 · Firewalls &amp; VPN · Routing &amp; VLANs · Linux Services · Monitoring &amp; Observability</p>
+    </div>
+    <div class="lh-badge">INTERMEDIATE</div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="week-block" id="w5">
+    <div class="week-header wn-int" onclick="toggleWeek('w5')">
+      <span class="wn-label">Week 5</span>
+      <span class="wn-title">Firewalls, VPN &amp; Security</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>iptables — Linux Netfilter Firewall</h3>
+      <p>iptables is the classic Linux firewall tool. It works with <strong>tables</strong> (filter, nat, mangle) and <strong>chains</strong> (INPUT, OUTPUT, FORWARD, PREROUTING, POSTROUTING).</p>
+
+      <table class="data-table">
+        <thead><tr><th>Chain</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><strong>INPUT</strong></td><td>Traffic destined for this host</td></tr>
+          <tr><td><strong>OUTPUT</strong></td><td>Traffic originating from this host</td></tr>
+          <tr><td><strong>FORWARD</strong></td><td>Traffic passing through this host (routing/NAT)</td></tr>
+        </tbody>
+      </table>
+
+      <pre><code># View current rules
+sudo iptables -L -n -v           # List all rules with packet counters
+sudo iptables -t nat -L -n -v    # View NAT table rules
+
+# Allow SSH (port 22)
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# Allow established/related connections (critical for stateful behaviour)
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow HTTP and HTTPS
+sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+# Allow loopback interface (always needed)
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A OUTPUT -o lo -j ACCEPT
+
+# Drop everything else on INPUT (set default policy to DROP)
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT    # Usually allow all outbound
+
+# Delete a rule (use -D instead of -A)
+sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
+
+# Save rules (Debian/Ubuntu)
+sudo iptables-save > /etc/iptables/rules.v4
+sudo ip6tables-save > /etc/iptables/rules.v6</code></pre>
+
+      <h3>nftables — Modern iptables Replacement</h3>
+      <pre><code># nftables uses a cleaner, consistent syntax
+sudo nft list ruleset                    # View all rules
+
+# Create a basic ruleset
+sudo nft add table inet filter
+sudo nft add chain inet filter input { type filter hook input priority 0 \; policy drop \; }
+sudo nft add rule inet filter input iif lo accept
+sudo nft add rule inet filter input ct state established,related accept
+sudo nft add rule inet filter input tcp dport 22 accept
+sudo nft add rule inet filter input tcp dport { 80, 443 } accept</code></pre>
+
+      <h3>firewalld — Zone-Based Firewall</h3>
+      <pre><code># firewalld uses "zones" — each zone has a trust level
+# Common zones: drop, block, public, external, internal, trusted, work, home, dmz
+
+sudo firewall-cmd --get-default-zone           # Show current default zone
+sudo firewall-cmd --list-all                   # Show active zone rules
+
+sudo firewall-cmd --add-service=http --permanent    # Allow HTTP permanently
+sudo firewall-cmd --add-service=https --permanent   # Allow HTTPS permanently
+sudo firewall-cmd --add-port=8080/tcp --permanent   # Open custom port
+sudo firewall-cmd --remove-service=telnet --permanent
+sudo firewall-cmd --reload                          # Apply permanent changes
+
+# Add a rich rule (allow only specific source)
+sudo firewall-cmd --add-rich-rule='rule family="ipv4" source address="192.168.1.0/24" service name="ssh" accept' --permanent</code></pre>
+
+      <h3>UFW — Uncomplicated Firewall</h3>
+      <pre><code>sudo ufw enable                                    # Enable UFW
+sudo ufw disable                                   # Disable UFW
+sudo ufw status verbose                            # Show rules and status
+
+sudo ufw default deny incoming                     # Block all inbound by default
+sudo ufw default allow outgoing                    # Allow all outbound by default
+
+sudo ufw allow 22/tcp                              # Allow SSH
+sudo ufw allow 80/tcp                              # Allow HTTP
+sudo ufw allow 443/tcp                             # Allow HTTPS
+sudo ufw deny 23                                   # Deny Telnet
+
+# Source-restricted rule
+sudo ufw allow from 192.168.1.0/24 to any port 3306   # MySQL only from internal LAN
+sudo ufw allow from 10.0.0.5 to any port 22            # SSH only from specific IP
+
+sudo ufw delete allow 80/tcp                       # Remove a rule
+sudo ufw logging on                                # Enable logging</code></pre>
+
+      <h3>Stateful vs Stateless Firewalls</h3>
+      <table class="data-table">
+        <thead><tr><th>Feature</th><th>Stateful</th><th>Stateless</th></tr></thead>
+        <tbody>
+          <tr><td>Connection tracking</td><td>Yes — tracks TCP state (NEW, ESTABLISHED, RELATED, INVALID)</td><td>No — each packet evaluated independently</td></tr>
+          <tr><td>Return traffic</td><td>Automatically allowed (ESTABLISHED match)</td><td>Must explicitly allow both directions</td></tr>
+          <tr><td>Performance</td><td>More memory/CPU overhead</td><td>Faster, no state table</td></tr>
+          <tr><td>Use case</td><td>Host-based firewalls, perimeter FW</td><td>High-speed ACLs on routers/switches</td></tr>
+          <tr><td>Example</td><td>iptables with -m state, firewalld</td><td>iptables without state, router ACL</td></tr>
+        </tbody>
+      </table>
+
+      <h3>VPN Technologies</h3>
+      <table class="data-table">
+        <thead><tr><th>VPN Type</th><th>Protocol / Port</th><th>Key Features</th></tr></thead>
+        <tbody>
+          <tr><td><strong>IPSec</strong></td><td>UDP 500/4500, ESP (protocol 50)</td><td>IKEv2 key exchange, tunnel mode (site-to-site) or transport mode (host-to-host), very widely supported</td></tr>
+          <tr><td><strong>OpenVPN</strong></td><td>UDP 1194 (default)</td><td>SSL/TLS based, tun (L3) or tap (L2) interface, highly configurable, cross-platform</td></tr>
+          <tr><td><strong>WireGuard</strong></td><td>UDP 51820 (default)</td><td>Modern cryptography (ChaCha20, Curve25519), ~4000 lines of code, fast, simple config</td></tr>
+          <tr><td><strong>SSL VPN</strong></td><td>TCP/UDP 443</td><td>Works through most firewalls, browser-based or client, example: OpenConnect, Cisco AnyConnect</td></tr>
+        </tbody>
+      </table>
+
+      <h4>WireGuard Configuration Example</h4>
+      <pre><code># /etc/wireguard/wg0.conf on Server (192.168.56.10)
+[Interface]
+PrivateKey = &lt;server_private_key_here&gt;
+Address = 10.0.0.1/24
+ListenPort = 51820
+# NAT forwarding (if server is also a gateway)
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+[Peer]
+PublicKey = &lt;client_public_key_here&gt;
+AllowedIPs = 10.0.0.2/32        # Only this peer's WireGuard IP
+
+# /etc/wireguard/wg0.conf on Client
+[Interface]
+PrivateKey = &lt;client_private_key_here&gt;
+Address = 10.0.0.2/24
+
+[Peer]
+PublicKey = &lt;server_public_key_here&gt;
+AllowedIPs = 0.0.0.0/0          # Route all traffic through VPN (full tunnel)
+Endpoint = 203.0.113.10:51820   # Server's public IP:port
+PersistentKeepalive = 25        # Keep NAT session alive
+
+# Key generation:
+wg genkey | tee privatekey | wg pubkey > publickey
+# Start:
+sudo wg-quick up wg0
+sudo systemctl enable wg-quick@wg0</code></pre>
+
+      <h3>TLS/SSL Handshake</h3>
+      <pre><code>1. ClientHello      → Client sends: supported TLS versions, cipher suites, random bytes
+2. ServerHello      ← Server selects: TLS version, cipher suite, sends its Certificate
+3. Certificate verify → Client validates server certificate against trusted CAs
+4. Key Exchange     ← Server sends key exchange data (DH/ECDH parameters)
+5. Client Finished  → Client derives session keys, sends Finished message (encrypted)
+6. Server Finished  ← Server confirms, both sides now use symmetric encryption
+7. Encrypted data ↔  Application data exchanged over encrypted channel
+
+# View certificate info:
+openssl s_client -connect google.com:443 -showcerts
+# Generate self-signed cert:
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes</code></pre>
+
+      <h3>SSH Hardening</h3>
+      <pre><code># /etc/ssh/sshd_config — key hardening settings:
+Port 2222                        # Non-default port (reduces script-kiddie attacks)
+PermitRootLogin no               # Never allow direct root SSH
+PasswordAuthentication no        # Force key-based auth only
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+AllowUsers alice bob deploy      # Whitelist users
+MaxAuthTries 3                   # Disconnect after 3 failed attempts
+LoginGraceTime 20                # 20 seconds to authenticate
+ClientAliveInterval 300          # Disconnect idle clients after 5 minutes
+ClientAliveCountMax 2
+X11Forwarding no                 # Disable X11 unless needed
+AllowTcpForwarding no            # Disable TCP forwarding unless needed
+
+# Reload SSH config (NOT restart — keeps existing sessions):
+sudo sshd -t                     # Test config for syntax errors
+sudo systemctl reload sshd</code></pre>
+
+      <h3>fail2ban — Intrusion Prevention</h3>
+      <pre><code># /etc/fail2ban/jail.local
+[DEFAULT]
+bantime  = 3600      # Ban for 1 hour
+findtime = 600       # Count failures within 10 minutes
+maxretry = 3         # Allow 3 attempts before ban
+ignoreip = 127.0.0.1/8 192.168.1.0/24  # Never ban these IPs
+
+[sshd]
+enabled  = true
+port     = 2222      # Match your SSH port
+logpath  = %(sshd_log)s
+maxretry = 3
+
+[nginx-http-auth]
+enabled = true
+
+# Commands:
+sudo fail2ban-client status          # Show active jails
+sudo fail2ban-client status sshd     # Show banned IPs for SSH
+sudo fail2ban-client set sshd unbanip 192.168.1.100  # Unban IP</code></pre>
+
+      <h3>SELinux &amp; AppArmor</h3>
+      <pre><code># SELinux (RHEL/CentOS/Fedora) — Mandatory Access Control
+getenforce                         # Show mode: Enforcing / Permissive / Disabled
+sudo setenforce 0                  # Switch to permissive (troubleshooting)
+sudo setenforce 1                  # Switch back to enforcing
+# Persistent setting: SELINUX=enforcing in /etc/selinux/config
+
+# Fix file context (e.g., after moving files)
+sudo restorecon -Rv /var/www/html/
+sudo chcon -t httpd_sys_content_t /var/www/html/app.py
+
+# Check SELinux denials
+sudo ausearch -m avc -ts recent
+sudo audit2allow -a               # Suggest policy changes
+sudo audit2allow -a -M mymodule   # Create custom policy module
+
+# AppArmor (Ubuntu/Debian)
+sudo aa-status                    # Show profiles and status
+sudo aa-enforce /etc/apparmor.d/usr.sbin.nginx    # Set to enforcing
+sudo aa-complain /etc/apparmor.d/usr.sbin.nginx   # Set to complain (log only)
+sudo apparmor_parser -r /etc/apparmor.d/usr.sbin.nginx  # Reload profile</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="week-block" id="w6">
+    <div class="week-header wn-int" onclick="toggleWeek('w6')">
+      <span class="wn-label">Week 6</span>
+      <span class="wn-title">Routing, Switching &amp; VLANs</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Static Routing on Linux</h3>
+      <pre><code># Temporary routes (lost on reboot)
+sudo ip route add 10.0.0.0/24 via 192.168.1.1 dev eth0    # Add route
+sudo ip route del 10.0.0.0/24                              # Delete route
+sudo ip route add default via 192.168.1.1                  # Default gateway
+
+# Persistent routes — Netplan (Ubuntu 18+)
+# /etc/netplan/00-installer-config.yaml
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: false
+      addresses: [192.168.1.10/24]
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.1.1
+        - to: 10.0.0.0/8
+          via: 192.168.1.254
+      nameservers:
+        addresses: [8.8.8.8]
+
+# View routing table
+ip route show
+# Output: default via 192.168.1.1 dev eth0 proto static
+#         10.0.0.0/8 via 192.168.1.254 dev eth0
+#         192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10</code></pre>
+
+      <h3>Dynamic Routing Protocols</h3>
+      <table class="data-table">
+        <thead><tr><th>Protocol</th><th>Type</th><th>Algorithm</th><th>Max Hops</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><strong>RIP v2</strong></td><td>Distance Vector</td><td>Bellman-Ford</td><td>15</td><td>Small legacy networks</td></tr>
+          <tr><td><strong>OSPF</strong></td><td>Link-State</td><td>Dijkstra SPF</td><td>Unlimited</td><td>Enterprise IGP, fast convergence, uses areas</td></tr>
+          <tr><td><strong>BGP</strong></td><td>Path Vector</td><td>Best-path selection</td><td>Unlimited</td><td>Internet routing between AS (eBGP), within AS (iBGP)</td></tr>
+          <tr><td><strong>EIGRP</strong></td><td>Hybrid (Cisco)</td><td>DUAL</td><td>Unlimited</td><td>Cisco networks, fast, supports unequal-cost LB</td></tr>
+        </tbody>
+      </table>
+
+      <h3>VLANs — Virtual Local Area Networks</h3>
+      <p>VLANs allow a single physical switch to be divided into multiple <em>logical networks</em>. Hosts in different VLANs cannot communicate without a Layer 3 device (router or L3 switch).</p>
+
+      <pre><code># VLAN tagging uses IEEE 802.1Q standard
+# A 4-byte tag is inserted into the Ethernet frame header:
+# TPID (0x8100) | PCP (3 bits) | DEI (1 bit) | VLAN ID (12 bits, 1-4094)
+
+# Port types:
+# Access port: carries ONE VLAN (untagged) — connects to end devices
+# Trunk port:  carries MULTIPLE VLANs (tagged) — connects switches/routers</code></pre>
+
+      <h4>Linux VLAN Configuration</h4>
+      <pre><code># Create VLAN 10 on interface eth0
+sudo ip link add link eth0 name eth0.10 type vlan id 10
+sudo ip addr add 192.168.10.1/24 dev eth0.10
+sudo ip link set eth0.10 up
+
+# Create VLAN 20
+sudo ip link add link eth0 name eth0.20 type vlan id 20
+sudo ip addr add 192.168.20.1/24 dev eth0.20
+sudo ip link set eth0.20 up
+
+# Verify
+ip -d link show eth0.10          # Shows VLAN ID and parent interface
+ip addr show eth0.10
+
+# Persistent (Netplan)
+# /etc/netplan/00-vlans.yaml
+network:
+  version: 2
+  vlans:
+    eth0.10:
+      id: 10
+      link: eth0
+      addresses: [192.168.10.1/24]
+    eth0.20:
+      id: 20
+      link: eth0
+      addresses: [192.168.20.1/24]</code></pre>
+
+      <h3>STP — Spanning Tree Protocol</h3>
+      <p>STP prevents Layer 2 loops in redundant switch topologies. Without STP, a broadcast storm would instantly saturate all links.</p>
+      <pre><code># STP process:
+1. Elect Root Bridge (lowest Bridge ID = priority + MAC)
+2. Each non-root switch finds its Root Port (best path to root)
+3. Each segment elects a Designated Port (one per segment)
+4. All other ports become Blocking ports
+
+# Port states: Blocking → Listening → Learning → Forwarding
+# 802.1D (original STP): ~30-50 seconds to converge
+# 802.1w (RSTP): ~1-2 seconds to converge (preferred)
+# 802.1s (MSTP): Multiple instances, one per group of VLANs</code></pre>
+
+      <h3>Link Aggregation — LACP &amp; Bonding</h3>
+      <pre><code># Linux bonding — combines multiple NICs for redundancy or speed
+# /etc/netplan/00-bonding.yaml
+network:
+  version: 2
+  bonds:
+    bond0:
+      interfaces: [eth0, eth1]
+      parameters:
+        mode: 802.3ad           # LACP (requires switch support)
+        mii-monitor-interval: 100
+      addresses: [192.168.1.10/24]
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.1.1
+
+# Bonding modes:
+# active-backup (mode 1): only one active, other is standby — failover only
+# balance-rr   (mode 0): round-robin across all interfaces — throughput
+# 802.3ad      (mode 4): LACP — requires switch config, provides LB + redundancy
+# balance-tlb  (mode 5): adaptive TX load balancing, no switch support needed</code></pre>
+
+      <h3>Network Namespaces &amp; Virtual Networking</h3>
+      <pre><code># Network namespaces — isolated network stack (used by containers/VMs)
+sudo ip netns add ns1                        # Create namespace
+sudo ip netns add ns2
+sudo ip netns list                           # List namespaces
+sudo ip netns exec ns1 ip addr              # Run command inside ns1
+
+# Connect two namespaces with a virtual ethernet pair (veth)
+sudo ip link add veth0 type veth peer name veth1   # Create pair
+sudo ip link set veth0 netns ns1            # Move veth0 to ns1
+sudo ip link set veth1 netns ns2            # Move veth1 to ns2
+sudo ip netns exec ns1 ip addr add 192.168.100.1/24 dev veth0
+sudo ip netns exec ns2 ip addr add 192.168.100.2/24 dev veth1
+sudo ip netns exec ns1 ip link set veth0 up
+sudo ip netns exec ns2 ip link set veth1 up
+sudo ip netns exec ns1 ping 192.168.100.2   # Test connectivity
+
+# Virtual bridge — connects multiple interfaces at Layer 2
+sudo ip link add br0 type bridge
+sudo ip link set eth1 master br0
+sudo ip link set eth2 master br0
+sudo ip addr add 192.168.1.1/24 dev br0
+sudo ip link set br0 up
+
+# tun vs tap:
+# tun: Layer 3 (IP packets) — used by VPNs like WireGuard/OpenVPN (tun mode)
+# tap: Layer 2 (Ethernet frames) — used by VM bridging, OpenVPN (tap mode)</code></pre>
+
+      <h3>ECMP — Equal-Cost Multi-Path</h3>
+      <pre><code># When multiple routes to same destination have equal metric,
+# traffic is distributed across all next-hops (load balancing)
+sudo ip route add 10.0.0.0/8 nexthop via 192.168.1.1 weight 1 \
+                               nexthop via 192.168.2.1 weight 1
+
+# Verify
+ip route show 10.0.0.0/8
+# Output: 10.0.0.0/8
+#   nexthop via 192.168.1.1 dev eth0 weight 1
+#   nexthop via 192.168.2.1 dev eth1 weight 1</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="week-block" id="w7">
+    <div class="week-header wn-int" onclick="toggleWeek('w7')">
+      <span class="wn-label">Week 7</span>
+      <span class="wn-title">Linux Services &amp; Automation</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>systemd Unit Files</h3>
+      <pre><code># /etc/systemd/system/myapp.service
+[Unit]
+Description=My Application Server
+Documentation=https://docs.myapp.com
+After=network.target postgresql.service   # Start after network and DB are up
+Requires=network.target                   # Hard dependency
+Wants=redis.service                       # Soft dependency (start if available)
+
+[Service]
+Type=simple                    # simple: main process stays in foreground
+# Type=forking: app forks and main process exits (traditional daemon)
+# Type=oneshot: runs once and exits (e.g., init scripts)
+# Type=notify: app signals readiness via sd_notify()
+
+User=myapp
+Group=myapp
+WorkingDirectory=/opt/myapp
+ExecStart=/usr/bin/python3 /opt/myapp/server.py
+ExecStop=/bin/kill -SIGTERM $MAINPID
+ExecReload=/bin/kill -SIGHUP $MAINPID
+Restart=always                 # Restart if it crashes
+RestartSec=5                   # Wait 5s before restart
+StartLimitBurst=3              # Max 3 restarts...
+StartLimitIntervalSec=60       # ...within 60 seconds
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/myapp/env # Load env vars from file
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target     # Start in runlevel 3 equivalent</code></pre>
+
+      <h3>systemctl Commands</h3>
+      <pre><code>sudo systemctl daemon-reload           # Reload unit files after editing
+sudo systemctl start nginx             # Start service
+sudo systemctl stop nginx              # Stop service
+sudo systemctl restart nginx           # Stop + start
+sudo systemctl reload nginx            # Reload config without stopping (if supported)
+sudo systemctl enable nginx            # Enable at boot
+sudo systemctl disable nginx           # Disable at boot
+sudo systemctl status nginx            # Show status, last log lines
+sudo systemctl is-active nginx         # Check if running
+sudo systemctl is-enabled nginx        # Check if enabled at boot
+sudo systemctl list-units --type=service --state=running  # All running services
+sudo systemctl list-timers             # Show systemd timers</code></pre>
+
+      <h3>journalctl — Systemd Journal</h3>
+      <pre><code>sudo journalctl -f                          # Follow live system log (like tail -f syslog)
+sudo journalctl -u nginx                    # Logs for nginx unit only
+sudo journalctl -u nginx -f                 # Follow nginx logs
+sudo journalctl -u nginx --since "1 hour ago"
+sudo journalctl --since "2024-01-15 09:00" --until "2024-01-15 10:00"
+sudo journalctl -p err                      # Only error level and above
+sudo journalctl -p warning -u sshd          # SSH warnings
+sudo journalctl --disk-usage                # How much space journal uses
+sudo journalctl --vacuum-time=7d            # Delete entries older than 7 days
+sudo journalctl -b                          # Since last boot
+sudo journalctl -b -1                       # Previous boot logs</code></pre>
+
+      <h3>cron &amp; Scheduled Tasks</h3>
+      <pre><code># cron syntax: minute hour day-of-month month day-of-week
+# *  = every
+# ,  = list (1,3,5)
+# -  = range (1-5)
+# /  = step (*/15 = every 15 minutes)
+
+# Examples:
+*/5 * * * *    /usr/bin/check_disk.sh          # Every 5 minutes
+0 2 * * *      /usr/bin/backup.sh              # Daily at 02:00
+0 0 * * 0      /usr/bin/weekly_report.sh       # Every Sunday midnight
+30 4 1 * *     /usr/bin/monthly_maintenance.sh # 1st of month at 04:30
+0 */6 * * *    /usr/bin/sync_logs.sh           # Every 6 hours
+
+crontab -e        # Edit current user's crontab
+crontab -l        # List current user's crontab
+sudo crontab -u root -l   # View root's crontab
+# System-wide cron dirs: /etc/cron.d/, /etc/cron.daily/, /etc/cron.hourly/</code></pre>
+
+      <h3>Advanced SSH Configuration</h3>
+      <pre><code># ~/.ssh/config — client-side SSH configuration
+
+# Jump host (bastion) pattern
+Host bastion
+  HostName bastion.example.com
+  User ec2-user
+  IdentityFile ~/.ssh/bastion_key.pem
+
+Host internal-*
+  ProxyJump bastion                   # Connect via bastion automatically
+  User ubuntu
+  IdentityFile ~/.ssh/internal_key.pem
+
+# SSH multiplexing — reuse existing connection for speed
+Host *
+  ControlMaster auto
+  ControlPath ~/.ssh/sockets/%r@%h:%p
+  ControlPersist 1h                   # Keep master alive 1 hour
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+
+# Usage:
+ssh internal-db01.example.com        # Automatically jumps through bastion
+ssh -J user@bastion user@internal    # Inline jump host syntax</code></pre>
+
+      <h3>rsync — Efficient File Transfer</h3>
+      <pre><code># rsync: only transfers changed files/blocks (delta sync)
+rsync -avz /local/dir/ user@remote:/remote/dir/   # Sync to remote (trailing / matters!)
+rsync -avz user@remote:/remote/dir/ /local/dir/   # Sync from remote
+
+# Key flags:
+# -a: archive mode (preserve permissions, timestamps, symlinks, owner, group)
+# -v: verbose
+# -z: compress during transfer
+# --progress: show file transfer progress
+# --delete: delete files on dest that don't exist on source (mirror mode)
+# --exclude: exclude patterns
+# --dry-run / -n: show what would happen without doing it
+
+rsync -avz --progress --exclude='*.log' --exclude='node_modules/' \
+  /data/app/ user@backup-server:/backups/app/
+
+# Common backup pattern with date stamping:
+DEST="/backups/app-$(date +%Y%m%d)"
+rsync -avz --link-dest=/backups/app-latest /data/app/ $DEST/
+ln -sfn $DEST /backups/app-latest    # Update symlink to latest</code></pre>
+
+      <h3>LVM — Logical Volume Management</h3>
+      <pre><code># LVM hierarchy: Physical Volume (PV) → Volume Group (VG) → Logical Volume (LV)
+# Benefits: resize LVs without downtime, snapshots, span multiple disks
+
+# Setup (assuming new disk /dev/sdb)
+sudo pvcreate /dev/sdb                           # Initialise PV
+sudo vgcreate datavg /dev/sdb                    # Create Volume Group
+sudo lvcreate -L 10G -n datalv datavg            # Create 10GB LV
+sudo mkfs.ext4 /dev/datavg/datalv                # Format
+sudo mkdir /data && sudo mount /dev/datavg/datalv /data
+echo '/dev/datavg/datalv /data ext4 defaults 0 2' | sudo tee -a /etc/fstab
+
+# Info commands
+sudo pvdisplay; sudo vgdisplay; sudo lvdisplay
+sudo vgs; sudo lvs                               # Compact summary
+
+# Extend an LV (no downtime needed for ext4/xfs)
+sudo lvextend -L +5G /dev/datavg/datalv          # Add 5GB
+sudo resize2fs /dev/datavg/datalv                # Grow ext4 filesystem
+# For XFS: sudo xfs_growfs /data
+
+# Snapshot (for backups)
+sudo lvcreate -L 2G -s -n datalv_snap /dev/datavg/datalv
+sudo mount -o ro /dev/datavg/datalv_snap /mnt/snap
+sudo lvremove /dev/datavg/datalv_snap            # Remove when done</code></pre>
+
+      <h3>RAID Levels</h3>
+      <table class="data-table">
+        <thead><tr><th>RAID</th><th>Min Disks</th><th>Redundancy</th><th>Performance</th><th>Usable Space</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0</strong></td><td>2</td><td>None (lose 1 = lose all)</td><td>Read+Write ↑↑</td><td>100% (N × disk)</td></tr>
+          <tr><td><strong>1</strong></td><td>2</td><td>1 disk failure ok</td><td>Read ↑, Write same</td><td>50% (1 × disk)</td></tr>
+          <tr><td><strong>5</strong></td><td>3</td><td>1 disk failure ok</td><td>Read ↑, Write slightly ↓</td><td>(N-1) × disk</td></tr>
+          <tr><td><strong>6</strong></td><td>4</td><td>2 disk failures ok</td><td>Read ↑, Write ↓↓</td><td>(N-2) × disk</td></tr>
+          <tr><td><strong>10</strong></td><td>4</td><td>1 per mirror pair</td><td>Read ↑↑, Write ↑</td><td>50% (N/2 × disk)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>NFS &amp; Samba File Sharing</h3>
+      <pre><code># NFS (Network File System) — Unix/Linux native file sharing
+sudo apt install nfs-kernel-server
+# /etc/exports:
+/shared  192.168.1.0/24(rw,sync,no_subtree_check)
+/ro-data *(ro,sync,no_root_squash)
+
+sudo exportfs -a         # Apply exports
+sudo exportfs -v         # List active exports
+sudo systemctl restart nfs-kernel-server
+
+# Client mount:
+sudo mount -t nfs 192.168.1.10:/shared /mnt/shared
+# Persistent (/etc/fstab):
+# 192.168.1.10:/shared /mnt/shared nfs defaults,_netdev 0 0
+
+# Samba (SMB/CIFS) — Windows compatible file sharing
+sudo apt install samba
+# /etc/samba/smb.conf:
+[global]
+   workgroup = WORKGROUP
+[myshare]
+   path = /data/shared
+   valid users = alice bob
+   read only = no
+   browsable = yes
+
+sudo smbpasswd -a alice          # Set Samba password for user
+sudo systemctl restart smbd nmbd</code></pre>
+
+      <h3>Log Management</h3>
+      <pre><code># logrotate — /etc/logrotate.d/myapp
+/var/log/myapp/*.log {
+    daily               # Rotate daily
+    rotate 14           # Keep 14 rotated files
+    compress            # Compress old logs with gzip
+    delaycompress       # Don't compress the most recent rotated file
+    missingok           # Don't error if log file missing
+    notifempty          # Don't rotate empty files
+    create 0644 myapp myapp  # Create new log with these permissions
+    postrotate
+        /bin/kill -HUP $(cat /var/run/myapp.pid) 2>/dev/null || true
+    endscript
+}
+
+# rsyslog — system log daemon
+# /etc/rsyslog.conf facility.severity /path/to/log
+kern.err                /var/log/kernel-errors.log
+*.warn;*.err            /var/log/important.log
+mail.*                  /var/log/mail.log
+# Remote logging (TCP):
+*.* @@remote-syslog.example.com:514
+# Local socket for containers:
+$SystemLogSocketName /run/systemd/journal/syslog</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="week-block" id="w8">
+    <div class="week-header wn-int" onclick="toggleWeek('w8')">
+      <span class="wn-label">Week 8</span>
+      <span class="wn-title">Monitoring &amp; Observability</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Prometheus Architecture</h3>
+      <p>Prometheus is a <strong>pull-based</strong> time-series monitoring system. It scrapes metrics from HTTP endpoints at configurable intervals and stores them in its own TSDB (Time Series Database).</p>
+      <pre><code># /etc/prometheus/prometheus.yml
+global:
+  scrape_interval: 15s          # How often to scrape targets
+  evaluation_interval: 15s      # How often to evaluate alerting rules
+  external_labels:
+    datacenter: 'dc1'
+
+rule_files:
+  - "alerts.yml"
+  - "recording_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node'
+    static_configs:
+      - targets:
+          - 'server1.lab.local:9100'
+          - 'server2.lab.local:9100'
+    scrape_interval: 10s     # Override global for this job
+
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['server1.lab.local:9113']  # nginx-prometheus-exporter</code></pre>
+
+      <h3>PromQL — Query Language</h3>
+      <pre><code># Instant vector — current value
+node_cpu_seconds_total                              # All CPU metric time series
+node_cpu_seconds_total{mode="idle"}                 # Filter by label
+node_cpu_seconds_total{instance="server1:9100"}     # Filter by instance
+
+# Range vector — values over time window
+node_cpu_seconds_total[5m]                          # Last 5 minutes of data
+
+# Rate — per-second rate of increase over time window (use for counters)
+rate(node_cpu_seconds_total{mode="idle"}[5m])
+
+# CPU usage % per instance
+100 - (avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+
+# Sum all HTTP requests per job
+sum by(job)(rate(http_requests_total[5m]))
+
+# Memory usage
+node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+
+# Disk free percentage
+node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100
+
+# Functions:
+# rate()       — per-second rate (counters)
+# irate()      — instantaneous rate (last two samples)
+# increase()   — total increase over time range
+# avg_over_time(metric[1h]) — average over 1 hour
+# histogram_quantile(0.99, rate(http_duration_bucket[5m]))  — p99 latency</code></pre>
+
+      <h3>Key Node Exporter Metrics</h3>
+      <table class="data-table">
+        <thead><tr><th>Metric</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>node_cpu_seconds_total</code></td><td>Counter</td><td>CPU time by mode (idle/user/system/iowait). Rate = usage %</td></tr>
+          <tr><td><code>node_memory_MemAvailable_bytes</code></td><td>Gauge</td><td>Available memory (includes reclaimable cache)</td></tr>
+          <tr><td><code>node_filesystem_avail_bytes</code></td><td>Gauge</td><td>Available disk space by mountpoint</td></tr>
+          <tr><td><code>node_network_receive_bytes_total</code></td><td>Counter</td><td>Network bytes received per interface</td></tr>
+          <tr><td><code>node_network_transmit_bytes_total</code></td><td>Counter</td><td>Network bytes transmitted per interface</td></tr>
+          <tr><td><code>node_load1</code></td><td>Gauge</td><td>1-minute load average</td></tr>
+          <tr><td><code>node_load5</code></td><td>Gauge</td><td>5-minute load average</td></tr>
+          <tr><td><code>node_load15</code></td><td>Gauge</td><td>15-minute load average</td></tr>
+          <tr><td><code>node_disk_io_time_seconds_total</code></td><td>Counter</td><td>Time spent doing I/Os (disk busy %)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Alertmanager Configuration</h3>
+      <pre><code># /etc/alertmanager/alertmanager.yml
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'alerts@example.com'
+  slack_api_url: 'https://hooks.slack.com/services/XXX/YYY/ZZZ'
+
+route:
+  group_by: ['alertname', 'cluster']
+  group_wait: 30s            # Wait 30s before sending group (collects related alerts)
+  group_interval: 5m         # Wait 5m before sending updated group notification
+  repeat_interval: 4h        # Resend if alert still firing after 4h
+  receiver: 'team-email'
+  routes:
+    - match:
+        severity: critical
+      receiver: 'pagerduty'
+    - match:
+        team: devops
+      receiver: 'slack-devops'
+
+receivers:
+  - name: 'team-email'
+    email_configs:
+      - to: 'devops@example.com'
+        send_resolved: true
+
+  - name: 'slack-devops'
+    slack_configs:
+      - channel: '#alerts'
+        title: '{{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']  # Suppress warnings when critical fires</code></pre>
+
+      <h3>Grafana — Dashboards</h3>
+      <pre><code># Access: http://grafana-host:3000  (default admin/admin)
+
+# Key concepts:
+# Data Source: connection to metrics/logs backend (Prometheus, Loki, InfluxDB, etc.)
+# Panel:       individual visualisation (graph, stat, table, heatmap, gauge)
+# Dashboard:   collection of panels
+# Variable:    dynamic dropdown to filter dashboards (e.g., ${instance})
+
+# Useful pre-built dashboards (import by ID at grafana.com/dashboards):
+# 1860  — Node Exporter Full (system metrics)
+# 3662  — Prometheus Stats (self-monitoring)
+# 315   — Kubernetes cluster monitoring
+# 12740 — Linux Host Overview
+
+# Example panel query (CPU usage graph):
+100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle",instance=~"$instance"}[5m])) * 100)
+# Use $instance variable for multi-host selection</code></pre>
+
+      <h3>ELK Stack</h3>
+      <table class="data-table">
+        <thead><tr><th>Component</th><th>Port</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Elasticsearch</strong></td><td>9200 (HTTP), 9300 (transport)</td><td>Distributed search and indexing engine (stores logs as documents)</td></tr>
+          <tr><td><strong>Logstash</strong></td><td>5044 (Beats input)</td><td>Log collection, parsing (Grok patterns), transformation, and forwarding</td></tr>
+          <tr><td><strong>Kibana</strong></td><td>5601</td><td>Web UI for searching, visualising, and dashboarding Elasticsearch data</td></tr>
+          <tr><td><strong>Filebeat</strong></td><td>—</td><td>Lightweight log shipper — tails log files and forwards to Logstash or ES</td></tr>
+        </tbody>
+      </table>
+      <pre><code># Logstash pipeline example (/etc/logstash/conf.d/nginx.conf):
+input {
+  beats {
+    port => 5044
+  }
+}
+filter {
+  if [fields][log_type] == "nginx" {
+    grok {
+      match => { "message" => "%{COMBINEDAPACHELOG}" }
+    }
+    date {
+      match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
+    }
+    geoip {
+      source => "clientip"
+    }
+  }
+}
+output {
+  elasticsearch {
+    hosts => ["http://elasticsearch:9200"]
+    index => "nginx-logs-%{+YYYY.MM.dd}"
+  }
+}</code></pre>
+
+      <h3>SLI / SLO / SLA / Error Budget</h3>
+      <table class="data-table">
+        <thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SLI</strong> — Service Level Indicator</td><td>A measured metric that reflects service quality</td><td>p99 request latency = 145ms; error rate = 0.01%</td></tr>
+          <tr><td><strong>SLO</strong> — Service Level Objective</td><td>Internal target for an SLI</td><td>p99 latency &lt; 200ms, 99.9% of the time over 30 days</td></tr>
+          <tr><td><strong>SLA</strong> — Service Level Agreement</td><td>Customer-facing contract with penalties for breach</td><td>"We guarantee 99.9% uptime; credits if we fail"</td></tr>
+          <tr><td><strong>Error Budget</strong></td><td>Allowed downtime/failures = 1 − SLO availability</td><td>99.9% SLO → 0.1% = 43.8 min/month error budget</td></tr>
+        </tbody>
+      </table>
+      <pre><code># Error Budget PromQL (fraction of time SLO was met):
+# Availability SLI:
+sum(rate(http_requests_total{status!~"5.."}[30d])) /
+sum(rate(http_requests_total[30d]))
+
+# Error budget remaining (%):
+(  (sum(rate(http_requests_total{status!~"5.."}[30d])) /
+    sum(rate(http_requests_total[30d])))  - 0.999 ) / 0.001 * 100</code></pre>
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

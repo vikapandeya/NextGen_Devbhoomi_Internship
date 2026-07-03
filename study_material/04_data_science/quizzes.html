@@ -1,0 +1,399 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Quizzes | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">🧩 Quizzes</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; QUIZZES
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">📖 Beginner Notes</a>
+    <a href="concept_notes_intermediate.html">📖 Intermediate Notes</a>
+    <a href="lab_guide_beginner.html">🔬 Labs</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🧩</div>
+    <div class="lh-text">
+      <h2>Data Science &amp; Analytics — Quizzes</h2>
+      <p>12 weekly quizzes, 5 questions each. Complete the corresponding lab to unlock each week's quiz. Scores are saved to your progress tracker.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">12 Weeks</span>
+      <span class="lh-badge">5 Qs Each</span>
+      <span class="lh-badge">Auto-Graded</span>
+    </div>
+  </div>
+
+  <div class="quiz-container">
+
+    <!-- QUIZ W1 -->
+    <div class="quiz-week-block" data-quiz-id="d4-w1" data-domain="data_science" data-week="1">
+      <div class="quiz-week-header">
+        <div class="quiz-week-num wn-beg">W1</div>
+        <h3>Data Science Fundamentals</h3>
+        <div class="quiz-week-meta">5 questions · Beginner</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. Which step in the OSEMN framework involves removing outliers, fixing missing values, and correcting data types?</p>
+        <div class="quiz-opt" data-value="a">A) Obtain</div>
+        <div class="quiz-opt" data-value="b">B) Scrub</div>
+        <div class="quiz-opt" data-value="c">C) Explore</div>
+        <div class="quiz-opt" data-value="d">D) Model</div>
+        <div class="quiz-explanation">Scrub (also called "wrangle" or "munge") is the data cleaning phase. It includes handling missing values, removing duplicates, correcting data types, and filtering outliers. This typically consumes 60–80% of a data scientist's time.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="b">
+        <p class="quiz-question">2. pandas is primarily used for which purpose in data science?</p>
+        <div class="quiz-opt" data-value="a">A) Building neural networks</div>
+        <div class="quiz-opt" data-value="b">B) Data manipulation and analysis</div>
+        <div class="quiz-opt" data-value="c">C) Computer vision tasks</div>
+        <div class="quiz-opt" data-value="d">D) Natural language processing</div>
+        <div class="quiz-explanation">pandas provides the DataFrame and Series data structures for data manipulation and analysis. It's the equivalent of Excel for programmers — loading, filtering, transforming, and aggregating tabular data. Neural networks use PyTorch/TensorFlow, CV uses OpenCV, and NLP uses NLTK/spaCy/transformers.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="c">
+        <p class="quiz-question">3. Which function do you use to load a comma-separated file into a pandas DataFrame?</p>
+        <div class="quiz-opt" data-value="a">A) pd.load_file('data.csv')</div>
+        <div class="quiz-opt" data-value="b">B) pd.open('data.csv')</div>
+        <div class="quiz-opt" data-value="c">C) pd.read_csv('data.csv')</div>
+        <div class="quiz-opt" data-value="d">D) pd.import_csv('data.csv')</div>
+        <div class="quiz-explanation">pd.read_csv() is the standard pandas function for loading CSV files into a DataFrame. It has many parameters including sep (delimiter), header, index_col, usecols, dtype, and na_values. Other formats: pd.read_excel(), pd.read_json(), pd.read_sql().</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. What does df.describe() return when called on a DataFrame?</p>
+        <div class="quiz-opt" data-value="a">A) The first 5 rows of the DataFrame</div>
+        <div class="quiz-opt" data-value="b">B) Summary statistics for numeric columns (count, mean, std, min, quartiles, max)</div>
+        <div class="quiz-opt" data-value="c">C) The data types of each column</div>
+        <div class="quiz-opt" data-value="d">D) The number of missing values per column</div>
+        <div class="quiz-explanation">df.describe() generates descriptive statistics for all numeric columns: count, mean, std, min, 25th/50th/75th percentiles, and max. For categorical columns, add include='object' to get count, unique, top, and freq instead. df.dtypes shows types, df.info() shows types + non-null counts, df.isnull().sum() counts missing values.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="b">
+        <p class="quiz-question">5. NumPy arrays are faster than Python lists for numerical computation primarily because:</p>
+        <div class="quiz-opt" data-value="a">A) They are stored in the cloud for faster access</div>
+        <div class="quiz-opt" data-value="b">B) They use fixed data types and contiguous memory layout, enabling vectorized operations</div>
+        <div class="quiz-opt" data-value="c">C) They have built-in GPU acceleration</div>
+        <div class="quiz-opt" data-value="d">D) They automatically resize as needed</div>
+        <div class="quiz-explanation">NumPy arrays store all elements with the same data type (e.g., float64) in contiguous memory blocks. This allows vectorized operations — applying a computation to the entire array at C speed without Python loops. Python lists store heterogeneous objects with separate pointers, making element-wise operations much slower.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+
+    <!-- QUIZ W2 -->
+    <div class="quiz-week-block" data-quiz-id="d4-w2" data-domain="data_science" data-week="2">
+      <div class="quiz-week-header">
+        <div class="quiz-week-num wn-beg">W2</div>
+        <h3>Python &amp; Data Manipulation</h3>
+        <div class="quiz-week-meta">5 questions · Beginner</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. How do you select only rows where the 'age' column is greater than 30 in a DataFrame df?</p>
+        <div class="quiz-opt" data-value="a">A) df.where('age &gt; 30')</div>
+        <div class="quiz-opt" data-value="b">B) df[df['age'] &gt; 30]</div>
+        <div class="quiz-opt" data-value="c">C) df.filter('age &gt; 30')</div>
+        <div class="quiz-opt" data-value="d">D) df.select(age &gt; 30)</div>
+        <div class="quiz-explanation">Boolean indexing with df[df['age'] > 30] is the standard pandas approach. df['age'] > 30 creates a boolean Series (True/False for each row), and passing that Series inside df[...] filters to only True rows. You can combine conditions: df[(df['age'] > 30) & (df['city'] == 'Delhi')].</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="b">
+        <p class="quiz-question">2. What does df.groupby('city')['sales'].sum() return?</p>
+        <div class="quiz-opt" data-value="a">A) Total sales across all cities as a single number</div>
+        <div class="quiz-opt" data-value="b">B) A Series with the total sales amount for each city</div>
+        <div class="quiz-opt" data-value="c">C) Sales values sorted alphabetically by city</div>
+        <div class="quiz-opt" data-value="d">D) A list of all unique city names</div>
+        <div class="quiz-explanation">groupby('city') splits the DataFrame into groups by city, then ['sales'].sum() aggregates the 'sales' column for each group by summing. The result is a Series where the index is the city names and values are the summed sales. Other aggregations: .mean(), .count(), .max(), .min(), .agg({'sales':'sum', 'quantity':'mean'}).</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. What does df.iloc[0:3] return?</p>
+        <div class="quiz-opt" data-value="a">A) Rows with integer index labels 0, 1, 2, and 3</div>
+        <div class="quiz-opt" data-value="b">B) The first 3 rows (positions 0, 1, 2) regardless of index labels</div>
+        <div class="quiz-opt" data-value="c">C) Columns at positions 0 through 3</div>
+        <div class="quiz-opt" data-value="d">D) The last 3 rows</div>
+        <div class="quiz-explanation">iloc uses integer positions (0-based). iloc[0:3] uses Python slice notation: start=0, stop=3 (exclusive), so it returns rows at positions 0, 1, and 2. Contrast with .loc which uses label-based indexing. If the DataFrame has index ['a','b','c','d'], df.loc['a':'c'] returns all 3 rows, but df.iloc[0:3] also returns the first 3 rows.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. What does df.isnull().sum() return?</p>
+        <div class="quiz-opt" data-value="a">A) The total number of rows in the DataFrame</div>
+        <div class="quiz-opt" data-value="b">B) The count of missing (NaN/None) values in each column</div>
+        <div class="quiz-opt" data-value="c">C) The sum of all numeric values in the DataFrame</div>
+        <div class="quiz-opt" data-value="d">D) A list of column names that contain null values</div>
+        <div class="quiz-explanation">df.isnull() returns a boolean DataFrame (True where values are NaN/None). Calling .sum() on a boolean Series or DataFrame counts the Trues, giving the count of missing values per column. To get the total missing across all columns: df.isnull().sum().sum(). To get percentage: df.isnull().sum() / len(df) * 100.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="b">
+        <p class="quiz-question">5. Which pandas method removes duplicate rows from a DataFrame?</p>
+        <div class="quiz-opt" data-value="a">A) df.unique()</div>
+        <div class="quiz-opt" data-value="b">B) df.drop_duplicates()</div>
+        <div class="quiz-opt" data-value="c">C) df.remove_copies()</div>
+        <div class="quiz-opt" data-value="d">D) df.distinct()</div>
+        <div class="quiz-explanation">df.drop_duplicates() removes rows that are identical across all columns (keeps the first occurrence by default). You can specify subset=['col1','col2'] to check only certain columns. keep='last' keeps the last occurrence. keep=False removes ALL duplicates (including originals). df.duplicated() returns a boolean Series marking which rows are duplicates.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+
+    <!-- QUIZ W3 -->
+    <div class="quiz-week-block" data-quiz-id="d4-w3" data-domain="data_science" data-week="3">
+      <div class="quiz-week-header">
+        <div class="quiz-week-num wn-beg">W3</div>
+        <h3>Data Visualization</h3>
+        <div class="quiz-week-meta">5 questions · Beginner</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="0" data-correct="c">
+        <p class="quiz-question">1. Which chart type is most appropriate for showing the distribution of a continuous variable like age or salary?</p>
+        <div class="quiz-opt" data-value="a">A) Bar chart</div>
+        <div class="quiz-opt" data-value="b">B) Pie chart</div>
+        <div class="quiz-opt" data-value="c">C) Histogram</div>
+        <div class="quiz-opt" data-value="d">D) Line chart</div>
+        <div class="quiz-explanation">A histogram divides continuous data into bins and shows the frequency of values in each bin. This reveals the shape of the distribution (normal, skewed, bimodal, etc.). Bar charts compare discrete categories. Pie charts show proportions of a whole. Line charts show trends over time. For continuous data distribution, histogram (or kde plot) is the right choice.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="b">
+        <p class="quiz-question">2. What does sns.heatmap(df.corr()) visualize?</p>
+        <div class="quiz-opt" data-value="a">A) The pattern of missing values in the DataFrame</div>
+        <div class="quiz-opt" data-value="b">B) Pairwise correlation coefficients between all numeric columns</div>
+        <div class="quiz-opt" data-value="c">C) Cluster assignments from K-Means</div>
+        <div class="quiz-opt" data-value="d">D) Time series values over time</div>
+        <div class="quiz-explanation">df.corr() computes the Pearson correlation coefficient between all pairs of numeric columns — values range from -1 (perfect negative) to +1 (perfect positive). sns.heatmap() visualizes this matrix with color encoding: red/warm = positive correlation, blue/cool = negative. The annot=True parameter adds the numeric values inside each cell.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="a">
+        <p class="quiz-question">3. When saving a Matplotlib chart, plt.savefig() must be called:</p>
+        <div class="quiz-opt" data-value="a">A) Before plt.show()</div>
+        <div class="quiz-opt" data-value="b">B) After plt.show()</div>
+        <div class="quiz-opt" data-value="c">C) After plt.close()</div>
+        <div class="quiz-opt" data-value="d">D) The order doesn't matter</div>
+        <div class="quiz-explanation">plt.show() renders the figure to screen AND clears the current figure buffer. If you call plt.savefig() after plt.show(), the figure buffer is empty and you'll save a blank white image. Always call plt.savefig() FIRST, then plt.show(). Use bbox_inches='tight' to avoid cutting off labels.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. A boxplot displays which statistical information?</p>
+        <div class="quiz-opt" data-value="a">A) Mean and variance only</div>
+        <div class="quiz-opt" data-value="b">B) Median, IQR (interquartile range), and outliers</div>
+        <div class="quiz-opt" data-value="c">C) Mode and frequency distribution</div>
+        <div class="quiz-opt" data-value="d">D) Cumulative distribution function</div>
+        <div class="quiz-explanation">A boxplot (box-and-whisker plot) shows: the box = Q1 to Q3 (IQR), the line inside = median (Q2), whiskers extend to 1.5×IQR beyond Q1 and Q3, and individual dots beyond whiskers = outliers. It's excellent for comparing distributions across groups and spotting outliers. Note: the mean is NOT shown by default.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="c">
+        <p class="quiz-question">5. In plt.figure(figsize=(10, 6)), what does figsize set?</p>
+        <div class="quiz-opt" data-value="a">A) The font size for all text in the chart</div>
+        <div class="quiz-opt" data-value="b">B) The screen resolution in pixels</div>
+        <div class="quiz-opt" data-value="c">C) The width and height of the figure in inches</div>
+        <div class="quiz-opt" data-value="d">D) The number of subplots to create</div>
+        <div class="quiz-explanation">figsize=(width, height) sets the figure dimensions in inches. The actual pixel size depends on the dpi (dots per inch) — default is 100 dpi, so figsize=(10,6) creates a 1000×600 pixel figure. For high-resolution exports, set dpi=150 or 300 in plt.savefig(). Typical values: (8,5) for single chart, (14,5) for two side-by-side charts.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+
+    <!-- QUIZ W4 -->
+    <div class="quiz-week-block" data-quiz-id="d4-w4" data-domain="data_science" data-week="4">
+      <div class="quiz-week-header">
+        <div class="quiz-week-num wn-beg">W4</div>
+        <h3>Statistics Basics</h3>
+        <div class="quiz-week-meta">5 questions · Beginner</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. A hypothesis test returns p-value = 0.02 with significance level α = 0.05. What is the correct conclusion?</p>
+        <div class="quiz-opt" data-value="a">A) Fail to reject H₀ — p-value is small</div>
+        <div class="quiz-opt" data-value="b">B) Reject H₀ — there is statistically significant evidence against the null hypothesis</div>
+        <div class="quiz-opt" data-value="c">C) Accept H₁ directly without further analysis</div>
+        <div class="quiz-opt" data-value="d">D) Need more data before deciding</div>
+        <div class="quiz-explanation">When p-value (0.02) &lt; α (0.05), we reject the null hypothesis. The p-value represents the probability of observing this data (or more extreme) if H₀ were true. A small p-value means this data is unlikely under H₀, so we have evidence to reject it. We never "accept" H₁ directly — we only "fail to reject" or "reject" H₀.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="b">
+        <p class="quiz-question">2. Standard deviation is a measure of:</p>
+        <div class="quiz-opt" data-value="a">A) The center of the data distribution</div>
+        <div class="quiz-opt" data-value="b">B) The spread or variability of the data around its mean</div>
+        <div class="quiz-opt" data-value="c">C) The skewness of the distribution</div>
+        <div class="quiz-opt" data-value="d">D) The presence of outliers only</div>
+        <div class="quiz-explanation">Standard deviation (σ for population, s for sample) measures how spread out values are around the mean. A small std means values cluster tightly around the mean. A large std means high variability. It's in the same units as the original data (unlike variance, which is squared). For a normal distribution: ~68% of data falls within 1σ, 95% within 2σ.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. The Central Limit Theorem states that as sample size n increases:</p>
+        <div class="quiz-opt" data-value="a">A) Sample means equal the population mean exactly</div>
+        <div class="quiz-opt" data-value="b">B) The distribution of sample means approaches a normal distribution regardless of the population's shape</div>
+        <div class="quiz-opt" data-value="c">C) Individual data points are always normally distributed</div>
+        <div class="quiz-opt" data-value="d">D) The sample mean equals the sample median</div>
+        <div class="quiz-explanation">The CLT is one of statistics' most important results: even if the original population is skewed, uniform, or has any shape, the sampling distribution of the mean becomes approximately normal as n increases (typically n ≥ 30 is sufficient). This underpins most statistical tests, confidence intervals, and explains why averages are more predictable than individual values.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. A normal distribution is best characterized by:</p>
+        <div class="quiz-opt" data-value="a">A) Two peaks (bimodal)</div>
+        <div class="quiz-opt" data-value="b">B) Perfect symmetry around the mean, with a bell-shaped curve</div>
+        <div class="quiz-opt" data-value="c">C) Values that are always positive and right-skewed</div>
+        <div class="quiz-opt" data-value="d">D) A fixed range from 0 to 1</div>
+        <div class="quiz-explanation">A normal (Gaussian) distribution is symmetric around its mean, meaning the left and right halves are mirror images. It's described completely by mean (μ) and standard deviation (σ). It can have any mean (positive, negative, zero) and any positive standard deviation. Values can theoretically extend from -∞ to +∞. The 68-95-99.7 rule applies.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="c">
+        <p class="quiz-question">5. In a correlation matrix, a coefficient value of -0.9 indicates:</p>
+        <div class="quiz-opt" data-value="a">A) No relationship between the two variables</div>
+        <div class="quiz-opt" data-value="b">B) A strong positive relationship</div>
+        <div class="quiz-opt" data-value="c">C) A strong negative (inverse) relationship</div>
+        <div class="quiz-opt" data-value="d">D) A weak negative relationship</div>
+        <div class="quiz-explanation">Pearson correlation ranges from -1 to +1. -0.9 is close to -1, indicating a strong negative (inverse) relationship: as one variable increases, the other tends to strongly decrease. Strength guideline: |r| &gt; 0.7 = strong, 0.3–0.7 = moderate, &lt; 0.3 = weak. Sign: positive = same direction, negative = opposite direction. Note: correlation ≠ causation.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+
+    <!-- QUIZ W5 -->
+    <div class="quiz-week-block" data-quiz-id="d4-w5" data-domain="data_science" data-week="5">
+      <div class="quiz-week-header">
+        <div class="quiz-week-num wn-int">W5</div>
+        <h3>Machine Learning Basics</h3>
+        <div class="quiz-week-meta">5 questions · Intermediate</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="0" data-correct="b">
+        <p class="quiz-question">1. train_test_split(X, y, test_size=0.2, random_state=42) splits the data into:</p>
+        <div class="quiz-opt" data-value="a">A) 20% training, 80% testing</div>
+        <div class="quiz-opt" data-value="b">B) 80% training, 20% testing</div>
+        <div class="quiz-opt" data-value="c">C) Exactly 20 samples for testing</div>
+        <div class="quiz-opt" data-value="d">D) 20 features for testing</div>
+        <div class="quiz-explanation">test_size=0.2 means 20% of data goes to the test set and 80% goes to training. The random_state=42 ensures reproducibility — the same split every time you run the code. stratify=y is recommended for classification to maintain the same class ratio in both splits. Common splits: 80/20 or 70/30.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="1" data-correct="b">
+        <p class="quiz-question">2. Overfitting occurs when a model:</p>
+        <div class="quiz-opt" data-value="a">A) Performs poorly on both training and test data</div>
+        <div class="quiz-opt" data-value="b">B) Performs very well on training data but poorly on test/new data</div>
+        <div class="quiz-opt" data-value="c">C) Is too simple to capture patterns in the data</div>
+        <div class="quiz-opt" data-value="d">D) Has too little training data to learn from</div>
+        <div class="quiz-explanation">Overfitting means the model has memorized the training data (including noise and random patterns) rather than learning the underlying signal. Signs: training accuracy &gt;&gt; test accuracy. Fixes: reduce model complexity (max_depth, fewer features), use regularization (L1/L2), cross-validation, more training data, dropout (for neural nets). The opposite is underfitting (poor performance on both).</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="2" data-correct="b">
+        <p class="quiz-question">3. LinearRegression from sklearn is appropriate when you want to predict:</p>
+        <div class="quiz-opt" data-value="a">A) A discrete category label (e.g., spam/not spam)</div>
+        <div class="quiz-opt" data-value="b">B) A continuous numeric value (e.g., house price, temperature)</div>
+        <div class="quiz-opt" data-value="c">C) The optimal clusters in unlabeled data</div>
+        <div class="quiz-opt" data-value="d">D) Reduced dimensionality of features</div>
+        <div class="quiz-explanation">Linear regression predicts continuous numeric outputs (regression tasks). For classification (predicting categories), use LogisticRegression, DecisionTreeClassifier, or RandomForestClassifier. For clustering (unsupervised), use KMeans. For dimensionality reduction, use PCA. The "Linear" in LinearRegression refers to the relationship between features and target being modeled as linear.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="3" data-correct="b">
+        <p class="quiz-question">4. Cross-validation (e.g., cross_val_score with cv=5) primarily helps to:</p>
+        <div class="quiz-opt" data-value="a">A) Speed up model training by parallelization</div>
+        <div class="quiz-opt" data-value="b">B) Provide a more reliable estimate of model generalization performance</div>
+        <div class="quiz-opt" data-value="c">C) Automatically reduce the size of the dataset</div>
+        <div class="quiz-opt" data-value="d">D) Automatically generate new features for the model</div>
+        <div class="quiz-explanation">Cross-validation splits data into k folds, trains k times (each time using k-1 folds for training and 1 for validation), and averages the performance. This gives a much more reliable estimate than a single train/test split, because it uses all data for validation and reduces variance. It also detects if performance varies significantly across different data subsets.</div>
+      </div>
+
+      <div class="quiz-q" data-q-index="4" data-correct="c">
+        <p class="quiz-question">5. A Random Forest model is an ensemble of which base models?</p>
+        <div class="quiz-opt" data-value="a">A) K-Nearest Neighbor models trained on different feature subsets</div>
+        <div class="quiz-opt" data-value="b">B) Neural networks with different architectures</div>
+        <div class="quiz-opt" data-value="c">C) Many decision trees, each trained on a random subset of data and features</div>
+        <div class="quiz-opt" data-value="d">D) Linear regression models with different regularization strengths</div>
+        <div class="quiz-explanation">Random Forest uses "bagging" (bootstrap aggregating): each tree is trained on a random sample (with replacement) of the training data AND a random subset of features at each split. Predictions are combined by majority vote (classification) or averaging (regression). This diversity among trees reduces overfitting compared to a single deep tree.</div>
+      </div>
+
+      <div class="quiz-score"></div>
+      <button class="btn-submit">Submit Quiz</button>
+      <button class="btn-retry">Retry</button>
+    </div>
+
+    <!-- LOCKED QUIZZES W6–W12 -->
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 6 Quiz — Advanced ML Models</h4>
+      <p>Complete the Week 6 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 7 Quiz — Model Evaluation</h4>
+      <p>Complete the Week 7 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 8 Quiz — SQL Analytics</h4>
+      <p>Complete the Week 8 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 9 Quiz — Feature Engineering</h4>
+      <p>Complete the Week 9 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 10 Quiz — Time Series Analysis</h4>
+      <p>Complete the Week 10 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 11 Quiz — Data Pipelines</h4>
+      <p>Complete the Week 11 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 12 Quiz — Capstone Review</h4>
+      <p>Complete the Week 12 capstone lab to unlock</p>
+    </div>
+
+  </div><!-- end quiz-container -->
+
+  <div class="week-nav">
+    <a href="concept_notes_beginner.html" class="btn-secondary">← Beginner Notes</a>
+    <a href="career_roadmap.html" class="btn-primary">🗺️ Career Roadmap →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Quizzes &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script src="../shared/level_filter.js"></script>
+<script src="../shared/quiz_engine.js"></script>
+</body>
+</html>
+

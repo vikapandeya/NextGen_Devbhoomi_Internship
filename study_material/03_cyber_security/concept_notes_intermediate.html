@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .analogy-box {
+    background: linear-gradient(135deg,#FDF6E3,#F5E6C0);
+    border: 1px solid #f0d485; border-left: 4px solid #C8941A;
+    border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: 13px; color: #555; line-height: 1.7;
+  }
+  .analogy-box strong { color: #1B3A6B; }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; CONCEPT NOTES — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner ↗</a>
+    <a href="concept_notes_advanced.html">Advanced ↗</a>
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">⚡</div>
+    <h1>Intermediate Level — Cyber Security Concept Notes</h1>
+    <p class="lh-sub">Weeks 5–8: OWASP Top 10, penetration testing methodology, web application security, and incident response.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 5–8</span>
+      <span class="lh-pill">OWASP · PenTesting · Web AppSec · Incident Response</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="sm-sec">Week 5 — OWASP Top 10 Web Vulnerabilities</div>
+  <div class="week-block open" id="w5">
+    <div class="week-head" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <div class="week-head-text">
+        <h3>OWASP Top 10 Web Vulnerabilities</h3>
+        <p>A01 Access Control · A02 Cryptographic Failures · A03 Injection · A04–A10 Overview</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Analogy:</strong> OWASP Top 10 is like a list of the most common ways houses get broken into: unlocked back doors (misconfigurations), weak locks (broken auth), no alarm system (lack of logging). Knowing this list means you know what attackers look for first.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>A01 — Broken Access Control (#1)</h4>
+          <ul>
+            <li>Users accessing data or functions they shouldn't</li>
+            <li><strong>IDOR example</strong>: change /user/123 to /user/124 in URL — see another user's data</li>
+            <li>Authorization must be checked server-side on every single request</li>
+            <li>Client-side checks (JS hiding buttons) are not authorization</li>
+            <li>Most common web vulnerability in 2021, 2023, and 2025</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>A02 — Cryptographic Failures</h4>
+          <ul>
+            <li>Sending passwords in plain text over HTTP</li>
+            <li>Using weak hashing: MD5, SHA-1 for passwords (crackable in seconds)</li>
+            <li>Not using HTTPS — all traffic readable on the network</li>
+            <li>Fix: TLS everywhere, bcrypt for passwords (not SHA-256!), AES-256 for data at rest</li>
+            <li>bcrypt includes salt automatically — prevents rainbow table attacks</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>A03 — Injection (SQL Injection)</h4>
+          <ul>
+            <li>User input goes directly into an SQL query without sanitization</li>
+            <li>Classic payload: <code>' OR '1'='1</code> bypasses authentication entirely</li>
+            <li>Also: command injection, LDAP injection, XPath injection</li>
+            <li><strong>Prevention</strong>: parameterized queries (prepared statements) — 100% effective</li>
+            <li>30+ years old and still in OWASP Top 3 every year</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>A04–A10 Overview</h4>
+          <ul>
+            <li><strong>A04 Insecure Design</strong> — architectural flaws, threat model at design phase</li>
+            <li><strong>A05 Security Misconfiguration</strong> — default creds, open S3 buckets, verbose errors</li>
+            <li><strong>A06 Vulnerable Components</strong> — outdated npm/pip packages with known CVEs</li>
+            <li><strong>A07 Auth Failures</strong> — weak passwords, no MFA, session fixation</li>
+            <li><strong>A08–A10</strong> — Software Integrity Failures, Logging Failures, SSRF</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="comment">-- VULNERABLE: user input directly in query</span>
+SELECT * FROM users WHERE username='<span class="string">$input</span>';
+
+<span class="comment">-- Attack: input = ' OR '1'='1</span>
+<span class="comment">-- Result: returns ALL users — authentication bypassed</span>
+
+<span class="comment">-- FIXED: parameterized query (Python)</span>
+cursor.execute(
+    <span class="string">"SELECT * FROM users WHERE username = %s"</span>,
+    (username,)  <span class="comment"># user input is NEVER part of the SQL string</span>
+)</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 5 Key Takeaway</h4>
+        <ul>
+          <li>SQL injection is 30+ years old and still in OWASP Top 3 because developers keep making the same mistake.</li>
+          <li>Parameterized queries prevent SQL injection 100% of the time — use them everywhere, no exceptions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="sm-sec">Week 6 — Penetration Testing Methodology</div>
+  <div class="week-block" id="w6">
+    <div class="week-head" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <div class="week-head-text">
+        <h3>Penetration Testing Methodology</h3>
+        <p>5 Phases · Recon · Tools Intro · Legal Requirements</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Analogy:</strong> A pen tester is a hired burglar. You pay them to break into your house before the real criminals do. They use the same techniques attackers use — but report findings to you instead of exploiting them.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>5 Phases of Penetration Testing</h4>
+          <ul>
+            <li><strong>1. Reconnaissance</strong> — gather information about the target</li>
+            <li><strong>2. Scanning</strong> — identify open ports, services, vulnerabilities</li>
+            <li><strong>3. Gaining Access</strong> — exploit discovered vulnerabilities</li>
+            <li><strong>4. Maintaining Access</strong> — simulate persistence (backdoors)</li>
+            <li><strong>5. Reporting</strong> — document all findings, evidence, remediations</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Reconnaissance Types</h4>
+          <ul>
+            <li><strong>Passive</strong> — no direct interaction with target</li>
+            <li>Google dorking, LinkedIn, WHOIS, Shodan, Certificate Transparency logs</li>
+            <li><strong>Active</strong> — direct interaction with target systems</li>
+            <li>Port scanning (Nmap), ping sweeps, banner grabbing</li>
+            <li>Active recon requires explicit written permission always</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Common Tools Introduction</h4>
+          <ul>
+            <li><strong>Nmap</strong> — network port scanner, OS detection</li>
+            <li><strong>Burp Suite</strong> — web application proxy and scanner</li>
+            <li><strong>Metasploit</strong> — exploitation framework (authorized targets only)</li>
+            <li><strong>Wireshark</strong> — network traffic capture and analysis</li>
+            <li><strong>Nikto</strong> — web server vulnerability scanner</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Legal &amp; Ethical Requirements</h4>
+          <ul>
+            <li>Written permission (scope of work) is <strong>mandatory</strong> — no exceptions</li>
+            <li>Define scope clearly: which IPs, which domains, which tests</li>
+            <li>Rules of Engagement: what's allowed, timing, emergency contacts</li>
+            <li>Unauthorized scanning = criminal offense under IT Act 2000 (India)</li>
+            <li>In this program: test ONLY on DVWA, TryHackMe, HackTheBox</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Week 6 Key Takeaway</h4>
+        <ul>
+          <li>NEVER run scanning or exploitation tools without explicit written permission.</li>
+          <li>Unauthorized scanning is a criminal offense under the IT Act 2000 in India.</li>
+          <li>All testing in this program is done on intentionally vulnerable apps: DVWA, HackTheBox, TryHackMe.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="sm-sec">Week 7 — Web Application Security Testing</div>
+  <div class="week-block" id="w7">
+    <div class="week-head" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <div class="week-head-text">
+        <h3>Web Application Security Testing</h3>
+        <p>Burp Suite · XSS Testing · IDOR Testing · Authentication Testing</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Burp Suite Basics</h4>
+          <ul>
+            <li><strong>Proxy</strong> — intercept HTTP/HTTPS between browser and server</li>
+            <li><strong>Repeater</strong> — modify and resend individual requests manually</li>
+            <li><strong>Intruder</strong> — automated fuzzing and brute force</li>
+            <li><strong>Spider/Crawler</strong> — map all application endpoints</li>
+            <li>Configure browser to use 127.0.0.1:8080 as proxy to start</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Cross-Site Scripting (XSS)</h4>
+          <ul>
+            <li>Inject malicious JavaScript into a web page viewed by others</li>
+            <li>Test payload: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> in all input fields</li>
+            <li><strong>Reflected XSS</strong> — payload in URL, affects only that request</li>
+            <li><strong>Stored XSS</strong> — payload saved in DB, runs for every visitor (dangerous)</li>
+            <li>Prevention: output encoding (<code>htmlspecialchars</code>), CSP headers</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Testing for IDOR</h4>
+          <ul>
+            <li>Change numeric IDs in URLs: <code>/user/123</code> → <code>/user/124</code></li>
+            <li>If you see another user's data, IDOR vulnerability confirmed</li>
+            <li>Also test: API parameters, POST body JSON, hidden form fields</li>
+            <li>Prevention: server-side authorization check on every data request</li>
+            <li>Never trust the client to enforce authorization — always server-side</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Authentication Testing</h4>
+          <ul>
+            <li><strong>Brute force</strong> — try many passwords; test if account lockout exists</li>
+            <li><strong>Credential stuffing</strong> — use leaked password lists from HIBP</li>
+            <li><strong>Session fixation</strong> — attacker sets session token before login</li>
+            <li><strong>JWT manipulation</strong> — try alg:none, weak secret, tampering claims</li>
+            <li>Fix: account lockout, MFA, rotate session tokens on login</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Week 7 Key Takeaway</h4>
+        <ul>
+          <li>Test YOUR application or explicitly authorized targets only.</li>
+          <li>XSS affects millions of sites. Output encoding (<code>htmlspecialchars</code> in PHP, <code>textContent</code> not <code>innerHTML</code> in JS) prevents it.</li>
+          <li>Authorization must always be checked server-side — never trust the client.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="sm-sec">Week 8 — Incident Response</div>
+  <div class="week-block" id="w8">
+    <div class="week-head" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <div class="week-head-text">
+        <h3>Incident Response</h3>
+        <p>IR Lifecycle · Detection Sources · Containment · Post-Incident</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Analogy:</strong> Incident response is like a hospital emergency room. You need a clear triage process, trained team, documented procedures, and the ability to act fast. A breach discovered 6 months later costs 10× more than one caught immediately.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>IR Lifecycle (NIST)</h4>
+          <ul>
+            <li><strong>1. Preparation</strong> — runbooks, team training, tools ready before an incident</li>
+            <li><strong>2. Detection &amp; Analysis</strong> — identify and confirm the incident</li>
+            <li><strong>3. Containment</strong> — stop the bleeding, isolate affected systems</li>
+            <li><strong>4. Eradication</strong> — remove malware, patch the vulnerability</li>
+            <li><strong>5. Recovery</strong> — restore systems, verify clean</li>
+            <li><strong>6. Lessons Learned</strong> — post-incident review, update runbooks</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Detection Sources</h4>
+          <ul>
+            <li><strong>SIEM</strong> — Security Information and Event Management (centralized log alerting)</li>
+            <li><strong>IDS/IPS</strong> — Intrusion Detection/Prevention Systems</li>
+            <li><strong>EDR</strong> — Endpoint Detection and Response (CrowdStrike, SentinelOne)</li>
+            <li><strong>User reports</strong> — often the first to notice something wrong</li>
+            <li><strong>Threat intel feeds</strong> — external IOC matching</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Containment Strategy</h4>
+          <ul>
+            <li>Isolate affected systems from the network immediately</li>
+            <li><strong>Preserve evidence first</strong> — memory dump, log copies before wiping</li>
+            <li>Do NOT delete logs — they are your investigation trail</li>
+            <li>Block malicious IPs/domains at firewall and DNS level</li>
+            <li>Short-term containment (isolate now), then long-term (rebuild clean)</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Post-Incident Requirements</h4>
+          <ul>
+            <li>Root cause analysis — how did the attacker get in?</li>
+            <li>Patch the exploited vulnerability</li>
+            <li>Update runbooks and detection rules</li>
+            <li><strong>Regulatory notification</strong>: GDPR (72 hours), CERT-In (6 hours for Indian cos.)</li>
+            <li>Blameless postmortem — learn, don't punish</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Week 8 Key Takeaway</h4>
+        <ul>
+          <li>The first 15 minutes of incident response determine the outcome.</li>
+          <li>Have a written runbook <em>before</em> an incident — you can't think clearly under pressure.</li>
+          <li>Preserve evidence before containment. Destroyed logs cannot be recovered.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="concept_notes_advanced.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Notes →</a>
+      <a href="lab_guide_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Concept Notes — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id) { const b = document.getElementById(id); b.classList.toggle('open'); }
+document.addEventListener('DOMContentLoaded', () => { const w = document.getElementById('w5'); if (w) w.classList.add('open'); });
+</script>
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps & Cloud — Lab Guide (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .lab-section{margin-bottom:40px;}
+  .lab-num-badge{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:16px;}
+  .deliverable-box{background:var(--purple-light);border:1px solid var(--purple);border-radius:var(--radius-sm);padding:14px 18px;margin-top:16px;font-size:13px;color:var(--text-mid);}
+  .deliverable-box strong{color:var(--purple);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">🧪 Lab Guide — Advanced Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_advanced.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero adv">
+    <div class="lh-icon">🚀</div>
+    <h1>Advanced Lab Guide — DevOps &amp; Cloud</h1>
+    <p class="lh-sub">4 labs: deploy to Kubernetes, set up monitoring with Prometheus and Grafana, implement security scanning in CI, and conduct a chaos experiment.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">Kubernetes · Prometheus · Security · Chaos</span>
+      <span class="lh-pill gold">Advanced Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>All intermediate labs done</li>
+        <li>Docker app on GitHub</li>
+        <li>minikube installed locally</li>
+        <li>kubectl installed</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>What You'll Build</h4>
+      <ul>
+        <li>App running on Kubernetes</li>
+        <li>Grafana monitoring dashboard</li>
+        <li>Security-gated CI pipeline</li>
+        <li>Chaos experiment results</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Time Estimate</h4>
+      <ul>
+        <li>Lab 9: ~3 hours</li>
+        <li>Lab 10: ~3 hours</li>
+        <li>Lab 11: ~2 hours</li>
+        <li>Lab 12: ~2 hours</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Submission</h4>
+      <ul>
+        <li>kubectl output screenshots</li>
+        <li>Grafana dashboard screenshot</li>
+        <li>Security scan results</li>
+        <li>Chaos experiment writeup</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LAB 9 -->
+  <div class="sm-sec">Lab 9 — Deploy to Kubernetes with minikube</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 09 · WEEK 9</div>
+    <div class="lab-goal"><strong>Goal:</strong> Deploy the Express app to a local Kubernetes cluster, expose it via a Service, and scale it up to 4 replicas while observing the pods being created.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Start minikube and Verify the Cluster</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Install minikube and kubectl, then start a local Kubernetes cluster. minikube runs a single-node K8s cluster inside a VM on your machine.</p>
+<pre><span class="comment"># Install minikube (Ubuntu/WSL)</span>
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+<span class="comment"># Start the cluster</span>
+minikube start --driver=docker
+minikube status              <span class="comment"># all components should show "Running"</span>
+
+<span class="comment"># Verify kubectl can talk to the cluster</span>
+kubectl get nodes            <span class="comment"># should show 1 node, STATUS=Ready</span>
+kubectl get namespaces       <span class="comment"># default, kube-system, kube-public</span></pre>
+        <div class="lab-tip"><strong>Tip:</strong> minikube requires Docker Desktop to be running on Windows/WSL. Start Docker Desktop before running <code>minikube start</code>.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Write deployment.yaml</h3>
+        <span>~25 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>A Deployment tells Kubernetes to always keep 2 replicas of your app running. If one dies, K8s restarts it automatically.</p>
+<pre><span class="comment"># k8s/deployment.yaml</span>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: YOUR_DOCKERHUB_USERNAME/myapp:v1
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Write service.yaml</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>A NodePort Service makes your app accessible from outside the cluster. minikube provides a URL to access it.</p>
+<pre><span class="comment"># k8s/service.yaml</span>
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30080</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Apply Manifests and Verify</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre>kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+
+kubectl get pods             <span class="comment"># wait for STATUS=Running on both pods</span>
+kubectl get svc              <span class="comment"># should show myapp-service</span>
+kubectl describe deployment myapp   <span class="comment"># full deployment details</span>
+
+<span class="comment"># Get the service URL from minikube</span>
+minikube service myapp-service --url
+curl &lt;the-url&gt;/health       <span class="comment"># should return JSON</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Scale Up and Watch Pods</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Scale the deployment to 4 replicas and watch Kubernetes create new pods in real time using the <code>-w</code> flag.</p>
+<pre><span class="comment"># Open two terminal windows for this step</span>
+
+<span class="comment"># Terminal 1 — watch pods in real time</span>
+kubectl get pods -w
+
+<span class="comment"># Terminal 2 — scale up</span>
+kubectl scale deployment myapp --replicas=4
+
+<span class="comment"># Back in Terminal 1: watch 2 new pods appear (Pending → Running)</span>
+<span class="comment"># This is Kubernetes' self-healing in action</span>
+
+kubectl get pods             <span class="comment"># should now show 4 pods running</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of <code>kubectl get pods</code> showing all 4 replicas with STATUS=Running. Bonus: include the <code>kubectl get pods -w</code> output showing the 2 new pods transitioning from Pending to Running.</div>
+  </div>
+
+  <!-- LAB 10 -->
+  <div class="sm-sec">Lab 10 — Prometheus + Grafana Monitoring</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 10 · WEEK 10</div>
+    <div class="lab-goal"><strong>Goal:</strong> Instrument the Node.js app to expose metrics, scrape them with Prometheus, visualize them in Grafana, and generate real load to see the metrics change live.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Add Prometheus Metrics to the App</h3>
+        <span>~25 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Install the <code>prom-client</code> library and expose a <code>/metrics</code> endpoint. Prometheus will scrape this endpoint every 15 seconds.</p>
+<pre>npm install prom-client
+
+<span class="comment"># Add to server.js</span>
+const client = require('prom-client');
+const register = new client.Registry();
+
+client.collectDefaultMetrics({ register });
+
+<span class="comment"># Custom counter for request tracking</span>
+const httpRequests = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total HTTP requests',
+  labelNames: ['method', 'route', 'status'],
+  registers: [register]
+});
+
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
+
+<span class="comment"># Increment counter on each request</span>
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequests.inc({ method: req.method, route: req.path, status: res.statusCode });
+  });
+  next();
+});</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Add Prometheus and Grafana to docker-compose</h3>
+        <span>~30 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># docker-compose.monitoring.yml</span>
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: devbhoomi2026
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  grafana-data:</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Configure Prometheus to Scrape the App</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># prometheus.yml</span>
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'myapp'
+    static_configs:
+      - targets: ['app:3000']
+    metrics_path: '/metrics'
+
+<span class="comment"># Start everything</span>
+docker-compose -f docker-compose.monitoring.yml up -d
+
+<span class="comment"># Verify Prometheus can reach the app</span>
+<span class="comment"># Open http://localhost:9090 → Status → Targets</span>
+<span class="comment"># "myapp" should show State=UP</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Configure Grafana Dashboard</h3>
+        <span>~25 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Open Grafana, connect it to Prometheus, and import a pre-built Node.js dashboard.</p>
+        <p>Navigate to <code>http://localhost:3001</code> → Login: admin / devbhoomi2026 → Configuration → Data Sources → Add → Prometheus → URL: <code>http://prometheus:9090</code> → Save &amp; Test.</p>
+        <p>Then: + → Import → enter Dashboard ID <strong>11159</strong> (Node.js Application Dashboard) → Import.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Generate Load and Watch Metrics</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Use Apache Bench to send 1000 requests and watch your Grafana dashboard respond in real time.</p>
+<pre><span class="comment"># Install apache bench</span>
+sudo apt install -y apache2-utils
+
+<span class="comment"># Send 1000 requests, 10 concurrent</span>
+ab -n 1000 -c 10 http://localhost:3000/health
+
+<span class="comment"># Switch to Grafana — watch request rate graph spike up</span>
+<span class="comment"># The graphs update every 30 seconds by default</span>
+<span class="comment"># Change the refresh to 5s (top right) during the load test</span>
+
+<span class="comment"># Write a PromQL query in Prometheus to see it yourself:</span>
+<span class="comment"># rate(http_requests_total[1m])</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of the Grafana dashboard showing at least one panel with live metrics data — ideally during or just after the load test, so the graphs show a visible spike in traffic.</div>
+  </div>
+
+  <!-- LAB 11 -->
+  <div class="sm-sec">Lab 11 — Security Scanning in CI Pipeline</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 11 · WEEK 11</div>
+    <div class="lab-goal"><strong>Goal:</strong> Add three layers of automated security scanning to your CI pipeline: container image scanning (Trivy), dependency audit (npm audit), and secret detection (Gitleaks).</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Add Trivy Container Image Scan</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Add a security-scan job to your GitHub Actions workflow. It runs after the image is built and fails on any HIGH or CRITICAL CVE.</p>
+<pre><span class="comment"># Add to .github/workflows/ci.yml</span>
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image for scanning
+        run: docker build -t myapp:scan .
+
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'myapp:scan'
+          format: 'table'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
+          ignore-unfixed: true</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Add Dependency Security Audit</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>npm audit checks all dependencies in package.json against the Node.js security advisory database.</p>
+<pre><span class="comment"># Add as a step inside the test job</span>
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
+        <span class="comment"># Fails if any HIGH or CRITICAL vulnerability found</span>
+        <span class="comment"># Run locally first: npm audit</span>
+        <span class="comment"># Fix issues: npm audit fix (or npm audit fix --force)</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Add Secret Detection with Gitleaks</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Gitleaks scans the entire Git history for accidentally committed API keys, passwords, and tokens.</p>
+<pre><span class="comment"># Add as a separate job — runs on every push</span>
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    <span class="comment"># full history needed for scanning</span>
+
+      - name: Detect secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Introduce a Vulnerability and Confirm Block</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Deliberately use a known-vulnerable package version to verify your pipeline actually blocks deployments with vulnerabilities.</p>
+<pre><span class="comment"># Install an old, vulnerable version of a package</span>
+npm install lodash@4.17.4    <span class="comment"># has known prototype pollution CVE</span>
+git add package.json package-lock.json
+git commit -m "Add vulnerable lodash version (intentional test)"
+git push
+
+<span class="comment"># Watch the pipeline — npm audit should fail the build</span>
+<span class="comment"># Check Actions tab to confirm security-scan job is red</span></pre>
+        <div class="lab-warn"><strong>Warning:</strong> This is intentional for lab purposes only. Never ship code with known high-severity vulnerabilities in a real project.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Fix the Vulnerability</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># Fix the vulnerable dependency</span>
+npm install lodash@latest
+npm audit                    <span class="comment"># confirm no more HIGH/CRITICAL issues</span>
+
+git add package.json package-lock.json
+git commit -m "Fix: upgrade lodash to patched version"
+git push
+
+<span class="comment"># Watch all security jobs turn green in GitHub Actions</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Two screenshots: (1) the failing GitHub Actions run showing the security scan blocking the build due to the vulnerable lodash version, (2) the passing run after the fix with all security jobs green.</div>
+  </div>
+
+  <!-- LAB 12 -->
+  <div class="sm-sec">Lab 12 — Chaos Engineering Experiment</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 12 · WEEK 12</div>
+    <div class="lab-goal"><strong>Goal:</strong> Prove your Kubernetes deployment self-heals by deliberately killing pods and watching Kubernetes automatically restore the desired state — all while traffic continues flowing.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Scale to 3 Replicas</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre>kubectl scale deployment myapp --replicas=3
+kubectl get pods             <span class="comment"># wait for all 3 to show Running</span>
+
+<span class="comment"># Get the service URL</span>
+minikube service myapp-service --url</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Start Continuous Traffic</h3>
+        <span>~5 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Open a dedicated terminal window for this. Keep it running through steps 3–5 to prove the app stays available during chaos.</p>
+<pre><span class="comment"># Terminal 1 — continuous traffic loop</span>
+SERVICE_URL=$(minikube service myapp-service --url)
+while true; do
+  STATUS=$(curl -s -o /dev/null -w "%{http_code}" $SERVICE_URL/health)
+  echo "$(date +%H:%M:%S) — HTTP $STATUS"
+  sleep 1
+done
+<span class="comment"># Should print "HTTP 200" every second</span>
+<span class="comment"># Any failures will show as non-200 codes — watch for them during chaos</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Delete a Pod — Watch Self-Healing</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Open a second terminal. Delete one pod and watch Kubernetes immediately create a replacement — proving the Deployment controller is always working.</p>
+<pre><span class="comment"># Terminal 2 — watch pods in real time</span>
+kubectl get pods -w
+
+<span class="comment"># Terminal 3 — kill a pod</span>
+POD_NAME=$(kubectl get pods -l app=myapp -o jsonpath='{.items[0].metadata.name}')
+kubectl delete pod $POD_NAME
+
+<span class="comment"># In Terminal 2: watch the deleted pod Terminating</span>
+<span class="comment"># Watch a new pod appear as Pending → ContainerCreating → Running</span>
+<span class="comment"># In Terminal 1: confirm traffic stays green (200) the whole time</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Kill a Container Inside a Pod</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>SSH into a running pod and kill the main process. Kubernetes detects the container failed and restarts it automatically.</p>
+<pre><span class="comment"># Get a pod name</span>
+POD=$(kubectl get pods -l app=myapp -o jsonpath='{.items[1].metadata.name}')
+
+<span class="comment"># Open a shell inside the pod</span>
+kubectl exec -it $POD -- /bin/sh
+
+<span class="comment"># Inside the pod — kill the node process</span>
+kill 1
+<span class="comment"># The shell session will close — the container exited</span>
+
+<span class="comment"># Back on your machine — watch K8s restart it</span>
+kubectl get pods -w
+<span class="comment"># RESTARTS column on that pod should increment from 0 to 1</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Simulate Node Failure</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>In a multi-node cluster, this simulates a server going down. With minikube's multi-node add-on, we can demonstrate the concept.</p>
+<pre><span class="comment"># Add a second node to minikube</span>
+minikube node add
+kubectl get nodes            <span class="comment"># should now show 2 nodes</span>
+
+<span class="comment"># Verify pods spread across both nodes</span>
+kubectl get pods -o wide     <span class="comment"># NODE column shows which node each pod runs on</span>
+
+<span class="comment"># Stop one node (simulates server failure)</span>
+minikube node stop m02       <span class="comment"># stop the second node</span>
+
+<span class="comment"># Watch K8s reschedule pods from the failed node to the remaining node</span>
+kubectl get pods -w
+<span class="comment"># Pods that were on m02 will be rescheduled to minikube (node 1)</span>
+
+<span class="comment"># Restart the node when done</span>
+minikube node start m02</pre>
+        <div class="lab-tip"><strong>Tip:</strong> Write down what you observe in each step. This forms your "chaos experiment report" — expected outcome, actual outcome, recovery time. SRE teams document this in a Game Day report.</div>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of <code>kubectl get pods -w</code> showing a pod being Terminated and a new pod immediately entering ContainerCreating → Running. Also include 2–3 lines from Terminal 1 showing HTTP 200 responses throughout the experiment — proving the app never went down.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_intermediate.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Intermediate Labs</a>
+    <div style="display:flex;gap:12px;">
+      <a href="concept_notes_advanced.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Concepts →</a>
+      <a href="../index.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Study Portal →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{});
+</script>
+</body>
+</html>

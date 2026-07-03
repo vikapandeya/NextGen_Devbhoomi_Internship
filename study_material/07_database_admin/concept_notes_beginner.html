@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept Notes — Beginner | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">📖 Concept Notes — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; CONCEPT NOTES — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate</a>
+    <a href="concept_notes_advanced.html">Advanced</a>
+    <a href="lab_guide_beginner.html">Lab Guide</a>
+    <a href="quizzes.html">Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="lh-icon">🗄️</div>
+    <div class="lh-text">
+      <h2>Concept Notes — Beginner Level</h2>
+      <p>From flat files to relational databases. Learn what a DBMS is, why ACID matters, and write your first SQL queries with confidence.</p>
+    </div>
+    <div class="lh-pills">
+      <span class="pill">MySQL Setup</span>
+      <span class="pill">SQL Fundamentals</span>
+      <span class="pill">JOINs</span>
+      <span class="pill">Aggregations</span>
+    </div>
+  </div>
+
+  <!-- W1 -->
+  <div class="week-block beg" id="w1">
+    <div class="week-header" onclick="toggleWeek('w1')">
+      <span class="week-num wn-beg">Week 1</span>
+      <h3>What is a Database?</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Database vs Flat Files (Excel)</h4>
+        <p>A flat file like a spreadsheet works for personal data but breaks down at scale. Consider what happens when 500 students all try to update the same Excel file simultaneously — conflicts, overwrites, corruption. A Database Management System (DBMS) solves this:</p>
+        <ul>
+          <li><strong>Multi-user access:</strong> thousands of users can read/write simultaneously without conflicts</li>
+          <li><strong>Data integrity:</strong> rules enforced at the database level, not dependent on user discipline</li>
+          <li><strong>Scale:</strong> billions of rows are handled efficiently with indexes and query optimisation</li>
+          <li><strong>Security:</strong> fine-grained access control — this user can SELECT, that user can only INSERT</li>
+          <li><strong>Recovery:</strong> transactions and WAL (Write-Ahead Log) protect against data loss on crash</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>DBMS vs RDBMS</h4>
+        <p>A <strong>DBMS</strong> (Database Management System) is any software for managing data: MySQL, PostgreSQL, MongoDB, Redis, Cassandra.</p>
+        <p>An <strong>RDBMS</strong> (Relational DBMS) specifically stores data in related tables with rows and columns, enforcing relationships between them: MySQL, PostgreSQL, SQLite, Oracle Database, Microsoft SQL Server.</p>
+        <p>Non-relational DBMSes (NoSQL) include document stores (MongoDB), key-value stores (Redis), and column-family databases (Cassandra) — covered in Week 11.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>The Relational Model</h4>
+        <ul>
+          <li><strong>Table (Relation):</strong> stores data about one type of entity — e.g. a <code>students</code> table</li>
+          <li><strong>Row (Record/Tuple):</strong> one instance of the entity — one student</li>
+          <li><strong>Column (Field/Attribute):</strong> one property of the entity — student's name, email, course</li>
+          <li><strong>Primary Key:</strong> a column (or combination of columns) that uniquely identifies each row — no two rows can have the same primary key, and it cannot be NULL</li>
+          <li><strong>Foreign Key:</strong> a column that references the primary key of another table, creating a relationship between the two tables</li>
+        </ul>
+        <pre><code>-- students table
+id (PK) | name      | email               | course_id (FK)
+--------|-----------|---------------------|---------------
+1       | Priya     | priya@example.com   | 3
+2       | Rahul     | rahul@example.com   | 1
+
+-- courses table
+id (PK) | course_name
+--------|--------------------
+1       | Web Development
+3       | Data Science</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>ACID Properties</h4>
+        <p>ACID is the set of guarantees that make database transactions reliable, even when things go wrong:</p>
+        <ul>
+          <li><strong>Atomicity:</strong> A transaction is all-or-nothing. If you're transferring ₹500 from account A to account B: debit A AND credit B happen together, or neither happens. A crash between the two operations leaves the database in a consistent state.</li>
+          <li><strong>Consistency:</strong> A transaction takes the database from one valid state to another valid state. Constraints (foreign keys, NOT NULL, CHECK) are enforced — a transaction that would violate them is rolled back.</li>
+          <li><strong>Isolation:</strong> Concurrent transactions do not interfere with each other. Two users booking the last seat simultaneously — only one succeeds; the other gets an error, not a double-booking.</li>
+          <li><strong>Durability:</strong> Once a transaction is committed, it survives crashes. The data is written to disk (via WAL/redo log) before COMMIT returns success to the application.</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>SQL Overview</h4>
+        <p>SQL (Structured Query Language) is the standard language for all RDBMS systems. It has four sub-languages:</p>
+        <ul>
+          <li><strong>DDL — Data Definition Language:</strong> defines the structure of the database
+            <pre><code>CREATE TABLE, ALTER TABLE, DROP TABLE, TRUNCATE TABLE</code></pre>
+          </li>
+          <li><strong>DML — Data Manipulation Language:</strong> works with the data inside tables
+            <pre><code>SELECT, INSERT, UPDATE, DELETE</code></pre>
+          </li>
+          <li><strong>DCL — Data Control Language:</strong> manages permissions
+            <pre><code>GRANT SELECT ON students TO 'reporting_user';
+REVOKE INSERT ON students FROM 'reporting_user';</code></pre>
+          </li>
+          <li><strong>TCL — Transaction Control Language:</strong> manages transaction boundaries
+            <pre><code>COMMIT, ROLLBACK, SAVEPOINT, START TRANSACTION</code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Setting Up MySQL</h4>
+        <ol>
+          <li>Download MySQL Community Server from dev.mysql.com/downloads (free). On Windows, use MySQL Installer — it installs both the server (port 3306 by default) and MySQL Workbench GUI.</li>
+          <li>During installation, set a root password. Remember it.</li>
+          <li>Open MySQL Workbench → New Connection → localhost, port 3306, root. Test connection.</li>
+          <li>For CLI access: open a terminal and run <code>mysql -u root -p</code>, enter your password.</li>
+        </ol>
+        <pre><code>-- First commands to run
+SHOW DATABASES;          -- see default databases
+CREATE DATABASE myapp;   -- create your first database
+USE myapp;               -- select it as the active database
+SHOW TABLES;             -- list tables (empty at first)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- W2 -->
+  <div class="week-block beg" id="w2">
+    <div class="week-header" onclick="toggleWeek('w2')">
+      <span class="week-num wn-beg">Week 2</span>
+      <h3>SQL Fundamentals</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Creating Tables with Data Types</h4>
+        <pre><code>CREATE DATABASE it_university;
+USE it_university;
+
+CREATE TABLE students (
+  id           INT PRIMARY KEY AUTO_INCREMENT,
+  name         VARCHAR(100) NOT NULL,
+  email        VARCHAR(150) NOT NULL UNIQUE,
+  phone        VARCHAR(15),
+  course       VARCHAR(50),
+  gpa          DECIMAL(3,2),
+  enrolled_at  DATE DEFAULT (CURRENT_DATE),
+  is_active    BOOLEAN DEFAULT TRUE,
+  notes        TEXT
+);</code></pre>
+        <p>Common MySQL data types:</p>
+        <ul>
+          <li><code>INT</code> — whole numbers (-2B to 2B). Use <code>BIGINT</code> for very large IDs.</li>
+          <li><code>VARCHAR(n)</code> — variable-length string up to n characters. More efficient than TEXT for short strings.</li>
+          <li><code>TEXT</code> — long-form text with no practical length limit. No indexing on full column.</li>
+          <li><code>DATE</code> — YYYY-MM-DD. <code>DATETIME</code> adds time. <code>TIMESTAMP</code> auto-converts to UTC.</li>
+          <li><code>DECIMAL(p,s)</code> — exact decimal: p = total digits, s = decimal places. Use for money — never FLOAT.</li>
+          <li><code>BOOLEAN</code> — stored as TINYINT(1): 0=false, 1=true.</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>Constraints</h4>
+        <pre><code>CREATE TABLE products (
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  name        VARCHAR(100) NOT NULL,
+  sku         VARCHAR(50) UNIQUE,
+  price       DECIMAL(10,2) NOT NULL CHECK (price >= 0),
+  stock       INT DEFAULT 0 CHECK (stock >= 0),
+  category    ENUM('electronics','clothing','food','other') NOT NULL
+);</code></pre>
+        <ul>
+          <li><code>PRIMARY KEY</code> — unique + NOT NULL. Table can have only one.</li>
+          <li><code>NOT NULL</code> — column cannot contain NULL value.</li>
+          <li><code>UNIQUE</code> — all values in column must be distinct. Can have NULLs (multiple NULLs allowed).</li>
+          <li><code>DEFAULT</code> — value used when INSERT does not specify the column.</li>
+          <li><code>CHECK</code> — enforces a condition (MySQL 8.0+ fully enforces these).</li>
+        </ul>
+      </div>
+
+      <div class="sm-sec">
+        <h4>INSERT, SELECT, UPDATE, DELETE</h4>
+        <pre><code>-- INSERT single row
+INSERT INTO students (name, email, course)
+VALUES ('Priya Sharma', 'priya@example.com', 'Web Development');
+
+-- INSERT multiple rows
+INSERT INTO students (name, email, course) VALUES
+  ('Rahul Verma', 'rahul@example.com', 'Data Science'),
+  ('Ankit Singh', 'ankit@example.com', 'Cyber Security'),
+  ('Meena Kumari', 'meena@example.com', 'Web Development');
+
+-- SELECT all columns
+SELECT * FROM students;
+
+-- SELECT specific columns with WHERE
+SELECT name, email, course
+FROM students
+WHERE course = 'Web Development'
+  AND is_active = TRUE;
+
+-- Comparison operators: =, !=, <, >, <=, >=, BETWEEN, LIKE, IN
+SELECT * FROM students
+WHERE enrolled_at BETWEEN '2024-01-01' AND '2024-12-31';
+
+SELECT * FROM students WHERE name LIKE 'P%';    -- starts with P
+SELECT * FROM students WHERE course IN ('Web Development', 'Data Science');
+
+-- ORDER BY, LIMIT, OFFSET
+SELECT name, enrolled_at
+FROM students
+ORDER BY enrolled_at DESC
+LIMIT 10 OFFSET 20;   -- page 3 of 10-per-page results
+
+-- UPDATE — ALWAYS use WHERE
+UPDATE students
+SET course = 'Full Stack Development'
+WHERE id = 1;
+
+-- UPDATE multiple columns
+UPDATE students
+SET course = 'Data Science', is_active = FALSE
+WHERE email = 'old@example.com';
+
+-- ⚠ UPDATE without WHERE updates ALL rows — dangerous!
+-- DELETE — ALWAYS use WHERE
+DELETE FROM students WHERE id = 5;
+
+-- Verify before deleting — run SELECT first:
+SELECT * FROM students WHERE id = 5;  -- check, then
+DELETE FROM students WHERE id = 5;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- W3 -->
+  <div class="week-block beg" id="w3">
+    <div class="week-header" onclick="toggleWeek('w3')">
+      <span class="week-num wn-beg">Week 3</span>
+      <h3>Joins &amp; Relationships</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Why Multiple Tables?</h4>
+        <p>Storing everything in one table causes redundancy. If you store the customer's city in every order row, you need to update every row when their city changes — one update becomes thousands. Normalisation splits data into related tables, storing each fact exactly once.</p>
+      </div>
+
+      <div class="sm-sec">
+        <h4>E-Commerce Schema Example</h4>
+        <pre><code>CREATE TABLE customers (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  name       VARCHAR(100) NOT NULL,
+  email      VARCHAR(150) UNIQUE,
+  city       VARCHAR(50)
+);
+
+CREATE TABLE orders (
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  customer_id INT NOT NULL,
+  total       DECIMAL(10,2),
+  status      ENUM('pending','shipped','delivered','cancelled') DEFAULT 'pending',
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE products (
+  id    INT PRIMARY KEY AUTO_INCREMENT,
+  name  VARCHAR(100),
+  price DECIMAL(10,2)
+);
+
+CREATE TABLE order_items (
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  order_id    INT NOT NULL,
+  product_id  INT NOT NULL,
+  quantity    INT NOT NULL,
+  unit_price  DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (order_id)   REFERENCES orders(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>JOIN Types</h4>
+        <pre><code>-- INNER JOIN: rows where customer_id matches in both tables
+SELECT c.name, o.id AS order_id, o.total, o.status
+FROM orders o
+JOIN customers c ON o.customer_id = c.id;
+
+-- LEFT JOIN: ALL customers, even those with zero orders
+-- (o.id will be NULL for customers with no orders)
+SELECT c.name, COUNT(o.id) AS order_count
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name;
+
+-- Multi-table JOIN: full order receipt
+SELECT
+  c.name        AS customer,
+  o.id          AS order_id,
+  p.name        AS product,
+  oi.quantity,
+  oi.unit_price,
+  (oi.quantity * oi.unit_price) AS line_total
+FROM order_items oi
+JOIN orders   o ON oi.order_id   = o.id
+JOIN customers c ON o.customer_id = c.id
+JOIN products  p ON oi.product_id = p.id
+WHERE o.id = 1;
+
+-- Self JOIN: employee reports to manager (same table)
+SELECT e.name AS employee, m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id
+ORDER BY m.name;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- W4 -->
+  <div class="week-block beg" id="w4">
+    <div class="week-header" onclick="toggleWeek('w4')">
+      <span class="week-num wn-beg">Week 4</span>
+      <h3>Aggregations &amp; Grouping</h3>
+      <span class="week-toggle">▼</span>
+    </div>
+    <div class="week-body">
+      <div class="sm-sec">
+        <h4>Aggregate Functions</h4>
+        <pre><code>-- COUNT: total orders, orders with notes
+SELECT COUNT(*) AS total_orders FROM orders;
+SELECT COUNT(notes) AS orders_with_notes FROM orders;  -- ignores NULLs
+
+-- SUM, AVG, MIN, MAX
+SELECT
+  SUM(total)  AS revenue,
+  AVG(total)  AS avg_order_value,
+  MIN(total)  AS smallest_order,
+  MAX(total)  AS largest_order
+FROM orders
+WHERE status = 'delivered';</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>GROUP BY and HAVING</h4>
+        <pre><code>-- Total orders and revenue per customer
+SELECT
+  c.name,
+  COUNT(o.id)  AS order_count,
+  SUM(o.total) AS total_spent
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name
+ORDER BY total_spent DESC;
+
+-- HAVING filters AFTER grouping (WHERE filters BEFORE)
+-- Find customers who spent more than ₹5000
+SELECT
+  c.name,
+  SUM(o.total) AS total_spent
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name
+HAVING total_spent > 5000;
+
+-- Count orders per day
+SELECT DATE(created_at) AS order_date, COUNT(*) AS daily_orders
+FROM orders
+GROUP BY DATE(created_at)
+ORDER BY order_date;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>NULL Handling</h4>
+        <pre><code>-- IS NULL / IS NOT NULL
+SELECT * FROM customers WHERE phone IS NULL;
+SELECT * FROM customers WHERE phone IS NOT NULL;
+
+-- COALESCE: return first non-NULL value
+SELECT name, COALESCE(phone, 'Not Provided') AS phone
+FROM customers;
+
+-- NULLIF: returns NULL if two values are equal (avoids division by zero)
+SELECT total / NULLIF(items_count, 0) AS avg_item_price
+FROM orders;</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>String &amp; Date Functions</h4>
+        <pre><code>-- String functions
+SELECT UPPER(name), LOWER(email) FROM customers;
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM users;
+SELECT SUBSTRING(email, 1, LOCATE('@', email) - 1) AS username FROM users;
+SELECT LENGTH('Hello World');     -- 11
+SELECT TRIM('  hello  ');         -- 'hello'
+SELECT REPLACE(phone, '-', '');   -- remove dashes
+
+-- Date functions
+SELECT NOW();                                  -- 2024-06-15 14:30:00
+SELECT CURDATE();                              -- 2024-06-15
+SELECT DATE_FORMAT(created_at, '%d %M %Y');    -- 15 June 2024
+SELECT DATEDIFF(NOW(), created_at) AS days_ago FROM orders;
+SELECT DATE_ADD(expiry_date, INTERVAL 30 DAY) AS new_expiry FROM memberships;
+SELECT * FROM orders WHERE YEAR(created_at) = 2024;
+-- ⚠ Better for index performance:
+SELECT * FROM orders WHERE created_at BETWEEN '2024-01-01' AND '2024-12-31';</code></pre>
+      </div>
+
+      <div class="sm-sec">
+        <h4>DISTINCT</h4>
+        <pre><code>-- Unique cities in the customers table
+SELECT DISTINCT city FROM customers ORDER BY city;
+
+-- Count of distinct courses enrolled
+SELECT COUNT(DISTINCT course) AS course_variety FROM students;</code></pre>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Concept Notes — Beginner &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

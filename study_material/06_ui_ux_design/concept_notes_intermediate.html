@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI/UX Design — Concept Notes (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .week-block.open .week-body { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .analogy-box { background: linear-gradient(135deg, #FDF6E3, #F5E6C0); border: 1px solid var(--gold-light); border-left: 4px solid var(--gold); border-radius: var(--radius-sm); padding: 14px 18px; margin: 14px 0; font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+  .analogy-box strong { color: var(--navy); }
+  .shortcut-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+  .shortcut-table th { background: var(--navy); color: white; padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+  .shortcut-table td { padding: 7px 12px; border-bottom: 1px solid var(--border-light); }
+  .shortcut-table tr:hover td { background: var(--paper); }
+  .shortcut-table code { background: var(--navy-deep); color: #C3E88D; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 11px; }
+  .atomic-steps { display: flex; gap: 0; margin: 16px 0; }
+  .atomic-step { flex: 1; text-align: center; padding: 16px 8px; background: var(--paper); border-right: 1px solid var(--border-light); }
+  .atomic-step:last-child { border-right: none; }
+  .atomic-step .as-icon { font-size: 24px; margin-bottom: 6px; }
+  .atomic-step h5 { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .atomic-step p { font-size: 11px; color: var(--gray); }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🎨 UI/UX Design</div>
+      <div class="bc-file">📖 Concept Notes — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 6 OF 9 &nbsp;·&nbsp; UI/UX DESIGN &nbsp;·&nbsp; CONCEPT NOTES (INTERMEDIATE)
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Beginner ↗</a>
+    <a href="concept_notes_advanced.html">Advanced ↗</a>
+    <a href="lab_guide_intermediate.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">🎨</div>
+    <h1>Concept Notes — Intermediate</h1>
+    <p class="lh-sub">4 weeks (W5–W8) of applied UI/UX skills. You will master Figma components and variants, build a complete design system, create interactive prototypes, and audit products for accessibility compliance.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">Weeks 5–8</span>
+      <span class="lh-pill">Figma Mastery · Design Systems · Prototyping · Accessibility</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Beginner level complete</li>
+        <li>Figma account created</li>
+        <li>Lo-fi wireframes done</li>
+        <li>User research conducted</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Tools This Level</h4>
+      <ul>
+        <li>Figma (components, variants)</li>
+        <li>Stark plugin (accessibility)</li>
+        <li>Iconify plugin (icons)</li>
+        <li>Content Reel plugin (data)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>What You Will Build</h4>
+      <ul>
+        <li>Full design system in Figma</li>
+        <li>Interactive mobile prototype</li>
+        <li>Accessibility audit report</li>
+        <li>Usability test + TCR data</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Assessment</h4>
+      <ul>
+        <li>Weekly quiz W5–W8</li>
+        <li>Lab 1–5 submissions</li>
+        <li>Project 2 — Full App Design</li>
+        <li>Prototype link submitted</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="sm-sec">Week 5 — Figma Mastery</div>
+  <div class="week-block open" id="w5">
+    <div class="week-head" onclick="toggleWeek('w5')">
+      <div class="week-num wn-int">W5</div>
+      <div class="week-head-text">
+        <h3>Figma Mastery</h3>
+        <p>Frames · Auto Layout · Components · Variants · Styles · Plugins · Shortcuts</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Create a master component and manage instances</li>
+          <li>Build a button component with variants (type/size/state)</li>
+          <li>Set up color styles and text styles in Figma</li>
+          <li>Use Auto Layout for responsive components</li>
+          <li>Install and use Stark, Unsplash, and Iconify plugins</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Why Figma?</h4>
+          <ul>
+            <li>Browser-based: works on any OS, no download required for viewers</li>
+            <li>Real-time collaboration: multiple designers on the same file simultaneously</li>
+            <li>Free for individuals (Starter plan): unlimited personal files</li>
+            <li>Industry standard: used by Google, Microsoft, Uber, Zomato, Razorpay</li>
+            <li>Inspect panel: developers see CSS values, spacing, and exportable assets without a separate handoff tool</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Key Figma Concepts</h4>
+          <ul>
+            <li><strong>Frame:</strong> The artboard. Use frames for every screen (not groups)</li>
+            <li><strong>Auto Layout:</strong> Makes frames resize with their content — essential for buttons and lists</li>
+            <li><strong>Constraints:</strong> Define how an element moves when its parent frame resizes (left/right/center/scale)</li>
+            <li><strong>Groups:</strong> Loose collection of layers. Use sparingly — prefer frames for layout</li>
+            <li><strong>Layers panel:</strong> All your elements live here. Name every layer — messy layers = messy collaboration</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Components</h4>
+          <ul>
+            <li><strong>Master component:</strong> The original. Edit the master — all instances update automatically</li>
+            <li><strong>Instance:</strong> A copy of the master that inherits all changes but can have local overrides</li>
+            <li><strong>Component props:</strong> Text (change label text), boolean (toggle visibility), instance swap (change icon)</li>
+            <li>Create component: Ctrl+Alt+K (or right-click → Create Component)</li>
+            <li>Detach instance to make a unique one-off version (right-click → Detach Instance)</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Variants</h4>
+          <ul>
+            <li>Variants group multiple states of a component into one component set</li>
+            <li>Example: Button with variants — Type (Primary/Secondary/Destructive), Size (S/M/L), State (Default/Hover/Disabled)</li>
+            <li>Create variants: select multiple components → right-click → Combine as Variants</li>
+            <li>Design goal: when you swap a variant, the layout should not break</li>
+            <li>Variants + Auto Layout = components that work in any design context</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sm-sec-label">Figma Keyboard Shortcuts</div>
+      <table class="shortcut-table">
+        <thead><tr><th>Action</th><th>Shortcut</th><th>When to Use</th></tr></thead>
+        <tbody>
+          <tr><td>Rectangle</td><td><code>R</code></td><td>Draw any box/button/card background</td></tr>
+          <tr><td>Text</td><td><code>T</code></td><td>Add a text layer</td></tr>
+          <tr><td>Frame</td><td><code>F</code></td><td>Create a new frame (artboard or container)</td></tr>
+          <tr><td>Auto Layout</td><td><code>Shift+A</code></td><td>Make the selected frame or group auto layout</td></tr>
+          <tr><td>Group</td><td><code>Ctrl+G</code></td><td>Group selected layers</td></tr>
+          <tr><td>Component</td><td><code>Ctrl+Alt+K</code></td><td>Turn selection into a master component</td></tr>
+          <tr><td>Duplicate</td><td><code>Ctrl+D</code></td><td>Duplicate in place (better than Ctrl+C/V for design)</td></tr>
+          <tr><td>Copy style</td><td><code>Ctrl+Alt+C</code></td><td>Copy fill, stroke, effects from a layer</td></tr>
+          <tr><td>Paste style</td><td><code>Ctrl+Alt+V</code></td><td>Paste copied style onto another layer</td></tr>
+          <tr><td>Zoom to fit</td><td><code>Shift+1</code></td><td>See all frames on the canvas</td></tr>
+          <tr><td>Show/hide panels</td><td><code>Ctrl+\</code></td><td>Presentation mode — show just the canvas</td></tr>
+        </tbody>
+      </table>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Styles — Define Once, Apply Everywhere</h4>
+          <ul>
+            <li><strong>Color styles:</strong> Name your colors (Primary/Secondary/Error/Success/Text/Background) and apply from the style panel</li>
+            <li><strong>Text styles:</strong> H1, H2, Body, Caption, Label — define font, size, weight, line-height once</li>
+            <li><strong>Effect styles:</strong> Shadow definitions you can apply to multiple cards consistently</li>
+            <li>When you update a style, every element using that style updates instantly</li>
+            <li>Styles are the Figma equivalent of CSS variables</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Useful Figma Plugins</h4>
+          <ul>
+            <li><strong>Unsplash:</strong> Insert royalty-free photos directly into Figma frames</li>
+            <li><strong>Iconify:</strong> 100,000+ icons (Material, Feather, Phosphor) searchable and insertable</li>
+            <li><strong>Content Reel:</strong> Paste realistic data — names, avatars, addresses — into your designs</li>
+            <li><strong>Stark:</strong> Accessibility checker — contrast ratio, color blindness simulation, focus order</li>
+            <li>Install plugins: Main menu → Resources → Plugins → Browse</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 5</h4>
+        <ul>
+          <li>Auto Layout is the single most important Figma skill. Master it and your components will be resilient.</li>
+          <li>Components + Variants = a design system in miniature. Never design the same button twice.</li>
+          <li>Name every layer clearly. Messy layer names are technical debt in design files.</li>
+          <li>Styles are CSS variables in Figma — define them before you design, not after.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="sm-sec">Week 6 — Design Systems</div>
+  <div class="week-block" id="w6">
+    <div class="week-head" onclick="toggleWeek('w6')">
+      <div class="week-num wn-int">W6</div>
+      <div class="week-head-text">
+        <h3>Design Systems</h3>
+        <p>Atomic Design · Design Tokens · Real-World Systems · Building Your Own · Handoff</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Explain the Atomic Design hierarchy (atoms → molecules → organisms)</li>
+          <li>Define design tokens and give 4 examples</li>
+          <li>Name 3 real-world design systems and their use cases</li>
+          <li>Build a mini design system with 5 colors, 3 text styles, 8 components</li>
+          <li>Describe the designer-to-developer handoff workflow</li>
+        </ul>
+      </div>
+
+      <div class="analogy-box">
+        <strong>What Is a Design System?</strong> A design system is a shared library of reusable components, design tokens, and documented guidelines that allows teams to build consistent products faster. Think of it as a LEGO set: each brick is a component; the colour system is the palette; the instruction booklet is the documentation. With a design system, a team of 20 designers can work on different parts of an app and it still looks like one product.
+      </div>
+
+      <div class="sm-sec-label">Atomic Design — Brad Frost</div>
+      <div class="atomic-steps">
+        <div class="atomic-step">
+          <div class="as-icon">⚛️</div>
+          <h5>Atoms</h5>
+          <p>Smallest unit: button, input, icon, label, color swatch, type style</p>
+        </div>
+        <div class="atomic-step">
+          <div class="as-icon">🧬</div>
+          <h5>Molecules</h5>
+          <p>Atoms combined: a search field = input + icon + button</p>
+        </div>
+        <div class="atomic-step">
+          <div class="as-icon">🦠</div>
+          <h5>Organisms</h5>
+          <p>Molecules combined: a navbar = logo + search + nav links + CTA button</p>
+        </div>
+        <div class="atomic-step">
+          <div class="as-icon">📄</div>
+          <h5>Templates</h5>
+          <p>Page layout without real content: the wireframe skeleton</p>
+        </div>
+        <div class="atomic-step">
+          <div class="as-icon">🌐</div>
+          <h5>Pages</h5>
+          <p>Templates with real content: what users actually see</p>
+        </div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Design Tokens</h4>
+          <ul>
+            <li>Design tokens are named variables for visual decisions: colors, spacing, typography, shadows</li>
+            <li><strong>Color tokens:</strong> --color-primary: #1B3A6B; --color-error: #C62828</li>
+            <li><strong>Spacing tokens:</strong> --space-xs: 4px; --space-sm: 8px; --space-md: 16px</li>
+            <li><strong>Typography tokens:</strong> --font-size-body: 15px; --line-height-body: 1.6</li>
+            <li>Tokens make it possible to update the entire design system by changing one value — and they map directly to CSS custom properties in code</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Real-World Design Systems</h4>
+          <ul>
+            <li><strong>Google Material Design 3:</strong> Open-source. Used by all Google products. Excellent documentation and Figma kit</li>
+            <li><strong>Apple Human Interface Guidelines (HIG):</strong> iOS/macOS design rules. Required reading for any iOS app designer</li>
+            <li><strong>Ant Design:</strong> Used by Alibaba. Comprehensive React component library with Figma counterpart</li>
+            <li><strong>Chakra UI:</strong> Popular open-source React component library with strong accessibility defaults</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Mini Design System — 8 Components</h4>
+          <ul>
+            <li>Button (primary/secondary/destructive variants)</li>
+            <li>Input (empty/filled/error/focused states)</li>
+            <li>Card (with image, title, description, CTA)</li>
+            <li>Badge (success/warning/error/info)</li>
+            <li>Avatar (image with fallback initials)</li>
+            <li>Navbar (logo + navigation + CTA)</li>
+            <li>Modal (header + body + actions + overlay)</li>
+            <li>Toast (success/error/info — appears bottom center)</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Designer-to-Developer Handoff</h4>
+          <ul>
+            <li><strong>Figma Inspect panel:</strong> Developers click any element and see CSS values, font details, spacing, and export options</li>
+            <li><strong>Dev Mode:</strong> Figma's dedicated developer view — shows measurements, redlines, and code snippets</li>
+            <li><strong>Assets:</strong> Export icons and images directly from Figma as SVG, PNG 1x/2x/3x</li>
+            <li><strong>Annotations:</strong> Add written notes to Figma frames explaining behaviour, interaction, edge cases</li>
+            <li>Handoff is not a one-time event — plan weekly design reviews with your developer partner</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 6</h4>
+        <ul>
+          <li>A design system is not a style guide — it is a living product shared between design and engineering.</li>
+          <li>Atomic Design gives you a vocabulary: atoms, molecules, organisms. Use it to structure your Figma files.</li>
+          <li>Design tokens make the design system portable — the same token works in Figma, CSS, iOS, and Android.</li>
+          <li>Handoff is a process, not a file hand-over. Build the developer relationship early.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="sm-sec">Week 7 — Interaction Design &amp; Prototyping</div>
+  <div class="week-block" id="w7">
+    <div class="week-head" onclick="toggleWeek('w7')">
+      <div class="week-num wn-int">W7</div>
+      <div class="week-head-text">
+        <h3>Interaction Design &amp; Prototyping</h3>
+        <p>Affordance · Microinteractions · Figma Prototype Mode · Fidelity Levels · Mobile Gestures</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Explain the four interaction design principles (feedback, affordance, signifier, constraint)</li>
+          <li>Describe microinteractions using Saffer's trigger-rules-feedback-loops model</li>
+          <li>Connect Figma frames with prototype arrows and set Smart Animate transitions</li>
+          <li>Choose the right prototype fidelity for the testing stage</li>
+          <li>Design empty states, loading states, and error states for all your screens</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Interaction Design Principles</h4>
+          <ul>
+            <li><strong>Feedback:</strong> Every action produces a visible response. A button press changes color. A form submit shows a spinner. Silence after an action creates anxiety</li>
+            <li><strong>Affordance:</strong> Objects communicate how they should be used. A button looks pressable. A slider looks draggable. Flat design risks losing affordance signals</li>
+            <li><strong>Signifiers:</strong> Visual cues that communicate affordance. A "handle" icon on a draggable card. An underline on a link. A chevron indicating navigation</li>
+            <li><strong>Constraints:</strong> Restrict what is possible at each step. Greying out unavailable options. Blocking checkout until address is filled</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Microinteractions — Dan Saffer</h4>
+          <ul>
+            <li>Microinteractions are the small, contained interactions within a product: liking a post, toggling a setting, sending a message</li>
+            <li><strong>Trigger:</strong> What initiates the microinteraction? (User taps a heart icon)</li>
+            <li><strong>Rules:</strong> What happens? (The heart fills red; count increments by 1)</li>
+            <li><strong>Feedback:</strong> What does the user see/feel? (Heart bounces; haptic pulse on mobile)</li>
+            <li><strong>Loops/Modes:</strong> Does it repeat? Does the state change next time? (The heart stays filled; tap again to unlike)</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Figma Prototyping</h4>
+          <ul>
+            <li>Connect frames: in Prototype tab, drag the blue arrow from an element to a destination frame</li>
+            <li><strong>Interaction types:</strong> On click, On tap, After delay (auto-advance), On drag, While hovering</li>
+            <li><strong>Animations:</strong> Instant, Dissolve, Smart Animate (morphs matching layers), Slide, Push</li>
+            <li><strong>Smart Animate:</strong> Requires matching layer names in both frames — Figma animates the position/size change automatically</li>
+            <li>Share prototype: top-right Share button → set to "Anyone with link can view" → Present mode</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Prototype Fidelity Levels</h4>
+          <ul>
+            <li><strong>Paper sketch (lo-fi):</strong> Fastest. Use for early concepts, rough flows. Test with 2–3 people before committing to digital</li>
+            <li><strong>Lo-fi digital wireframe:</strong> Grey boxes, no color, placeholder text. Tests navigation and flow</li>
+            <li><strong>Mid-fi:</strong> Structure + typography but no final colors or images. Good for layout decisions</li>
+            <li><strong>Hi-fi mockup:</strong> Final colors, components, real content. Tests visual design and detailed interactions</li>
+            <li>Rule: test with the lowest fidelity that answers your question. High-fi too early wastes time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Mobile Gestures — Design Affordances</h4>
+          <ul>
+            <li><strong>Tap:</strong> Primary action. Every CTA, link, and button. Minimum 44×44pt touch target</li>
+            <li><strong>Double tap:</strong> Secondary action (like a photo). Must be discoverable — show it in onboarding</li>
+            <li><strong>Long press:</strong> Context menu. Show a visible hold-animation to confirm the gesture registered</li>
+            <li><strong>Swipe:</strong> Navigate between screens or dismiss items. Provide visible handles or cues (partly visible next card)</li>
+            <li><strong>Pinch:</strong> Zoom. Only for content that benefits from zoom (maps, photos, documents)</li>
+            <li><strong>Pull to refresh:</strong> Show a spinner animation; confirm with a subtle success state</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Design All Three States — Every Screen</h4>
+          <ul>
+            <li><strong>Loading state:</strong> Never show a blank white screen. Use skeleton loaders (grey placeholder shapes) — not spinners alone</li>
+            <li><strong>Empty state:</strong> When there is no content yet — new user, empty cart, no results. Include: illustration or icon, explanation of why it is empty, clear CTA to take action</li>
+            <li><strong>Error state:</strong> Something went wrong. Specify what (network error, not found, permission denied), offer a fix (retry, go back, contact support)</li>
+            <li>Designing only the happy path is the most common beginner mistake in prototyping</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 7</h4>
+        <ul>
+          <li>Affordance is the most important interaction concept: things should look like what they do.</li>
+          <li>Microinteractions are how users form trust with a product — get the feedback loop right.</li>
+          <li>Always design loading, empty, and error states. They are not edge cases; they are the first things new users see.</li>
+          <li>Smart Animate requires matching layer names — name your layers before you build your prototype.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="sm-sec">Week 8 — Accessibility &amp; Inclusive Design</div>
+  <div class="week-block" id="w8">
+    <div class="week-head" onclick="toggleWeek('w8')">
+      <div class="week-num wn-int">W8</div>
+      <div class="week-head-text">
+        <h3>Accessibility &amp; Inclusive Design</h3>
+        <p>WCAG 2.1 · POUR Principles · Color Blindness · Screen Readers · Inclusive Design Methods</p>
+      </div>
+      <span class="wh-arrow">▾</span>
+    </div>
+    <div class="week-body">
+      <div class="objectives">
+        <h4>Learning Objectives</h4>
+        <ul>
+          <li>Explain the three WCAG 2.1 levels (A, AA, AAA)</li>
+          <li>Apply the POUR principles to evaluate a design</li>
+          <li>Simulate three types of color blindness using Stark</li>
+          <li>Use NVDA (Windows screen reader) to test a web page</li>
+          <li>Explain the inclusive design principle of "design for extremes"</li>
+        </ul>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>WCAG 2.1 Levels</h4>
+          <ul>
+            <li><strong>Level A (minimum):</strong> Basic accessibility. Without this, some users cannot access content at all. Includes alt text on images, keyboard navigation, no auto-play audio</li>
+            <li><strong>Level AA (standard):</strong> Target for all commercial products. Required by law in many countries. Includes contrast ratios (4.5:1 normal text), resize to 200% without loss, visible focus indicators</li>
+            <li><strong>Level AAA (enhanced):</strong> Highest standard. Not required for all content. Includes 7:1 contrast ratio, sign language interpretation, no time limits</li>
+            <li>Design target for this program: WCAG 2.1 AA</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>POUR Principles</h4>
+          <ul>
+            <li><strong>Perceivable:</strong> All users can perceive the content. Alt text for images, captions for video, color is never the only indicator of meaning</li>
+            <li><strong>Operable:</strong> All interactive elements can be operated. Keyboard navigation (Tab key), skip links, no seizure-inducing flashes, no time limits on tasks</li>
+            <li><strong>Understandable:</strong> Content and UI are understandable. Clear language, descriptive error messages, consistent navigation across pages</li>
+            <li><strong>Robust:</strong> Works across assistive technologies. Valid HTML, ARIA attributes correctly applied, tested with real screen readers</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Color Blindness — Types &amp; Design Solutions</h4>
+          <ul>
+            <li><strong>Deuteranopia (most common):</strong> Cannot distinguish red from green. Affects 5% of men. Fix: use icons + labels alongside color to convey status</li>
+            <li><strong>Protanopia:</strong> Reds appear very dark or black. Fix: never use red text alone on white for errors — add a ⚠ icon</li>
+            <li><strong>Tritanopia (rare):</strong> Cannot distinguish blue from green or yellow. Fix: use high contrast + patterns in addition to color</li>
+            <li>Use Stark plugin: Simulate → select blindness type → compare your design under each condition</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Inclusive Design Principles</h4>
+          <ul>
+            <li><strong>Design for extremes:</strong> Designing for one-handed use (broken arm, holding a baby) benefits all users. Designing for low literacy benefits all users under stress</li>
+            <li><strong>Solve for one, extend to many:</strong> Closed captions were created for the deaf — they are now used in noisy offices and by language learners</li>
+            <li><strong>Recognize exclusion:</strong> Who are we excluding with this design? Ask this about every design decision</li>
+            <li><strong>Learn from diversity:</strong> Designers with disabilities make better accessibility decisions than those without. Build diverse teams</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lab-tip">
+        <strong>Accessibility Tools Checklist:</strong> Stark plugin (Figma) — color contrast + blindness simulation. axe DevTools (Chrome extension) — automated web accessibility audit. NVDA (Windows, free) — screen reader for testing web pages. Chrome Lighthouse (F12 → Lighthouse tab) — accessibility score for any live URL. VoiceOver (Mac/iOS, built-in) — screen reader for Apple platforms.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>ARIA Attributes — When to Use</h4>
+          <ul>
+            <li>ARIA (Accessible Rich Internet Applications) adds meaning to HTML elements that screen readers can use</li>
+            <li><strong>aria-label:</strong> Name an element that has no visible text (icon-only button: "Close dialog")</li>
+            <li><strong>aria-expanded:</strong> Tell screen readers whether an accordion is open or collapsed</li>
+            <li><strong>aria-live:</strong> Announce dynamic content changes (toast notifications, search results updating)</li>
+            <li>Rule: first use native HTML semantics (button, nav, main, header). Only add ARIA when native HTML cannot do the job</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Focus Indicators — Why They Matter</h4>
+          <ul>
+            <li>Keyboard users navigate with Tab — the focus ring shows them where they are</li>
+            <li>Many designs remove focus rings because they look "ugly" — this breaks keyboard navigation</li>
+            <li>WCAG 2.1 AA requires visible focus indicators on all interactive elements</li>
+            <li>Design beautiful focus rings: 2px solid outline, 2px offset, using your brand's primary color</li>
+            <li>Never use <code>outline: none</code> in CSS without providing a custom focus style as a replacement</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <h4>Key Takeaway — Week 8</h4>
+        <ul>
+          <li>WCAG 2.1 AA is the legal and ethical minimum. Treat it as a design constraint, not an afterthought.</li>
+          <li>POUR: Perceivable, Operable, Understandable, Robust — a checklist for every screen you design.</li>
+          <li>Never rely on color alone. Always pair color with an icon, label, or pattern.</li>
+          <li>Design for the most constrained user — everyone else benefits.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sm-page -->
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; UI/UX Design &nbsp;·&nbsp; Concept Notes (Intermediate) &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id) {
+  const b = document.getElementById(id);
+  b.classList.toggle('open');
+}
+document.addEventListener('DOMContentLoaded', function() {
+  const w = document.getElementById('w5');
+  if (w) w.classList.add('open');
+});
+</script>
+</body>
+</html>

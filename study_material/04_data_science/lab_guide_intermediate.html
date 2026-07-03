@@ -1,0 +1,786 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Lab Guide (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">🔬 Lab Guide — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">🔬 Beginner Labs</a>
+    <a href="concept_notes_intermediate.html">📖 Intermediate Notes</a>
+    <a href="lab_guide_advanced.html">🔬 Advanced Labs</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">🔬</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Intermediate Track</h2>
+      <p>5 hands-on labs for Weeks 5–8. You will run statistical tests, build ML models, create a spam detector, perform customer segmentation, and write SQL analytics queries.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">Intermediate</span>
+      <span class="lh-badge">5 Labs</span>
+      <span class="lh-badge">W5–W8</span>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="lab-block" id="lab1">
+    <div class="lab-header">
+      <div class="lab-num">Lab 1</div>
+      <div class="lab-title">
+        <h3>Statistics with Real Data — Diamonds Dataset</h3>
+        <div class="lab-meta"><span class="tag-week">Week 5</span> <span class="tag-time">60 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Apply descriptive statistics and hypothesis testing to the diamonds dataset. Answer: are 'Ideal' cut diamonds significantly more expensive than 'Good' cut diamonds?
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Load and Explore</div>
+        <pre><code>>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy import stats
+
+diamonds = sns.load_dataset('diamonds')
+print("Shape:", diamonds.shape)
+print("\nFirst 5 rows:")
+print(diamonds.head())
+print("\nColumn info:")
+print(diamonds.info())
+print("\nCut value counts:")
+print(diamonds['cut'].value_counts())</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Descriptive Stats for Price</div>
+        <pre><code>>price = diamonds['price']
+
+q1 = price.quantile(0.25)
+q3 = price.quantile(0.75)
+iqr = q3 - q1
+
+print("=== PRICE STATISTICS ===")
+print(f"Count:    {len(price):,}")
+print(f"Mean:     ${price.mean():,.0f}")
+print(f"Median:   ${price.median():,.0f}")
+print(f"Std Dev:  ${price.std():,.0f}")
+print(f"Min:      ${price.min():,}")
+print(f"Max:      ${price.max():,}")
+print(f"Q1 (25%): ${q1:,.0f}")
+print(f"Q3 (75%): ${q3:,.0f}")
+print(f"IQR:      ${iqr:,.0f}")
+print(f"\nNote: Mean (${price.mean():,.0f}) > Median (${price.median():,.0f})")
+print("This indicates positive skew — a few very expensive diamonds pull the mean up.")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Hypothesis Test — t-test</div>
+        <pre><code>>ideal = diamonds[diamonds['cut'] == 'Ideal']['price']
+good  = diamonds[diamonds['cut'] == 'Good']['price']
+
+print(f"Ideal cut: n={len(ideal):,}, Mean=${ideal.mean():,.0f}, Median=${ideal.median():,.0f}")
+print(f"Good cut:  n={len(good):,}, Mean=${good.mean():,.0f}, Median=${good.median():,.0f}")
+
+# Two-sample independent t-test
+# H0: mean price of Ideal = mean price of Good
+# H1: they are different (two-tailed)
+t_stat, p_value = stats.ttest_ind(ideal, good)
+
+print(f"\nt-statistic: {t_stat:.4f}")
+print(f"p-value:     {p_value:.6f}")
+
+alpha = 0.05
+if p_value < alpha:
+    print(f"\nConclusion (α={alpha}): REJECT H₀")
+    print("The price difference between Ideal and Good cut diamonds is statistically significant.")
+else:
+    print(f"\nConclusion (α={alpha}): FAIL TO REJECT H₀")
+
+# Interesting finding: Ideal diamonds are often cheaper because they tend to be smaller!
+# This is Simpson's Paradox — controlling for carat would flip the result.</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Visualize Both Distributions</div>
+        <pre><code>>fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+fig.suptitle('Ideal vs Good Cut Diamond Prices', fontsize=13, fontweight='bold')
+
+# Side-by-side histograms with KDE
+sns.histplot(ideal, kde=True, ax=axes[0], color='#1B3A6B', label='Ideal', alpha=0.7, bins=50)
+sns.histplot(good,  kde=True, ax=axes[0], color='#C8941A', label='Good',  alpha=0.7, bins=50)
+axes[0].set_title('Price Distribution by Cut')
+axes[0].set_xlabel('Price ($)')
+axes[0].legend()
+
+# Boxplot comparison
+subset = diamonds[diamonds['cut'].isin(['Ideal', 'Good'])]
+sns.boxplot(x='cut', y='price', data=subset, ax=axes[1],
+            palette={'Ideal': '#1B3A6B', 'Good': '#C8941A'})
+axes[1].set_title('Boxplot: Median, IQR, and Outliers')
+axes[1].set_xlabel('Cut')
+axes[1].set_ylabel('Price ($)')
+
+plt.tight_layout()
+plt.savefig('diamonds_price_comparison.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Notebook with all steps complete. Write a 3-sentence interpretation: what does the t-test result mean in plain English? Why might Ideal-cut diamonds sometimes be cheaper despite being "better"?
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="lab-block" id="lab2">
+    <div class="lab-header">
+      <div class="lab-num">Lab 2</div>
+      <div class="lab-title">
+        <h3>First ML Model — California Housing Price Regression</h3>
+        <div class="lab-meta"><span class="tag-week">Week 6</span> <span class="tag-time">75 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Build your first machine learning model to predict California house prices. Understand the ML workflow end-to-end: data → features → model → evaluation.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Load and Explore Dataset</div>
+        <pre><code>>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load California Housing dataset
+housing = fetch_california_housing(as_frame=True)
+df = housing.frame
+
+print("Dataset shape:", df.shape)
+print("\nFeature descriptions:")
+for name, desc in zip(housing.feature_names, housing.DESCR.split('\n')[11:19]):
+    print(f"  {name}: {desc.strip()}")
+print(f"  MedHouseVal: Median house value (hundreds of thousands of dollars)")
+print("\nFirst 5 rows:")
+print(df.head())</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Explore Features</div>
+        <pre><code>>print("=== DATASET STATISTICS ===")
+print(df.describe().round(2))
+
+print(f"\nMissing values: {df.isnull().sum().sum()}")
+
+# Correlation with target
+corr_with_target = df.corr()['MedHouseVal'].sort_values(ascending=False)
+print("\nCorrelation with House Value:")
+print(corr_with_target)
+
+# The most correlated feature
+print(f"\nStrongest predictor: {corr_with_target.index[1]} (r={corr_with_target.iloc[1]:.3f})")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Prepare Data &amp; Split</div>
+        <pre><code>>feature_cols = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']
+X = df[feature_cols]
+y = df['MedHouseVal']
+
+print(f"Features shape: {X.shape}")
+print(f"Target shape:   {y.shape}")
+print(f"Target range:   ${y.min():.2f} — ${y.max():.2f} (hundreds of thousands)")
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+print(f"\nTrain size: {len(X_train):,} samples")
+print(f"Test size:  {len(X_test):,} samples")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Train &amp; Evaluate Linear Regression</div>
+        <pre><code>>model = LinearRegression()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+mse  = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+r2   = r2_score(y_test, y_pred)
+
+print("=== MODEL EVALUATION ===")
+print(f"RMSE: ${rmse:.3f} (hundred thousands) = ${rmse * 100000:,.0f}")
+print(f"R²:   {r2:.3f}  ({r2:.1%} of variance explained)")
+
+print("\nFeature Coefficients:")
+coef_df = pd.DataFrame({'Feature': feature_cols, 'Coefficient': model.coef_})
+coef_df['Abs'] = coef_df['Coefficient'].abs()
+coef_df = coef_df.sort_values('Abs', ascending=False)
+for _, row in coef_df.iterrows():
+    print(f"  {row['Feature']:15s}: {row['Coefficient']:+.4f}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Plot Predictions vs Actuals</div>
+        <pre><code>>fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+fig.suptitle('Linear Regression — California House Prices', fontsize=13, fontweight='bold')
+
+# Scatter: Predicted vs Actual
+axes[0].scatter(y_test, y_pred, alpha=0.3, color='#1B3A6B', s=10)
+line_min, line_max = y_test.min(), y_test.max()
+axes[0].plot([line_min, line_max], [line_min, line_max],
+             color='#C8941A', linewidth=2, linestyle='--', label='Perfect predictions')
+axes[0].set_xlabel('Actual Price ($100K)')
+axes[0].set_ylabel('Predicted Price ($100K)')
+axes[0].set_title(f'Actual vs Predicted (R²={r2:.3f})')
+axes[0].legend()
+
+# Residuals distribution
+residuals = y_test - y_pred
+sns.histplot(residuals, kde=True, ax=axes[1], color='#1B3A6B',
+             edgecolor='white', bins=50)
+axes[1].axvline(0, color='#C8941A', linestyle='--', linewidth=2)
+axes[1].set_title('Residuals Distribution\n(should be ~normal around 0)')
+axes[1].set_xlabel('Residual (Actual − Predicted)')
+
+plt.tight_layout()
+plt.savefig('housing_regression.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Complete notebook. Answer in a Markdown cell: (1) What does R²=0.6 mean? (2) Which feature matters most? (3) What would you try next to improve the model?
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="lab-block" id="lab3">
+    <div class="lab-header">
+      <div class="lab-num">Lab 3</div>
+      <div class="lab-title">
+        <h3>Classification — Text Category Detector</h3>
+        <div class="lab-meta"><span class="tag-week">Week 7</span> <span class="tag-time">75 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Build a text classification model using TF-IDF vectorization and Logistic Regression. Classify newsgroup posts into two categories and evaluate with precision/recall/F1.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Load Text Dataset</div>
+        <pre><code>>from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Use 2 categories: space vs hockey
+categories = ['sci.space', 'rec.sport.hockey']
+newsgroups = fetch_20newsgroups(subset='all', categories=categories,
+                                 remove=('headers','footers','quotes'))
+
+print(f"Documents: {len(newsgroups.data)}")
+print(f"Categories: {newsgroups.target_names}")
+print(f"\nSample post (first 200 chars):")
+print(newsgroups.data[0][:200])
+print(f"\nLabel: {newsgroups.target_names[newsgroups.target[0]]}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> TF-IDF Vectorization</div>
+        <pre><code>>X_train_raw, X_test_raw, y_train, y_test = train_test_split(
+    newsgroups.data, newsgroups.target, test_size=0.2, random_state=42, stratify=newsgroups.target
+)
+
+# TF-IDF: Term Frequency × Inverse Document Frequency
+# High TF-IDF = word appears often in THIS doc but rarely across all docs
+# This captures the words that make a document unique
+vectorizer = TfidfVectorizer(
+    max_features=5000,    # keep top 5000 words by TF-IDF score
+    ngram_range=(1, 2),   # include single words AND two-word phrases
+    min_df=2,             # ignore words appearing in < 2 documents
+    stop_words='english'  # remove common words like 'the', 'is', etc.
+)
+
+X_train = vectorizer.fit_transform(X_train_raw)   # fit on train only!
+X_test  = vectorizer.transform(X_test_raw)        # transform test using train's vocabulary
+
+print(f"Train matrix shape: {X_train.shape}")   # (docs, features)
+print(f"Test matrix shape:  {X_test.shape}")
+
+# Top words
+feature_names = vectorizer.get_feature_names_out()
+print(f"\nSample vocabulary (first 20): {feature_names[:20].tolist()}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Train &amp; Evaluate</div>
+        <pre><code>>model = LogisticRegression(max_iter=1000, C=1.0, random_state=42)
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.3f}")
+print()
+print(classification_report(y_test, y_pred,
+                             target_names=newsgroups.target_names))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Confusion Matrix</div>
+        <pre><code>>cm = confusion_matrix(y_test, y_pred)
+
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=[f'Pred: {n}' for n in newsgroups.target_names],
+            yticklabels=[f'True: {n}' for n in newsgroups.target_names])
+plt.title('Confusion Matrix', fontsize=12, fontweight='bold')
+plt.tight_layout()
+plt.savefig('confusion_matrix.png', dpi=150, bbox_inches='tight')
+plt.show()
+
+tn, fp, fn, tp = cm.ravel()
+print(f"\nTrue Positives:  {tp}")
+print(f"True Negatives:  {tn}")
+print(f"False Positives: {fp}")
+print(f"False Negatives: {fn}")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Test with a Custom Sentence</div>
+        <pre><code>># Test predictions on new text
+test_sentences = [
+    "The astronaut floated in the international space station orbit",
+    "The hockey player scored a goal in the Stanley Cup playoffs",
+    "The rocket launch was delayed due to weather conditions",
+    "The team won the championship after a penalty shootout"
+]
+
+for sentence in test_sentences:
+    vec = vectorizer.transform([sentence])
+    pred_class = newsgroups.target_names[model.predict(vec)[0]]
+    proba = model.predict_proba(vec)[0]
+    confidence = max(proba)
+    print(f"Text: '{sentence[:60]}...'")
+    print(f"  → Predicted: {pred_class} (confidence: {confidence:.1%})\n")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Complete notebook with all steps. Write a Markdown cell explaining precision vs recall in plain English using an example from this dataset (a misclassified hockey post, for instance).
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="lab-block" id="lab4">
+    <div class="lab-header">
+      <div class="lab-num">Lab 4</div>
+      <div class="lab-title">
+        <h3>K-Means Clustering — Customer Segmentation</h3>
+        <div class="lab-meta"><span class="tag-week">Week 7</span> <span class="tag-time">60 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Use K-Means clustering to segment synthetic customer data into meaningful groups. Apply the elbow method to choose optimal K, then describe each cluster's characteristics.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Generate Synthetic Customer Data</div>
+        <pre><code>>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_blobs
+
+np.random.seed(42)
+
+# Create 4 realistic customer segments:
+# 1. Budget shoppers: low spend, high frequency
+# 2. Occasional big spenders: high spend, low frequency
+# 3. Loyal medium spenders: medium spend, medium frequency
+# 4. Inactive: very low spend and frequency
+
+n_per_cluster = 100
+customers = pd.DataFrame({
+    'monthly_spend':  np.concatenate([
+        np.random.normal(200, 50, n_per_cluster),    # budget
+        np.random.normal(900, 150, n_per_cluster),   # big spenders
+        np.random.normal(500, 80, n_per_cluster),    # loyal
+        np.random.normal(80, 20, n_per_cluster)      # inactive
+    ]),
+    'purchase_freq': np.concatenate([
+        np.random.normal(12, 2, n_per_cluster),      # budget — frequent
+        np.random.normal(3, 1, n_per_cluster),       # big — rare
+        np.random.normal(7, 2, n_per_cluster),       # loyal — medium
+        np.random.normal(1.5, 0.5, n_per_cluster)   # inactive — very rare
+    ]),
+    'days_since_last': np.concatenate([
+        np.random.normal(10, 3, n_per_cluster),
+        np.random.normal(45, 15, n_per_cluster),
+        np.random.normal(20, 7, n_per_cluster),
+        np.random.normal(90, 30, n_per_cluster)
+    ])
+})
+customers = customers.clip(lower=0)  # no negative values
+
+print("Customer dataset created:")
+print(customers.describe().round(1))</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Scale Features &amp; Elbow Method</div>
+        <pre><code>>scaler = StandardScaler()
+X_scaled = scaler.fit_transform(customers)
+
+# Elbow method — find optimal K
+inertias = []
+k_range = range(1, 11)
+
+for k in k_range:
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    km.fit(X_scaled)
+    inertias.append(km.inertia_)
+
+plt.figure(figsize=(8, 4))
+plt.plot(k_range, inertias, marker='o', color='#1B3A6B', linewidth=2, markersize=8)
+plt.xlabel('Number of Clusters (K)')
+plt.ylabel('Inertia (Within-cluster Sum of Squares)')
+plt.title('Elbow Method — Choose Optimal K')
+plt.xticks(k_range)
+plt.axvline(4, color='#C8941A', linestyle='--', linewidth=2, label='Optimal K=4')
+plt.legend()
+plt.tight_layout()
+plt.savefig('kmeans_elbow.png', dpi=150, bbox_inches='tight')
+plt.show()
+print("Elbow method saved!")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Fit Final Model with K=4</div>
+        <pre><code>>km_final = KMeans(n_clusters=4, random_state=42, n_init=10)
+customers['cluster'] = km_final.fit_predict(X_scaled)
+
+print("Cluster sizes:")
+print(customers['cluster'].value_counts().sort_index())
+
+print("\nCluster means:")
+cluster_summary = customers.groupby('cluster').mean().round(1)
+print(cluster_summary)</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Visualize Clusters</div>
+        <pre><code>>colors = ['#4CAF50', '#2196F3', '#C8941A', '#E53935']
+cluster_labels = {0: 'Segment A', 1: 'Segment B', 2: 'Segment C', 3: 'Segment D'}
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+fig.suptitle('Customer Segmentation — K-Means (K=4)', fontsize=13, fontweight='bold')
+
+for cluster_id in range(4):
+    mask = customers['cluster'] == cluster_id
+    axes[0].scatter(customers.loc[mask, 'monthly_spend'],
+                    customers.loc[mask, 'purchase_freq'],
+                    c=colors[cluster_id], alpha=0.7, s=40, label=f'Cluster {cluster_id}')
+
+axes[0].set_xlabel('Monthly Spend (₹)')
+axes[0].set_ylabel('Purchase Frequency (times/month)')
+axes[0].set_title('Spend vs Frequency')
+axes[0].legend()
+
+for cluster_id in range(4):
+    mask = customers['cluster'] == cluster_id
+    axes[1].scatter(customers.loc[mask, 'monthly_spend'],
+                    customers.loc[mask, 'days_since_last'],
+                    c=colors[cluster_id], alpha=0.7, s=40, label=f'Cluster {cluster_id}')
+
+axes[1].set_xlabel('Monthly Spend (₹)')
+axes[1].set_ylabel('Days Since Last Purchase')
+axes[1].set_title('Spend vs Recency')
+axes[1].legend()
+
+plt.tight_layout()
+plt.savefig('customer_clusters.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Label &amp; Describe Clusters</div>
+        <pre><code>>cluster_descriptions = cluster_summary.copy()
+cluster_descriptions['size'] = customers['cluster'].value_counts().sort_index()
+
+print("=== CLUSTER ANALYSIS ===\n")
+for cluster_id in range(4):
+    row = cluster_summary.loc[cluster_id]
+    spend = row['monthly_spend']
+    freq  = row['purchase_freq']
+    days  = row['days_since_last']
+    size  = customers[customers['cluster'] == cluster_id].shape[0]
+
+    print(f"Cluster {cluster_id} ({size} customers):")
+    print(f"  Avg Monthly Spend:    ₹{spend:.0f}")
+    print(f"  Avg Purchase Freq:    {freq:.1f}x/month")
+    print(f"  Avg Days Since Last:  {days:.0f} days")
+
+    # Auto-label based on characteristics
+    if spend > 700 and freq < 5:
+        label = "💎 High-Value Occasional Buyers"
+    elif spend < 200 and freq > 8:
+        label = "🔄 Budget Frequent Shoppers"
+    elif spend > 350 and freq > 5 and days < 30:
+        label = "⭐ Loyal Regular Customers"
+    else:
+        label = "😴 Inactive / At-Risk"
+    print(f"  → Suggested Label: {label}\n")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Complete notebook with elbow plot and cluster visualization saved. Write a business recommendation: for each cluster, what marketing strategy would you suggest? (2–3 sentences per cluster)
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="lab-block" id="lab5">
+    <div class="lab-header">
+      <div class="lab-num">Lab 5</div>
+      <div class="lab-title">
+        <h3>SQL Analytics Queries — SQLite in Python</h3>
+        <div class="lab-meta"><span class="tag-week">Week 8</span> <span class="tag-time">75 min</span></div>
+      </div>
+    </div>
+    <div class="lab-body">
+      <div class="lab-objective">
+        <strong>Objective:</strong> Set up a SQLite database in Python, populate it with sample sales data, and write 5 progressively complex SQL analytics queries. Connect results back to pandas.
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 1</span> Create Database and Table</div>
+        <pre><code>>import sqlite3
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime, timedelta
+import random
+
+# Connect to SQLite (creates file if it doesn't exist)
+conn = sqlite3.connect('sales_analytics.db')
+cursor = conn.cursor()
+
+# Create sales table
+cursor.execute('''DROP TABLE IF EXISTS sales''')
+cursor.execute('''
+CREATE TABLE sales (
+    sale_id       INTEGER PRIMARY KEY,
+    date          TEXT NOT NULL,
+    region        TEXT NOT NULL,
+    product       TEXT NOT NULL,
+    category      TEXT NOT NULL,
+    quantity      INTEGER NOT NULL,
+    unit_price    REAL NOT NULL,
+    customer_id   INTEGER NOT NULL
+)
+''')
+conn.commit()
+print("Database and table created.")</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 2</span> Insert 200 Rows of Sample Data</div>
+        <pre><code>>np.random.seed(42)
+random.seed(42)
+
+regions   = ['North', 'South', 'East', 'West']
+products  = ['Laptop', 'Phone', 'Tablet', 'Headphones', 'Monitor',
+             'Keyboard', 'Mouse', 'Webcam', 'Speaker', 'Cable']
+categories = {'Laptop': 'Computing', 'Phone': 'Mobile', 'Tablet': 'Mobile',
+              'Headphones': 'Audio', 'Monitor': 'Computing', 'Keyboard': 'Peripherals',
+              'Mouse': 'Peripherals', 'Webcam': 'Peripherals', 'Speaker': 'Audio', 'Cable': 'Accessories'}
+prices = {'Laptop': 65000, 'Phone': 30000, 'Tablet': 25000, 'Headphones': 5000,
+          'Monitor': 18000, 'Keyboard': 3000, 'Mouse': 1500, 'Webcam': 4000,
+          'Speaker': 6000, 'Cable': 500}
+
+start_date = datetime(2025, 7, 1)
+rows = []
+for i in range(1, 201):
+    date = start_date + timedelta(days=random.randint(0, 364))
+    product = random.choice(products)
+    qty = random.randint(1, 10)
+    price_jitter = prices[product] * np.random.uniform(0.9, 1.1)
+    rows.append((i, date.strftime('%Y-%m-%d'), random.choice(regions),
+                 product, categories[product], qty, round(price_jitter, 2),
+                 random.randint(1001, 1050)))
+
+cursor.executemany('INSERT INTO sales VALUES (?,?,?,?,?,?,?,?)', rows)
+conn.commit()
+print(f"Inserted {len(rows)} rows.")
+
+# Verify
+result = pd.read_sql("SELECT COUNT(*) as total FROM sales", conn)
+print(result)</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 3</span> Query 1 — Total Sales by Region</div>
+        <pre><code>>q1 = """
+SELECT
+    region,
+    COUNT(*) as transaction_count,
+    SUM(quantity) as total_units,
+    ROUND(SUM(quantity * unit_price), 0) as total_revenue,
+    ROUND(AVG(quantity * unit_price), 0) as avg_order_value
+FROM sales
+GROUP BY region
+ORDER BY total_revenue DESC
+"""
+df_q1 = pd.read_sql(q1, conn)
+print("=== Total Sales by Region ===")
+print(df_q1.to_string(index=False))
+
+plt.figure(figsize=(8, 4))
+sns.barplot(x='region', y='total_revenue', data=df_q1, palette='Blues_d')
+plt.title('Total Revenue by Region')
+plt.ylabel('Revenue (₹)')
+plt.savefig('sql_region_revenue.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 4</span> Query 2 — Top 5 Products &amp; Monthly Trend</div>
+        <pre><code>>q2 = """
+SELECT
+    product,
+    category,
+    COUNT(*) as orders,
+    SUM(quantity) as units_sold,
+    ROUND(SUM(quantity * unit_price), 0) as revenue
+FROM sales
+GROUP BY product, category
+ORDER BY revenue DESC
+LIMIT 5
+"""
+print("=== Top 5 Products by Revenue ===")
+print(pd.read_sql(q2, conn).to_string(index=False))
+
+# Monthly trend
+q3 = """
+SELECT
+    SUBSTR(date, 1, 7) as month,
+    COUNT(*) as transactions,
+    ROUND(SUM(quantity * unit_price), 0) as revenue
+FROM sales
+GROUP BY month
+ORDER BY month
+"""
+df_monthly = pd.read_sql(q3, conn)
+print("\n=== Monthly Revenue Trend ===")
+print(df_monthly.to_string(index=False))
+
+plt.figure(figsize=(12, 4))
+plt.plot(df_monthly['month'], df_monthly['revenue'], marker='o', color='#1B3A6B', linewidth=2)
+plt.xticks(rotation=45, ha='right')
+plt.title('Monthly Revenue Trend')
+plt.ylabel('Revenue (₹)')
+plt.tight_layout()
+plt.savefig('sql_monthly_trend.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+      </div>
+
+      <div class="lab-step">
+        <div class="step-header"><span class="step-badge">Step 5</span> Query 3 — Repeat Customers with Window Function</div>
+        <pre><code>>q4 = """
+SELECT
+    customer_id,
+    COUNT(*) as purchase_count,
+    ROUND(SUM(quantity * unit_price), 0) as lifetime_value,
+    MIN(date) as first_purchase,
+    MAX(date) as last_purchase,
+    CAST(JULIANDAY(MAX(date)) - JULIANDAY(MIN(date)) AS INTEGER) as active_days
+FROM sales
+GROUP BY customer_id
+HAVING COUNT(*) >= 3
+ORDER BY lifetime_value DESC
+"""
+df_repeat = pd.read_sql(q4, conn)
+print("=== Customers with 3+ Purchases ===")
+print(df_repeat.head(10).to_string(index=False))
+print(f"\nTotal repeat customers: {len(df_repeat)}")
+
+# LAG() — compare each month to previous month
+q5 = """
+WITH monthly AS (
+    SELECT SUBSTR(date, 1, 7) as month,
+           ROUND(SUM(quantity * unit_price), 0) as revenue
+    FROM sales GROUP BY month ORDER BY month
+)
+SELECT
+    month,
+    revenue,
+    LAG(revenue, 1) OVER (ORDER BY month) as prev_month,
+    ROUND((revenue - LAG(revenue, 1) OVER (ORDER BY month)) * 100.0 /
+          LAG(revenue, 1) OVER (ORDER BY month), 1) as pct_change
+FROM monthly
+"""
+df_lag = pd.read_sql(q5, conn)
+print("\n=== Month-over-Month Growth ===")
+print(df_lag.to_string(index=False))
+
+conn.close()
+print("\nDatabase connection closed.")</code></pre>
+      </div>
+
+      <div class="lab-deliverable">
+        <strong>Deliverable:</strong> Complete notebook with all 5 queries executed and output visible. Two chart PNGs saved. Write a brief Markdown summary: which region/product performs best and why you think that is.
+      </div>
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="lab_guide_beginner.html" class="btn-secondary">← Beginner Labs</a>
+    <a href="lab_guide_advanced.html" class="btn-primary">Next: Advanced Labs →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>
+

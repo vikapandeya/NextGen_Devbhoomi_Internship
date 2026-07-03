@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">🧪 Lab Guide — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; LAB GUIDE — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero beg">
+    <div class="lh-icon">🧪</div>
+    <h1>Beginner Lab Guide — Cyber Security</h1>
+    <p class="lh-sub">4 labs: safe security practices, analyzing phishing emails, network traffic basics with Wireshark, and password security audit.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">Weeks 1–4</span>
+      <span class="lh-pill">No hacking tools required</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="sm-sec">Lab 1 (Week 1) — Security Mindset &amp; Threat Modeling</div>
+
+  <div class="objectives">
+    <h4>Lab Objectives</h4>
+    <ul>
+      <li>Think like an attacker to find weaknesses</li>
+      <li>Identify and classify digital assets by sensitivity</li>
+      <li>Apply the STRIDE threat modeling framework</li>
+      <li>Calculate and communicate risk scores to stakeholders</li>
+    </ul>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Define Your Web Application &amp; List Assets</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Create a threat model for a simple web application: a user login system with a personal notes storage feature. Begin by listing every asset in this system.</p>
+      <p>Assets to identify: user passwords (stored in database), notes content (user's private data), session tokens (issued after login), database connection credentials, the server itself.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Apply STRIDE to Each Asset</h3>
+      <span>~30 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>For each asset, identify threats using the STRIDE model. Create a table with columns: Asset | Threat Type | Threat Description.</p>
+      <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;line-height:2;">
+        <li><strong>S</strong>poofing — pretending to be another user or system</li>
+        <li><strong>T</strong>ampering — modifying data without authorization</li>
+        <li><strong>R</strong>epudiation — denying that an action was taken</li>
+        <li><strong>I</strong>nformation Disclosure — data exposed to unauthorized parties</li>
+        <li><strong>D</strong>enial of Service — making the system unavailable</li>
+        <li><strong>E</strong>levation of Privilege — gaining more access than permitted</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Score Each Threat (Risk = Likelihood × Impact)</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>For each threat in your table, rate on a 1–5 scale: <strong>Likelihood</strong> (how probable?) and <strong>Impact</strong> (how damaging?). Calculate <strong>Risk Score = Likelihood × Impact</strong> (max = 25).</p>
+      <p>Example: "Attacker brute-forces weak password" — Likelihood: 4, Impact: 5, Risk: 20 (Critical).</p>
+      <p>Thresholds: ≥ 20 = Critical, 12–19 = High, 6–11 = Medium, &lt; 6 = Low.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Propose Mitigations for High-Risk Threats</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>For every threat with a risk score ≥ 12, propose one concrete mitigation. Example: brute force risk → implement account lockout after 5 failed attempts + require MFA.</p>
+      <p>Add a <strong>Residual Risk</strong> column: after your mitigation is applied, what is the new risk score? Mitigation should reduce likelihood or impact.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Write the Threat Model Document</h3>
+      <span>~25 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Create a 1-page document containing: (1) Application description, (2) Asset list, (3) Completed STRIDE threat table with risk scores, (4) Mitigations for all High/Critical threats, (5) Your overall risk assessment conclusion.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Threat model document (Word/PDF/Markdown) submitted to mentor portal before end of Week 1.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="sm-sec">Lab 2 (Week 2) — Analyzing Phishing Emails</div>
+
+  <div class="lab-warn">
+    <strong>⚠️ Safety Notice:</strong> All analysis is performed on SAMPLE emails provided by the course portal. Never interact with, forward, or click links in real phishing emails. Never enter credentials into any site discovered through a sample email.
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Download Sample Phishing Emails</h3>
+      <span>~5 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Download the sample phishing email set from the course portal (3 sample .eml files provided). These are sanitized examples — all links have been defanged (e.g. hxxps://) and cannot be clicked.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Analyze Email Content for Red Flags</h3>
+      <span>~30 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>For each of the 3 sample emails, identify and document:</p>
+      <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;line-height:2;">
+        <li>Sender display name vs the actual email address (often different)</li>
+        <li>Urgency language in subject line or body</li>
+        <li>Suspicious links — note display text vs actual URL</li>
+        <li>Grammar and spelling errors</li>
+        <li>Mismatched domain names (e.g. paypa1.com instead of paypal.com)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Analyze Email Headers via MXToolbox</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Open each sample email's raw headers (provided as text in the course portal). Paste into <strong>mxtoolbox.com/EmailHeaders</strong>. Look for:</p>
+      <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;line-height:2;">
+        <li><strong>SPF</strong> — does the sender IP match authorized senders for that domain?</li>
+        <li><strong>DKIM</strong> — is the email cryptographically signed by the sender domain?</li>
+        <li><strong>DMARC</strong> — does the domain policy match what was received?</li>
+        <li>SPF Fail + DKIM Fail = almost certainly spoofed or phishing</li>
+      </ul>
+      <p>Screenshot the MXToolbox results for each email.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Check Domains on VirusTotal</h3>
+      <span>~10 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>The sample emails contain defanged domains in the body. Re-fang only for VirusTotal analysis (add back https://, do NOT visit the URL). At <strong>virustotal.com</strong>, paste the domain name (not the full URL) and check the Security Vendors' Analysis results.</p>
+      <p>Note: how many vendors flag the domain as malicious? Record the category (phishing, malware distribution, etc.).</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Write the Analysis Report</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Write a 1-page analysis covering all 3 emails: what social engineering techniques were used in each, how you identified each as phishing, and what a user could have done to avoid being tricked.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Analysis report (1 page minimum) + screenshots of email header analysis from MXToolbox. Submit via mentor portal by end of Week 2.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="sm-sec">Lab 3 (Week 3) — Wireshark Network Traffic Analysis</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Install Wireshark</h3>
+      <span>~10 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Download and install Wireshark from <strong>wireshark.org</strong>. Install WinPcap/Npcap (included in installer) to allow packet capture. Run as Administrator on Windows.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Capture HTTP Traffic</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Select your active network interface (Wi-Fi or Ethernet). Start a capture. Open Firefox and browse to <strong>http://httpbin.org/get</strong> — this is a safe plain HTTP test endpoint. Browse around for 1–2 minutes then stop the capture.</p>
+      <div class="lab-tip">
+        <strong>Tip:</strong> httpbin.org intentionally serves over HTTP for testing purposes. Never send sensitive data over HTTP in real use.
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Filter and Examine HTTP Packets</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>In Wireshark's filter bar, type <code>http</code> and press Enter. Find an HTTP GET request. Click on it and examine: source/destination IP address, HTTP method and path, request headers (User-Agent, Host, Accept), and response headers and body.</p>
+      <p>You can read everything — the URL, your IP, all headers. This is what an attacker on your network can see when you use HTTP.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Capture and Compare HTTPS Traffic</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Start a new capture. Browse to <strong>https://example.com</strong>. Stop capture. Filter by <code>tcp.port == 443</code>. You can see that traffic exists (IP addresses, timing, packet sizes) but the <strong>payload is completely encrypted</strong>. The content is unreadable.</p>
+      <p>Take a screenshot of each — the readable HTTP packet content, and the encrypted HTTPS TLS Application Data.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Write Comparison and Reflection</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Two labeled screenshots — one showing readable HTTP data (with annotations pointing to sensitive fields), one showing encrypted HTTPS data. Written comparison (200 words minimum): what could an attacker on public WiFi see with each protocol, and what does this mean for your daily browsing habits?
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="sm-sec">Lab 4 (Week 4) — Password Security Audit</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Check Your Emails on Have I Been Pwned</h3>
+      <span>~10 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Go to <strong>haveibeenpwned.com</strong>. Enter your personal email addresses. This service is safe, privacy-respecting (Troy Hunt), and free. It checks your email against 13+ billion compromised accounts from known data breaches.</p>
+      <p>Note: how many breaches appear? Which ones include passwords? This is how attackers find valid credential combos for credential stuffing attacks.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Install Bitwarden Password Manager</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Install <strong>Bitwarden</strong> from bitwarden.com — it is free, open source, and independently audited. Install the browser extension for Chrome/Firefox and the desktop app. Create an account with a strong master passphrase (4+ random words, e.g. "mountain-river-keyboard-cloud").</p>
+      <div class="lab-tip">
+        <strong>Tip:</strong> Your master password is the one password you do need to remember. Make it a passphrase, not a password. Write it on paper and store it physically safely — not in a file on your computer.
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Audit 10 Existing Passwords</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Add 10 of your current account credentials to Bitwarden. Go to <strong>Tools → Vault Health Reports</strong>. Identify:</p>
+      <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;line-height:2;">
+        <li>Reused passwords (same password on multiple sites)</li>
+        <li>Weak passwords (under 12 characters)</li>
+        <li>Exposed passwords (found in known breach databases)</li>
+      </ul>
+      <p>Take a screenshot of the health report showing the current state (number of issues found).</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Generate Strong Passwords for All Weak Accounts</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>For every weak/reused/exposed password found, use Bitwarden's password generator (Settings → Generator) to create new passwords: 20+ characters, include uppercase, lowercase, numbers, and symbols. Update each account and save the new credential in Bitwarden.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Enable TOTP MFA on 3 Critical Accounts</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Install <strong>Aegis Authenticator</strong> (Android, free, open source) or <strong>Google Authenticator</strong> on your phone. Enable MFA on: your primary email (Gmail/Outlook), your GitHub account, and one social media account. Choose the "Authenticator App" option, scan the QR code.</p>
+      <p>Store the backup codes in Bitwarden as a secure note — they are your emergency access if you lose your phone.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Two screenshots of Bitwarden Health Report — before and after remediation — showing improvement in password hygiene. Plus confirmation screenshot of MFA enabled on 3 accounts.
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Concept Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Intermediate Labs →</a>
+      <a href="quizzes.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Quiz →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Lab Guide — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

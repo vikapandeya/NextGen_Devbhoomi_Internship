@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .lab-badge { display:inline-block; background:var(--green); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; letter-spacing:.5px; text-transform:uppercase; }
+  .lab-badge.int { background:var(--gold); }
+  .lab-badge.adv { background:#7B1FA2; }
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">🧪 Lab Guide — Beginner Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; LAB GUIDE — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Lab ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero beg">
+    <div class="lh-icon">🧪</div>
+    <h1>Beginner Lab Guide</h1>
+    <p class="lh-sub">4 hands-on lab exercises — one per week. Build a real portfolio website from scratch. Each lab builds on the previous one. By Week 4 you will have a live, deployed website.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">VS Code · Chrome DevTools · GitHub</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <div class="objectives">
+    <h4>Lab Setup — Do This Once Before Lab 1</h4>
+    <ul>
+      <li>Install VS Code from code.visualstudio.com</li>
+      <li>Install the "Live Server" extension in VS Code</li>
+      <li>Create a free account at github.com</li>
+      <li>Install Git from git-scm.com</li>
+      <li>Configure Git: <code>git config --global user.name "Your Name"</code> and <code>git config --global user.email "you@email.com"</code></li>
+    </ul>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="sm-sec">Lab 1 — Build Your Personal Portfolio Page (Week 1)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create your project folder</h4>
+      <p>Create a folder on your Desktop called <code>my-portfolio</code>. Open VS Code → File → Open Folder → select your folder. Create a new file called <code>index.html</code>.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Start with the HTML skeleton</h4>
+      <p>Type <code>!</code> and press Tab in VS Code — it generates the full HTML5 boilerplate. Update the title to your name. Then add this structure inside <code>&lt;body&gt;</code>:</p>
+      <pre>&lt;header&gt;
+  &lt;nav&gt;
+    &lt;a href="#about"&gt;About&lt;/a&gt;
+    &lt;a href="#skills"&gt;Skills&lt;/a&gt;
+    &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;section id="about"&gt;
+    &lt;h1&gt;Hello, I'm [Your Name]&lt;/h1&gt;
+    &lt;p&gt;BCA student at [Your College], passionate about web development.&lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section id="skills"&gt;
+    &lt;h2&gt;Skills&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;HTML5&lt;/li&gt;
+      &lt;li&gt;CSS3&lt;/li&gt;
+      &lt;li&gt;JavaScript&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/section&gt;
+
+  &lt;section id="contact"&gt;
+    &lt;h2&gt;Contact Me&lt;/h2&gt;
+    &lt;form&gt;
+      &lt;label for="name"&gt;Your Name:&lt;/label&gt;
+      &lt;input type="text" id="name" placeholder="Enter your name"&gt;
+      &lt;label for="msg"&gt;Message:&lt;/label&gt;
+      &lt;textarea id="msg" placeholder="Write your message..."&gt;&lt;/textarea&gt;
+      &lt;button type="submit"&gt;Send Message&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;© 2026 [Your Name]&lt;/p&gt;
+&lt;/footer&gt;</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Open in Live Server</h4>
+      <p>Right-click on <code>index.html</code> in VS Code → "Open with Live Server." Your page opens in the browser. Every time you save, it refreshes automatically. Verify all sections are visible.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Validate your HTML</h4>
+      <p>Go to <strong>validator.w3.org</strong>. Select "Validate by Direct Input." Paste your HTML. Fix any errors shown. Zero errors = Lab 1 complete.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <h4>Submission</h4>
+      <p>Take a screenshot of your browser showing the page AND the validator showing zero errors. Upload both to the submission portal.</p>
+      <span class="lab-badge">Deliverable: screenshot + clean validation</span>
+    </div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="sm-sec">Lab 2 — Style with CSS3 + Flexbox (Week 2)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create style.css</h4>
+      <p>Create <code>style.css</code> in the same folder. Link it in your HTML head: <code>&lt;link rel="stylesheet" href="style.css"&gt;</code>. Start with the CSS reset and variables:</p>
+      <pre>:root {
+  --navy:    #1B3A6B;
+  --gold:    #C8941A;
+  --cream:   #F8F6F0;
+  --white:   #ffffff;
+  --font:    'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--cream);
+  color: #333;
+  line-height: 1.6;
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Style the navigation</h4>
+      <pre>header {
+  background: var(--navy);
+  padding: 16px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-end;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+nav a:hover {
+  color: var(--gold);
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Style the About section as a hero</h4>
+      <pre>#about {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 80px 32px;
+}
+
+#about h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+#about p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  max-width: 600px;
+  margin: 0 auto;
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Use Chrome DevTools to experiment</h4>
+      <p>Press F12 in Chrome. Click the element picker (top-left icon). Click any element on your page. Try changing CSS values in the Styles panel on the right. This is temporary — copy good values back to your file.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <h4>Submission</h4>
+      <p>Your styled page should have: sticky nav, hero section, styled skills list, and a styled form. Screenshot the full page.</p>
+      <span class="lab-badge">Deliverable: styled portfolio screenshot</span>
+    </div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="sm-sec">Lab 3 — Responsive Design with CSS Grid (Week 3)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Convert skills list to a responsive grid</h4>
+      <p>Add more skills to your list and wrap them in a grid container:</p>
+      <pre><span class="comment">/* HTML — replace the ul with this */</span>
+&lt;div class="skills-grid"&gt;
+  &lt;div class="skill-card"&gt;HTML5&lt;/div&gt;
+  &lt;div class="skill-card"&gt;CSS3&lt;/div&gt;
+  &lt;div class="skill-card"&gt;JavaScript&lt;/div&gt;
+  &lt;div class="skill-card"&gt;Responsive Design&lt;/div&gt;
+  &lt;div class="skill-card"&gt;Git&lt;/div&gt;
+  &lt;div class="skill-card"&gt;VS Code&lt;/div&gt;
+&lt;/div&gt;
+
+<span class="comment">/* CSS */</span>
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 32px;
+}
+
+.skill-card {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Test responsiveness with DevTools</h4>
+      <p>Press F12 → click the phone/tablet icon (Toggle Device Toolbar). Test at: 360px (Android), 414px (iPhone), 768px (iPad), 1280px (laptop). Your grid should adjust at every size without content overflowing.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Add a media query for mobile nav</h4>
+      <pre>@media (max-width: 600px) {
+  nav {
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  #about h1 {
+    font-size: 1.8rem;
+  }
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Submission</h4>
+      <p>Submit two screenshots: desktop view (1280px) and mobile view (360px) from DevTools.</p>
+      <span class="lab-badge">Deliverable: desktop + mobile screenshots</span>
+    </div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="sm-sec">Lab 4 — JavaScript + Deploy to GitHub Pages (Week 4)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create script.js and make the form interactive</h4>
+      <pre><span class="comment">// script.js</span>
+const form = document.querySelector('#contact form');
+const nameInput = document.querySelector('#name');
+const msgInput = document.querySelector('#msg');
+
+form.addEventListener('submit', (e) =&gt; {
+  e.preventDefault();
+
+  const name = nameInput.value.trim();
+  const msg  = msgInput.value.trim();
+
+  if (!name) {
+    alert('Please enter your name');
+    nameInput.focus();
+    return;
+  }
+
+  if (!msg) {
+    alert('Please enter a message');
+    msgInput.focus();
+    return;
+  }
+
+  <span class="comment">// Show success message</span>
+  form.innerHTML = `
+    &lt;div style="text-align:center; padding:32px;"&gt;
+      &lt;h3 style="color:#2E7D32;"&gt;✓ Message sent!&lt;/h3&gt;
+      &lt;p&gt;Thank you, ${name}. I'll get back to you soon.&lt;/p&gt;
+    &lt;/div&gt;
+  `;
+});</pre>
+      <p>Link this file in your HTML: <code>&lt;script src="script.js"&gt;&lt;/script&gt;</code> (before closing <code>&lt;/body&gt;</code>)</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Push to GitHub</h4>
+      <p>Open VS Code Terminal (Ctrl+`):</p>
+      <pre>git init
+git add .
+git commit -m "Add portfolio website"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-USERNAME.github.io.git
+git push -u origin main</pre>
+      <p>Replace <code>YOUR-USERNAME</code> with your actual GitHub username (repository must be named <code>username.github.io</code>).</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Enable GitHub Pages</h4>
+      <p>On GitHub: Settings → Pages → Source: Deploy from branch → Branch: main → Save. Wait 2–3 minutes. Your site will be live at <code>https://YOUR-USERNAME.github.io</code>.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Submission</h4>
+      <p>Submit the live URL of your deployed portfolio. It must show all three sections (About, Skills, Contact) with working JavaScript form validation.</p>
+      <span class="lab-badge">Deliverable: live GitHub Pages URL</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Concept Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="quizzes.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Take Quiz →</a>
+      <a href="lab_guide_intermediate.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Intermediate Lab →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Lab Guide — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

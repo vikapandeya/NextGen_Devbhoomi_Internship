@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Lab Guide (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">🧪 Lab Guide — Advanced Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; LAB GUIDE — ADVANCED
+  <div class="dbar-links">
+    <a href="lab_guide_intermediate.html">← Intermediate Lab</a>
+    <a href="concept_notes_advanced.html">Concept Notes ↗</a>
+    <a href="project_briefs.html">Projects ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero adv">
+    <div class="lh-icon">🧪</div>
+    <h1>Advanced Lab Guide</h1>
+    <p class="lh-sub">4 labs converting the Task Manager to TypeScript, adding a test suite, setting up CI/CD with GitHub Actions, and shipping a production-ready application.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs (Weeks 9–12)</span>
+      <span class="lh-pill">TypeScript · Jest · GitHub Actions · Docker</span>
+      <span class="lh-pill gold">Advanced Level</span>
+    </div>
+  </div>
+
+  <!-- LAB 9 -->
+  <div class="sm-sec">Lab 9 — Migrate Task Manager to TypeScript (Week 9)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Add TypeScript to the existing React project</h4>
+      <pre>npm install -D typescript @types/react @types/react-dom
+npx tsc --init</pre>
+      <p>Rename files: <code>App.jsx → App.tsx</code>, <code>TaskItem.jsx → TaskItem.tsx</code></p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Define TypeScript interfaces</h4>
+      <p>Create <code>src/types.ts</code>:</p>
+      <pre>export interface Task {
+  id: number;
+  title: string;
+  done: boolean;
+}
+
+export interface TaskItemProps {
+  task: Task;
+  onToggle: (id: number) =&gt; void;
+  onDelete: (id: number) =&gt; void;
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Update components with types</h4>
+      <pre>import { Task, TaskItemProps } from '../types';
+
+const TaskItem: React.FC&lt;TaskItemProps&gt; = ({ task, onToggle, onDelete }) =&gt; {
+  return (
+    &lt;div className={`task-item ${task.done ? 'done' : ''}`}&gt;
+      &lt;span&gt;{task.title}&lt;/span&gt;
+      &lt;button onClick={() =&gt; onToggle(task.id)}&gt;Done&lt;/button&gt;
+      &lt;button onClick={() =&gt; onDelete(task.id)}&gt;Delete&lt;/button&gt;
+    &lt;/div&gt;
+  );
+};</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Fix all TypeScript errors</h4>
+      <p>Run <code>npx tsc --noEmit</code>. Fix every error TypeScript reports. No errors = Lab 9 complete. Common fixes: add return types to functions, type event handlers, handle <code>null</code> with <code>if</code> checks.</p>
+    </div>
+  </div>
+
+  <!-- LAB 10 -->
+  <div class="sm-sec">Lab 10 — Write Tests with Jest + RTL (Week 10)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Install testing tools</h4>
+      <pre>npm install -D jest @testing-library/react @testing-library/jest-dom \
+  @testing-library/user-event jest-environment-jsdom \
+  babel-jest @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript</pre>
+      <p>Add to <code>package.json</code>:</p>
+      <pre>"scripts": {
+  "test": "jest",
+  "test:coverage": "jest --coverage"
+},
+"jest": {
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": ["@testing-library/jest-dom"]
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Write a utility function test</h4>
+      <p>Create <code>src/utils/taskUtils.ts</code>:</p>
+      <pre>export function countRemaining(tasks: { done: boolean }[]): number {
+  return tasks.filter(t =&gt; !t.done).length;
+}
+
+export function filterByStatus(tasks: { done: boolean }[], showDone: boolean) {
+  return tasks.filter(t =&gt; t.done === showDone);
+}</pre>
+      <p>Create <code>src/utils/taskUtils.test.ts</code>:</p>
+      <pre>import { countRemaining, filterByStatus } from './taskUtils';
+
+const tasks = [
+  { id: 1, title: 'A', done: false },
+  { id: 2, title: 'B', done: true },
+  { id: 3, title: 'C', done: false },
+];
+
+describe('countRemaining', () =&gt; {
+  test('counts undone tasks', () =&gt; {
+    expect(countRemaining(tasks)).toBe(2);
+  });
+  test('returns 0 when all done', () =&gt; {
+    expect(countRemaining([{ done: true }])).toBe(0);
+  });
+});
+
+describe('filterByStatus', () =&gt; {
+  test('returns only done tasks', () =&gt; {
+    expect(filterByStatus(tasks, true).length).toBe(1);
+  });
+});</pre>
+      <p>Run <code>npm test</code> — all tests must pass.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Write a component test</h4>
+      <pre>import { render, screen, fireEvent } from '@testing-library/react';
+import TaskItem from '../components/TaskItem';
+
+const mockTask = { id: 1, title: 'Test task', done: false };
+const mockToggle = jest.fn();
+const mockDelete = jest.fn();
+
+test('renders task title', () =&gt; {
+  render(&lt;TaskItem task={mockTask} onToggle={mockToggle} onDelete={mockDelete} /&gt;);
+  expect(screen.getByText('Test task')).toBeInTheDocument();
+});
+
+test('calls onToggle when Done clicked', () =&gt; {
+  render(&lt;TaskItem task={mockTask} onToggle={mockToggle} onDelete={mockDelete} /&gt;);
+  fireEvent.click(screen.getByText('Done'));
+  expect(mockToggle).toHaveBeenCalledWith(1);
+});</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Check coverage</h4>
+      <p>Run <code>npm run test:coverage</code>. Coverage report appears in terminal and <code>coverage/</code> folder. Aim for ≥70% statements and lines. Screenshot the coverage table.</p>
+    </div>
+  </div>
+
+  <!-- LAB 11 -->
+  <div class="sm-sec">Lab 11 — GitHub Actions CI/CD Pipeline (Week 11)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create the workflow file</h4>
+      <p>Create <code>.github/workflows/ci.yml</code> in your project root:</p>
+      <pre>name: CI — Task Manager
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test &amp; Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Run tests
+        run: npm test -- --watchAll=false --coverage
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Push and watch the pipeline run</h4>
+      <pre>git add .github/
+git commit -m "Add CI pipeline"
+git push</pre>
+      <p>Go to your GitHub repo → Actions tab. Watch the workflow run. All steps must pass (green checkmarks). Screenshot the successful pipeline run.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Add branch protection</h4>
+      <p>GitHub repo → Settings → Branches → Add rule for <code>main</code>. Enable: "Require status checks to pass before merging" → select your CI job. Now <code>main</code> can only receive code that passes all tests.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Submission</h4>
+      <p>Submit a link to your GitHub Actions workflow run showing all green steps. This demonstrates industry-standard CI/CD practices.</p>
+    </div>
+  </div>
+
+  <!-- LAB 12 -->
+  <div class="sm-sec">Lab 12 — Production Polish &amp; Docker (Week 12)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Dockerize the Express API</h4>
+      <p>Create <code>Dockerfile</code> in <code>task-api/</code>:</p>
+      <pre>FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --production
+
+COPY . .
+
+EXPOSE 3001
+CMD ["node", "index.js"]</pre>
+      <p>Create <code>.dockerignore</code>:</p>
+      <pre>node_modules
+.env
+*.md</pre>
+      <p>Build and run:</p>
+      <pre>docker build -t task-api .
+docker run -p 3001:3001 --env-file .env task-api</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Run Lighthouse audit on your frontend</h4>
+      <p>Open your deployed Vercel URL in Chrome → F12 → Lighthouse tab → Analyze page load. Review all 4 scores. Fix the top 2 suggestions in the Performance or Accessibility sections. Common quick wins:</p>
+      <ul style="list-style:disc;padding-left:20px;line-height:2;">
+        <li>Add <code>alt</code> to all images</li>
+        <li>Add <code>&lt;meta name="description"&gt;</code></li>
+        <li>Lazy load images below the fold</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Final portfolio check</h4>
+      <p>Your completed Domain 1 portfolio must include:</p>
+      <ul style="list-style:disc;padding-left:20px;line-height:2;">
+        <li>Live portfolio website on GitHub Pages</li>
+        <li>Full-stack Task Manager live on Vercel + Render</li>
+        <li>GitHub repo with CI pipeline passing</li>
+        <li>Test coverage ≥ 70%</li>
+        <li>TypeScript throughout</li>
+        <li>Lighthouse Performance score ≥ 80</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Final Submission</h4>
+      <p>Submit to your mentor: GitHub repos links, live deployment URLs, screenshot of CI pipeline passing, screenshot of Lighthouse report.</p>
+      <span style="display:inline-block;background:#7B1FA2;color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;">Deliverable: Complete production-ready project</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_intermediate.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Intermediate Lab</a>
+    <div style="display:flex;gap:12px;">
+      <a href="project_briefs.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Project Briefs →</a>
+      <a href="career_roadmap.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Career Roadmap →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Lab Guide — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

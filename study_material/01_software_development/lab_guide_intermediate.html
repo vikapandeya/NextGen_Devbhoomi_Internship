@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Development — Lab Guide (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">💻 Software Development</div>
+      <div class="bc-file">🧪 Lab Guide — Intermediate Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 1 OF 9 &nbsp;·&nbsp; SOFTWARE DEVELOPMENT &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">← Beginner Lab</a>
+    <a href="concept_notes_intermediate.html">Concept Notes ↗</a>
+    <a href="lab_guide_advanced.html">Advanced Lab ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">🧪</div>
+    <h1>Intermediate Lab Guide</h1>
+    <p class="lh-sub">4 labs building a full-stack Task Manager application. React frontend + Express backend + MySQL database — connected together and deployed live.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs (Weeks 5–8)</span>
+      <span class="lh-pill">React · Node.js · MySQL · Postman</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div class="objectives">
+    <h4>Lab Setup — Prerequisites</h4>
+    <ul>
+      <li>Node.js 20+ installed: download from nodejs.org</li>
+      <li>XAMPP installed (includes MySQL): apachefriends.org — start MySQL in XAMPP Control Panel</li>
+      <li>Postman installed: postman.com/downloads</li>
+      <li>Verify Node: open terminal and run <code>node --version</code> (should show v20.x.x)</li>
+    </ul>
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="sm-sec">Lab 5 — React Task Manager UI (Week 5)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create Vite + React project</h4>
+      <pre>npm create vite@latest task-manager -- --template react
+cd task-manager
+npm install
+npm run dev</pre>
+      <p>Open <code>http://localhost:5173</code> — you should see the Vite + React welcome page.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Create TaskItem component</h4>
+      <p>Create <code>src/components/TaskItem.jsx</code>:</p>
+      <pre>function TaskItem({ task, onToggle, onDelete }) {
+  return (
+    &lt;div className={`task-item ${task.done ? 'done' : ''}`}&gt;
+      &lt;span className="task-title"&gt;{task.title}&lt;/span&gt;
+      &lt;div className="task-actions"&gt;
+        &lt;button onClick={() =&gt; onToggle(task.id)}&gt;
+          {task.done ? 'Undo' : 'Done'}
+        &lt;/button&gt;
+        &lt;button onClick={() =&gt; onDelete(task.id)}&gt;Delete&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default TaskItem;</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Build App.jsx with state management</h4>
+      <pre>import { useState } from 'react';
+import TaskItem from './components/TaskItem';
+
+const INITIAL_TASKS = [
+  { id: 1, title: 'Learn React hooks', done: false },
+  { id: 2, title: 'Build task manager', done: false },
+  { id: 3, title: 'Deploy to Vercel', done: false },
+];
+
+function App() {
+  const [tasks, setTasks]   = useState(INITIAL_TASKS);
+  const [newTask, setNewTask] = useState('');
+
+  const addTask = () =&gt; {
+    const title = newTask.trim();
+    if (!title) return;
+    setTasks([...tasks, { id: Date.now(), title, done: false }]);
+    setNewTask('');
+  };
+
+  const toggleTask = (id) =&gt;
+    setTasks(tasks.map(t =&gt; t.id === id ? { ...t, done: !t.done } : t));
+
+  const deleteTask = (id) =&gt;
+    setTasks(tasks.filter(t =&gt; t.id !== id));
+
+  return (
+    &lt;div className="app"&gt;
+      &lt;h1&gt;Task Manager&lt;/h1&gt;
+      &lt;div className="add-task"&gt;
+        &lt;input
+          value={newTask}
+          onChange={(e) =&gt; setNewTask(e.target.value)}
+          onKeyDown={(e) =&gt; e.key === 'Enter' &amp;&amp; addTask()}
+          placeholder="Add a new task..."
+        /&gt;
+        &lt;button onClick={addTask}&gt;Add&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div className="task-list"&gt;
+        {tasks.map(t =&gt;
+          &lt;TaskItem key={t.id} task={t} onToggle={toggleTask} onDelete={deleteTask} /&gt;
+        )}
+      &lt;/div&gt;
+      &lt;p className="counter"&gt;{tasks.filter(t =&gt; !t.done).length} remaining&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Add CSS and test all interactions</h4>
+      <p>Style your App in <code>src/App.css</code>. Test: add a task, complete a task, delete a task, press Enter to add. All must work. Take a screenshot showing the task list with mixed completed/pending tasks.</p>
+    </div>
+  </div>
+
+  <!-- LAB 6 -->
+  <div class="sm-sec">Lab 6 — Express REST API (Week 6)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create Express server</h4>
+      <pre>mkdir task-api
+cd task-api
+npm init -y
+npm install express cors
+</pre>
+      <p>Create <code>index.js</code>:</p>
+      <pre>const express = require('express');
+const cors    = require('cors');
+const app     = express();
+
+app.use(cors());
+app.use(express.json());
+
+let tasks = [
+  { id: 1, title: 'Build API', done: false },
+];
+let nextId = 2;
+
+app.get('/api/tasks',        (req, res) =&gt; res.json(tasks));
+
+app.post('/api/tasks', (req, res) =&gt; {
+  const { title } = req.body;
+  if (!title) return res.status(400).json({ error: 'title required' });
+  const task = { id: nextId++, title, done: false };
+  tasks.push(task);
+  res.status(201).json(task);
+});
+
+app.patch('/api/tasks/:id', (req, res) =&gt; {
+  const task = tasks.find(t =&gt; t.id === +req.params.id);
+  if (!task) return res.status(404).json({ error: 'not found' });
+  task.done = !task.done;
+  res.json(task);
+});
+
+app.delete('/api/tasks/:id', (req, res) =&gt; {
+  tasks = tasks.filter(t =&gt; t.id !== +req.params.id);
+  res.status(204).end();
+});
+
+app.listen(3001, () =&gt; console.log('API running on port 3001'));</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Test every endpoint in Postman</h4>
+      <ul style="list-style:disc;padding-left:20px;line-height:2;">
+        <li><code>GET http://localhost:3001/api/tasks</code> → returns array</li>
+        <li><code>POST http://localhost:3001/api/tasks</code> with body <code>{"title":"New task"}</code> → returns new task with id</li>
+        <li><code>PATCH http://localhost:3001/api/tasks/1</code> → toggles done</li>
+        <li><code>DELETE http://localhost:3001/api/tasks/1</code> → 204 no content</li>
+        <li><code>GET</code> again → deleted task is gone</li>
+      </ul>
+      <p>Screenshot each test result in Postman.</p>
+    </div>
+  </div>
+
+  <!-- LAB 7 -->
+  <div class="sm-sec">Lab 7 — Connect API to MySQL Database (Week 7)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Create the database</h4>
+      <p>Open XAMPP → Start MySQL → open phpMyAdmin (localhost/phpmyadmin). Create a new database called <code>taskdb</code>. Run this SQL:</p>
+      <pre>CREATE TABLE tasks (
+  id    INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  done  TINYINT(1)   DEFAULT 0
+);</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Install MySQL driver and dotenv</h4>
+      <pre>npm install mysql2 dotenv</pre>
+      <p>Create <code>.env</code> file in task-api folder:</p>
+      <pre>DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+DB_NAME=taskdb</pre>
+      <p>Create <code>.gitignore</code> file and add: <code>.env</code> (one line)</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Update index.js to use real database</h4>
+      <pre>require('dotenv').config();
+const mysql = require('mysql2/promise');
+
+const db = mysql.createPool({
+  host:     process.env.DB_HOST,
+  user:     process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+});
+
+app.get('/api/tasks', async (req, res) =&gt; {
+  try {
+    const [rows] = await db.query('SELECT * FROM tasks ORDER BY id DESC');
+    res.json(rows);
+  } catch (err) { res.status(500).json({ error: 'DB error' }); }
+});
+
+app.post('/api/tasks', async (req, res) =&gt; {
+  const { title } = req.body;
+  if (!title) return res.status(400).json({ error: 'title required' });
+  try {
+    const [result] = await db.query(
+      'INSERT INTO tasks (title) VALUES (?)', [title]
+    );
+    res.status(201).json({ id: result.insertId, title, done: false });
+  } catch (err) { res.status(500).json({ error: 'DB error' }); }
+});</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Verify in Postman + phpMyAdmin</h4>
+      <p>POST a new task via Postman, then refresh phpMyAdmin → taskdb → tasks table. The row must appear. DELETE a task via Postman, verify it's removed from the table. Screenshot both.</p>
+    </div>
+  </div>
+
+  <!-- LAB 8 -->
+  <div class="sm-sec">Lab 8 — Connect React to the Real API + Deploy (Week 8)</div>
+  <div class="lab-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Update React to fetch from Express</h4>
+      <pre>import { useState, useEffect } from 'react';
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+function App() {
+  const [tasks, setTasks]   = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [newTask, setNewTask] = useState('');
+
+  useEffect(() =&gt; {
+    fetch(`${API}/api/tasks`)
+      .then(r =&gt; r.json())
+      .then(data =&gt; { setTasks(data); setLoading(false); });
+  }, []);
+
+  const addTask = async () =&gt; {
+    const title = newTask.trim();
+    if (!title) return;
+    const res  = await fetch(`${API}/api/tasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title }),
+    });
+    const task = await res.json();
+    setTasks([task, ...tasks]);
+    setNewTask('');
+  };
+
+  if (loading) return &lt;p&gt;Loading tasks...&lt;/p&gt;;
+
+  return (
+    &lt;div className="app"&gt;
+      &lt;h1&gt;Task Manager&lt;/h1&gt;
+      &lt;div className="add-task"&gt;
+        &lt;input value={newTask}
+          onChange={e =&gt; setNewTask(e.target.value)}
+          onKeyDown={e =&gt; e.key === 'Enter' &amp;&amp; addTask()}
+          placeholder="New task..." /&gt;
+        &lt;button onClick={addTask}&gt;Add&lt;/button&gt;
+      &lt;/div&gt;
+      {tasks.map(t =&gt; &lt;div key={t.id}&gt;{t.title}&lt;/div&gt;)}
+    &lt;/div&gt;
+  );
+}</pre>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Deploy backend to Render</h4>
+      <p>Push <code>task-api</code> to a new GitHub repo. Go to render.com → New Web Service → Connect your GitHub repo. Set:</p>
+      <ul style="list-style:disc;padding-left:20px;line-height:2;">
+        <li>Build Command: <code>npm install</code></li>
+        <li>Start Command: <code>node index.js</code></li>
+        <li>Add environment variables from your .env file</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Deploy frontend to Vercel</h4>
+      <p>Push <code>task-manager</code> to GitHub. Import at vercel.com. Add environment variable: <code>VITE_API_URL = https://your-api.onrender.com</code>. Deploy. Test the live app — add a task, it should persist in the database.</p>
+    </div>
+  </div>
+  <div class="lab-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Submission</h4>
+      <p>Submit both live URLs: Vercel frontend URL + Render API URL. Mentor will test by adding a task and checking it persists on page refresh.</p>
+      <span style="display:inline-block;background:var(--green);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;">Deliverable: 2 live deployment URLs</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Lab</a>
+    <a href="lab_guide_advanced.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Lab →</a>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Software Development &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>

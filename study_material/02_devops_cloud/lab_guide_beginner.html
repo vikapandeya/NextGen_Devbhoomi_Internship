@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps & Cloud — Lab Guide (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+  .lab-section{margin-bottom:40px;}
+  .lab-num-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:16px;}
+  .deliverable-box{background:var(--green-light);border:1px solid var(--green);border-radius:var(--radius-sm);padding:14px 18px;margin-top:16px;font-size:13px;color:var(--text-mid);}
+  .deliverable-box strong{color:var(--green);}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">🧪 Lab Guide — Beginner Level</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; LAB GUIDE — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="lab_guide_intermediate.html">Intermediate Labs ↗</a>
+    <a href="quizzes.html">Quiz ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero beg">
+    <div class="lh-icon">🧪</div>
+    <h1>Beginner Lab Guide — DevOps &amp; Cloud</h1>
+    <p class="lh-sub">4 hands-on labs: set up your Linux environment, practice Git branching, explore networking tools, and create your first AWS resources.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">Linux · Git · Networking · AWS</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Before You Start</h4>
+      <ul>
+        <li>Windows 10 or 11 (64-bit)</li>
+        <li>8 GB RAM minimum</li>
+        <li>Stable internet connection</li>
+        <li>GitHub account created</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>What You'll Build</h4>
+      <ul>
+        <li>Functional Linux environment</li>
+        <li>First GitHub Pull Request</li>
+        <li>Network diagnostic report</li>
+        <li>First S3 bucket on AWS</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Time Estimate</h4>
+      <ul>
+        <li>Lab 1: ~2 hours</li>
+        <li>Lab 2: ~1.5 hours</li>
+        <li>Lab 3: ~1 hour</li>
+        <li>Lab 4: ~2 hours</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Submission</h4>
+      <ul>
+        <li>Screenshots for each lab</li>
+        <li>GitHub links where required</li>
+        <li>Submit to mentor portal</li>
+        <li>Deadline: end of Week 4</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LAB 1 -->
+  <div class="sm-sec">Lab 1 — Linux Environment Setup &amp; Practice</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 01 · WEEK 1</div>
+    <div class="lab-goal"><strong>Goal:</strong> Install WSL2 (Windows Subsystem for Linux), navigate the filesystem, write a shell script, and practice file permissions.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Install WSL2 on Windows</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Open PowerShell as Administrator (right-click Start → Windows Terminal (Admin)). Run the install command and restart when prompted.</p>
+<pre>wsl --install
+<span class="comment"># Restart your computer when prompted</span>
+<span class="comment"># On first launch, create a Linux username and password</span>
+<span class="comment"># Verify it worked:</span>
+wsl --list --verbose</pre>
+        <div class="lab-tip"><strong>Tip:</strong> Your WSL username and Windows username can be different. Use a simple lowercase name with no spaces.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Practice Navigation</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Open your Ubuntu terminal and run these commands one by one. Understand what each returns before moving on.</p>
+<pre>pwd                         <span class="comment"># show current location</span>
+ls -la                      <span class="comment"># list files with permissions</span>
+mkdir projects              <span class="comment"># create a directory</span>
+cd projects                 <span class="comment"># move into it</span>
+touch hello.sh              <span class="comment"># create an empty file</span>
+ls -la                      <span class="comment"># confirm hello.sh appears</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Write and Run a Shell Script</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Write a shell script that greets you, then make it executable and run it.</p>
+<pre>echo '#!/bin/bash' > hello.sh
+echo 'echo "Hello from Linux, Devbhoomi Intern!"' >> hello.sh
+echo 'echo "Today is: $(date)"' >> hello.sh
+chmod +x hello.sh
+./hello.sh</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>File Permissions Exercise</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Create 3 files with different permission levels. Use <code>ls -la</code> to verify and understand what each set of permissions means in practice.</p>
+<pre>touch file_public.sh file_private.sh file_readonly.sh
+chmod 777 file_public.sh     <span class="comment"># rwxrwxrwx — everyone can do everything</span>
+chmod 644 file_private.sh    <span class="comment"># rw-r--r-- — owner edits, others read only</span>
+chmod 400 file_readonly.sh   <span class="comment"># r-------- — only owner can read</span>
+ls -la *.sh                  <span class="comment"># verify all three look correct</span></pre>
+        <div class="lab-warn"><strong>Warning:</strong> Never set 777 permissions on production files. It means any user on the system can modify or delete them.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Process Management</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Explore running processes on your Linux system. Identify the top CPU consumers and practice stopping a process safely.</p>
+<pre>top                          <span class="comment"># live process monitor — press q to quit</span>
+ps aux                       <span class="comment"># list all running processes</span>
+ps aux | grep bash           <span class="comment"># filter for bash processes</span>
+
+<span class="comment"># Find and kill a process by name (safe example)</span>
+sleep 60 &amp;                   <span class="comment"># start a background process</span>
+ps aux | grep sleep          <span class="comment"># find its PID</span>
+kill &lt;PID&gt;                   <span class="comment"># terminate it</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of your terminal showing (1) <code>ls -la</code> output with the three files and their different permissions, and (2) the output of running <code>./hello.sh</code>. Label both screenshots clearly.</div>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="sm-sec">Lab 2 — Git Feature Branch Workflow</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 02 · WEEK 2</div>
+    <div class="lab-goal"><strong>Goal:</strong> Create a real GitHub repository, work on a feature branch, open a Pull Request, and resolve a merge conflict manually.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Create Repository and Clone</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Create a new public repository called <strong>devops-practice</strong> on GitHub, then clone it to your local machine.</p>
+<pre>git clone https://github.com/YOUR_USERNAME/devops-practice.git
+cd devops-practice
+git status                   <span class="comment"># confirm you're on main branch</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Create Feature Branch and Write README</h3>
+        <span>~30 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Create a feature branch and write a professional README with real content for this practice repository.</p>
+<pre>git checkout -b feature/add-readme
+
+<span class="comment"># Write README.md with these sections:</span>
+<span class="comment"># - Project Description</span>
+<span class="comment"># - Prerequisites</span>
+<span class="comment"># - Installation</span>
+<span class="comment"># - Usage</span>
+
+git add README.md
+git commit -m "Add professional README with setup instructions"
+git push origin feature/add-readme</pre>
+        <p>Go to GitHub and open a Pull Request from <code>feature/add-readme</code> into <code>main</code>. Write a clear PR description.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Simulate and Resolve a Merge Conflict</h3>
+        <span>~30 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>This is the most important skill in Git. Create two branches that edit the same line, then merge and resolve the conflict.</p>
+<pre>git checkout main
+git checkout -b feature/branch-a
+echo "Line from Branch A" > conflict.txt
+git add conflict.txt &amp;&amp; git commit -m "Add conflict.txt from branch A"
+
+git checkout main
+git checkout -b feature/branch-b
+echo "Different line from Branch B" > conflict.txt
+git add conflict.txt &amp;&amp; git commit -m "Add conflict.txt from branch B"
+
+<span class="comment"># Now merge branch-a into main, then try to merge branch-b</span>
+git checkout main
+git merge feature/branch-a
+git merge feature/branch-b   <span class="comment"># this will create a conflict</span>
+
+<span class="comment"># Edit conflict.txt to resolve: remove the <<<< ==== >>>> markers</span>
+<span class="comment"># Keep whichever content (or both) makes sense</span>
+git add conflict.txt
+git commit -m "Resolve merge conflict between branch-a and branch-b"</pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Set Up .gitignore</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Create a proper .gitignore file for a Node.js project. These file types should never be committed to a repository.</p>
+<pre><span class="comment"># .gitignore for Node.js projects</span>
+node_modules/
+.env
+.env.local
+*.log
+dist/
+.DS_Store
+.vscode/
+coverage/</pre>
+        <div class="lab-warn"><strong>Warning:</strong> If you accidentally commit <code>.env</code> or <code>node_modules</code>, remove them from history with <code>git rm --cached</code> immediately — do not just add them to .gitignore after the fact.</div>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Link to your GitHub Pull Request (feature/add-readme → main) + a screenshot of your terminal showing the merge conflict markers and your resolved file.</div>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="sm-sec">Lab 3 — Networking Diagnostics</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 03 · WEEK 3</div>
+    <div class="lab-goal"><strong>Goal:</strong> Use standard Linux networking tools to diagnose connectivity, perform DNS lookups, and trace the path packets take across the internet.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Ping Tests — Latency and Connectivity</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Test connectivity to different endpoints and interpret the latency values you see.</p>
+<pre>ping -c 4 google.com         <span class="comment"># test DNS + connectivity (4 packets)</span>
+ping -c 4 8.8.8.8            <span class="comment"># test IP connectivity (Google's DNS)</span>
+ping -c 4 1.1.1.1            <span class="comment"># Cloudflare DNS — should be very fast</span>
+
+<span class="comment"># Record the average latency for each and note differences</span>
+<span class="comment"># Under 50ms = excellent, 50-100ms = good, 200ms+ = slow</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>DNS Lookup</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Query DNS records directly and understand what an A record, CNAME, and MX record are.</p>
+<pre>nslookup google.com          <span class="comment"># basic DNS lookup</span>
+nslookup amazon.com          <span class="comment"># multiple A records — load balancing</span>
+
+<span class="comment"># Install dig if needed: sudo apt install dnsutils</span>
+dig google.com               <span class="comment"># detailed DNS query</span>
+dig google.com MX            <span class="comment"># mail exchange records</span>
+dig amazon.com +short        <span class="comment"># just the IP addresses</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Port and Header Inspection</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Check if ports are open and inspect the HTTP headers that web servers return.</p>
+<pre>curl -I https://google.com   <span class="comment"># get HTTP response headers only</span>
+curl -I https://github.com   <span class="comment"># note the server and security headers</span>
+
+<span class="comment"># Test if a specific port is open</span>
+nc -zv google.com 443        <span class="comment"># port 443 (HTTPS) — should succeed</span>
+nc -zv google.com 22         <span class="comment"># port 22 (SSH) — should fail for google.com</span>
+
+<span class="comment"># Look for these response headers:</span>
+<span class="comment"># Strict-Transport-Security — forces HTTPS</span>
+<span class="comment"># X-Content-Type-Options — prevents MIME sniffing</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Traceroute — Map the Internet Path</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Trace every router hop between your machine and a destination. This is how engineers diagnose where latency comes from.</p>
+<pre><span class="comment"># On Linux (WSL):</span>
+traceroute google.com        <span class="comment"># install: sudo apt install traceroute</span>
+
+<span class="comment"># On Windows CMD/PowerShell:</span>
+tracert google.com
+
+<span class="comment"># Count the number of hops (routers) between you and Google</span>
+<span class="comment"># Note any hop with high latency — that's where delay is added</span>
+<span class="comment"># * * * means the router doesn't respond to probes (normal)</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Check Your IP Addresses</h3>
+        <span>~10 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Discover your public and private IP addresses and understand the difference.</p>
+<pre>ip addr show                 <span class="comment"># all network interfaces + private IP</span>
+curl ifconfig.me             <span class="comment"># your public IP (what servers see)</span>
+curl ifconfig.me/all         <span class="comment"># detailed info including ISP</span>
+
+<span class="comment"># Compare: private IP (192.168.x.x or 10.x.x.x) vs public IP</span>
+<span class="comment"># They differ because of NAT (Network Address Translation)</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of your <code>dig google.com</code> DNS output showing the A record IP addresses + screenshot of <code>traceroute google.com</code> with the total hop count noted in writing.</div>
+  </div>
+
+  <!-- LAB 4 -->
+  <div class="sm-sec">Lab 4 — AWS Account Setup + First S3 Bucket</div>
+  <div class="lab-section">
+    <div class="lab-num-badge">LAB 04 · WEEK 4</div>
+    <div class="lab-goal"><strong>Goal:</strong> Create and secure your AWS account, set a billing alarm, configure the AWS CLI, and create your first S3 bucket programmatically.</div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">1</div>
+        <h3>Create AWS Account and Enable MFA</h3>
+        <span>~30 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Sign up at aws.amazon.com. Use a personal email address — not your company or college email. The first thing to do after signup is secure your root account.</p>
+        <p>After signup: go to <strong>IAM → Security credentials → Multi-factor authentication → Assign MFA device</strong>. Use Google Authenticator or Authy on your phone.</p>
+        <div class="lab-warn"><strong>Warning:</strong> Your AWS root account is the highest privilege account. If it is compromised, someone can delete everything and run up a massive bill. Enable MFA before doing anything else.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">2</div>
+        <h3>Create a Billing Alarm</h3>
+        <span>~15 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Set a $5 monthly billing alert. This prevents surprise charges from forgotten resources.</p>
+        <p>AWS Console → search "Budgets" → Create Budget → Cost Budget → $5.00 → your email for alerts → Create.</p>
+        <div class="lab-tip"><strong>Tip:</strong> Set the threshold at 80% ($4.00) so you're warned before you actually hit $5, not after.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">3</div>
+        <h3>Create IAM User with Programmatic Access</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>Never use your root account for daily work. Create a dedicated IAM user for your CLI and code access.</p>
+        <p>IAM → Users → Create User → name: <code>devbhoomi-cli</code> → Attach policy: <strong>AdministratorAccess</strong> → Create → Security credentials tab → Create access key → CLI use case → Download the CSV file.</p>
+        <div class="lab-warn"><strong>Warning:</strong> Download the CSV immediately — AWS will never show you the secret key again. Store it somewhere safe and never commit it to GitHub.</div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">4</div>
+        <h3>Install AWS CLI and Configure</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+<pre><span class="comment"># Install AWS CLI on Ubuntu/WSL</span>
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version                <span class="comment"># should show aws-cli/2.x.x</span>
+
+<span class="comment"># Configure with your IAM user credentials</span>
+aws configure
+<span class="comment"># Enter: AWS Access Key ID (from CSV)</span>
+<span class="comment"># Enter: AWS Secret Access Key (from CSV)</span>
+<span class="comment"># Enter: Default region: ap-south-1 (Mumbai — closest to India)</span>
+<span class="comment"># Enter: Default output format: json</span>
+
+<span class="comment"># Verify it works</span>
+aws sts get-caller-identity  <span class="comment"># should show your account ID and username</span></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="lab-step-head">
+        <div class="lab-step-num">5</div>
+        <h3>Create S3 Bucket and Upload a File</h3>
+        <span>~20 min</span>
+      </div>
+      <div class="lab-step-body">
+        <p>S3 bucket names are globally unique across all of AWS. Use your name in the bucket name to ensure uniqueness.</p>
+<pre><span class="comment"># Create the bucket (replace YOUR_NAME with your actual name)</span>
+aws s3 mb s3://YOUR_NAME-devbhoomi-test --region ap-south-1
+
+<span class="comment"># Upload the hello.sh script from Lab 1</span>
+aws s3 cp ~/projects/hello.sh s3://YOUR_NAME-devbhoomi-test/
+
+<span class="comment"># Verify the file is there</span>
+aws s3 ls s3://YOUR_NAME-devbhoomi-test/
+
+<span class="comment"># List all your buckets</span>
+aws s3 ls
+
+<span class="comment"># Clean up (free tier limits apply)</span>
+<span class="comment"># aws s3 rm s3://YOUR_NAME-devbhoomi-test/hello.sh</span>
+<span class="comment"># aws s3 rb s3://YOUR_NAME-devbhoomi-test</span></pre>
+      </div>
+    </div>
+
+    <div class="deliverable-box"><strong>Deliverable:</strong> Screenshot of the AWS Console showing your S3 bucket in the ap-south-1 region + screenshot of your terminal showing the <code>aws s3 ls</code> output with the uploaded file listed.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="concept_notes_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Concept Notes</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Intermediate Labs →</a>
+      <a href="../index.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Study Portal →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Lab Guide — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{});
+</script>
+</body>
+</html>

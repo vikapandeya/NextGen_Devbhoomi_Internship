@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Briefs | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">📋 Project Briefs</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; PROJECT BRIEFS
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes</a>
+    <a href="lab_guide_beginner.html">Lab Guides</a>
+    <a href="quizzes.html">Quizzes</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">📋</div>
+    <div class="lh-text">
+      <h2>Project Briefs — Database Administration</h2>
+      <p>Three graded projects taking you from schema design to production-grade multi-database architecture. Each builds directly on the previous.</p>
+    </div>
+  </div>
+
+  <!-- P1 -->
+  <div class="project-card beg">
+    <div class="project-card-header">
+      <div class="proj-level-badge beg">Beginner</div>
+      <h3>P1 — Student Management System</h3>
+      <div class="proj-meta">
+        <span class="proj-deadline">Deadline: Week 4</span>
+        <span class="proj-pass">Pass Mark: 60 / 100</span>
+      </div>
+    </div>
+    <div class="project-card-body">
+      <div class="proj-tech">
+        <strong>Tools Required:</strong>
+        <span class="tech-tag">MySQL</span>
+        <span class="tech-tag">MySQL Workbench</span>
+        <span class="tech-tag">CLI (optional)</span>
+      </div>
+
+      <div class="proj-desc">
+        <h4>Description</h4>
+        <p>Design and populate a complete relational database for a college student management system. This project tests your ability to design a normalised schema from a real-world description, enforce data integrity with constraints, and write SQL queries that span multiple tables.</p>
+      </div>
+
+      <div class="proj-requirements">
+        <h4>Requirements</h4>
+        <ul>
+          <li><strong>ER Diagram first:</strong> Draw the ER diagram on paper, photograph it, and include the photo in your submission PDF. The diagram must show all entities, attributes, and relationships with cardinality notation.</li>
+          <li><strong>Create all 5 tables:</strong> <code>students</code>, <code>courses</code>, <code>enrollments</code>, <code>instructors</code>, <code>grades</code> — all with proper constraints (PRIMARY KEY, NOT NULL, UNIQUE where appropriate) and correct FOREIGN KEY relationships between tables.</li>
+          <li><strong>Insert realistic sample data:</strong> at least 20 students, 10 courses, 3 instructors. Populate enrollments and grades tables with appropriate data (not just 3 rows per table — make it realistic for a college).</li>
+          <li><strong>Write 10 SQL queries</strong> that demonstrate a variety of SQL features:
+            <ul>
+              <li>A simple SELECT with WHERE filter and ORDER BY</li>
+              <li>A JOIN between 2 tables</li>
+              <li>A JOIN between 3 or more tables</li>
+              <li>An aggregate function (COUNT, SUM, AVG)</li>
+              <li>GROUP BY with a HAVING clause</li>
+              <li>A subquery (either correlated or non-correlated)</li>
+              <li>LEFT JOIN to find records that have no match</li>
+              <li>UPDATE with a WHERE condition</li>
+              <li>NULL handling (IS NULL or COALESCE)</li>
+              <li>A query you consider the most interesting or complex (explain why)</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="proj-rubric">
+        <h4>Grading Rubric</h4>
+        <table class="ref-table">
+          <thead><tr><th>Criterion</th><th>Marks</th><th>What Examiners Look For</th></tr></thead>
+          <tbody>
+            <tr><td>ER Design</td><td>25</td><td>All 5 entities present, relationships correct, cardinality labelled, photo submitted</td></tr>
+            <tr><td>Table Creation + Constraints</td><td>25</td><td>All FK relationships working, appropriate constraints on each column, no redundant data in schema</td></tr>
+            <tr><td>Sample Data Quality</td><td>20</td><td>Realistic data (real-sounding names, valid emails, sensible grades/scores), sufficient volume</td></tr>
+            <tr><td>SQL Query Variety + Correctness</td><td>30</td><td>All 10 queries run without error, correct results, variety of SQL features demonstrated</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td>Pass mark: 60. Submit as a .sql file with comments labelling each section.</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2 -->
+  <div class="project-card int">
+    <div class="project-card-header">
+      <div class="proj-level-badge int">Intermediate</div>
+      <h3>P2 — E-Commerce Database with Analytics</h3>
+      <div class="proj-meta">
+        <span class="proj-deadline">Deadline: Week 8</span>
+        <span class="proj-pass">Pass Mark: 65 / 100</span>
+      </div>
+    </div>
+    <div class="project-card-body">
+      <div class="proj-tech">
+        <strong>Tools Required:</strong>
+        <span class="tech-tag">MySQL or PostgreSQL</span>
+        <span class="tech-tag">Any query runner</span>
+      </div>
+
+      <div class="proj-desc">
+        <h4>Description</h4>
+        <p>Build the complete data layer for an e-commerce platform. This goes beyond basic CRUD — you will add performance optimisation through indexes, automate business logic with stored procedures and triggers, and write analytical queries suitable for a business intelligence dashboard.</p>
+      </div>
+
+      <div class="proj-requirements">
+        <h4>Requirements</h4>
+        <ul>
+          <li><strong>Full e-commerce schema:</strong> <code>customers</code>, <code>products</code>, <code>categories</code> (with hierarchy), <code>orders</code>, <code>order_items</code>, <code>payments</code>, <code>reviews</code>. All with proper constraints and FK relationships.</li>
+          <li><strong>Sample data:</strong> at least 100 rows across the main tables (use realistic data — real city names, real product names in a category, plausible prices).</li>
+          <li><strong>5 indexes with documented rationale:</strong> for each index, include a comment explaining: which query pattern it supports, the EXPLAIN output before and after. Include at least one composite index.</li>
+          <li><strong>5 stored procedures:</strong> <code>sp_place_order</code> (validates stock, creates order and items, updates stock), <code>sp_apply_discount</code> (recalculates order total by percentage), <code>sp_cancel_order</code> (updates status, restores stock), <code>sp_get_customer_summary</code> (customer info + stats), <code>sp_inventory_report</code> (products with low stock threshold parameter).</li>
+          <li><strong>3 triggers:</strong> audit log trigger on order INSERT, stock deduction trigger (AFTER INSERT on order_items), trigger to prevent deleting products that have order history.</li>
+          <li><strong>10 analytical queries:</strong> monthly revenue trend, week-over-week growth, customer lifetime value ranking, product performance by category, cart abandonment proxy (orders that stayed in pending status for &gt;24h), repeat customer rate, top products by review score, revenue contribution by city, average delivery time, churn indicator query.</li>
+          <li><strong>Performance report:</strong> pick 3 of your analytical queries. For each: show the EXPLAIN output before optimisation, describe the problem (full scan? filesort?), add the index, show EXPLAIN after, and note the estimated rows scanned improvement.</li>
+        </ul>
+      </div>
+
+      <div class="proj-rubric">
+        <h4>Grading Rubric</h4>
+        <table class="ref-table">
+          <thead><tr><th>Criterion</th><th>Marks</th><th>What Examiners Look For</th></tr></thead>
+          <tbody>
+            <tr><td>Schema Design</td><td>20</td><td>Normalised to 3NF, all relationships correct, appropriate data types, no redundancy</td></tr>
+            <tr><td>Sample Data</td><td>10</td><td>100+ rows, realistic content, good variety for analytics to be meaningful</td></tr>
+            <tr><td>Indexes</td><td>15</td><td>5 indexes with EXPLAIN before/after, rationale explained, at least 1 composite index</td></tr>
+            <tr><td>Stored Procedures + Triggers</td><td>25</td><td>All 5 procedures and 3 triggers run correctly, edge cases handled (rollback on failure)</td></tr>
+            <tr><td>Analytical Queries</td><td>20</td><td>All 10 queries run without error, results are meaningful, window functions or CTEs used where appropriate</td></tr>
+            <tr><td>Performance Report</td><td>10</td><td>EXPLAIN output shown before/after for 3 queries, improvement documented</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td>Pass mark: 65. Submit as a .sql file + PDF report for the performance analysis.</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3 -->
+  <div class="project-card adv">
+    <div class="project-card-header">
+      <div class="proj-level-badge adv">Advanced</div>
+      <h3>P3 — Multi-Database Architecture</h3>
+      <div class="proj-meta">
+        <span class="proj-deadline">Deadline: Week 12</span>
+        <span class="proj-pass">Pass Mark: 70 / 100</span>
+      </div>
+    </div>
+    <div class="project-card-body">
+      <div class="proj-tech">
+        <strong>Tools Required:</strong>
+        <span class="tech-tag">MySQL</span>
+        <span class="tech-tag">MongoDB</span>
+        <span class="tech-tag">Redis</span>
+        <span class="tech-tag">Node.js/Express</span>
+        <span class="tech-tag">Docker Compose</span>
+      </div>
+
+      <div class="proj-desc">
+        <h4>Description</h4>
+        <p>Build a complete, production-architecture data layer for a social media platform. Use the right database for each use case — not one database for everything. Demonstrate that you understand <em>why</em> each technology was chosen, not just how to use it.</p>
+      </div>
+
+      <div class="proj-requirements">
+        <h4>Requirements</h4>
+        <ul>
+          <li>
+            <strong>MySQL:</strong> <code>users</code>, <code>posts</code> (metadata only — no content), <code>followers</code> (user_id + following_id), <code>likes</code> (user_id + post_id) — these need ACID transactions and complex JOIN queries. Design the schema for correctness and performance at scale.
+          </li>
+          <li>
+            <strong>MongoDB:</strong> post <em>content</em> document (embedded tags array, rich text body, media references array, engagement stats). Schema flexibility is why MongoDB is right here — each post type (text, photo, video) has different fields.
+          </li>
+          <li>
+            <strong>Redis:</strong> use 4 Redis patterns:
+            <ol>
+              <li>Feed cache per user (sorted set: score = timestamp, value = post_id)</li>
+              <li>Trending hashtags (sorted set: score = mention count in last hour)</li>
+              <li>Active session tokens (hash with 24-hour TTL)</li>
+              <li>Rate limiting (counter with 1-minute TTL per user)</li>
+            </ol>
+          </li>
+          <li>
+            <strong>Docker Compose file:</strong> starts all 3 databases with a single <code>docker-compose up -d</code>. Include health checks.
+          </li>
+          <li>
+            <strong>Express API with 3 key endpoints:</strong>
+            <ol>
+              <li><code>GET /feed</code> — check Redis sorted set first → if cache miss, query MySQL for followed user IDs + PostgreSQL/MongoDB for post content → cache result for 5 minutes → on new post creation, invalidate affected users' feeds</li>
+              <li><code>POST /posts</code> — insert metadata in MySQL, insert content in MongoDB (handle partial failure gracefully)</li>
+              <li><code>GET /trending</code> — return top 10 hashtags from Redis sorted set, with fallback to MongoDB aggregate if Redis is empty</li>
+            </ol>
+          </li>
+          <li>
+            <strong>Backup/restore script:</strong> a shell script that backs up all 3 databases with timestamps, and a restore script. Both should be idempotent.
+          </li>
+          <li>
+            <strong>Architecture decision document (1 page):</strong> for each of the 3 databases, explain: what data it stores, why this database was chosen over the alternatives, what would break if you moved that data to a different database. This document is worth 15% of your grade.
+          </li>
+        </ul>
+      </div>
+
+      <div class="proj-rubric">
+        <h4>Grading Rubric</h4>
+        <table class="ref-table">
+          <thead><tr><th>Criterion</th><th>Marks</th><th>What Examiners Look For</th></tr></thead>
+          <tbody>
+            <tr><td>MySQL Schema</td><td>20</td><td>Normalised, correct FKs, indexes on join columns, appropriate constraints for social data</td></tr>
+            <tr><td>MongoDB Design</td><td>15</td><td>Document structure leverages embedding appropriately, queries use array operators and aggregation</td></tr>
+            <tr><td>Redis Patterns</td><td>20</td><td>All 4 patterns implemented correctly: sorted sets, hashes, TTLs, atomic operations</td></tr>
+            <tr><td>Docker Compose</td><td>10</td><td>Single command starts all services, health checks present, environment variables used for secrets</td></tr>
+            <tr><td>API Integration</td><td>20</td><td>All 3 endpoints work end-to-end, cache patterns correct, partial failure handled gracefully</td></tr>
+            <tr><td>Architecture Document</td><td>15</td><td>Clearly explains WHY each DB was chosen, shows understanding of trade-offs, not just "MongoDB is flexible"</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td>Pass mark: 70. Submit: GitHub repo link + architecture PDF + docker-compose up screenshot.</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Project Briefs &nbsp;·&nbsp; Batch 2026–27</footer>
+<script src="../shared/level_filter.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking & Sysadmin — Concept Notes Beginner | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">📡 Concept Notes — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; CONCEPT NOTES — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate Notes ↗</a>
+    <a href="lab_guide_beginner.html">Lab Guide ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="lh-icon">📡</div>
+    <div class="lh-text">
+      <h2>Concept Notes — Beginner</h2>
+      <p>Weeks 1–4 · OSI &amp; TCP/IP Models · Subnetting · Linux CLI · Network Troubleshooting</p>
+    </div>
+    <div class="lh-badge">BEGINNER</div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="week-block" id="w1">
+    <div class="week-header wn-beg" onclick="toggleWeek('w1')">
+      <span class="wn-label">Week 1</span>
+      <span class="wn-title">OSI &amp; TCP/IP Models</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>The OSI Model (7 Layers)</h3>
+      <p>The <strong>Open Systems Interconnection (OSI)</strong> model is a conceptual framework that standardises how different network systems communicate. It divides communication into 7 distinct layers, each with a specific responsibility.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Layer</th>
+            <th>PDU</th>
+            <th>Key Protocols / Technologies</th>
+            <th>Responsibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>7</td><td><strong>Application</strong></td><td>Data</td><td>HTTP, HTTPS, FTP, DNS, SMTP, IMAP, SSH, Telnet</td><td>End-user services, network APIs</td></tr>
+          <tr><td>6</td><td><strong>Presentation</strong></td><td>Data</td><td>SSL/TLS, JPEG, MPEG, ASCII, UTF-8</td><td>Data translation, encryption, compression</td></tr>
+          <tr><td>5</td><td><strong>Session</strong></td><td>Data</td><td>NetBIOS, RPC, PPTP, SIP</td><td>Establishes, manages, terminates sessions</td></tr>
+          <tr><td>4</td><td><strong>Transport</strong></td><td>Segment</td><td>TCP (reliable), UDP (fast/unreliable)</td><td>End-to-end delivery, flow control, error correction</td></tr>
+          <tr><td>3</td><td><strong>Network</strong></td><td>Packet</td><td>IP (IPv4/IPv6), ICMP, OSPF, RIP, BGP</td><td>Logical addressing, routing between networks</td></tr>
+          <tr><td>2</td><td><strong>Data Link</strong></td><td>Frame</td><td>Ethernet (802.3), Wi-Fi (802.11), ARP, VLAN (802.1Q)</td><td>Physical addressing (MAC), error detection on local link</td></tr>
+          <tr><td>1</td><td><strong>Physical</strong></td><td>Bits</td><td>Ethernet cable, fibre, radio waves, USB, Bluetooth</td><td>Transmits raw bits over physical medium</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box tip">
+        <strong>Memory trick:</strong> "All People Seem To Need Data Processing" (Application → Physical, top-down) or "Please Do Not Throw Sausage Pizza Away" (bottom-up).
+      </div>
+
+      <h3>TCP/IP Model (4 Layers)</h3>
+      <p>The <strong>TCP/IP model</strong> is the practical model used in real networks (the internet runs on TCP/IP). It maps to the OSI model but collapses some layers.</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>TCP/IP Layer</th><th>Equivalent OSI Layers</th><th>Example Protocols</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Application</strong></td><td>7, 6, 5 (Application + Presentation + Session)</td><td>HTTP, FTP, DNS, SMTP, SSH</td></tr>
+          <tr><td><strong>Transport</strong></td><td>4 (Transport)</td><td>TCP, UDP</td></tr>
+          <tr><td><strong>Internet</strong></td><td>3 (Network)</td><td>IP, ICMP, ARP (disputed)</td></tr>
+          <tr><td><strong>Network Access</strong></td><td>2, 1 (Data Link + Physical)</td><td>Ethernet, Wi-Fi, MAC addressing</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Encapsulation &amp; Decapsulation</h3>
+      <p>As data travels <em>down</em> the OSI stack (sender side), each layer wraps it with its own header (and sometimes trailer). This is <strong>encapsulation</strong>. On the receiver side, each layer <em>unwraps</em> its header — this is <strong>decapsulation</strong>.</p>
+      <pre><code>Application data: "GET / HTTP/1.1\r\nHost: google.com"
+         ↓  Transport layer adds TCP header (src/dst port, seq#)
+       [TCP Header | Data]          ← Segment
+         ↓  Network layer adds IP header (src/dst IP)
+    [IP Header | TCP Header | Data] ← Packet
+         ↓  Data Link adds Ethernet header + FCS trailer
+[ETH Hdr | IP Hdr | TCP Hdr | Data | FCS] ← Frame
+         ↓  Physical layer sends as bits
+   10110011 00101010 ...            ← Bits</code></pre>
+
+      <h3>IPv4 Address Structure</h3>
+      <p>An IPv4 address is a <strong>32-bit number</strong> written in <em>dotted-decimal notation</em> — four octets (0–255) separated by dots.</p>
+      <pre><code>Example:  192  .  168  .   1  .  100
+Binary:  11000000.10101000.00000001.01100100
+         ←──── Network ────→←── Host ──→ (for /24)</code></pre>
+
+      <h3>IPv4 Address Classes</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Class</th><th>First Octet Range</th><th>Default Mask</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>1 – 126</td><td>/8 (255.0.0.0)</td><td>Large organisations</td></tr>
+          <tr><td><strong>B</strong></td><td>128 – 191</td><td>/16 (255.255.0.0)</td><td>Medium organisations</td></tr>
+          <tr><td><strong>C</strong></td><td>192 – 223</td><td>/24 (255.255.255.0)</td><td>Small networks</td></tr>
+          <tr><td><strong>D</strong></td><td>224 – 239</td><td>N/A</td><td>Multicast</td></tr>
+          <tr><td><strong>E</strong></td><td>240 – 255</td><td>N/A</td><td>Experimental / Reserved</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Private IP Ranges (RFC 1918)</h3>
+      <p>These ranges are not routable on the public internet — they are reserved for internal/private use:</p>
+      <table class="data-table">
+        <thead><tr><th>Class</th><th>Private Range</th><th>CIDR</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>10.0.0.0 – 10.255.255.255</td><td>10.0.0.0/8</td></tr>
+          <tr><td>B</td><td>172.16.0.0 – 172.31.255.255</td><td>172.16.0.0/12</td></tr>
+          <tr><td>C</td><td>192.168.0.0 – 192.168.255.255</td><td>192.168.0.0/16</td></tr>
+        </tbody>
+      </table>
+      <div class="info-box note">
+        <strong>Special addresses:</strong> Loopback: <code>127.0.0.0/8</code> (127.0.0.1 = localhost — always refers to your own machine). Link-local: <code>169.254.0.0/16</code> (APIPA — assigned when DHCP fails).
+      </div>
+
+      <h3>TCP vs UDP</h3>
+      <table class="data-table">
+        <thead><tr><th>Feature</th><th>TCP</th><th>UDP</th></tr></thead>
+        <tbody>
+          <tr><td>Connection</td><td>Connection-oriented (3-way handshake)</td><td>Connectionless</td></tr>
+          <tr><td>Reliability</td><td>Guaranteed delivery, acknowledgements</td><td>Best-effort, no ACK</td></tr>
+          <tr><td>Order</td><td>Ordered (sequence numbers)</td><td>No ordering</td></tr>
+          <tr><td>Speed</td><td>Slower (overhead)</td><td>Faster (low overhead)</td></tr>
+          <tr><td>Use cases</td><td>HTTP, SSH, FTP, SMTP, database</td><td>DNS, DHCP, video streaming, VoIP, gaming</td></tr>
+        </tbody>
+      </table>
+      <pre><code># TCP 3-way handshake:
+Client → Server : SYN  (synchronise, starts connection)
+Server → Client : SYN-ACK  (acknowledge + own SYN)
+Client → Server : ACK  (acknowledge — connection established)</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block" id="w2">
+    <div class="week-header wn-beg" onclick="toggleWeek('w2')">
+      <span class="wn-label">Week 2</span>
+      <span class="wn-title">Subnetting &amp; IP Addressing</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>CIDR Notation</h3>
+      <p><strong>CIDR (Classless Inter-Domain Routing)</strong> notation writes an IP address followed by a slash and the number of network bits: <code>IP/prefix-length</code>.</p>
+      <pre><code>192.168.1.0/24
+              ↑
+     24 bits are NETWORK (fixed), 8 bits are HOST (variable)
+     Subnet mask: 255.255.255.0
+     Total addresses: 2^8 = 256
+     Usable host addresses: 256 - 2 = 254  (subtract network + broadcast)</code></pre>
+
+      <h3>Common Subnet Masks</h3>
+      <table class="data-table">
+        <thead><tr><th>CIDR</th><th>Subnet Mask</th><th>Total IPs</th><th>Usable Hosts</th></tr></thead>
+        <tbody>
+          <tr><td>/8</td><td>255.0.0.0</td><td>16,777,216</td><td>16,777,214</td></tr>
+          <tr><td>/16</td><td>255.255.0.0</td><td>65,536</td><td>65,534</td></tr>
+          <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td></tr>
+          <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td></tr>
+          <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td>62</td></tr>
+          <tr><td>/27</td><td>255.255.255.224</td><td>32</td><td>30</td></tr>
+          <tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td></tr>
+          <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td>2</td></tr>
+          <tr><td>/32</td><td>255.255.255.255</td><td>1</td><td>Host route only</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Subnetting Calculation</h3>
+      <p><strong>Formula:</strong> To create <em>n</em> subnets, borrow <code>log₂(n)</code> bits from the host portion.</p>
+      <pre><code># Example: Split 192.168.10.0/24 into 4 equal subnets
+# Borrow 2 bits → 2^2 = 4 subnets; new prefix = /26 (24+2)
+# Each subnet: 2^6 = 64 addresses, 62 usable hosts
+
+Subnet 1: 192.168.10.0/26   → hosts .1 – .62,  broadcast .63
+Subnet 2: 192.168.10.64/26  → hosts .65 – .126, broadcast .127
+Subnet 3: 192.168.10.128/26 → hosts .129 – .190, broadcast .191
+Subnet 4: 192.168.10.192/26 → hosts .193 – .254, broadcast .255</code></pre>
+
+      <h3>VLSM — Variable Length Subnet Masking</h3>
+      <p>VLSM allows using <em>different prefix lengths</em> within the same address space — allocate just the right size for each segment, avoiding waste.</p>
+      <pre><code># Example: Allocate 192.168.1.0/24 for:
+#   HQ LAN (50 hosts)  → need /26 (62 hosts) → 192.168.1.0/26
+#   Branch LAN (20 hosts) → need /27 (30 hosts) → 192.168.1.64/27
+#   Point-to-point link (2 hosts) → need /30 (2 hosts) → 192.168.1.96/30
+#   Remaining: 192.168.1.100/30 onwards unused</code></pre>
+
+      <h3>IPv6 Addressing</h3>
+      <p>IPv6 uses <strong>128-bit addresses</strong> written as 8 groups of 4 hexadecimal digits separated by colons.</p>
+      <pre><code>Full:       2001:0db8:85a3:0000:0000:8a2e:0370:7334
+Compressed: 2001:db8:85a3::8a2e:370:7334
+            (leading zeros dropped; :: replaces one run of all-zero groups)
+
+Loopback:   ::1            (equivalent to 127.0.0.1 in IPv4)
+Link-local: fe80::1/10     (automatically assigned, not routable)
+Global:     2001::/16 and 2000::/3 (public, routable)
+Multicast:  ff00::/8</code></pre>
+
+      <h3>NAT — Network Address Translation</h3>
+      <p>NAT allows multiple devices with private IP addresses to share one (or few) public IP addresses when accessing the internet.</p>
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Static NAT</strong></td><td>One-to-one mapping of private IP to public IP (used for servers)</td></tr>
+          <tr><td><strong>Dynamic NAT</strong></td><td>Many-to-many from a pool of public IPs</td></tr>
+          <tr><td><strong>PAT (NAT Overload)</strong></td><td>Many private IPs → one public IP, differentiated by port number (most common home/office NAT)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>DHCP — DORA Process</h3>
+      <p>DHCP automatically assigns IP configuration to clients. The four-step exchange is called <strong>DORA</strong>:</p>
+      <pre><code>1. DISCOVER  – Client broadcasts "I need an IP" (src: 0.0.0.0:68, dst: 255.255.255.255:67)
+2. OFFER     – Server broadcasts an available IP lease offer
+3. REQUEST   – Client broadcasts "I accept the offered IP from that server"
+4. ACKNOWLEDGE – Server confirms the lease (includes IP, mask, gateway, DNS, lease time)</code></pre>
+
+      <h3>DNS — Domain Name System</h3>
+      <p>DNS translates human-readable domain names (google.com) into IP addresses. The hierarchy works top-down:</p>
+      <pre><code>Root servers (.) → TLD servers (.com, .org, .in) → Authoritative NS → Resolver → Client
+
+Query for www.google.com:
+  1. OS checks local cache / /etc/hosts
+  2. Asks recursive resolver (ISP or 8.8.8.8)
+  3. Resolver asks root server → points to .com TLD
+  4. .com TLD → points to google.com authoritative NS
+  5. Authoritative NS → returns A record (IP: 142.250.x.x)
+  6. Resolver caches and returns to client</code></pre>
+
+      <h3>DNS Record Types</h3>
+      <table class="data-table">
+        <thead><tr><th>Record</th><th>Purpose</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>IPv4 address</td><td>google.com → 142.250.80.46</td></tr>
+          <tr><td><strong>AAAA</strong></td><td>IPv6 address</td><td>google.com → 2607:f8b0::200e</td></tr>
+          <tr><td><strong>CNAME</strong></td><td>Canonical name (alias)</td><td>www.example.com → example.com</td></tr>
+          <tr><td><strong>MX</strong></td><td>Mail exchange server</td><td>example.com → mail.example.com (priority 10)</td></tr>
+          <tr><td><strong>PTR</strong></td><td>Reverse lookup (IP → name)</td><td>10.1.168.192.in-addr.arpa → host.example.com</td></tr>
+          <tr><td><strong>NS</strong></td><td>Nameserver for zone</td><td>example.com NS ns1.example.com</td></tr>
+          <tr><td><strong>SOA</strong></td><td>Start of Authority (zone metadata)</td><td>Serial, refresh, retry, expire, TTL</td></tr>
+          <tr><td><strong>TXT</strong></td><td>Text record (SPF, DKIM, verification)</td><td>"v=spf1 include:_spf.google.com ~all"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block" id="w3">
+    <div class="week-header wn-beg" onclick="toggleWeek('w3')">
+      <span class="wn-label">Week 3</span>
+      <span class="wn-title">Linux CLI Fundamentals</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Linux Filesystem Hierarchy Standard (FHS)</h3>
+      <table class="data-table">
+        <thead><tr><th>Directory</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>/</code></td><td>Root — top of the entire filesystem tree</td></tr>
+          <tr><td><code>/etc</code></td><td>System configuration files (nginx.conf, sshd_config, fstab)</td></tr>
+          <tr><td><code>/var</code></td><td>Variable data: logs (/var/log), spool, mail, databases</td></tr>
+          <tr><td><code>/home</code></td><td>User home directories (/home/alice, /home/bob)</td></tr>
+          <tr><td><code>/bin</code></td><td>Essential user binaries (ls, cp, mv, cat)</td></tr>
+          <tr><td><code>/usr</code></td><td>User programs and libraries (/usr/bin, /usr/lib, /usr/share)</td></tr>
+          <tr><td><code>/sbin</code></td><td>System administration binaries (iptables, ifconfig, reboot)</td></tr>
+          <tr><td><code>/tmp</code></td><td>Temporary files — cleared on reboot</td></tr>
+          <tr><td><code>/proc</code></td><td>Virtual filesystem: process and kernel info (/proc/cpuinfo, /proc/meminfo)</td></tr>
+          <tr><td><code>/dev</code></td><td>Device files (/dev/sda, /dev/null, /dev/random)</td></tr>
+          <tr><td><code>/mnt</code></td><td>Temporary mount points for external storage</td></tr>
+          <tr><td><code>/opt</code></td><td>Optional third-party software (Prometheus, custom tools)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Navigation &amp; File Operations</h3>
+      <pre><code># Navigation
+pwd                          # Print working directory
+ls -la /etc                  # List all files with details (permissions, size, owner)
+cd /var/log                  # Change directory
+find /etc -name "*.conf" -type f  # Find all .conf files
+locate nginx.conf            # Fast file search (uses database — run updatedb first)
+
+# File operations
+cp -r /etc/nginx /backup/nginx        # Copy directory recursively
+mv /tmp/file.txt /home/user/          # Move or rename file
+rm -rf /tmp/old-dir/                  # Remove directory and contents (CAUTION!)
+mkdir -p /data/projects/web          # Create nested directories
+touch /tmp/empty.txt                  # Create empty file / update timestamp
+ln -s /usr/local/bin/app /usr/bin/app # Create symbolic link</code></pre>
+
+      <h3>Text Processing Tools</h3>
+      <pre><code># View files
+cat /etc/hosts                        # Print entire file
+less /var/log/syslog                  # Page through file (q = quit, / = search)
+head -n 20 /var/log/nginx/access.log  # First 20 lines
+tail -f /var/log/syslog               # Follow live (great for log watching)
+
+# Search &amp; filter
+grep -rni "error" /var/log/           # Recursive, case-insensitive, show line numbers
+grep -v "^#" /etc/ssh/sshd_config     # Exclude comment lines
+
+# Text transformation
+awk '{print $1, $7}' /var/log/nginx/access.log  # Print columns 1 and 7
+awk -F: '{print $1, $3}' /etc/passwd            # Use : as delimiter
+sed 's/old-hostname/new-hostname/g' /etc/hosts  # Replace text (print only)
+sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config  # Edit in-place
+
+# Pipes and redirection
+cat /var/log/auth.log | grep "Failed" | wc -l   # Count failed login attempts
+ps aux | grep nginx | grep -v grep              # Find nginx processes
+df -h > /tmp/disk-report.txt                    # Save output to file
+ls /nonexistent 2>/dev/null                     # Discard error output
+curl -s http://example.com 2>&1 | grep "200"   # Merge stderr into stdout</code></pre>
+
+      <h3>File Permissions</h3>
+      <pre><code># Permission string: -rwxr-xr--
+# Format: [type][owner rwx][group rwx][other rwx]
+# - = file, d = directory, l = symlink
+
+# r = 4, w = 2, x = 1
+chmod 755 script.sh       # owner=rwx(7), group=r-x(5), other=r-x(5)
+chmod 644 config.txt      # owner=rw-(6), group=r--(4), other=r--(4)
+chmod u+x deploy.sh       # Add execute for owner only
+chmod go-w /etc/cron.d/   # Remove write from group and other
+chown alice:developers file.txt  # Change owner and group
+chown -R www-data:www-data /var/www/  # Recursive ownership change
+
+# View current permissions:
+ls -la /etc/shadow         # -rw-r----- root shadow
+stat /etc/passwd           # Detailed inode info including permissions
+
+# Default permissions: umask 022 means:
+#   Files: 666 - 022 = 644  (rw-r--r--)
+#   Dirs:  777 - 022 = 755  (rwxr-xr-x)</code></pre>
+
+      <h3>Process Management</h3>
+      <pre><code># Viewing processes
+ps aux                         # All processes, all users, with full details
+ps aux | grep nginx            # Filter for nginx
+top                            # Interactive process viewer (q to quit, k to kill)
+htop                           # Enhanced interactive viewer (if installed)
+
+# Killing processes
+kill 1234                      # Send SIGTERM (15) — graceful shutdown
+kill -9 1234                   # Send SIGKILL — force kill (cannot be caught)
+killall nginx                  # Kill all processes named nginx
+pkill -f "python script.py"    # Kill by command pattern
+
+# Priority (nice)
+nice -n 10 python backup.py    # Start with lower priority (10 = lower than default 0)
+renice +5 1234                 # Change priority of running process
+
+# Background jobs
+long-command &                 # Run in background
+jobs                           # List background jobs
+fg %1                          # Bring job 1 to foreground
+nohup python server.py &       # Run immune to hangup (keeps running after logout)</code></pre>
+
+      <h3>Package Management</h3>
+      <pre><code># Debian / Ubuntu (APT)
+sudo apt update                          # Refresh package lists
+sudo apt upgrade                         # Upgrade all installed packages
+sudo apt install nginx curl git          # Install packages
+sudo apt remove nginx                    # Remove package (keep config)
+sudo apt purge nginx                     # Remove package + config files
+apt search nginx                         # Search for package
+dpkg -l | grep nginx                     # List installed packages matching nginx
+
+# CentOS / RHEL 7 (YUM)
+sudo yum update
+sudo yum install nginx
+
+# Fedora / RHEL 8+ (DNF)
+sudo dnf install nginx
+sudo dnf update --security               # Security updates only</code></pre>
+
+      <h3>Bash Scripting Basics</h3>
+      <pre><code>#!/bin/bash
+# shebang line MUST be first line, specifies interpreter
+
+# Variables
+NAME="Alice"
+COUNT=10
+CURRENT_DATE=$(date +%Y-%m-%d)   # Command substitution
+
+echo "Hello, $NAME. Today is $CURRENT_DATE."
+
+# Conditional
+if [ $COUNT -gt 5 ]; then
+    echo "Count is greater than 5"
+elif [ $COUNT -eq 5 ]; then
+    echo "Count is exactly 5"
+else
+    echo "Count is less than 5"
+fi
+
+# For loop
+for server in web01 web02 db01; do
+    echo "Checking $server..."
+    ping -c 1 $server > /dev/null && echo "$server: UP" || echo "$server: DOWN"
+done
+
+# While loop
+i=1
+while [ $i -le 3 ]; do
+    echo "Iteration $i"
+    ((i++))
+done
+
+# Function
+check_service() {
+    local SERVICE=$1
+    if systemctl is-active --quiet $SERVICE; then
+        echo "$SERVICE is RUNNING"
+    else
+        echo "$SERVICE is STOPPED"
+    fi
+}
+check_service nginx
+check_service sshd</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-block" id="w4">
+    <div class="week-header wn-beg" onclick="toggleWeek('w4')">
+      <span class="wn-label">Week 4</span>
+      <span class="wn-title">Network Troubleshooting Basics</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Core Diagnostic Tools</h3>
+
+      <h4>ping — Test ICMP Reachability</h4>
+      <pre><code>ping -c 4 8.8.8.8          # Send 4 ICMP echo requests to Google DNS
+ping -c 4 google.com       # Tests DNS resolution + reachability
+ping -i 0.2 192.168.1.1    # Ping every 0.2 seconds (faster)
+
+# Output: round-trip time (RTT) in ms, TTL value
+# TTL ~64 = Linux/macOS hop away; TTL ~128 = Windows hop away
+# Packet loss % indicates reliability issues</code></pre>
+
+      <h4>traceroute / tracert — Path Discovery</h4>
+      <pre><code>traceroute google.com          # Linux: shows each hop (router) to destination
+tracert google.com             # Windows equivalent
+traceroute -n google.com       # -n: don't resolve hostnames (faster)
+
+# * * * means the hop didn't respond (firewall or ICMP disabled)
+# High latency at a specific hop = bottleneck at that router</code></pre>
+
+      <h4>nslookup &amp; dig — DNS Queries</h4>
+      <pre><code>nslookup google.com            # Basic DNS lookup
+dig google.com A               # Query A records for google.com
+dig google.com MX              # Query mail exchanger records
+dig @8.8.8.8 example.com       # Use specific DNS server (8.8.8.8)
+dig +short google.com          # Clean output — just the IP
+dig -x 142.250.80.46           # Reverse DNS lookup (PTR record)
+
+# dig output sections: QUESTION, ANSWER, AUTHORITY, ADDITIONAL</code></pre>
+
+      <h4>ss / netstat — Socket Statistics</h4>
+      <pre><code>ss -tulpn                      # TCP/UDP Listening Ports with process names
+ss -s                          # Summary of socket counts
+ss -t state established        # Active TCP connections
+
+netstat -an                    # All connections (older systems)
+netstat -tulpn                 # Same as ss -tulpn
+
+# Common port numbers:
+# 22=SSH, 80=HTTP, 443=HTTPS, 25=SMTP, 53=DNS, 3306=MySQL, 5432=PostgreSQL</code></pre>
+
+      <h4>ip — Network Interface &amp; Routing</h4>
+      <pre><code>ip addr show                   # All interfaces with IP addresses
+ip addr show eth0              # Specific interface
+ip link show                   # Link layer info (MAC, UP/DOWN state)
+ip link set eth0 up            # Bring interface up
+ip link set eth0 down          # Bring interface down
+
+ip route show                  # Routing table
+ip route add default via 192.168.1.1          # Add default gateway
+ip route add 10.0.0.0/8 via 192.168.1.1       # Add specific route
+ip route del 10.0.0.0/8                       # Delete route
+
+arp -n                         # ARP table (IP to MAC mappings)</code></pre>
+
+      <h4>curl &amp; wget — HTTP Testing</h4>
+      <pre><code>curl -I https://example.com           # Headers only (HTTP status code, server type)
+curl -o /tmp/page.html https://example.com  # Download to file
+curl -v https://example.com          # Verbose: show TLS handshake, headers
+curl -u admin:password http://api/   # Basic auth
+
+wget https://example.com/file.tar.gz  # Download file
+wget -q -O /dev/null --server-response https://example.com  # Check HTTP status silently</code></pre>
+
+      <h4>tcpdump — Packet Capture</h4>
+      <pre><code>sudo tcpdump -i eth0                   # Capture all traffic on eth0
+sudo tcpdump -i eth0 port 80           # Only HTTP traffic
+sudo tcpdump -i eth0 host 8.8.8.8      # Traffic to/from specific IP
+sudo tcpdump -i eth0 -w /tmp/cap.pcap  # Save to file for Wireshark analysis
+sudo tcpdump -r /tmp/cap.pcap          # Read saved capture file
+sudo tcpdump -i eth0 'tcp and port 443 and host 192.168.1.100'  # Complex filter</code></pre>
+
+      <h3>Wireshark Filters</h3>
+      <pre><code>http                           # All HTTP traffic
+tcp.port == 443                # HTTPS traffic
+ip.addr == 192.168.1.100       # Traffic involving specific IP
+tcp.flags.syn == 1             # TCP SYN packets only (connections being established)
+dns                            # All DNS queries/responses
+icmp                           # Ping traffic only</code></pre>
+
+      <h3>Systematic Troubleshooting Workflow</h3>
+      <p>When a server cannot reach an external service, work through the OSI model bottom-up:</p>
+      <pre><code>Step 1: Check physical/link layer
+  ip link show                 # Is interface UP? Any errors?
+
+Step 2: Check IP configuration
+  ip addr show                 # Do we have the correct IP + subnet mask?
+
+Step 3: Check default gateway
+  ip route show                # Is there a default route (0.0.0.0/0)?
+
+Step 4: Ping the gateway
+  ping -c 2 192.168.1.1        # Can we reach our router?
+
+Step 5: Ping an external IP
+  ping -c 2 8.8.8.8            # Can we reach the internet? (tests routing)
+
+Step 6: Test DNS resolution
+  dig @8.8.8.8 google.com      # Does DNS work with explicit server?
+  dig google.com               # Does DNS work with configured server?
+
+Step 7: Test the service
+  curl -I http://service:port  # Does the application respond?
+  ss -tulpn | grep :80         # Is the service actually listening?</code></pre>
+
+      <h3>Common Network Problems</h3>
+      <table class="data-table">
+        <thead><tr><th>Symptom</th><th>Likely Cause</th><th>Diagnostic</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Can ping gateway, can't reach internet</td><td>Wrong or missing default route</td><td><code>ip route show</code></td><td>Add default route via gateway</td></tr>
+          <tr><td>Can ping by IP, can't ping by hostname</td><td>DNS misconfigured</td><td><code>cat /etc/resolv.conf</code></td><td>Set nameserver in resolv.conf or systemd-resolved</td></tr>
+          <tr><td>Connection refused on port 80</td><td>Web server not running or firewall</td><td><code>ss -tulpn | grep :80</code>, <code>iptables -L</code></td><td>Start nginx / allow port in firewall</td></tr>
+          <tr><td>Connection times out (no response)</td><td>Firewall silently dropping</td><td><code>tcpdump -i eth0 port 80</code></td><td>Add ACCEPT rule for that port</td></tr>
+          <tr><td>IP conflict — duplicate address</td><td>Static + DHCP conflict</td><td><code>arp -n</code> (two MACs for one IP)</td><td>Change static IP or reserve in DHCP</td></tr>
+          <tr><td>DHCP not getting IP</td><td>Wrong interface or DHCP server down</td><td><code>journalctl -u isc-dhcp-server</code></td><td>Check interface config in /etc/default/isc-dhcp-server</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box tip">
+        <strong>Pro Tip:</strong> Always check <code>/var/log/syslog</code> or <code>journalctl -xe</code> for system-level error messages. They often tell you exactly what failed and why.
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Concept Notes — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>

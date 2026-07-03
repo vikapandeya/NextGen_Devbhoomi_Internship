@@ -1,0 +1,657 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & Analytics — Concept Notes (Advanced) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📊 Data Science &amp; Analytics</div>
+      <div class="bc-file">📖 Concept Notes — Advanced</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 4 OF 9 &nbsp;·&nbsp; DATA SCIENCE &amp; ANALYTICS &nbsp;·&nbsp; CONCEPT NOTES — ADVANCED
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">📖 Intermediate Notes</a>
+    <a href="lab_guide_advanced.html">🔬 Advanced Labs</a>
+    <a href="project_briefs.html">📋 Projects</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">📊</div>
+    <div class="lh-text">
+      <h2>Data Science &amp; Analytics — Advanced Track</h2>
+      <p>Weeks 9–12 · Advanced ML, time series, data engineering pipelines, and business intelligence. Prerequisites: Weeks 1–8 complete.</p>
+    </div>
+    <div class="lh-meta">
+      <span class="lh-badge">Advanced</span>
+      <span class="lh-badge">4 Weeks</span>
+      <span class="lh-badge">W9–W12</span>
+    </div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="week-block" id="w9">
+    <div class="week-header" onclick="toggleWeek('w9')">
+      <div class="week-num wn-adv">W9</div>
+      <h3>Advanced ML &amp; Feature Engineering</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Feature Selection Methods</h4>
+        <p>More features does not always mean a better model. Irrelevant and redundant features add noise, slow training, and hurt generalization. Feature selection is the process of choosing the most informative subset of features.</p>
+        <pre><code>>from sklearn.feature_selection import VarianceThreshold, SelectKBest, f_classif, RFE
+from sklearn.ensemble import RandomForestClassifier
+
+# ---- Variance Threshold — remove near-constant features ----
+sel = VarianceThreshold(threshold=0.01)  # remove features with variance < 0.01
+X_filtered = sel.fit_transform(X)
+print(f"Original: {X.shape[1]} features → After: {X_filtered.shape[1]}")
+
+# ---- SelectKBest — keep top K features by statistical test ----
+# f_classif uses ANOVA F-score (for classification)
+selector = SelectKBest(score_func=f_classif, k=5)
+selector.fit(X_train, y_train)
+feature_scores = pd.Series(selector.scores_, index=X.columns).sort_values(ascending=False)
+print(feature_scores)
+
+# ---- Recursive Feature Elimination (RFE) ----
+# Trains model, removes weakest feature, repeats until k features remain
+rfe = RFE(estimator=RandomForestClassifier(n_estimators=50, random_state=42),
+          n_features_to_select=5)
+rfe.fit(X_train, y_train)
+selected = pd.DataFrame({'feature': X.columns, 'selected': rfe.support_, 'rank': rfe.ranking_})
+print(selected.sort_values('rank'))</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Handling Imbalanced Datasets</h4>
+        <p>In fraud detection, disease prediction, or churn modeling, the minority class (fraud, disease, churn) may be only 1–5% of the data. A naive model that always predicts "no fraud" gets 99% accuracy but is useless. Strategies:</p>
+        <pre><code>>from sklearn.utils.class_weight import compute_class_weight
+from imblearn.over_sampling import SMOTE
+import numpy as np
+
+# Check imbalance
+print(pd.Series(y_train).value_counts(normalize=True))
+# e.g., 0 (no fraud): 95%, 1 (fraud): 5%
+
+# ---- Option 1: class_weight='balanced' — penalizes misclassifying minority class more ----
+from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier(class_weight='balanced', random_state=42)
+model.fit(X_train, y_train)
+
+# ---- Option 2: SMOTE — Synthetic Minority Oversampling Technique ----
+# Creates synthetic minority class samples in feature space
+# pip install imbalanced-learn
+from imblearn.over_sampling import SMOTE
+sm = SMOTE(random_state=42)
+X_resampled, y_resampled = sm.fit_resample(X_train, y_train)
+print(pd.Series(y_resampled).value_counts())  # now balanced!
+
+# ---- Option 3: Undersampling — reduce majority class ----
+from imblearn.under_sampling import RandomUnderSampler
+rus = RandomUnderSampler(random_state=42)
+X_under, y_under = rus.fit_resample(X_train, y_train)
+
+# IMPORTANT: Always use F1, Precision, Recall, AUC — not accuracy — for imbalanced data</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>sklearn Pipeline</h4>
+        <p>A Pipeline chains multiple processing steps into one object. This is crucial for two reasons: (1) it prevents data leakage by ensuring the scaler is fit only on training data, and (2) it makes deployment easy — you can serialize the entire pipeline and use it in production.</p>
+        <pre><code>>from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+
+# Define feature groups
+numeric_features = ['age', 'fare']
+categorical_features = ['pclass', 'embarked']
+
+# Pipelines for each type
+numeric_pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler',  StandardScaler())
+])
+
+categorical_pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='most_frequent')),
+    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+])
+
+# Combine with ColumnTransformer
+preprocessor = ColumnTransformer([
+    ('num', numeric_pipeline, numeric_features),
+    ('cat', categorical_pipeline, categorical_features)
+])
+
+# Full pipeline: preprocessing + model
+full_pipeline = Pipeline([
+    ('preprocessor', preprocessor),
+    ('model', LogisticRegression(random_state=42))
+])
+
+full_pipeline.fit(X_train, y_train)
+y_pred = full_pipeline.predict(X_test)
+
+# Save entire pipeline
+import pickle
+with open('titanic_pipeline.pkl', 'wb') as f:
+    pickle.dump(full_pipeline, f)
+
+# Load and use later
+with open('titanic_pipeline.pkl', 'rb') as f:
+    loaded_pipeline = pickle.load(f)
+prediction = loaded_pipeline.predict(new_passenger_df)</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Gradient Boosting — XGBoost &amp; LightGBM</h4>
+        <p>Gradient boosting builds trees sequentially — each new tree corrects the errors of the previous ones. This makes it far more powerful than random forests on most structured/tabular data. XGBoost and LightGBM are the implementations that win most Kaggle competitions.</p>
+        <pre><code>>pip install xgboost lightgbm</code></pre>
+        <pre><code>>from xgboost import XGBClassifier
+from sklearn.model_selection import cross_val_score
+import lightgbm as lgb
+
+# ---- XGBoost ----
+xgb = XGBClassifier(
+    n_estimators=300,
+    max_depth=4,
+    learning_rate=0.05,    # smaller = slower learning = better generalization
+    subsample=0.8,         # use 80% of rows per tree (like random forest)
+    colsample_bytree=0.8,  # use 80% of features per tree
+    eval_metric='logloss',
+    random_state=42
+)
+xgb.fit(X_train, y_train,
+        eval_set=[(X_test, y_test)],   # early stopping monitor
+        verbose=False)
+print("XGB accuracy:", accuracy_score(y_test, xgb.predict(X_test)))
+
+# ---- LightGBM — faster, better on large datasets ----
+lgbm = lgb.LGBMClassifier(n_estimators=300, learning_rate=0.05, random_state=42)
+lgbm.fit(X_train, y_train)
+print("LGBM accuracy:", accuracy_score(y_test, lgbm.predict(X_test)))</code></pre>
+        <p>Why they win: they're accurate, fast, handle missing values natively, and support built-in cross-validation with early stopping to prevent overfitting.</p>
+      </div>
+
+      <div class="concept-section">
+        <h4>Neural Network Introduction</h4>
+        <p>Neural networks are inspired by the brain's structure — layers of interconnected nodes (neurons) that learn hierarchical representations of data. They excel at images, text, audio, and complex patterns that traditional ML struggles with.</p>
+        <ul class="content-list">
+          <li><strong>Input layer</strong> — One neuron per feature. Passes raw data to the network.</li>
+          <li><strong>Hidden layers</strong> — Learn intermediate representations. Each neuron computes: output = activation(Σ(weight × input) + bias).</li>
+          <li><strong>Output layer</strong> — Final prediction. Use softmax for multi-class, sigmoid for binary, linear for regression.</li>
+          <li><strong>ReLU (Rectified Linear Unit)</strong> — Most common hidden layer activation: f(x) = max(0, x). Avoids vanishing gradient problem.</li>
+          <li><strong>Softmax</strong> — Converts a vector of scores to probabilities (sum to 1). Used in multi-class output layers.</li>
+          <li><strong>Backpropagation</strong> — The algorithm for updating weights: compute gradient of loss with respect to each weight, then subtract a fraction (learning rate) of that gradient.</li>
+        </ul>
+        <pre><code>>from sklearn.neural_network import MLPClassifier
+
+# Simple neural network with sklearn
+mlp = MLPClassifier(
+    hidden_layer_sizes=(100, 50),  # 2 hidden layers: 100 neurons then 50
+    activation='relu',
+    solver='adam',
+    max_iter=300,
+    random_state=42
+)
+mlp.fit(X_train_scaled, y_train)
+print("MLP accuracy:", accuracy_score(y_test, mlp.predict(X_test_scaled)))</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="week-block" id="w10">
+    <div class="week-header" onclick="toggleWeek('w10')">
+      <div class="week-num wn-adv">W10</div>
+      <h3>Time Series Analysis</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>Time Series Components</h4>
+        <p>Any time series can be decomposed into three components:</p>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>Trend</strong>
+            <p>Long-term increase or decrease in the data. A growing business shows upward trend in revenue. Seasonal adjustments remove trend to study cycles.</p>
+          </div>
+          <div class="info-card">
+            <strong>Seasonality</strong>
+            <p>Regular, predictable patterns that repeat over a fixed period. Retail sales spike every December. Ice cream sales peak every summer. Period can be daily, weekly, monthly, yearly.</p>
+          </div>
+          <div class="info-card">
+            <strong>Noise / Residuals</strong>
+            <p>Random fluctuations that can't be explained by trend or seasonality. After removing trend and seasonality, what remains should be random noise — if it still has patterns, the model is incomplete.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>pandas for Time Series</h4>
+        <pre><code>>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create a time series DataFrame
+dates = pd.date_range(start='2024-01-01', end='2026-06-01', freq='D')
+np.random.seed(42)
+trend = np.linspace(1000, 2000, len(dates))
+seasonality = 200 * np.sin(2 * np.pi * np.arange(len(dates)) / 365)
+noise = np.random.randn(len(dates)) * 100
+
+ts = pd.DataFrame({'date': dates, 'sales': trend + seasonality + noise})
+ts = ts.set_index('date')
+
+# Resample — aggregate to different frequencies
+weekly  = ts.resample('W').sum()     # weekly totals
+monthly = ts.resample('ME').mean()    # monthly averages
+yearly  = ts.resample('YE').sum()     # yearly totals
+
+# Rolling average — smooth out noise
+ts['rolling_7d']  = ts['sales'].rolling(window=7).mean()   # 7-day moving average
+ts['rolling_30d'] = ts['sales'].rolling(window=30).mean()  # 30-day moving average
+
+plt.figure(figsize=(12, 5))
+plt.plot(ts.index, ts['sales'], alpha=0.3, color='gray', label='Daily')
+plt.plot(ts.index, ts['rolling_7d'], color='#1B3A6B', label='7-day MA')
+plt.plot(ts.index, ts['rolling_30d'], color='#C8941A', linewidth=2, label='30-day MA')
+plt.legend(); plt.title('Sales with Moving Averages'); plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Stationarity &amp; the ADF Test</h4>
+        <p>Most time series models (like ARIMA) require the series to be stationary: mean, variance, and autocorrelation structure must be constant over time. A trending series is NOT stationary.</p>
+        <pre><code>>from statsmodels.tsa.stattools import adfuller
+
+def test_stationarity(series, name='Series'):
+    result = adfuller(series.dropna())
+    print(f"ADF Test for {name}:")
+    print(f"  ADF Statistic: {result[0]:.4f}")
+    print(f"  p-value:       {result[1]:.4f}")
+    if result[1] < 0.05:
+        print("  → STATIONARY (p < 0.05)")
+    else:
+        print("  → NON-STATIONARY — consider differencing")
+
+test_stationarity(ts['sales'], 'Raw Sales')
+
+# Make stationary by differencing (subtract previous value)
+ts['sales_diff'] = ts['sales'].diff()          # first-order differencing
+test_stationarity(ts['sales_diff'].dropna(), 'Differenced Sales')
+
+# Seasonal differencing (subtract same day last year)
+ts['sales_seasonal_diff'] = ts['sales'].diff(365)</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>ARIMA Model</h4>
+        <p>ARIMA (AutoRegressive Integrated Moving Average) is the classic time series forecasting model. The three components:</p>
+        <ul class="content-list">
+          <li><strong>AR (p)</strong> — AutoRegressive: the value depends on its own previous values. p = number of lag observations.</li>
+          <li><strong>I (d)</strong> — Integrated: number of times the series needs to be differenced to become stationary. d=1 for most series with trend.</li>
+          <li><strong>MA (q)</strong> — Moving Average: the value depends on previous forecast errors. q = number of lagged forecast errors.</li>
+        </ul>
+        <pre><code>>from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+import warnings
+warnings.filterwarnings('ignore')
+
+# Use monthly data for ARIMA
+monthly_sales = monthly['sales']
+
+# ACF and PACF help choose q and p
+fig, axes = plt.subplots(1, 2, figsize=(14, 4))
+plot_acf(monthly_sales, lags=24, ax=axes[0])
+plot_pacf(monthly_sales, lags=24, ax=axes[1])
+plt.tight_layout(); plt.show()
+
+# Fit ARIMA(1,1,1): AR=1, difference=1, MA=1
+train = monthly_sales[:-6]    # all but last 6 months
+test  = monthly_sales[-6:]    # last 6 months for evaluation
+
+model = ARIMA(train, order=(1, 1, 1))
+result = model.fit()
+print(result.summary())
+
+# Forecast 6 months ahead
+forecast = result.forecast(steps=6)
+conf_int = result.get_forecast(steps=6).conf_int()
+
+plt.figure(figsize=(12, 5))
+plt.plot(train.index, train, label='Training', color='#1B3A6B')
+plt.plot(test.index, test, label='Actual Test', color='green')
+plt.plot(forecast.index, forecast, label='Forecast', color='#C8941A', linestyle='--')
+plt.fill_between(conf_int.index, conf_int.iloc[:,0], conf_int.iloc[:,1], alpha=0.2)
+plt.legend(); plt.title('ARIMA Forecast vs Actual'); plt.show()</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Prophet — Facebook's Forecasting Library</h4>
+        <p>Prophet is designed for business time series with strong seasonal patterns. It requires minimal tuning, handles missing data and outliers, and automatically detects holidays. Excellent for non-specialists who need quick, reliable forecasts.</p>
+        <pre><code>>pip install prophet</code></pre>
+        <pre><code>>from prophet import Prophet
+import pandas as pd
+
+# Prophet requires columns: 'ds' (date) and 'y' (value)
+prophet_df = monthly_sales.reset_index()
+prophet_df.columns = ['ds', 'y']
+
+model = Prophet(yearly_seasonality=True, weekly_seasonality=False)
+model.fit(prophet_df)
+
+# Forecast 12 months ahead
+future = model.make_future_dataframe(periods=12, freq='ME')
+forecast = model.predict(future)
+
+# Plot
+fig = model.plot(forecast)
+fig2 = model.plot_components(forecast)   # shows trend + seasonality separately
+plt.show()</code></pre>
+        <p><strong>Applications</strong>: stock price prediction (careful — very noisy), sales forecasting, demand planning, traffic prediction, energy consumption forecasting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="week-block" id="w11">
+    <div class="week-header" onclick="toggleWeek('w11')">
+      <div class="week-num wn-adv">W11</div>
+      <h3>Data Engineering &amp; Pipelines</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>ETL vs ELT — The Modern Data Stack</h4>
+        <table class="ref-table">
+          <thead><tr><th>Aspect</th><th>ETL (Traditional)</th><th>ELT (Modern)</th></tr></thead>
+          <tbody>
+            <tr><td>Process order</td><td>Extract → Transform → Load</td><td>Extract → Load → Transform</td></tr>
+            <tr><td>Where transform happens</td><td>In a separate ETL server before loading</td><td>Inside the data warehouse (using SQL/dbt)</td></tr>
+            <tr><td>Best for</td><td>Legacy systems, sensitive data requiring masking before storage</td><td>Cloud data warehouses (BigQuery, Snowflake, Redshift)</td></tr>
+            <tr><td>Tools</td><td>Informatica, SSIS, Talend</td><td>Fivetran, Airbyte, Stitch + dbt</td></tr>
+            <tr><td>Scalability</td><td>Limited by ETL server capacity</td><td>Scales with cloud warehouse</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-section">
+        <h4>Apache Airflow — Orchestrating Data Pipelines</h4>
+        <p>Airflow is the industry-standard tool for orchestrating data pipelines. You define workflows as Python code using DAGs (Directed Acyclic Graphs).</p>
+        <ul class="content-list">
+          <li><strong>DAG</strong> — Directed Acyclic Graph. The entire workflow definition — a set of tasks with dependencies, a schedule, and retry logic.</li>
+          <li><strong>Task</strong> — A single unit of work: run a Python function, execute a SQL query, trigger an API call, etc.</li>
+          <li><strong>Operator</strong> — The type of task. PythonOperator runs Python. BashOperator runs shell. PostgresOperator runs SQL. Hundreds of community operators exist.</li>
+          <li><strong>Sensor</strong> — A special task that waits for a condition (file arrival, HTTP endpoint, database row) before proceeding.</li>
+          <li><strong>Schedule</strong> — Cron expression or Airflow preset (@daily, @hourly, @weekly) defining when the DAG runs.</li>
+        </ul>
+        <pre><code>>from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
+from datetime import datetime, timedelta
+
+def extract_data():
+    import pandas as pd
+    df = pd.read_csv('s3://my-bucket/raw/sales_2026.csv')
+    df.to_parquet('/tmp/raw_sales.parquet')
+    print(f"Extracted {len(df)} rows")
+
+def transform_data():
+    import pandas as pd
+    df = pd.read_parquet('/tmp/raw_sales.parquet')
+    df['revenue'] = df['quantity'] * df['unit_price']
+    df['month'] = pd.to_datetime(df['date']).dt.to_period('M')
+    monthly = df.groupby('month')['revenue'].sum().reset_index()
+    monthly.to_parquet('/tmp/monthly_revenue.parquet')
+
+with DAG(
+    dag_id='sales_pipeline',
+    start_date=datetime(2026, 1, 1),
+    schedule='@daily',               # runs every day at midnight
+    catchup=False,
+    default_args={'retries': 2, 'retry_delay': timedelta(minutes=5)}
+) as dag:
+
+    extract = PythonOperator(task_id='extract', python_callable=extract_data)
+    transform = PythonOperator(task_id='transform', python_callable=transform_data)
+    load = BashOperator(task_id='load', bash_command='python /scripts/load_to_db.py')
+
+    extract >> transform >> load   # defines execution order</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Data Storage — Lake vs Warehouse vs Lakehouse</h4>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>Data Lake</strong>
+            <p>Raw storage for all data types — structured, semi-structured, unstructured. Store now, schema later ("schema-on-read"). Cheap storage (S3, GCS, ADLS). Great for ML training data and archiving. Risk: becomes a "data swamp" without governance.</p>
+          </div>
+          <div class="info-card">
+            <strong>Data Warehouse</strong>
+            <p>Optimized for analytical SQL queries on structured data. Schema-on-write — data modeled before storage. Fast queries, reliable. Examples: Snowflake, BigQuery, Redshift. Expensive for large raw data storage.</p>
+          </div>
+          <div class="info-card">
+            <strong>Data Lakehouse</strong>
+            <p>Combines lake (cheap raw storage) with warehouse (query performance + ACID transactions). Built on open table formats: Delta Lake (Databricks), Apache Iceberg, Apache Hudi. Best of both worlds — the modern enterprise choice.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>PySpark Basics</h4>
+        <p>Apache Spark is the go-to engine for processing data at scale — think terabytes or petabytes that won't fit in pandas. PySpark is the Python API for Spark.</p>
+        <pre><code>>from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+# Create Spark session
+spark = SparkSession.builder \
+    .appName("SalesAnalysis") \
+    .master("local[*]") \
+    .getOrCreate()
+
+# Read data (Spark DataFrame — NOT pandas)
+df = spark.read.csv('sales.csv', header=True, inferSchema=True)
+df.printSchema()
+df.show(5)
+
+# Transformations (lazy — not executed yet)
+result = (df
+    .filter(F.col('amount') > 100)
+    .groupBy('region', 'month')
+    .agg(F.sum('amount').alias('total'), F.count('*').alias('orders'))
+    .orderBy('total', ascending=False))
+
+# Action — triggers execution
+result.show()
+
+# Save as Parquet (columnar format — 10x faster queries than CSV)
+result.write.parquet('output/regional_summary.parquet', mode='overwrite')</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Cloud Data Tools Overview</h4>
+        <table class="ref-table">
+          <thead><tr><th>Tool</th><th>Provider</th><th>Purpose</th><th>Key Feature</th></tr></thead>
+          <tbody>
+            <tr><td>S3 + Athena</td><td>AWS</td><td>Query S3 files with SQL, no servers</td><td>Pay per query, serverless</td></tr>
+            <tr><td>BigQuery</td><td>GCP</td><td>Serverless, columnar data warehouse</td><td>Free 1TB/month, incredible speed</td></tr>
+            <tr><td>Snowflake</td><td>Multi-cloud</td><td>Cloud data warehouse, SQL analytics</td><td>Separates compute from storage, auto-scale</td></tr>
+            <tr><td>Databricks</td><td>Multi-cloud</td><td>Unified analytics platform (Spark + notebooks)</td><td>Delta Lake, MLflow, collaborative notebooks</td></tr>
+            <tr><td>dbt</td><td>Open source / Cloud</td><td>SQL transformation layer in your warehouse</td><td>Version control your SQL transformations</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 12 -->
+  <div class="week-block" id="w12">
+    <div class="week-header" onclick="toggleWeek('w12')">
+      <div class="week-num wn-adv">W12</div>
+      <h3>Business Intelligence &amp; Dashboards</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <div class="concept-section">
+        <h4>BI Tools Comparison</h4>
+        <table class="ref-table">
+          <thead><tr><th>Tool</th><th>Type</th><th>Best For</th><th>Skill Level</th></tr></thead>
+          <tbody>
+            <tr><td>Power BI</td><td>Commercial (Microsoft)</td><td>Enterprise, Excel users, Microsoft shops</td><td>Beginner–Intermediate</td></tr>
+            <tr><td>Tableau</td><td>Commercial (Salesforce)</td><td>Beautiful interactive dashboards, data storytelling</td><td>Intermediate</td></tr>
+            <tr><td>Metabase</td><td>Open source / Cloud</td><td>Self-hosted, team SQL dashboards, quick setup</td><td>Beginner</td></tr>
+            <tr><td>Apache Superset</td><td>Open source</td><td>Large-scale enterprise, Airbnb/Lyft style</td><td>Intermediate–Advanced</td></tr>
+            <tr><td>Looker Studio</td><td>Free (Google)</td><td>Google Workspace shops, quick reports</td><td>Beginner</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-section">
+        <h4>Dashboard Design Principles</h4>
+        <ul class="content-list">
+          <li><strong>One primary metric per chart</strong> — Each visualization should answer exactly one question. If you're trying to show three things, make three charts.</li>
+          <li><strong>Clear titles are answers, not labels</strong> — Instead of "Monthly Sales," write "Sales grew 34% YoY in Q2 2026."</li>
+          <li><strong>Color for meaning only</strong> — Don't use 10 colors just to look colorful. Use color to highlight: red for alerts, green for good, blue/gray for neutral.</li>
+          <li><strong>Show context</strong> — A number alone means nothing. Show it vs last period, vs target, vs industry benchmark.</li>
+          <li><strong>Mobile-first layout</strong> — Most executives view dashboards on phones. Test your layout at 375px width.</li>
+          <li><strong>Reduce ink-to-data ratio</strong> — Remove gridlines, 3D effects, and decorative borders that don't add information. Every pixel should earn its place.</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h4>Key Business KPIs with SQL</h4>
+        <pre><code>>-- DAU / MAU — Daily / Monthly Active Users
+SELECT
+    DATE(event_time) as date,
+    COUNT(DISTINCT user_id) as DAU
+FROM events
+GROUP BY DATE(event_time);
+
+-- Churn Rate = users who didn't return this month / users from last month
+WITH last_month AS (SELECT DISTINCT user_id FROM events WHERE month = '2026-05'),
+     this_month AS (SELECT DISTINCT user_id FROM events WHERE month = '2026-06')
+SELECT
+    COUNT(lm.user_id) as last_month_users,
+    COUNT(tm.user_id) as retained,
+    1.0 - COUNT(tm.user_id) * 1.0 / COUNT(lm.user_id) as churn_rate
+FROM last_month lm
+LEFT JOIN this_month tm ON lm.user_id = tm.user_id;
+
+-- LTV (Lifetime Value) — how much revenue a customer generates on average
+SELECT AVG(customer_revenue) as avg_ltv
+FROM (
+    SELECT customer_id, SUM(amount) as customer_revenue
+    FROM orders
+    GROUP BY customer_id
+) t;
+
+-- NPS proxy from survey scores
+SELECT
+    SUM(CASE WHEN score >= 9 THEN 1 ELSE 0 END) * 100.0 / COUNT(*) -
+    SUM(CASE WHEN score <= 6 THEN 1 ELSE 0 END) * 100.0 / COUNT(*) as nps
+FROM survey_responses;</code></pre>
+      </div>
+
+      <div class="concept-section">
+        <h4>Storytelling with Data — Pyramid Principle</h4>
+        <p>The Barbara Minto Pyramid Principle is the gold standard for structuring data presentations. Most data scientists make the mistake of telling the story chronologically (how they discovered it). Instead, lead with the conclusion.</p>
+        <div class="workflow-steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Governing Thought (top of pyramid)</strong> — Start with your single key insight: "Churning customers have 3x fewer support interactions in their first month."</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Supporting Arguments (middle)</strong> — Three points that prove your governing thought. Each backed by data.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Evidence (base)</strong> — Charts, tables, and statistics supporting each argument. This is where your visualizations live.</div></div>
+        </div>
+      </div>
+
+      <div class="concept-section">
+        <h4>A/B Testing — Making Data-Driven Decisions</h4>
+        <p>A/B testing (or split testing) is the scientific way to measure the effect of a change. One group (control) gets the current version; another (treatment) gets the new version.</p>
+        <pre><code>>import numpy as np
+from scipy import stats
+
+# Scenario: New onboarding flow (B) vs old onboarding (A)
+# Metric: Day-7 retention rate
+
+# Control group (A): 5000 users
+n_a = 5000
+conversions_a = 1100    # 22% retention
+
+# Treatment group (B): 5000 users
+n_b = 5000
+conversions_b = 1250    # 25% retention
+
+rate_a = conversions_a / n_a
+rate_b = conversions_b / n_b
+print(f"Control rate:   {rate_a:.1%}")
+print(f"Treatment rate: {rate_b:.1%}")
+print(f"Lift: {(rate_b - rate_a) / rate_a:.1%}")
+
+# Two-proportion z-test
+from statsmodels.stats.proportion import proportions_ztest
+counts = np.array([conversions_b, conversions_a])
+nobs   = np.array([n_b, n_a])
+stat, p_value = proportions_ztest(counts, nobs)
+
+print(f"\np-value: {p_value:.4f}")
+if p_value < 0.05:
+    print("SIGNIFICANT — Roll out new onboarding!")
+else:
+    print("Not significant — Need more data or the change doesn't work.")
+
+# Sample size calculation — how many users do we need?
+from statsmodels.stats.power import NormalIndPower
+analysis = NormalIndPower()
+sample_size = analysis.solve_power(effect_size=0.1, alpha=0.05, power=0.8)
+print(f"\nRequired sample size per group: {int(sample_size)}")</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="week-nav">
+    <a href="concept_notes_intermediate.html" class="btn-secondary">← Intermediate Notes</a>
+    <a href="lab_guide_advanced.html" class="btn-primary">🔬 Go to Advanced Labs →</a>
+    <a href="project_briefs.html" class="btn-secondary">📋 View Projects →</a>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Data Science &amp; Analytics &nbsp;·&nbsp; Concept Notes — Advanced &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

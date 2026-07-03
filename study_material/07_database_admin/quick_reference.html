@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Reference | Database Administration | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+@media print {
+  .sm-header, .sm-domain-bar, .sm-footer, .print-btn { display: none !important; }
+  body { font-size: 11px; }
+  .sm-main { padding: 0; }
+  .ref-section { page-break-inside: avoid; margin-bottom: 16px; }
+  pre, code { font-size: 9px; }
+  .ref-table { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🗄️ Database Administration</div>
+      <div class="bc-file">⚡ Quick Reference</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 7 OF 9 &nbsp;·&nbsp; DATABASE ADMINISTRATION &nbsp;·&nbsp; QUICK REFERENCE
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes</a>
+    <a href="lab_guide_beginner.html">Lab Guides</a>
+    <a href="career_roadmap.html">Career Roadmap</a>
+    <a href="quizzes.html">Quizzes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero adv">
+    <div class="lh-icon">⚡</div>
+    <div class="lh-text">
+      <h2>Quick Reference — Database Administration</h2>
+      <p>SQL patterns, JOIN examples, window functions, transactions, index cheatsheet, MySQL vs PostgreSQL comparison, and MongoDB/Redis snippets — all in one printable page.</p>
+    </div>
+    <div class="lh-pills">
+      <button class="print-btn" onclick="window.print()">🖨️ Print Reference</button>
+    </div>
+  </div>
+
+  <!-- Section 1: SQL Fundamentals -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">1. SQL Fundamentals</h3>
+    <pre><code>-- DDL
+CREATE DATABASE mydb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE mydb;
+
+CREATE TABLE users (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  name       VARCHAR(100) NOT NULL,
+  email      VARCHAR(150) NOT NULL UNIQUE,
+  role       ENUM('admin','user','guest') DEFAULT 'user',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE users ADD COLUMN last_login DATETIME;
+CREATE INDEX idx_email ON users(email);
+DROP TABLE IF EXISTS temp_users;
+
+-- DML
+INSERT INTO users (name, email) VALUES ('Priya', 'priya@example.com');
+INSERT INTO users (name, email) VALUES ('Rahul','r@e.com'),('Ankit','a@e.com');
+
+SELECT id, name, email
+FROM users
+WHERE role = 'user'
+ORDER BY created_at DESC
+LIMIT 10 OFFSET 20;
+
+UPDATE users SET role = 'admin' WHERE email = 'priya@example.com';
+DELETE FROM users WHERE last_login &lt; DATE_SUB(NOW(), INTERVAL 1 YEAR);
+
+-- Aggregate
+SELECT city, COUNT(*) AS cnt, AVG(age) AS avg_age
+FROM users
+GROUP BY city
+HAVING cnt > 5
+ORDER BY cnt DESC;</code></pre>
+  </section>
+
+  <!-- Section 2: JOIN Patterns -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">2. JOIN Patterns</h3>
+    <pre><code>-- INNER JOIN — matching rows only
+SELECT o.id, c.name, o.total
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+WHERE o.status = 'delivered';
+
+-- LEFT JOIN — all customers even with 0 orders
+SELECT c.name, COUNT(o.id) AS order_count
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name;
+
+-- Find customers with NO orders
+SELECT c.name FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+WHERE o.id IS NULL;
+
+-- Multi-table JOIN
+SELECT c.name, p.name AS product, oi.quantity, oi.unit_price
+FROM customers c
+JOIN orders o      ON c.id          = o.customer_id
+JOIN order_items oi ON o.id          = oi.order_id
+JOIN products p    ON oi.product_id  = p.id
+WHERE o.created_at >= '2024-01-01';
+
+-- Self JOIN (employee → manager)
+SELECT e.name AS employee, m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;</code></pre>
+  </section>
+
+  <!-- Section 3: Window Functions -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">3. Window Functions (MySQL 8+ / PostgreSQL)</h3>
+    <pre><code>-- ROW_NUMBER, RANK, DENSE_RANK
+SELECT name, salary,
+  ROW_NUMBER()  OVER (PARTITION BY dept ORDER BY salary DESC) AS row_num,
+  RANK()        OVER (PARTITION BY dept ORDER BY salary DESC) AS rnk,
+  DENSE_RANK()  OVER (PARTITION BY dept ORDER BY salary DESC) AS dense_rnk
+FROM employees;
+-- ROW_NUMBER: 1,2,3,4    — always unique
+-- RANK:       1,2,2,4    — gap after tie
+-- DENSE_RANK: 1,2,2,3    — no gap after tie
+
+-- Running total and previous value
+SELECT date, amount,
+  SUM(amount) OVER (ORDER BY date ROWS UNBOUNDED PRECEDING) AS running_total,
+  LAG(amount, 1, 0)  OVER (ORDER BY date) AS prev_amount,
+  LEAD(amount, 1, 0) OVER (ORDER BY date) AS next_amount
+FROM daily_sales;
+
+-- NTILE — quartiles
+SELECT name, score,
+  NTILE(4) OVER (ORDER BY score DESC) AS quartile
+FROM students;</code></pre>
+  </section>
+
+  <!-- Section 4: Transactions -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">4. Transactions</h3>
+    <pre><code>START TRANSACTION;
+  -- Step 1: deduct stock
+  UPDATE products SET stock = stock - 2 WHERE id = 5;
+  -- Step 2: create order
+  INSERT INTO orders (customer_id, total) VALUES (10, 499.98);
+  -- Step 3: order item
+  INSERT INTO order_items (order_id, product_id, quantity)
+  VALUES (LAST_INSERT_ID(), 5, 2);
+COMMIT;
+-- On any error: ROLLBACK;
+
+-- Savepoint (partial rollback)
+START TRANSACTION;
+  INSERT INTO t VALUES (1);
+  SAVEPOINT sp1;
+  INSERT INTO t VALUES (2);
+  ROLLBACK TO sp1;   -- (2) reverted; (1) remains
+COMMIT;
+
+-- Explicit locking
+SELECT * FROM products WHERE id = 5 FOR UPDATE;  -- pessimistic lock</code></pre>
+  </section>
+
+  <!-- Section 5: Indexes & EXPLAIN -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">5. Indexes &amp; EXPLAIN</h3>
+    <pre><code>-- Create indexes
+CREATE INDEX idx_status           ON orders(status);
+CREATE INDEX idx_composite        ON order_items(order_id, product_id);
+CREATE UNIQUE INDEX idx_email     ON users(email);
+DROP INDEX idx_status ON orders;
+SHOW INDEXES FROM orders;
+
+-- Read EXPLAIN output
+EXPLAIN SELECT * FROM orders WHERE customer_id = 42;
+-- type=ALL  → full scan (bad for large tables)
+-- type=ref  → index lookup (good)
+-- type=const → primary key lookup (best)
+-- key=NULL  → no index used
+-- rows=10000 → estimated rows scanned (lower = faster)
+-- Extra: Using filesort → ORDER BY without index (add index)
+-- Extra: Using index   → covering index (fastest)
+
+-- Avoid these anti-patterns:
+-- ✗ WHERE YEAR(created_at) = 2024     (function on indexed col)
+-- ✓ WHERE created_at BETWEEN '2024-01-01' AND '2024-12-31'
+-- ✗ WHERE email LIKE '%gmail.com'     (leading wildcard)
+-- ✓ WHERE email LIKE 'priya%'         (trailing wildcard uses index)</code></pre>
+  </section>
+
+  <!-- Section 6: MySQL vs PostgreSQL -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">6. MySQL vs PostgreSQL Quick Comparison</h3>
+    <table class="ref-table">
+      <thead>
+        <tr><th>Feature</th><th>MySQL</th><th>PostgreSQL</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Auto increment</td><td>AUTO_INCREMENT</td><td>SERIAL or GENERATED ALWAYS AS IDENTITY</td></tr>
+        <tr><td>String concatenation</td><td>CONCAT(a, b)</td><td>a || b or CONCAT(a, b)</td></tr>
+        <tr><td>Current timestamp</td><td>NOW(), CURDATE()</td><td>NOW(), CURRENT_DATE</td></tr>
+        <tr><td>Case-insensitive compare</td><td>Default for VARCHAR</td><td>Use ILIKE or citext extension</td></tr>
+        <tr><td>JSON support</td><td>JSON type, limited operators</td><td>JSONB with GIN index, rich operators</td></tr>
+        <tr><td>Full-text search</td><td>FULLTEXT index</td><td>tsvector + GIN index</td></tr>
+        <tr><td>Window functions</td><td>MySQL 8.0+</td><td>Full support since v8.4</td></tr>
+        <tr><td>Arrays</td><td>Not native (use JSON)</td><td>Native ARRAY type</td></tr>
+        <tr><td>Upsert</td><td>INSERT ... ON DUPLICATE KEY UPDATE</td><td>INSERT ... ON CONFLICT DO UPDATE</td></tr>
+        <tr><td>EXPLAIN</td><td>EXPLAIN (shows estimates)</td><td>EXPLAIN ANALYZE (with actual times)</td></tr>
+        <tr><td>Default port</td><td>3306</td><td>5432</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 7: MongoDB + Redis -->
+  <section class="sm-sec ref-section">
+    <h3 class="sec-title">7. MongoDB + Redis Quick Reference</h3>
+    <pre><code>// MongoDB (mongoose)
+const Post = mongoose.model('Post', schema);
+
+// Query: posts with tag 'node' and views > 100
+await Post.find({ tags: 'node', views: { $gt: 100 } }).sort('-views').limit(5);
+
+// Aggregation: top 3 authors by total views
+await Post.aggregate([
+  { $group: { _id: '$author', total: { $sum: '$views' } } },
+  { $sort: { total: -1 } },
+  { $limit: 3 }
+]);
+
+// Update: increment views, push to array
+await Post.updateOne({ _id: id }, {
+  $inc: { views: 1 },
+  $push: { comments: { user, text, createdAt: new Date() } }
+});
+
+// Delete: older than 2020
+await Post.deleteMany({ createdAt: { $lt: new Date('2020-01-01') } });
+
+// ────────────────────────────────────────────────────────
+// Redis (ioredis)
+const redis = new Redis();
+
+// String with TTL
+await redis.set('key', 'value', 'EX', 300);       // 5-min TTL
+await redis.setex('key', 300, 'value');            // equivalent
+const val = await redis.get('key');
+
+// Hash (object storage)
+await redis.hset('user:42', 'name', 'Priya', 'role', 'admin');
+const user = await redis.hgetall('user:42');
+await redis.expire('user:42', 3600);               // 1-hour TTL
+
+// Sorted set (leaderboard)
+await redis.zadd('leaderboard', 1500, 'alice', 1200, 'bob');
+const top5 = await redis.zrevrange('leaderboard', 0, 4, 'WITHSCORES');
+await redis.zincrby('leaderboard', 100, 'bob');    // add 100 to bob's score
+
+// Rate limiting
+await redis.incr(`requests:${ip}:minute`);         // atomic counter
+await redis.expire(`requests:${ip}:minute`, 60);   // 1-min window
+
+// Cache-aside pattern
+const cached = await redis.get(cacheKey);
+if (cached) return JSON.parse(cached);
+const data = await db.query(...);
+await redis.setex(cacheKey, 300, JSON.stringify(data));</code></pre>
+  </section>
+
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Database Administration &nbsp;·&nbsp; Quick Reference &nbsp;·&nbsp; Batch 2026–27</footer>
+</body>
+</html>

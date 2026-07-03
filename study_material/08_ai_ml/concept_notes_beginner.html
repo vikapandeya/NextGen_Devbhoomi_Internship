@@ -1,0 +1,598 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; Machine Learning — Concept Notes (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.timeline{margin:12px 0;}
+.tl-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.07);}
+.tl-year{font-weight:700;min-width:48px;color:var(--clr-accent,#2563eb);}
+.workflow-steps{display:grid;gap:8px;margin:12px 0;}
+.wf-step{display:flex;gap:12px;background:rgba(0,0,0,.03);border-radius:8px;padding:10px 14px;align-items:flex-start;}
+.wf-num{background:var(--clr-accent,#2563eb);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.concept-box{background:rgba(0,0,0,.04);border-left:4px solid var(--clr-accent,#2563eb);border-radius:0 8px 8px 0;padding:14px 16px;margin:12px 0;}
+.bottom-nav{display:flex;justify-content:space-between;padding:24px 0 8px;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;}
+.btn-primary{background:var(--clr-accent,#2563eb);color:#fff;}
+.btn-secondary{background:rgba(0,0,0,.08);color:inherit;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🤖 AI &amp; Machine Learning</div>
+      <div class="bc-file">📖 Concept Notes — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 8 OF 9 &nbsp;·&nbsp; AI &amp; MACHINE LEARNING &nbsp;·&nbsp; CONCEPT NOTES (BEGINNER)
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">🔬 Lab Guide (Beginner)</a>
+    <a href="concept_notes_intermediate.html">📖 Intermediate Notes</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero beg">
+    <div class="hero-icon">📖</div>
+    <div class="hero-text">
+      <h2>Concept Notes — Beginner Level</h2>
+      <p>Your foundation in AI concepts, Python for ML, and understanding machine intelligence.</p>
+      <div class="hero-pills">
+        <span class="pill">AI Basics</span>
+        <span class="pill">Python ML</span>
+        <span class="pill">Data Prep</span>
+        <span class="pill">First Models</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- W1 -->
+  <div class="week-block" id="w1">
+    <div class="week-header" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <h3>Week 1 — What is Artificial Intelligence?</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>AI vs ML vs Deep Learning — The Hierarchy</h4>
+      <p><strong>Artificial Intelligence (AI)</strong> is the broadest field — any technique enabling machines to mimic human-like intelligence. <strong>Machine Learning (ML)</strong> is a subset of AI where machines learn from data without being explicitly programmed. <strong>Deep Learning (DL)</strong> is a subset of ML using multi-layered neural networks inspired by the human brain.</p>
+      <ul>
+        <li><strong>AI example:</strong> A rule-based chatbot that answers FAQs using if/else logic.</li>
+        <li><strong>ML example:</strong> A spam filter that learns from 10,000 emails to identify spam patterns on its own.</li>
+        <li><strong>DL example:</strong> GPT-4 generating human-quality text, trained on hundreds of billions of web pages.</li>
+      </ul>
+
+      <h4>Types of Machine Learning</h4>
+      <p><strong>1. Supervised Learning</strong> — The model learns from labeled examples (input → known output).</p>
+      <ul>
+        <li><em>Classification:</em> Predict a category. Examples: Email spam/not-spam, tumor benign/malignant, MNIST digit 0–9, credit card fraud yes/no.</li>
+        <li><em>Regression:</em> Predict a continuous number. Examples: House price, stock closing price, patient blood pressure, delivery time in minutes.</li>
+      </ul>
+      <p><strong>2. Unsupervised Learning</strong> — The model finds hidden patterns in unlabeled data.</p>
+      <ul>
+        <li><em>Clustering:</em> Group similar data points. Examples: Customer segmentation (VIP, occasional, churned), news topic grouping.</li>
+        <li><em>Dimensionality Reduction:</em> Compress data while preserving structure. Examples: PCA for visualization, autoencoders for image compression.</li>
+      </ul>
+      <p><strong>3. Reinforcement Learning (RL)</strong> — An agent learns by trial and error, receiving rewards for correct actions.</p>
+      <ul>
+        <li><em>Game AI:</em> AlphaGo defeated world Go champion by playing millions of self-games.</li>
+        <li><em>Robotics:</em> Robotic arm learns to pick objects without explicit programming.</li>
+        <li><em>Finance:</em> Trading bot that maximizes portfolio return while managing risk.</li>
+      </ul>
+
+      <h4>Real Applications in India</h4>
+      <ul>
+        <li><strong>Swiggy / Zomato:</strong> Recommendation systems suggest dishes based on your order history, time of day, and location. Collaborative filtering + content-based filtering.</li>
+        <li><strong>Netflix India:</strong> Content recommendations using matrix factorization and deep learning on viewing patterns of 200M+ subscribers.</li>
+        <li><strong>CIBIL Score:</strong> ML-based credit scoring analyses repayment history, credit utilization, loan types, and predicts default probability for lenders.</li>
+        <li><strong>Crop Disease Detection:</strong> Computer vision models trained on leaf images help farmers in UP and Maharashtra identify disease 3 days before visible symptoms appear.</li>
+        <li><strong>Voice Assistants:</strong> Siri/Alexa/Google use Automatic Speech Recognition (ASR) + NLP. India-specific models handle Hinglish and 22 official regional accents.</li>
+        <li><strong>DigiYatra:</strong> Face recognition at Indian airports uses Deep Learning for passenger identification, achieving 99.7% accuracy across 24 airports.</li>
+      </ul>
+
+      <h4>AI Timeline — Key Milestones</h4>
+      <div class="timeline">
+        <div class="tl-item"><span class="tl-year">1950</span><span>Alan Turing proposes the "Turing Test" — if a machine can converse indistinguishably from a human, it demonstrates intelligence.</span></div>
+        <div class="tl-item"><span class="tl-year">1957</span><span>Frank Rosenblatt's Perceptron — first trainable single-layer neural network. Could classify simple visual patterns.</span></div>
+        <div class="tl-item"><span class="tl-year">1980s</span><span>Expert Systems peak — rule-based AI (MYCIN for medical diagnosis). Brittle: couldn't handle cases outside its rules.</span></div>
+        <div class="tl-item"><span class="tl-year">1990s</span><span>Support Vector Machines (SVM) rise. Statistical learning theory dominates. Deep Blue defeats chess world champion Kasparov (1997).</span></div>
+        <div class="tl-item"><span class="tl-year">2012</span><span>AlexNet wins ImageNet competition with 15.3% error (vs. 26% for second place). Deep Learning revolution begins. GPUs enable training at scale.</span></div>
+        <div class="tl-item"><span class="tl-year">2016</span><span>AlphaGo defeats world Go champion Lee Sedol 4–1. RL + Monte Carlo Tree Search + Deep Learning. Go has more board positions than atoms in the observable universe.</span></div>
+        <div class="tl-item"><span class="tl-year">2017</span><span>"Attention Is All You Need" — Google proposes the Transformer architecture. Foundation of all modern Large Language Models.</span></div>
+        <div class="tl-item"><span class="tl-year">2022</span><span>ChatGPT launches, reaching 100M users in 2 months. Generative AI enters mainstream. DALL-E 2, Stable Diffusion for images.</span></div>
+        <div class="tl-item"><span class="tl-year">2024</span><span>Claude 3.5 Sonnet, Gemini 1.5, GPT-4o. Multimodal AI, 1M+ token context windows, real-time voice. AI agents can browse the web and write complete applications.</span></div>
+      </div>
+
+      <h4>Ethical Considerations in AI</h4>
+      <ul>
+        <li><strong>Algorithmic Bias:</strong> Facial recognition systems trained mostly on Western faces have higher error rates for dark-skinned women (MIT Media Lab study: 35% error vs. 1% for light-skinned men). Amazon scrapped a hiring AI that penalized resumes mentioning "women's chess club."</li>
+        <li><strong>Explainability (XAI):</strong> When a bank's AI rejects a loan, applicants legally deserve an explanation. Black-box models (deep neural nets) vs. interpretable models (decision trees, logistic regression with SHAP values).</li>
+        <li><strong>India's DPDP Act 2023:</strong> Digital Personal Data Protection Act mandates: explicit consent before data collection, right to data erasure, data fiduciaries must register, penalty up to ₹250 crore for breaches. Critical compliance requirement for AI products.</li>
+        <li><strong>Deepfakes:</strong> Synthetic media generated by GANs spreads misinformation. India witnessed deepfake videos of politicians during 2024 elections, prompting MEITY guidelines.</li>
+        <li><strong>Job Displacement:</strong> McKinsey estimates 12 million Indian workers may need to switch occupations by 2030. Reskilling in AI/ML is therefore a national priority.</li>
+      </ul>
+
+      <h4>Why Python for ML?</h4>
+      <p>Python has become the undisputed language of AI/ML due to its exceptional ecosystem:</p>
+      <ul>
+        <li><strong>NumPy:</strong> Fast array operations, linear algebra, broadcasting. The backbone of all ML libraries — everything runs on NumPy arrays under the hood.</li>
+        <li><strong>pandas:</strong> DataFrame operations for data manipulation, cleaning, grouping, and exploration. The Excel of Python data science.</li>
+        <li><strong>scikit-learn:</strong> 100+ ML algorithms with a consistent API (fit/predict/score), pipelines, preprocessing tools, and cross-validation.</li>
+        <li><strong>Matplotlib / Seaborn:</strong> Visualization — static charts, statistical plots, heatmaps. Essential for EDA and communicating results.</li>
+        <li><strong>Keras / TensorFlow:</strong> High-level deep learning API. Build, train, and deploy neural networks with 10 lines of code.</li>
+        <li><strong>PyTorch:</strong> Flexible deep learning preferred by researchers. Dynamic computation graph enables easier debugging.</li>
+        <li><strong>Hugging Face Transformers:</strong> 500,000+ pre-trained models for NLP, vision, audio — download and use in 5 minutes.</li>
+        <li><strong>Community:</strong> Stack Overflow, Kaggle, GitHub, YouTube — solutions to every problem exist, often within minutes of searching.</li>
+      </ul>
+
+    </div>
+  </div><!-- /W1 -->
+
+  <!-- W2 -->
+  <div class="week-block" id="w2">
+    <div class="week-header" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <h3>Week 2 — Python &amp; Google Colab Setup</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>Google Colab — Your Free ML Environment</h4>
+      <p>Google Colab provides free GPU/TPU compute, pre-installed ML libraries, and Google Drive integration — perfect for learning ML without any infrastructure cost.</p>
+      <ol>
+        <li>Open <strong>colab.research.google.com</strong> (sign in with Google account)</li>
+        <li>Click <strong>+ New Notebook</strong></li>
+        <li>Go to <strong>Runtime → Change runtime type → Hardware accelerator → T4 GPU → Save</strong></li>
+        <li>Verify GPU: Run <code>!nvidia-smi</code> — should show Tesla T4 with ~15GB VRAM</li>
+        <li>Mount Drive (optional): <code>from google.colab import drive; drive.mount('/content/drive')</code></li>
+      </ol>
+      <p><strong>Free limits:</strong> ~12 hours continuous runtime, 15GB RAM, 100GB disk, idle timeout after 90 minutes. <strong>Colab Pro</strong> (₹500/month) unlocks A100 GPU and longer sessions. For most course work, the free tier is sufficient.</p>
+
+      <h4>Essential Imports — Pre-installed, No pip Needed</h4>
+      <pre><code># Core scientific computing — all pre-installed in Colab
+import numpy as np              # Fast array operations
+import pandas as pd             # DataFrames
+import matplotlib.pyplot as plt # Plotting
+import seaborn as sns           # Statistical visualization
+
+# Machine Learning
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Style settings
+plt.style.use('seaborn-v0_8')
+sns.set_palette('Set2')
+print("All libraries loaded successfully!")</code></pre>
+
+      <h4>The ML Workflow — 8 Steps</h4>
+      <div class="workflow-steps">
+        <div class="wf-step"><span class="wf-num">1</span><div><strong>Problem Definition</strong> — Classification or regression? What is the success metric? What business decision does this enable?</div></div>
+        <div class="wf-step"><span class="wf-num">2</span><div><strong>Collect Data</strong> — Kaggle datasets, sklearn built-ins, web scraping, APIs, company databases, surveys, IoT sensors.</div></div>
+        <div class="wf-step"><span class="wf-num">3</span><div><strong>EDA (Exploratory Data Analysis)</strong> — Understand distributions, correlations, outliers, class imbalance, data types, and data quality.</div></div>
+        <div class="wf-step"><span class="wf-num">4</span><div><strong>Preprocessing</strong> — Handle missing values, encode categories, scale features, engineer new features, split train/test.</div></div>
+        <div class="wf-step"><span class="wf-num">5</span><div><strong>Train Model</strong> — Choose algorithm, fit on training set, monitor training loss.</div></div>
+        <div class="wf-step"><span class="wf-num">6</span><div><strong>Evaluate</strong> — Test set metrics, cross-validation, confusion matrix, interpret results in business terms.</div></div>
+        <div class="wf-step"><span class="wf-num">7</span><div><strong>Deploy</strong> — REST API (FastAPI/Flask), Streamlit app, cloud service (AWS SageMaker, GCP Vertex AI).</div></div>
+        <div class="wf-step"><span class="wf-num">8</span><div><strong>Monitor</strong> — Data drift detection, performance degradation alerts, scheduled retraining when model degrades.</div></div>
+      </div>
+
+      <h4>Loading Datasets</h4>
+      <pre><code># sklearn built-in datasets — clean, small, perfect for learning
+from sklearn.datasets import (
+    load_iris,                # 150 samples, 4 features, 3 flower species
+    load_wine,                # 178 samples, 13 features, 3 wine classes
+    load_breast_cancer,       # 569 samples, 30 features, binary classification
+    fetch_california_housing  # 20,640 samples, house prices regression
+)
+
+iris = load_iris()
+X, y = iris.data, iris.target
+feature_names = iris.feature_names
+print(f"Shape: {X.shape}")            # (150, 4)
+print(f"Classes: {iris.target_names}")  # ['setosa' 'versicolor' 'virginica']
+
+# Convert to DataFrame for easier manipulation
+df = pd.DataFrame(X, columns=feature_names)
+df['species'] = y
+print(df.head())
+print(df.describe())
+
+# seaborn datasets — real-world with some messiness
+import seaborn as sns
+titanic  = sns.load_dataset('titanic')   # (891, 15) — has missing values
+tips     = sns.load_dataset('tips')       # (244, 7) — restaurant tips
+diamonds = sns.load_dataset('diamonds')  # (53940, 10) — diamond prices
+print(titanic.shape, titanic.isnull().sum())</code></pre>
+
+      <h4>Train-Test Split — The Golden Rule</h4>
+      <pre><code>>from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,      # 20% for testing — common range: 0.1 to 0.3
+    random_state=42,    # Reproducibility — always set a seed!
+    stratify=y          # CRITICAL for classification: preserves class ratios
+)
+
+print(f"Training samples: {X_train.shape[0]}")  # 120
+print(f"Test samples:     {X_test.shape[0]}")   # 30
+
+# Why stratify matters (example with 95/5 imbalanced classes):
+# WITHOUT stratify: test set might randomly have 0 fraud cases → fake 100% accuracy
+# WITH stratify=y:  test set always has ~5% fraud → honest, representative evaluation</code></pre>
+
+      <h4>Feature Matrix X vs Target y</h4>
+      <pre><code>># X (Feature Matrix): 2D array, shape = (n_samples, n_features)
+print(f"X shape: {X.shape}")      # (150, 4) — 150 samples, 4 features each
+print(f"X dtype: {X.dtype}")      # float64
+
+# y (Target Vector): 1D array, shape = (n_samples,)
+print(f"y shape: {y.shape}")      # (150,)
+print(f"y values: {np.unique(y)}")  # [0 1 2] for iris species
+
+# Always sanity-check before training:
+assert X.shape[0] == y.shape[0], "Row count mismatch between X and y!"
+print("Missing values in X:", np.isnan(X).sum())
+print("Missing values in y:", np.isnan(y.astype(float)).sum())</code></pre>
+
+    </div>
+  </div><!-- /W2 -->
+
+  <!-- W3 -->
+  <div class="week-block" id="w3">
+    <div class="week-header" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <h3>Week 3 — Data Preprocessing</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>"Garbage In, Garbage Out"</h4>
+      <p>Studies consistently show data scientists spend 60–80% of their time on data cleaning and preparation. A clean, well-engineered dataset with simple Logistic Regression will consistently outperform dirty data fed into a deep neural network. Real-world data is always messy: missing values, inconsistent formats, outliers, duplicate rows, wrong data types, and mislabeled samples.</p>
+
+      <h4>Handling Missing Values</h4>
+      <pre><code>>import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+
+df = pd.DataFrame({
+    'age':    [25, np.nan, 35, np.nan, 45],
+    'salary': [50000, 60000, np.nan, 70000, 80000],
+    'city':   ['Mumbai', np.nan, 'Delhi', 'Pune', np.nan]
+})
+
+# Step 1: Audit all missing values
+print(df.isnull().sum())              # Count per column
+print(df.isnull().mean() * 100)       # Percentage missing
+
+# Step 2: Apply appropriate strategy per column
+
+# Numerical — use median (robust to outliers) or mean
+imputer_num = SimpleImputer(strategy='median')
+df[['age', 'salary']] = imputer_num.fit_transform(df[['age', 'salary']])
+
+# Categorical — use most_frequent (mode)
+imputer_cat = SimpleImputer(strategy='most_frequent')
+df[['city']] = imputer_cat.fit_transform(df[['city']])
+
+# Or fill with a constant sentinel value
+df['city'].fillna('Unknown', inplace=True)
+
+# When to DROP:
+# Column has > 50% missing — consider dropping the entire column
+# Row is missing the TARGET variable — always drop that row
+df.dropna(subset=['survived'], inplace=True)  # Drop rows with no label</code></pre>
+
+      <h4>Categorical Encoding</h4>
+      <pre><code>>from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+
+df = pd.DataFrame({
+    'size':  ['S', 'M', 'L', 'XL', 'M', 'S'],     # Ordinal: has meaningful order
+    'color': ['Red', 'Blue', 'Green', 'Red', 'Blue', 'Green']  # Nominal: no order
+})
+
+# ORDINAL: use manual mapping (safer than LabelEncoder which assigns arbitrary order)
+size_order = {'S': 0, 'M': 1, 'L': 2, 'XL': 3}
+df['size_enc'] = df['size'].map(size_order)
+
+# NOMINAL: use One-Hot Encoding — create one binary column per category
+# drop_first=True removes one redundant column (avoids dummy variable trap)
+color_dummies = pd.get_dummies(df['color'], prefix='color', drop_first=True)
+df = pd.concat([df, color_dummies], axis=1)
+# Red: [0,0], Blue: [1,0], Green: [0,1] — only 2 columns needed for 3 colors
+print(df)
+
+# HIGH CARDINALITY (e.g., 500 city names):
+# Target Encoding: replace category with mean of target variable in that category
+# Or use sklearn's TargetEncoder (v1.3+) inside a Pipeline</code></pre>
+
+      <h4>Feature Scaling</h4>
+      <pre><code>>from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+# Problem: age (18–80) vs salary (10,000–2,000,000)
+# Without scaling, salary dominates distance-based algorithms!
+
+X_train_raw = [[25, 50000], [30, 80000], [45, 150000], [22, 30000]]
+X_test_raw  = [[35, 95000], [50, 200000]]
+
+# StandardScaler: z = (x - mean) / std  → mean=0, std=1
+# Use for: LogisticRegression, SVM, PCA, Neural Networks, KNN, KMeans
+scaler_std = StandardScaler()
+X_train_std = scaler_std.fit_transform(X_train_raw)  # fit AND transform
+X_test_std  = scaler_std.transform(X_test_raw)        # transform ONLY (no fit!)
+print("Means after scaling:", X_train_std.mean(axis=0))  # Should be ~[0, 0]
+
+# MinMaxScaler: x_norm = (x - min) / (max - min)  → values in [0, 1]
+# Use for: neural network inputs, image pixels (255 → 1.0)
+# WARNING: sensitive to outliers!
+scaler_mm = MinMaxScaler()
+X_train_mm = scaler_mm.fit_transform(X_train_raw)
+
+# KEY RULE: NEVER fit on test data — causes data leakage!
+# Tree models (DecisionTree, RandomForest, XGBoost) do NOT need scaling.
+# They split based on thresholds, not distances.</code></pre>
+
+      <h4>Feature Engineering</h4>
+      <pre><code>>import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({
+    'age':        [25, 45, 32, 67, 19],
+    'timestamp':  pd.to_datetime(['2024-01-15 08:30', '2024-03-22 14:00',
+                                  '2024-07-04 20:15', '2024-11-11 12:00',
+                                  '2024-12-25 09:45']),
+    'first_name': ['Rahul', 'Priya', 'Amit', 'Sunita', 'Rohan'],
+    'last_name':  ['Sharma', 'Singh', 'Kumar', 'Devi', 'Patel'],
+    'salary':     [35000, 120000, 75000, 250000, 22000]
+})
+
+# Bin continuous age into meaningful groups
+df['age_group'] = pd.cut(df['age'],
+    bins=[0, 18, 35, 60, 100],
+    labels=['teen', 'young_adult', 'middle_aged', 'senior']
+)
+
+# Extract temporal features from datetime
+df['day_of_week'] = df['timestamp'].dt.dayofweek    # 0=Monday, 6=Sunday
+df['hour']        = df['timestamp'].dt.hour
+df['month']       = df['timestamp'].dt.month
+df['is_weekend']  = (df['timestamp'].dt.dayofweek >= 5).astype(int)
+df['is_morning']  = (df['timestamp'].dt.hour < 12).astype(int)
+
+# Combine text features
+df['full_name']   = df['first_name'] + ' ' + df['last_name']
+df['name_length'] = df['full_name'].str.len()
+
+# Log transform for right-skewed distributions (salary, house price, population)
+df['log_salary'] = np.log1p(df['salary'])   # log1p = log(1+x), safe for 0 values
+
+print(df[['age', 'age_group', 'day_of_week', 'hour', 'is_weekend', 'log_salary']])</code></pre>
+
+      <h4>sklearn Pipeline — Preventing Data Leakage</h4>
+      <pre><code>>from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
+
+# BAD (data leakage): scaler sees test data statistics during fit
+# scaler.fit_transform(X_all)  ← leaks!
+# X_train, X_test = split(X_all_scaled)  ← too late
+
+# GOOD: Pipeline ensures each fold only fits on its training portion
+pipe = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),  # Step 1: fill missing
+    ('scaler',  StandardScaler()),                   # Step 2: normalize
+    ('model',   LogisticRegression(max_iter=1000))  # Step 3: train
+])
+
+# Cross-validation safely: each fold fits imputer+scaler on train only
+scores = cross_val_score(pipe, X, y, cv=5, scoring='accuracy')
+print(f"CV Accuracy: {scores.mean():.3f} ± {scores.std():.3f}")
+
+# Deploy: save entire pipeline as one artifact
+import joblib
+joblib.dump(pipe, 'model_pipeline.pkl')   # Save
+pipe_loaded = joblib.load('model_pipeline.pkl')  # Load in production
+pred = pipe_loaded.predict([[0.5, 2.3, 1.4, 0.2]])  # Raw input → prediction</code></pre>
+
+      <h4>Handling Imbalanced Classes</h4>
+      <pre><code>>from sklearn.linear_model import LogisticRegression
+import pandas as pd
+
+# Problem: 95% class 0, 5% class 1 (fraud detection)
+# Naive model: always predict class 0 → 95% accuracy but catches 0% of fraud!
+
+# Solution 1: class_weight='balanced' — auto-increases penalty for minority class
+model = LogisticRegression(class_weight='balanced', max_iter=1000)
+
+# Solution 2: Manual class weights
+model = LogisticRegression(class_weight={0: 1, 1: 20}, max_iter=1000)
+
+# Solution 3: SMOTE — generate synthetic minority samples
+# pip install imbalanced-learn
+from imblearn.over_sampling import SMOTE
+sm = SMOTE(random_state=42)
+X_resampled, y_resampled = sm.fit_resample(X_train, y_train)
+print("Before SMOTE:", pd.Series(y_train).value_counts().to_dict())
+print("After SMOTE: ", pd.Series(y_resampled).value_counts().to_dict())
+
+# Solution 4: Use correct metrics — NOT accuracy!
+# F1-score, ROC-AUC, Precision-Recall AUC for imbalanced data</code></pre>
+
+    </div>
+  </div><!-- /W3 -->
+
+  <!-- W4 -->
+  <div class="week-block" id="w4">
+    <div class="week-header" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <h3>Week 4 — First ML Models</h3>
+      <div class="week-toggle">▼</div>
+    </div>
+    <div class="week-body">
+
+      <h4>Linear Regression — Predicting Numbers</h4>
+      <p>Linear Regression models the relationship between features and a continuous output as:</p>
+      <p style="font-size:1.1em;padding:8px 0;"><strong>y = w₁x₁ + w₂x₂ + ... + wₙxₙ + b</strong></p>
+      <p>Training minimizes <strong>Mean Squared Error (MSE) = (1/n) Σ(yᵢ - ŷᵢ)²</strong> using gradient descent — iteratively adjust weights in the direction that reduces error most.</p>
+      <pre><code>>from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import numpy as np
+
+# Example: predict salary from years of experience
+X = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]
+y = [35000,40000,45000,50000,55000,65000,70000,75000,85000,90000]
+
+model = LinearRegression()
+model.fit(X, y)
+
+print(f"Weight (slope):  {model.coef_[0]:.0f}")    # ~₹6,055 raise per year
+print(f"Intercept (bias):{model.intercept_:.0f}")   # Base salary
+
+y_pred = model.predict([[11],[12]])
+print(f"11 yrs experience: ₹{y_pred[0]:,.0f}")
+print(f"12 yrs experience: ₹{y_pred[1]:,.0f}")
+
+# Regression Evaluation Metrics
+y_test_real = [88000, 95000]
+mse  = mean_squared_error(y_test_real, y_pred)
+rmse = np.sqrt(mse)
+mae  = mean_absolute_error(y_test_real, y_pred)
+r2   = r2_score(y_test_real, y_pred)
+
+print(f"\nMSE:  {mse:,.0f}")   # Mean squared error — penalizes large errors
+print(f"RMSE: {rmse:,.0f}")   # Same unit as target (₹) — most interpretable
+print(f"MAE:  {mae:,.0f}")    # Average absolute error — robust to outliers
+print(f"R²:   {r2:.3f}")      # 1.0=perfect, 0.0=predicts mean, <0=worse than mean</code></pre>
+
+      <h4>Logistic Regression — Classifying with Probabilities</h4>
+      <p>Despite the name, Logistic Regression is a <strong>classification</strong> algorithm. It applies the sigmoid function to produce a probability, then classifies using a threshold (default: 0.5).</p>
+      <p style="font-size:1.1em;padding:8px 0;"><strong>σ(z) = 1 / (1 + e⁻ᶻ)</strong> where z = w·x + b</p>
+      <p>When z is very positive, σ(z) → 1 (confident class 1). When z is very negative, σ(z) → 0 (confident class 0).</p>
+      <pre><code>>from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report
+
+# Binary classification: breast cancer malignant (0) vs benign (1)
+X, y = load_breast_cancer(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# Logistic Regression is sensitive to scale — always normalize
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s  = scaler.transform(X_test)
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train_s, y_train)
+
+y_pred  = model.predict(X_test_s)            # Hard labels: [0, 1, 1, 0, ...]
+y_proba = model.predict_proba(X_test_s)[:,1] # Probability of class 1: [0.03, 0.97, ...]
+
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.3f}")
+print(classification_report(y_test, y_pred,
+      target_names=['Malignant', 'Benign']))</code></pre>
+
+      <h4>Classification Metrics Explained</h4>
+      <div class="concept-box">
+        <p><strong>Confusion Matrix — Spam Detector Example (1000 emails):</strong></p>
+        <ul>
+          <li><strong>TP (True Positive) = 180:</strong> Predicted spam, IS spam. Correct spam catch.</li>
+          <li><strong>TN (True Negative) = 780:</strong> Predicted not-spam, is NOT spam. Correct inbox delivery.</li>
+          <li><strong>FP (False Positive / Type I Error) = 10:</strong> Predicted spam, but it's your boss's email! User complaint.</li>
+          <li><strong>FN (False Negative / Type II Error) = 30:</strong> Predicted not-spam, but it IS spam. Slipped through.</li>
+        </ul>
+        <ul>
+          <li><strong>Accuracy = (TP+TN)/(Total) = 960/1000 = 96%.</strong> Misleading if data is imbalanced.</li>
+          <li><strong>Precision = TP/(TP+FP) = 180/190 = 94.7%.</strong> "Of spam caught, what % was really spam?" High precision = few false alarms.</li>
+          <li><strong>Recall = TP/(TP+FN) = 180/210 = 85.7%.</strong> "Of all actual spam, what % did we catch?" High recall = few misses.</li>
+          <li><strong>F1 = 2×(P×R)/(P+R) = 89.9%.</strong> Harmonic mean balancing precision and recall. Best single metric for imbalanced data.</li>
+          <li><strong>ROC-AUC:</strong> 0.5 = random guessing, 1.0 = perfect. Good for comparing models independent of threshold.</li>
+        </ul>
+      </div>
+      <pre><code>>from sklearn.metrics import (confusion_matrix, ConfusionMatrixDisplay,
+                             classification_report, roc_auc_score)
+import matplotlib.pyplot as plt
+
+cm   = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(cm, display_labels=['Malignant', 'Benign'])
+disp.plot(cmap='Blues')
+plt.title('Confusion Matrix — Cancer Classifier')
+plt.tight_layout()
+plt.show()
+
+auc = roc_auc_score(y_test, y_proba)
+print(f"ROC-AUC: {auc:.3f}")  # 1.0 = perfect, 0.5 = random</code></pre>
+
+      <h4>Bias-Variance Tradeoff</h4>
+      <p>Every ML model faces a fundamental tension:</p>
+      <ul>
+        <li><strong>High Bias (Underfitting):</strong> Model is too simple — poor performance on BOTH training AND test data. Example: fitting a linear line to clearly curved data. Fix: more complex model, more features.</li>
+        <li><strong>High Variance (Overfitting):</strong> Model memorized training data including noise. Great training accuracy but poor test accuracy. Example: Decision tree with no depth limit memorizes every sample. Fix: regularization, more training data, simpler model, cross-validation.</li>
+        <li><strong>The Sweet Spot:</strong> Low bias + low variance = good generalization. Found through cross-validation and hyperparameter tuning.</li>
+      </ul>
+      <pre><code>>from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+X, y = load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+results = []
+for depth in [1, 2, 3, 5, 10, None]:
+    dt = DecisionTreeClassifier(max_depth=depth, random_state=42)
+    dt.fit(X_train, y_train)
+    train_acc = dt.score(X_train, y_train)
+    test_acc  = dt.score(X_test, y_test)
+    results.append({'max_depth': str(depth), 'train_acc': f"{train_acc:.3f}",
+                    'test_acc': f"{test_acc:.3f}", 'gap': f"{train_acc-test_acc:.3f}"})
+
+print(pd.DataFrame(results).to_string(index=False))
+# max_depth=1:    train=0.667, test=0.644, gap=0.023  ← UNDERFITTING (high bias)
+# max_depth=3:    train=0.981, test=0.956, gap=0.025  ← GOOD BALANCE
+# max_depth=None: train=1.000, test=0.933, gap=0.067  ← OVERFITTING (high variance)</code></pre>
+
+    </div>
+  </div><!-- /W4 -->
+
+  <div class="bottom-nav">
+    <a href="../index.html" class="btn btn-secondary">← Study Portal</a>
+    <a href="concept_notes_intermediate.html" class="btn btn-primary">Intermediate Notes →</a>
+  </div>
+</main>
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; AI &amp; Machine Learning &nbsp;·&nbsp; Concept Notes (Beginner) &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

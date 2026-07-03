@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile App Development — Concept Notes (Beginner) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.analogy-box{background:linear-gradient(135deg,#FDF6E3,#F5E6C0);border:1px solid var(--gold-light);border-left:4px solid var(--gold);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+.analogy-box strong{color:var(--navy);}
+.compare-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:12px;}
+.compare-table th{background:var(--navy);color:white;padding:9px 12px;text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid var(--border-light);}
+.compare-table tr:hover td{background:var(--paper);}
+.compare-table .yes{color:var(--green);font-weight:700;}
+.compare-table .no{color:var(--red);font-weight:700;}
+.compare-table .mid{color:var(--orange);font-weight:700;}
+</style>
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📱 Mobile App Development</div>
+      <div class="bc-file">📖 Concept Notes — Beginner</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 5 OF 9 &nbsp;·&nbsp; MOBILE APP DEVELOPMENT &nbsp;·&nbsp; CONCEPT NOTES — BEGINNER
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Intermediate ↗</a>
+    <a href="lab_guide_beginner.html">Lab Guide ↗</a>
+    <a href="quizzes.html">Quizzes ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero beg">
+    <div class="lh-icon">📱</div>
+    <h1>Concept Notes — Beginner</h1>
+    <p class="lh-sub">4 weeks of mobile development foundations. You will understand the mobile landscape, build your first React Native screens, navigate between them, and persist data locally — all without writing a single line of Java or Swift.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Weeks</span>
+      <span class="lh-pill">React Native · Expo</span>
+      <span class="lh-pill">Navigation · AsyncStorage</span>
+      <span class="lh-pill gold">Beginner Level</span>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>What You Will Learn</h4>
+      <ul>
+        <li>Mobile development landscape</li>
+        <li>React Native core components</li>
+        <li>Stack &amp; Tab navigation</li>
+        <li>Forms, lists, local storage</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Tools Used</h4>
+      <ul>
+        <li>Node.js + npm</li>
+        <li>Expo CLI (npx)</li>
+        <li>Expo Go app (phone)</li>
+        <li>VS Code + extensions</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Learning Approach</h4>
+      <ul>
+        <li>Read concept + run code</li>
+        <li>Lab exercise each week</li>
+        <li>Test live on your phone</li>
+        <li>Weekly quiz (5 questions)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>End Goal</h4>
+      <ul>
+        <li>Notes app running on device</li>
+        <li>Navigation between screens</li>
+        <li>Data surviving app restart</li>
+        <li>Ready for Intermediate</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="objectives">
+    <h4>Learning Objectives — By Week 4 You Will Be Able To</h4>
+    <ul>
+      <li>Explain native vs cross-platform tradeoffs</li>
+      <li>Create and run an Expo app on a real device</li>
+      <li>Build screens using View, Text, FlatList, TextInput</li>
+      <li>Navigate between screens using React Navigation</li>
+      <li>Validate a form and show inline error messages</li>
+      <li>Save and load data with AsyncStorage</li>
+    </ul>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="sm-sec">Week 1 — Introduction to Mobile Development</div>
+  <div class="week-block open" id="w1">
+    <div class="week-head" onclick="toggleWeek('w1')">
+      <div class="week-num wn-beg">W1</div>
+      <div class="week-head-text">
+        <h3>Introduction to Mobile Development</h3>
+        <p>Native vs Cross-platform · iOS vs Android · React Native · Expo setup</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> Building a mobile app is like opening a restaurant. You can open one kitchen that only serves one cuisine (native iOS or native Android), or you can build a central kitchen with an adaptor menu that serves both markets (React Native / Flutter). The single kitchen costs less to run — but the specialist kitchen can always do something the multi-cuisine one cannot quite match.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Three App Development Approaches</h4>
+          <ul>
+            <li><strong>Native:</strong> Swift/SwiftUI for iOS, Kotlin/Compose for Android — best performance, full platform access, two codebases</li>
+            <li><strong>Cross-platform:</strong> React Native, Flutter — one codebase, compiles to native widgets, ~95% of native capability</li>
+            <li><strong>PWA:</strong> Web app in a browser shell — easiest, but limited device API access, no App Store listing</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Why React Native for This Program</h4>
+          <ul>
+            <li>One codebase → iOS + Android simultaneously</li>
+            <li>JavaScript — you already know the language</li>
+            <li>Huge community (Meta + Microsoft backing)</li>
+            <li>Used by: Facebook, Instagram, Shopify, Discord</li>
+            <li>Expo makes setup effortless (no Xcode/Android Studio needed for learning)</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="compare-table">
+        <thead>
+          <tr><th>Approach</th><th>Language</th><th>Performance</th><th>One Codebase</th><th>App Store</th><th>Device APIs</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>iOS Native</td><td>Swift</td><td class="yes">Excellent</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Full</td><td>iOS-only products</td></tr>
+          <tr><td>Android Native</td><td>Kotlin</td><td class="yes">Excellent</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Full</td><td>Android-only products</td></tr>
+          <tr><td>React Native</td><td>JavaScript</td><td class="mid">Very Good</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="mid">Most</td><td>Startups, cross-platform</td></tr>
+          <tr><td>Flutter</td><td>Dart</td><td class="yes">Excellent</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="mid">Most</td><td>Performance-sensitive apps</td></tr>
+          <tr><td>PWA</td><td>HTML/CSS/JS</td><td class="mid">Good</td><td class="yes">Yes</td><td class="no">No</td><td class="no">Limited</td><td>Content sites, low budget</td></tr>
+        </tbody>
+      </table>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Mobile UX Principles</h4>
+          <ul>
+            <li><strong>Thumb zones:</strong> Most users hold phone with one hand — keep primary actions in the bottom third of the screen</li>
+            <li><strong>Tap targets:</strong> Minimum 44×44 px — fingers are not mouse cursors</li>
+            <li><strong>Mobile-first thinking:</strong> Small screen, slow network, interrupted use — design for constraints first</li>
+            <li><strong>Gestures:</strong> Swipe, pinch, tap — feel natural; respect platform conventions</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Setting Up: Expo</h4>
+          <ul>
+            <li>Install Node.js (nodejs.org) — includes npm</li>
+            <li>No global install needed: <code>npx create-expo-app MyApp --template blank</code></li>
+            <li>Start: <code>npx expo start</code> → shows QR code in terminal</li>
+            <li>Install <strong>Expo Go</strong> on your phone (iOS App Store / Google Play)</li>
+            <li>Scan QR code → your app runs on your real device instantly</li>
+            <li>Save a file → app reloads automatically (Hot Reload)</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="comment"># Create and run your first Expo app</span>
+npx create-expo-app MyFirstApp --template blank
+cd MyFirstApp
+npx expo start
+
+<span class="comment"># Folder structure:</span>
+MyFirstApp/
+  App.js          <span class="comment"># your root component</span>
+  app.json        <span class="comment"># app name, icon, version</span>
+  package.json    <span class="comment"># dependencies</span>
+  assets/         <span class="comment"># images, fonts, icons</span>
+  node_modules/   <span class="comment"># installed packages (never edit)</span></pre>
+
+      <div class="key-takeaway">
+        <h4>Week 1 Key Takeaways</h4>
+        <ul>
+          <li>React Native is the right choice for this program: JS-based, cross-platform, widely used in industry</li>
+          <li>Expo removes 90% of setup friction — you can test on a real phone in 5 minutes</li>
+          <li>Mobile UX rules differ from web: 44px tap targets, thumb zones, no hover states</li>
+          <li>Never tell a hiring manager "I only know web" — React Native skills transfer directly</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="sm-sec">Week 2 — React Native Fundamentals</div>
+  <div class="week-block" id="w2">
+    <div class="week-head" onclick="toggleWeek('w2')">
+      <div class="week-num wn-beg">W2</div>
+      <div class="week-head-text">
+        <h3>React Native Core Components</h3>
+        <p>View · Text · StyleSheet · FlatList · Flexbox · Platform · Dimensions</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Key mental shift:</strong> In React web you use HTML tags like <code>&lt;div&gt;</code> and <code>&lt;p&gt;</code>. In React Native there are no HTML tags — everything is a native component. <code>&lt;View&gt;</code> is your <code>&lt;div&gt;</code>, <code>&lt;Text&gt;</code> wraps every word, and all layout is Flexbox.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>Core Components</h4>
+          <ul>
+            <li><code>View</code> — layout container (like div)</li>
+            <li><code>Text</code> — every string must be inside Text</li>
+            <li><code>Image</code> — local or remote images</li>
+            <li><code>ScrollView</code> — scrollable container for short lists</li>
+            <li><code>TouchableOpacity</code> — tappable with opacity feedback</li>
+            <li><code>Pressable</code> — modern replacement, more control</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>StyleSheet API</h4>
+          <ul>
+            <li>No CSS files — styles are JavaScript objects</li>
+            <li>camelCase: <code>backgroundColor</code> not <code>background-color</code></li>
+            <li>No cascading — each component is independent</li>
+            <li>Flexbox only — no Grid, no floats</li>
+            <li><code>StyleSheet.create({})</code> — validates and optimises styles</li>
+            <li>Numbers not strings for most sizes: <code>padding: 16</code> not <code>'16px'</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>React Native Flexbox</h4>
+          <ul>
+            <li><strong>Default direction: column</strong> (not row like CSS!)</li>
+            <li><code>flex: 1</code> — fill all available space</li>
+            <li><code>flexDirection: 'row'</code> — lay children horizontally</li>
+            <li><code>justifyContent</code> — along main axis</li>
+            <li><code>alignItems</code> — along cross axis</li>
+            <li><code>gap</code> — spacing between children (RN 0.71+)</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Platform &amp; Dimensions APIs</h4>
+          <ul>
+            <li><code>Platform.OS === 'ios'</code> or <code>'android'</code></li>
+            <li><code>Platform.select({ios: x, android: y})</code> — return different values per OS</li>
+            <li><code>Dimensions.get('window').width</code> — screen width in dp</li>
+            <li><code>Dimensions.get('window').height</code> — screen height</li>
+            <li>Use for responsive font sizes, padding adjustments</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="keyword">import</span> { View, Text, StyleSheet, TouchableOpacity, Platform, Dimensions } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+
+<span class="keyword">const</span> { width } = Dimensions.get(<span class="string">'window'</span>);
+
+<span class="keyword">export default function</span> HomeScreen() {
+  <span class="keyword">return</span> (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Hello, Uttarakhand! 🏔️&lt;/Text&gt;
+      &lt;Text style={styles.subtitle}&gt;Running on {Platform.OS}&lt;/Text&gt;
+      &lt;TouchableOpacity style={styles.btn} onPress={() =&gt; alert(<span class="string">'Tapped!'</span>)} activeOpacity={0.7}&gt;
+        &lt;Text style={styles.btnText}&gt;Tap me&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    &lt;/View&gt;
+  );
+}
+
+<span class="keyword">const</span> styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: <span class="string">'#F8F6F0'</span>,
+    alignItems: <span class="string">'center'</span>,
+    justifyContent: <span class="string">'center'</span>,
+    padding: 24,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: <span class="string">'800'</span>,
+    color: <span class="string">'#1B3A6B'</span>,
+    marginBottom: 8,
+    textAlign: <span class="string">'center'</span>,
+  },
+  subtitle: { fontSize: 14, color: <span class="string">'#5A6070'</span>, marginBottom: 32 },
+  btn: {
+    backgroundColor: <span class="string">'#1B3A6B'</span>,
+    paddingVertical: 14,
+    paddingHorizontal: 36,
+    borderRadius: 12,
+    width: width * 0.8, <span class="comment">// 80% of screen width</span>
+    alignItems: <span class="string">'center'</span>,
+  },
+  btnText: { color: <span class="string">'white'</span>, fontWeight: <span class="string">'700'</span>, fontSize: 15 },
+});</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 2 Key Takeaways</h4>
+        <ul>
+          <li>React Native's default flexDirection is <strong>column</strong> — this trips up every web developer once</li>
+          <li>All text must be inside a <code>&lt;Text&gt;</code> component — no bare strings in JSX</li>
+          <li><code>StyleSheet.create()</code> runs validation at startup — use it, not plain objects</li>
+          <li><code>Platform.OS</code> lets one codebase behave correctly on both platforms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="sm-sec">Week 3 — Navigation in React Native</div>
+  <div class="week-block" id="w3">
+    <div class="week-head" onclick="toggleWeek('w3')">
+      <div class="week-num wn-beg">W3</div>
+      <div class="week-head-text">
+        <h3>React Navigation</h3>
+        <p>Stack · Tabs · Drawer · Params · useNavigation hook</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Real-world analogy:</strong> Navigation is the backbone of every mobile app. Stack Navigator works like a stack of papers — push a new screen on top, pop it off to go back. Tab Navigator is the bottom bar you see in Instagram or WhatsApp — always visible, always one tap away.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>React Navigation Setup</h4>
+          <ul>
+            <li><code>npm install @react-navigation/native</code></li>
+            <li><code>npx expo install react-native-screens react-native-safe-area-context</code></li>
+            <li><code>npm install @react-navigation/native-stack</code></li>
+            <li><code>npm install @react-navigation/bottom-tabs</code></li>
+            <li>Wrap your entire app in <code>&lt;NavigationContainer&gt;</code></li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Navigator Types</h4>
+          <ul>
+            <li><strong>Stack:</strong> Push/pop pattern — for drill-down flows (Home → Detail → Edit)</li>
+            <li><strong>Bottom Tabs:</strong> Persistent tab bar — for top-level sections (Feed, Search, Profile)</li>
+            <li><strong>Drawer:</strong> Side menu that slides in — for secondary navigation options</li>
+            <li>Navigators can be nested: Tabs inside a Stack, Stack inside Tabs</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Passing Parameters</h4>
+          <ul>
+            <li>Send: <code>navigation.navigate('Detail', {'{'} id: 42 {'}'})</code></li>
+            <li>Receive: <code>const {'{'} id {'}'} = route.params</code></li>
+            <li>The receiving screen gets <code>route</code> prop automatically</li>
+            <li>Use <code>useRoute()</code> hook instead of prop if deeply nested</li>
+            <li>Params are not persisted — re-pass on navigation</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>Navigation Hooks</h4>
+          <ul>
+            <li><code>useNavigation()</code> — get navigation object in any component</li>
+            <li><code>useRoute()</code> — get route (params) in any component</li>
+            <li>Without hooks, only direct children of screens get nav props</li>
+            <li><code>navigation.goBack()</code> — go back one screen</li>
+            <li><code>navigation.navigate('Home')</code> — go to a named screen</li>
+            <li><code>navigation.setOptions({'{'}title: 'Edit Note'{'}'})</code> — change header title dynamically</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="keyword">import</span> { NavigationContainer } <span class="keyword">from</span> <span class="string">'@react-navigation/native'</span>;
+<span class="keyword">import</span> { createNativeStackNavigator } <span class="keyword">from</span> <span class="string">'@react-navigation/native-stack'</span>;
+<span class="keyword">import</span> { createBottomTabNavigator } <span class="keyword">from</span> <span class="string">'@react-navigation/bottom-tabs'</span>;
+
+<span class="keyword">const</span> Stack = createNativeStackNavigator();
+<span class="keyword">const</span> Tab   = createBottomTabNavigator();
+
+<span class="comment">// Tab navigator for main sections</span>
+<span class="keyword">function</span> MainTabs() {
+  <span class="keyword">return</span> (
+    &lt;Tab.Navigator screenOptions={{'{'}tabBarActiveTintColor: <span class="string">'#1B3A6B'</span>{'}'}}&gt;
+      &lt;Tab.Screen name=<span class="string">"Home"</span>    component={HomeScreen} /&gt;
+      &lt;Tab.Screen name=<span class="string">"Profile"</span> component={ProfileScreen} /&gt;
+    &lt;/Tab.Navigator&gt;
+  );
+}
+
+<span class="comment">// Stack wraps the tabs + detail screens</span>
+<span class="keyword">export default function</span> App() {
+  <span class="keyword">return</span> (
+    &lt;NavigationContainer&gt;
+      &lt;Stack.Navigator&gt;
+        &lt;Stack.Screen name=<span class="string">"Main"</span>   component={MainTabs} options={{'{'}headerShown: false{'}'}} /&gt;
+        &lt;Stack.Screen name=<span class="string">"Detail"</span> component={DetailScreen} options={{'{'}title: <span class="string">'Details'</span>{'}'}} /&gt;
+      &lt;/Stack.Navigator&gt;
+    &lt;/NavigationContainer&gt;
+  );
+}
+
+<span class="comment">// Navigate with params from HomeScreen</span>
+navigation.navigate(<span class="string">'Detail'</span>, { id: 42, name: <span class="string">'Hemkund Lake'</span> });
+
+<span class="comment">// Read params in DetailScreen</span>
+<span class="keyword">const</span> { id, name } = route.params;</pre>
+
+      <div class="key-takeaway">
+        <h4>Week 3 Key Takeaways</h4>
+        <ul>
+          <li><code>NavigationContainer</code> must be at the root of your app — not inside any screen</li>
+          <li>Bottom tabs for top-level sections; Stack for drill-down flows — combine both</li>
+          <li>Use <code>useNavigation()</code> hook inside components that are not direct screen children</li>
+          <li>Params are not persistent — don't use them to store state, use AsyncStorage for that</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="sm-sec">Week 4 — Lists, Forms &amp; User Input</div>
+  <div class="week-block" id="w4">
+    <div class="week-head" onclick="toggleWeek('w4')">
+      <div class="week-num wn-beg">W4</div>
+      <div class="week-head-text">
+        <h3>Lists, Forms &amp; AsyncStorage</h3>
+        <p>FlatList · SectionList · TextInput · Form validation · AsyncStorage</p>
+      </div>
+      <span class="wh-arrow">▼</span>
+    </div>
+    <div class="week-body">
+
+      <div class="analogy-box">
+        <strong>Why FlatList, not ScrollView?</strong> ScrollView renders everything at once. For a 500-item list that causes lag. FlatList is virtualized — it renders only the ~15 items visible on screen at any moment, recycling cells as you scroll. For lists over 20 items, always use FlatList.
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h4>FlatList</h4>
+          <ul>
+            <li><code>data</code> — the array to render</li>
+            <li><code>renderItem={'{'}({'{'}item{'}'}) =&gt; &lt;Card item={item} /&gt;{'}'}</code></li>
+            <li><code>keyExtractor={'{'}item =&gt; item.id.toString(){'}'}</code> — unique key per row</li>
+            <li><code>refreshing + onRefresh</code> — pull-to-refresh</li>
+            <li><code>ListEmptyComponent</code> — shown when data=[]</li>
+            <li><code>numColumns={2}</code> — grid layout</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>SectionList</h4>
+          <ul>
+            <li>Like FlatList but with section headers</li>
+            <li>Data format: <code>[{'{'}title, data: [...]{'}'}, ...]</code></li>
+            <li><code>renderSectionHeader</code> — renders the section label</li>
+            <li>Good for: contacts (A-Z), grouped settings, categorised menus</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>TextInput</h4>
+          <ul>
+            <li><code>value + onChangeText</code> — controlled input (always use this)</li>
+            <li><code>placeholder</code> — hint text</li>
+            <li><code>keyboardType="email-address"</code> — right keyboard layout</li>
+            <li><code>secureTextEntry={true}</code> — password field</li>
+            <li><code>multiline</code> — textarea equivalent</li>
+            <li><code>returnKeyType="done"</code> — labels the return key</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <h4>AsyncStorage</h4>
+          <ul>
+            <li><code>npm install @react-native-async-storage/async-storage</code></li>
+            <li>Key-value store — values must be strings</li>
+            <li><code>await AsyncStorage.setItem('key', JSON.stringify(data))</code></li>
+            <li><code>await AsyncStorage.getItem('key')</code> — returns string or null</li>
+            <li><code>await AsyncStorage.removeItem('key')</code></li>
+            <li>Survives app close — perfect for user preferences, cached data</li>
+          </ul>
+        </div>
+      </div>
+
+      <pre><span class="keyword">import</span> { FlatList, TextInput, KeyboardAvoidingView, Platform } <span class="keyword">from</span> <span class="string">'react-native'</span>;
+<span class="keyword">import</span> AsyncStorage <span class="keyword">from</span> <span class="string">'@react-native-async-storage/async-storage'</span>;
+
+<span class="comment">// Controlled form with validation</span>
+<span class="keyword">const</span> [email, setEmail] = useState(<span class="string">''</span>);
+<span class="keyword">const</span> [error, setError]  = useState(<span class="string">''</span>);
+
+<span class="keyword">function</span> validate() {
+  <span class="keyword">if</span> (!email.includes(<span class="string">'@'</span>)) { setError(<span class="string">'Enter a valid email address'</span>); <span class="keyword">return</span> false; }
+  setError(<span class="string">''</span>);
+  <span class="keyword">return</span> true;
+}
+
+&lt;KeyboardAvoidingView behavior={Platform.OS === <span class="string">'ios'</span> ? <span class="string">'padding'</span> : <span class="string">'height'</span>}&gt;
+  &lt;TextInput
+    value={email}
+    onChangeText={setEmail}
+    placeholder=<span class="string">"your@email.com"</span>
+    keyboardType=<span class="string">"email-address"</span>
+    autoCapitalize=<span class="string">"none"</span>
+    style={styles.input}
+  /&gt;
+  {error ? &lt;Text style={styles.errorText}&gt;{error}&lt;/Text&gt; : null}
+&lt;/KeyboardAvoidingView&gt;
+
+<span class="comment">// Save to AsyncStorage</span>
+<span class="keyword">await</span> AsyncStorage.setItem(<span class="string">'todos'</span>, JSON.stringify(todosArray));
+
+<span class="comment">// Load on mount</span>
+useEffect(() =&gt; {
+  <span class="keyword">async function</span> load() {
+    <span class="keyword">const</span> raw = <span class="keyword">await</span> AsyncStorage.getItem(<span class="string">'todos'</span>);
+    <span class="keyword">if</span> (raw) setTodos(JSON.parse(raw));
+  }
+  load();
+}, []); <span class="comment">// empty deps = run once on mount</span></pre>
+
+      <div class="key-takeaway">
+        <h4>Week 4 Key Takeaways</h4>
+        <ul>
+          <li>Use <code>FlatList</code> for any list longer than ~20 items — <code>ScrollView</code> is for short, static content</li>
+          <li>Always wrap forms in <code>KeyboardAvoidingView</code> so the keyboard doesn't hide your inputs</li>
+          <li>AsyncStorage stores strings only — always <code>JSON.stringify()</code> on save, <code>JSON.parse()</code> on load</li>
+          <li>Load AsyncStorage inside a <code>useEffect(()=&gt;{}, [])</code> so it runs once when the screen mounts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="../index.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Study Portal</a>
+    <div style="display:flex;gap:12px;">
+      <a href="concept_notes_intermediate.html" style="background:var(--blue);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Intermediate Notes →</a>
+      <a href="lab_guide_beginner.html" style="background:var(--green);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Lab Guide →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Mobile App Development &nbsp;·&nbsp; Concept Notes — Beginner &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{const w=document.getElementById('w1');if(w)w.classList.add('open');});
+</script>
+</body>
+</html>

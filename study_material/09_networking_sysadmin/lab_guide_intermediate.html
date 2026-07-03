@@ -1,0 +1,1276 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking & Sysadmin — Lab Guide Intermediate | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🌐 Networking &amp; Sysadmin</div>
+      <div class="bc-file">⚙️ Lab Guide — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 9 OF 9 &nbsp;·&nbsp; NETWORKING &amp; SYSTEM ADMINISTRATION &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="concept_notes_intermediate.html">Concept Notes ↗</a>
+    <a href="lab_guide_advanced.html">Advanced Lab ↗</a>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="level-hero int">
+    <div class="lh-icon">⚙️</div>
+    <div class="lh-text">
+      <h2>Lab Guide — Intermediate</h2>
+      <p>Weeks 5–8 · Firewall &amp; VPN · VLANs &amp; Routing · systemd &amp; Automation · Prometheus &amp; Grafana</p>
+    </div>
+    <div class="lh-badge">LAB · INTERMEDIATE</div>
+  </div>
+
+  <div class="info-box note">
+    <strong>Prerequisites:</strong> Beginner labs (Weeks 1–4) completed. You should have two VMs: <strong>server1</strong> (192.168.56.10) and <strong>server2</strong> (192.168.56.11) both running Ubuntu Server 22.04.
+  </div>
+
+  <!-- WEEK 5 LAB -->
+  <div class="week-block" id="w5">
+    <div class="week-header wn-int" onclick="toggleWeek('w5')">
+      <span class="wn-label">Week 5 Lab</span>
+      <span class="wn-title">Firewall Hardening &amp; WireGuard VPN</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Implement a production-grade UFW firewall policy with source restrictions</li>
+        <li>Create persistent iptables rules with iptables-persistent</li>
+        <li>Set up a WireGuard VPN tunnel between server1 and server2</li>
+        <li>Configure fail2ban to protect against brute-force SSH attacks</li>
+      </ul>
+
+      <h3>Part A — UFW Firewall Configuration</h3>
+      <pre><code># Start with a clean slate — reset any existing UFW rules
+sudo ufw reset
+sudo ufw status
+
+# Set default policies (deny all inbound, allow all outbound)
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow essential services with comments for documentation
+sudo ufw allow 22/tcp comment 'SSH access'
+sudo ufw allow 80/tcp comment 'HTTP web server'
+sudo ufw allow 443/tcp comment 'HTTPS web server'
+
+# Restrict MySQL to internal network only (never expose DB to internet)
+sudo ufw allow from 192.168.56.0/24 to any port 3306 comment 'MySQL - internal LAN only'
+
+# Allow ICMP (ping) — this is handled by /etc/ufw/before.rules by default
+# Verify: grep icmp /etc/ufw/before.rules | head -5
+
+# Enable the firewall
+sudo ufw enable
+# Type 'y' when prompted
+
+# Verify the rules
+sudo ufw status verbose</code></pre>
+
+      <pre><code># Expected output of 'sudo ufw status verbose':
+# Status: active
+# Logging: on (low)
+# Default: deny (incoming), allow (outgoing), disabled (routed)
+# New profiles: skip
+#
+# To                         Action      From
+# --                         ------      ----
+# 22/tcp                     ALLOW IN    Anywhere            # SSH access
+# 80/tcp                     ALLOW IN    Anywhere            # HTTP web server
+# 443/tcp                    ALLOW IN    Anywhere            # HTTPS web server
+# 3306                       ALLOW IN    192.168.56.0/24     # MySQL - internal LAN only</code></pre>
+
+      <h3>Part B — Persistent iptables Rules</h3>
+      <pre><code># Install iptables-persistent to save/restore rules across reboots
+sudo apt install iptables-persistent -y
+# Answer YES to save current rules when prompted
+
+# Create a clean ruleset file
+sudo tee /etc/iptables/rules.v4 &lt;&lt;'EOF'
+*filter
+# Default policies
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# Allow loopback (local traffic — always needed)
+-A INPUT -i lo -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+
+# Allow established and related connections (stateful)
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# SSH — allow from anywhere (restrict to specific IPs in production)
+-A INPUT -p tcp --dport 22 -j ACCEPT
+
+# HTTP and HTTPS
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+
+# ICMP (ping) — allow all types
+-A INPUT -p icmp -j ACCEPT
+
+# MySQL — only from internal network
+-A INPUT -p tcp --dport 3306 -s 192.168.56.0/24 -j ACCEPT
+
+# Log dropped packets (before final drop)
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables-drop: " --log-level 7
+
+COMMIT
+EOF
+
+# Apply the rules
+sudo iptables-restore &lt; /etc/iptables/rules.v4
+
+# Verify rules are active
+sudo iptables -L INPUT -n -v
+# Expected: Shows all defined rules with packet counters</code></pre>
+
+      <h3>Part C — WireGuard VPN Setup</h3>
+      <pre><code># Install WireGuard on BOTH servers
+sudo apt install wireguard -y
+
+# ===== ON SERVER1 (192.168.56.10) =====
+
+# Generate key pair
+wg genkey | sudo tee /etc/wireguard/server1_private.key | wg pubkey | sudo tee /etc/wireguard/server1_public.key
+sudo chmod 600 /etc/wireguard/server1_private.key
+
+# Read and save the keys
+SERVER1_PRIVATE=$(sudo cat /etc/wireguard/server1_private.key)
+SERVER1_PUBLIC=$(sudo cat /etc/wireguard/server1_public.key)
+echo "Server1 Public Key: $SERVER1_PUBLIC"
+# COPY THIS KEY — you need it for server2's config</code></pre>
+
+      <pre><code># ===== ON SERVER2 (192.168.56.11) =====
+
+# Generate key pair on server2
+wg genkey | sudo tee /etc/wireguard/server2_private.key | wg pubkey | sudo tee /etc/wireguard/server2_public.key
+sudo chmod 600 /etc/wireguard/server2_private.key
+
+SERVER2_PRIVATE=$(sudo cat /etc/wireguard/server2_private.key)
+SERVER2_PUBLIC=$(sudo cat /etc/wireguard/server2_public.key)
+echo "Server2 Public Key: $SERVER2_PUBLIC"
+# COPY THIS KEY — you need it for server1's config</code></pre>
+
+      <pre><code># ===== BACK ON SERVER1 — Create wg0.conf =====
+sudo tee /etc/wireguard/wg0.conf &lt;&lt;EOF
+[Interface]
+PrivateKey = $SERVER1_PRIVATE
+Address = 10.0.0.1/24
+ListenPort = 51820
+
+# Enable IP forwarding through the VPN (optional — for routing lab traffic)
+PostUp = echo 1 &gt; /proc/sys/net/ipv4/ip_forward
+PostDown = echo 0 &gt; /proc/sys/net/ipv4/ip_forward
+
+[Peer]
+# Server2's public key
+PublicKey = &lt;PASTE_SERVER2_PUBLIC_KEY_HERE&gt;
+AllowedIPs = 10.0.0.2/32
+Endpoint = 192.168.56.11:51820
+PersistentKeepalive = 25
+EOF
+sudo chmod 600 /etc/wireguard/wg0.conf</code></pre>
+
+      <pre><code># ===== ON SERVER2 — Create wg0.conf =====
+sudo tee /etc/wireguard/wg0.conf &lt;&lt;EOF
+[Interface]
+PrivateKey = $SERVER2_PRIVATE
+Address = 10.0.0.2/24
+ListenPort = 51820
+
+[Peer]
+# Server1's public key
+PublicKey = &lt;PASTE_SERVER1_PUBLIC_KEY_HERE&gt;
+AllowedIPs = 10.0.0.1/32
+Endpoint = 192.168.56.10:51820
+PersistentKeepalive = 25
+EOF
+sudo chmod 600 /etc/wireguard/wg0.conf</code></pre>
+
+      <pre><code># ===== Start WireGuard on BOTH servers =====
+sudo systemctl enable --now wg-quick@wg0
+sudo systemctl status wg-quick@wg0
+
+# ===== Test connectivity over VPN =====
+# On server1:
+ping -c 4 10.0.0.2                   # Ping server2's VPN IP
+# Expected: 4 packets transmitted, 4 received
+
+# View WireGuard status
+sudo wg show
+# Expected output:
+# interface: wg0
+#   public key: ...
+#   listening port: 51820
+# peer: ...
+#   endpoint: 192.168.56.11:51820
+#   allowed ips: 10.0.0.2/32
+#   latest handshake: X seconds ago
+#   transfer: 1.24 KiB received, 1.20 KiB sent</code></pre>
+
+      <h3>Part D — fail2ban SSH Protection</h3>
+      <pre><code># Install fail2ban
+sudo apt install fail2ban -y
+
+# Create local jail configuration (never edit jail.conf — it gets overwritten on upgrade)
+sudo tee /etc/fail2ban/jail.local &lt;&lt;'EOF'
+[DEFAULT]
+# Global defaults
+bantime  = 3600       # Ban duration: 1 hour
+findtime = 600        # Count failures within this window: 10 minutes
+maxretry = 3          # Attempts before ban
+ignoreip = 127.0.0.1/8 ::1 192.168.56.0/24  # Never ban these
+banaction = iptables-multiport
+backend = systemd     # Use systemd journal for log parsing
+
+[sshd]
+enabled  = true
+port     = 22
+logpath  = %(sshd_log)s
+maxretry = 3
+
+[nginx-http-auth]
+enabled  = true
+EOF
+
+# Start fail2ban
+sudo systemctl enable --now fail2ban
+sudo systemctl status fail2ban
+
+# Verify SSH jail is active
+sudo fail2ban-client status
+# Expected: "Number of jail:   2"
+# "Jail list:   nginx-http-auth, sshd"
+
+sudo fail2ban-client status sshd
+# Expected: Shows currently banned IPs (likely empty)</code></pre>
+
+      <pre><code>># Test fail2ban by simulating failed SSH logins
+# From server2, attempt 4 failed logins (enter wrong password each time):
+for i in 1 2 3 4; do
+    ssh -o ConnectTimeout=5 wronguser@192.168.56.10 || true
+    sleep 1
+done
+
+# Back on server1, check if server2 is now banned
+sudo fail2ban-client status sshd
+# Expected: "Banned IP list: 192.168.56.11"
+
+# Unban server2 (so you can continue the labs!)
+sudo fail2ban-client set sshd unbanip 192.168.56.11
+sudo fail2ban-client status sshd   # Should show empty ban list</code></pre>
+
+      <h3>Checkpoint Verification</h3>
+      <pre><code>># All must pass before Week 6:
+sudo ufw status | grep "Status: active"            # UFW enabled
+sudo wg show | grep "latest handshake"             # WireGuard connected
+ping -c 2 10.0.0.2                                # VPN tunnel works
+sudo fail2ban-client status sshd | grep "Currently banned"  # fail2ban active</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 6 LAB -->
+  <div class="week-block" id="w6">
+    <div class="week-header wn-int" onclick="toggleWeek('w6')">
+      <span class="wn-label">Week 6 Lab</span>
+      <span class="wn-title">VLAN Routing &amp; Switching (GNS3 / Linux VLANs)</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Configure VLAN segmentation using Cisco IOS syntax in GNS3 or EVE-NG</li>
+        <li>Implement router-on-a-stick for inter-VLAN routing</li>
+        <li>Apply ACLs to enforce VLAN traffic policies</li>
+        <li>Configure Linux VLAN interfaces as an alternative approach</li>
+      </ul>
+
+      <h3>Lab Topology</h3>
+      <pre><code>Network diagram:
+            ┌───────────────────────────────────────┐
+            │         Router R1                      │
+            │   fa0/0.10 → 192.168.10.1/24 (VLAN10)  │
+            │   fa0/0.20 → 192.168.20.1/24 (VLAN20)  │
+            │   fa0/0.30 → 192.168.30.1/24 (VLAN30)  │
+            └──────────────┬────────────────────────┘
+                           │ trunk (all VLANs tagged)
+            ┌──────────────▼────────────────────────┐
+            │         Switch SW1                     │
+            │  fa0/1 (access VLAN 10) → PC1          │
+            │  fa0/2 (access VLAN 20) → PC2          │
+            │  fa0/3 (access VLAN 30) → PC3          │
+            │  fa0/24 (trunk) → Router               │
+            └───────────────────────────────────────┘
+
+PC1: 192.168.10.10/24  gw: 192.168.10.1  (Admin VLAN)
+PC2: 192.168.20.10/24  gw: 192.168.20.1  (Dev VLAN)
+PC3: 192.168.30.10/24  gw: 192.168.30.1  (Guest VLAN)</code></pre>
+
+      <h3>Part A — Switch Configuration (Cisco IOS)</h3>
+      <pre><code>># Connect to SW1 console in GNS3
+
+SW1# configure terminal
+
+! Create VLANs
+SW1(config)# vlan 10
+SW1(config-vlan)# name Admin
+SW1(config-vlan)# exit
+SW1(config)# vlan 20
+SW1(config-vlan)# name Dev
+SW1(config-vlan)# exit
+SW1(config)# vlan 30
+SW1(config-vlan)# name Guest
+SW1(config-vlan)# exit
+
+! Configure access ports (end devices)
+SW1(config)# interface FastEthernet 0/1
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 10
+SW1(config-if)# no shutdown
+SW1(config-if)# exit
+
+SW1(config)# interface FastEthernet 0/2
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 20
+SW1(config-if)# no shutdown
+SW1(config-if)# exit
+
+SW1(config)# interface FastEthernet 0/3
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 30
+SW1(config-if)# no shutdown
+SW1(config-if)# exit
+
+! Configure trunk port (to router)
+SW1(config)# interface FastEthernet 0/24
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk encapsulation dot1q
+SW1(config-if)# switchport trunk allowed vlan 10,20,30
+SW1(config-if)# no shutdown
+SW1(config-if)# exit
+
+SW1(config)# end
+SW1# write memory   ! Save config
+
+! Verify:
+SW1# show vlan brief
+SW1# show interfaces trunk</code></pre>
+
+      <h3>Part B — Router-on-a-Stick (R1 Configuration)</h3>
+      <pre><code>># Connect to R1 console
+
+R1# configure terminal
+
+! Enable the physical interface (no IP on main interface)
+R1(config)# interface FastEthernet 0/0
+R1(config-if)# no ip address
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+! Subinterface for VLAN 10 (Admin)
+R1(config)# interface FastEthernet 0/0.10
+R1(config-subif)# encapsulation dot1Q 10       ! Tag 802.1Q VLAN 10
+R1(config-subif)# ip address 192.168.10.1 255.255.255.0
+R1(config-subif)# exit
+
+! Subinterface for VLAN 20 (Dev)
+R1(config)# interface FastEthernet 0/0.20
+R1(config-subif)# encapsulation dot1Q 20
+R1(config-subif)# ip address 192.168.20.1 255.255.255.0
+R1(config-subif)# exit
+
+! Subinterface for VLAN 30 (Guest)
+R1(config)# interface FastEthernet 0/0.30
+R1(config-subif)# encapsulation dot1Q 30
+R1(config-subif)# ip address 192.168.30.1 255.255.255.0
+R1(config-subif)# exit
+
+R1# write memory
+
+! Verify
+R1# show ip interface brief
+! Expected:
+! FastEthernet0/0        unassigned     YES manual up    up
+! FastEthernet0/0.10     192.168.10.1   YES manual up    up
+! FastEthernet0/0.20     192.168.20.1   YES manual up    up
+! FastEthernet0/0.30     192.168.30.1   YES manual up    up
+
+R1# show ip route
+! Expected: directly connected routes for all 3 subnets</code></pre>
+
+      <h3>Part C — Assign IPs to PCs and Test</h3>
+      <pre><code>># On PC1 (VPCS in GNS3)
+PC1> ip 192.168.10.10 192.168.10.1 24
+PC1> show ip
+
+# On PC2
+PC2> ip 192.168.20.10 192.168.20.1 24
+
+# On PC3
+PC3> ip 192.168.30.10 192.168.30.1 24
+
+# Test intra-VLAN (should work even without router):
+# PC1 ping 192.168.10.1        (ping router — should succeed)
+
+# Test inter-VLAN routing:
+PC1> ping 192.168.20.10       ! PC1 to PC2 (different VLAN)
+# Expected: 5 packets, 5 received (via router)
+
+PC1> ping 192.168.30.10       ! PC1 to PC3
+# Expected: 5 packets, 5 received
+
+PC2> ping 192.168.30.10       ! PC2 to PC3
+# Expected: 5 packets, 5 received</code></pre>
+
+      <h3>Part D — ACL to Block Guest from Admin</h3>
+      <pre><code>># Security requirement: VLAN 30 (Guest) cannot access VLAN 10 (Admin)
+# But Guests CAN access VLAN 20 (Dev) — allowed for collaboration
+
+R1# configure terminal
+
+! Create named extended ACL
+R1(config)# ip access-list extended BLOCK_GUEST_TO_ADMIN
+R1(config-ext-nacl)# deny   ip 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255
+R1(config-ext-nacl)# permit ip any any
+R1(config-ext-nacl)# exit
+
+! Apply ACL inbound on VLAN 30 subinterface
+R1(config)# interface FastEthernet 0/0.30
+R1(config-subif)# ip access-group BLOCK_GUEST_TO_ADMIN in
+R1(config-subif)# exit
+R1# write memory
+
+! Test the ACL:
+PC3> ping 192.168.10.10    ! Should FAIL (blocked by ACL)
+# Expected: UUUUU (unreachable)
+
+PC3> ping 192.168.20.10    ! Should SUCCEED (Dev VLAN allowed)
+# Expected: 5 packets received
+
+! Verify ACL hits:
+R1# show ip access-lists BLOCK_GUEST_TO_ADMIN
+! Expected: shows deny line with match count increasing</code></pre>
+
+      <h3>Part E — Linux VLAN (Alternative to GNS3)</h3>
+      <pre><code># If GNS3 is not available, configure VLANs on Ubuntu Server1
+
+# Install VLAN package
+sudo apt install vlan -y
+sudo modprobe 8021q              # Load VLAN kernel module
+echo "8021q" | sudo tee -a /etc/modules  # Load on boot
+
+# Create VLAN 10 sub-interface
+sudo ip link add link enp0s8 name enp0s8.10 type vlan id 10
+sudo ip addr add 192.168.10.50/24 dev enp0s8.10
+sudo ip link set enp0s8.10 up
+
+# Create VLAN 20 sub-interface
+sudo ip link add link enp0s8 name enp0s8.20 type vlan id 20
+sudo ip addr add 192.168.20.50/24 dev enp0s8.20
+sudo ip link set enp0s8.20 up
+
+# Verify VLAN interfaces
+ip -d link show enp0s8.10
+# Expected shows: vlan protocol 802.1Q id 10
+
+ip addr show enp0s8.10
+# Expected: inet 192.168.10.50/24
+
+# Persistent VLAN config (Netplan)
+sudo nano /etc/netplan/01-vlans.yaml</code></pre>
+
+      <pre><code>># /etc/netplan/01-vlans.yaml
+network:
+  version: 2
+  vlans:
+    enp0s8.10:
+      id: 10
+      link: enp0s8
+      addresses:
+        - 192.168.10.50/24
+    enp0s8.20:
+      id: 20
+      link: enp0s8
+      addresses:
+        - 192.168.20.50/24</code></pre>
+
+      <pre><code>># Apply and verify
+sudo netplan apply
+ip addr show enp0s8.10
+ip addr show enp0s8.20
+
+# Static route to reach other VLAN via router
+sudo ip route add 192.168.20.0/24 via 192.168.10.1    # Router as gateway</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 7 LAB -->
+  <div class="week-block" id="w7">
+    <div class="week-header wn-int" onclick="toggleWeek('w7')">
+      <span class="wn-label">Week 7 Lab</span>
+      <span class="wn-title">systemd Service, LVM &amp; Log Management</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Create and manage a custom systemd service unit</li>
+        <li>Write a service watchdog script with cron scheduling</li>
+        <li>Add a virtual disk in VirtualBox and manage it with LVM</li>
+        <li>Configure logrotate for custom log files</li>
+      </ul>
+
+      <h3>Part A — Custom Python Web Server as a systemd Service</h3>
+      <pre><code># Create the web server root directory
+sudo mkdir -p /var/www/html
+echo "&lt;h1&gt;Lab Web Server&lt;/h1&gt;&lt;p&gt;Served by Python on port 8080&lt;/p&gt;" | sudo tee /var/www/html/index.html
+
+# Create the Python web server script
+sudo tee /usr/local/bin/webserver.py &lt;&lt;'EOF'
+#!/usr/bin/env python3
+"""Simple HTTP server for lab use"""
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import os
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+os.chdir('/var/www/html')
+
+class LoggingHandler(SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        logging.info("%s - %s" % (self.client_address[0], format % args))
+
+PORT = 8080
+httpd = HTTPServer(('0.0.0.0', PORT), LoggingHandler)
+logging.info(f"Starting web server on port {PORT}")
+httpd.serve_forever()
+EOF
+
+sudo chmod +x /usr/local/bin/webserver.py</code></pre>
+
+      <pre><code># Create the systemd unit file
+sudo tee /etc/systemd/system/webserver.service &lt;&lt;'EOF'
+[Unit]
+Description=Simple Python Web Server
+Documentation=https://docs.python.org/3/library/http.server.html
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+# Working directory and command
+WorkingDirectory=/var/www/html
+ExecStart=/usr/bin/python3 /usr/local/bin/webserver.py
+
+# Restart policy
+Restart=always
+RestartSec=5
+StartLimitBurst=3
+StartLimitIntervalSec=60
+
+# Resource limits
+LimitNOFILE=65536
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=webserver
+
+[Install]
+WantedBy=multi-user.target
+EOF</code></pre>
+
+      <pre><code># Reload systemd, enable and start the service
+sudo systemctl daemon-reload
+sudo systemctl enable webserver
+sudo systemctl start webserver
+
+# Verify it's running
+sudo systemctl status webserver
+# Expected: active (running)
+
+# Test the web server
+curl http://localhost:8080
+# Expected: &lt;h1&gt;Lab Web Server&lt;/h1&gt;
+
+# Allow port 8080 through firewall
+sudo ufw allow 8080/tcp comment 'Python lab web server'
+
+# Test from server2
+curl http://192.168.56.10:8080/
+# Expected: HTML from server1
+
+# View logs
+sudo journalctl -u webserver -n 20
+sudo journalctl -u webserver -f    # Follow live (Ctrl+C to stop)</code></pre>
+
+      <h3>Part B — Service Watchdog with cron</h3>
+      <pre><code># Create the watchdog script
+sudo tee /usr/local/bin/service_watchdog.sh &lt;&lt;'EOF'
+#!/bin/bash
+# Service watchdog — restarts service if it goes down
+SERVICE="webserver"
+LOG="/var/log/watchdog.log"
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
+if ! systemctl is-active --quiet "$SERVICE"; then
+    echo "$TIMESTAMP: WARNING - $SERVICE is DOWN, attempting restart..." | tee -a "$LOG"
+    systemctl restart "$SERVICE"
+    sleep 2
+
+    if systemctl is-active --quiet "$SERVICE"; then
+        echo "$TIMESTAMP: SUCCESS - $SERVICE restarted successfully" | tee -a "$LOG"
+        logger -t watchdog "Service $SERVICE was restarted successfully"
+    else
+        echo "$TIMESTAMP: ERROR - $SERVICE failed to restart!" | tee -a "$LOG"
+        logger -p user.err -t watchdog "CRITICAL: Service $SERVICE failed to restart"
+    fi
+else
+    echo "$TIMESTAMP: OK - $SERVICE is running" >> "$LOG"
+fi
+EOF
+
+sudo chmod +x /usr/local/bin/service_watchdog.sh
+sudo /usr/local/bin/service_watchdog.sh   # Test it runs ok
+cat /var/log/watchdog.log</code></pre>
+
+      <pre><code># Schedule watchdog in cron (runs every 5 minutes)
+(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/local/bin/service_watchdog.sh") | crontab -
+crontab -l   # Verify entry added
+
+# Test the watchdog — stop the service and wait for cron to restart it
+sudo systemctl stop webserver
+curl http://localhost:8080   # Should fail
+sleep 310                    # Wait 5+ minutes (or manually run the script)
+sudo /usr/local/bin/service_watchdog.sh   # Simulate cron run
+curl http://localhost:8080   # Should work again
+cat /var/log/watchdog.log    # Should show WARNING and SUCCESS lines</code></pre>
+
+      <h3>Part C — LVM Disk Management</h3>
+      <pre><code># FIRST: Add a new virtual disk in VirtualBox
+# 1. Power off server1
+# 2. VirtualBox → server1 Settings → Storage
+# 3. Click "Add Hard Disk" → Create → VDI → Dynamically allocated → 10GB
+# 4. Save and power on server1
+
+# Identify the new disk
+sudo fdisk -l | grep "^Disk /dev"
+lsblk
+# Expected: /dev/sdb   10G (new disk, unformatted)</code></pre>
+
+      <pre><code># Initialize LVM
+# Step 1: Create Physical Volume (PV) on the new disk
+sudo pvcreate /dev/sdb
+sudo pvdisplay            # Verify PV created
+
+# Step 2: Create Volume Group (VG) named 'datavg'
+sudo vgcreate datavg /dev/sdb
+sudo vgdisplay            # Verify VG, note Free PE count
+
+# Step 3: Create Logical Volume (LV) named 'datalv' — 8GB
+sudo lvcreate -L 8G -n datalv datavg
+sudo lvdisplay            # Verify LV, note device path
+
+# Step 4: Format with ext4
+sudo mkfs.ext4 /dev/datavg/datalv
+
+# Step 5: Mount it
+sudo mkdir -p /data2
+sudo mount /dev/datavg/datalv /data2
+df -h /data2
+# Expected: /dev/mapper/datavg-datalv  7.9G  36M  7.5G   1%  /data2</code></pre>
+
+      <pre><code># Step 6: Make mount persistent via /etc/fstab
+echo '/dev/datavg/datalv  /data2  ext4  defaults  0  2' | sudo tee -a /etc/fstab
+# Verify fstab syntax
+sudo mount -a    # Re-mount all from fstab (should not error)
+df -h /data2     # Should still show mounted</code></pre>
+
+      <pre><code># Step 7: Extend the LV (add 1GB — simulate growing disk needs)
+sudo lvextend -L +1G /dev/datavg/datalv
+sudo lvdisplay | grep "LV Size"    # Should now show 9.00 GiB
+
+# Extend the filesystem (online — no unmount needed)
+sudo resize2fs /dev/datavg/datalv
+df -h /data2                       # Should now show ~8.8G total
+
+# Summary commands
+sudo pvs; sudo vgs; sudo lvs       # Compact overview
+sudo pvdisplay; sudo vgdisplay; sudo lvdisplay   # Full details</code></pre>
+
+      <h3>Part D — logrotate Configuration</h3>
+      <pre><code># Create some test log files
+sudo mkdir -p /var/log/webserver
+sudo chown www-data:www-data /var/log/webserver
+
+# Create logrotate config for the webserver logs
+sudo tee /etc/logrotate.d/webserver &lt;&lt;'EOF'
+/var/log/webserver/*.log {
+    daily
+    rotate 7
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 www-data adm
+    sharedscripts
+    postrotate
+        # Signal the service to re-open log files
+        systemctl reload webserver 2>/dev/null || true
+    endscript
+}
+EOF</code></pre>
+
+      <pre><code># Also configure journald to limit disk usage
+sudo tee -a /etc/systemd/journald.conf &lt;&lt;'EOF'
+[Journal]
+SystemMaxUse=500M
+MaxRetentionSec=1month
+Compress=yes
+EOF
+sudo systemctl restart systemd-journald
+
+# Test logrotate
+sudo touch /var/log/webserver/access.log /var/log/webserver/error.log
+sudo sh -c 'echo "test log entry $(date)" &gt; /var/log/webserver/access.log'
+
+sudo logrotate --debug /etc/logrotate.d/webserver
+# Expected: shows rotation steps but does NOT actually rotate (--debug = dry run)
+
+# Force rotation (for testing)
+sudo logrotate --force /etc/logrotate.d/webserver
+ls -la /var/log/webserver/
+# Expected: access.log (new, empty) and access.log.1 (rotated old file)</code></pre>
+    </div>
+  </div>
+
+  <!-- WEEK 8 LAB -->
+  <div class="week-block" id="w8">
+    <div class="week-header wn-int" onclick="toggleWeek('w8')">
+      <span class="wn-label">Week 8 Lab</span>
+      <span class="wn-title">Prometheus, Grafana, Node Exporter &amp; Alerting</span>
+      <span class="wn-arrow">▾</span>
+    </div>
+    <div class="week-body">
+
+      <h3>Objectives</h3>
+      <ul class="content-list">
+        <li>Install Prometheus and configure scrape targets for both VMs</li>
+        <li>Install Node Exporter on both servers as a systemd service</li>
+        <li>Install Grafana and import the Node Exporter dashboard</li>
+        <li>Write alerting rules and configure Alertmanager notifications</li>
+        <li>Install Loki + Promtail for log aggregation</li>
+      </ul>
+
+      <h3>Part A — Install Prometheus</h3>
+      <pre><code>># Run all commands on server1 (192.168.56.10)
+
+# Download and install Prometheus
+cd /tmp
+wget https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
+tar xvf prometheus-2.45.0.linux-amd64.tar.gz
+
+# Install binaries
+sudo mv prometheus-2.45.0.linux-amd64/prometheus /usr/local/bin/
+sudo mv prometheus-2.45.0.linux-amd64/promtool /usr/local/bin/
+
+# Create directories and user
+sudo useradd --no-create-home --shell /bin/false prometheus
+sudo mkdir -p /etc/prometheus /var/lib/prometheus
+sudo mv prometheus-2.45.0.linux-amd64/consoles /etc/prometheus/
+sudo mv prometheus-2.45.0.linux-amd64/console_libraries /etc/prometheus/
+sudo chown -R prometheus:prometheus /etc/prometheus /var/lib/prometheus
+
+# Verify installation
+prometheus --version</code></pre>
+
+      <pre><code>># Create Prometheus configuration
+sudo tee /etc/prometheus/prometheus.yml &lt;&lt;'EOF'
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    datacenter: 'lab'
+
+rule_files:
+  - "alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node'
+    static_configs:
+      - targets:
+          - 'localhost:9100'
+          - '192.168.56.11:9100'
+    labels:
+      env: 'lab'
+EOF
+
+sudo chown prometheus:prometheus /etc/prometheus/prometheus.yml
+
+# Validate the config
+promtool check config /etc/prometheus/prometheus.yml
+# Expected: "SUCCESS: 1 rule files found"</code></pre>
+
+      <pre><code>># Create systemd unit for Prometheus
+sudo tee /etc/systemd/system/prometheus.service &lt;&lt;'EOF'
+[Unit]
+Description=Prometheus Monitoring System
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/var/lib/prometheus/ \
+    --storage.tsdb.retention.time=30d \
+    --web.listen-address=0.0.0.0:9090 \
+    --web.enable-lifecycle
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now prometheus
+sudo systemctl status prometheus
+
+# Allow through firewall
+sudo ufw allow 9090/tcp comment 'Prometheus'
+
+# Access: http://192.168.56.10:9090</code></pre>
+
+      <h3>Part B — Install Node Exporter (Both Servers)</h3>
+      <pre><code>># Run on BOTH server1 and server2
+cd /tmp
+wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
+tar xvf node_exporter-1.6.1.linux-amd64.tar.gz
+sudo mv node_exporter-1.6.1.linux-amd64/node_exporter /usr/local/bin/
+
+sudo useradd --no-create-home --shell /bin/false node_exporter
+
+# Systemd unit
+sudo tee /etc/systemd/system/node_exporter.service &lt;&lt;'EOF'
+[Unit]
+Description=Node Exporter - Prometheus system metrics
+Documentation=https://github.com/prometheus/node_exporter
+After=network.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter \
+    --collector.systemd \
+    --collector.processes
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now node_exporter
+sudo ufw allow 9100/tcp comment 'Node Exporter'
+
+# Test locally
+curl -s http://localhost:9100/metrics | head -20
+# Expected: lines starting with "# HELP" and "# TYPE"
+
+# On Prometheus web UI: Status → Targets
+# Both server1:9100 and server2:9100 should show State=UP</code></pre>
+
+      <h3>Part C — Install Grafana</h3>
+      <pre><code>># On server1 only
+# Add Grafana APT repository
+sudo apt install -y apt-transport-https software-properties-common wget
+sudo mkdir -p /etc/apt/keyrings/
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg &gt; /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+
+sudo apt update
+sudo apt install grafana -y
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now grafana-server
+sudo ufw allow 3000/tcp comment 'Grafana'
+
+# Access Grafana: http://192.168.56.10:3000
+# Login: admin / admin
+# It will prompt you to change the password — set something memorable</code></pre>
+
+      <pre><code>># Configure Prometheus as a data source in Grafana:
+# 1. Menu (☰) → Connections → Data sources → Add data source
+# 2. Select: Prometheus
+# 3. URL: http://localhost:9090
+# 4. Click "Save &amp; test"
+# Expected: "Successfully queried the Prometheus API"
+
+# Import Node Exporter dashboard:
+# 1. Menu (☰) → Dashboards → Import
+# 2. Enter dashboard ID: 1860
+# 3. Click Load
+# 4. Select Prometheus as data source
+# 5. Click Import
+
+# You should now see a comprehensive Linux system dashboard
+# with CPU, memory, disk, network panels for both servers</code></pre>
+
+      <h3>Part D — Alerting Rules</h3>
+      <pre><code>># Create alert rules file
+sudo tee /etc/prometheus/alerts.yml &lt;&lt;'EOF'
+groups:
+  - name: node_alerts
+    interval: 30s
+    rules:
+
+      - alert: HighCPUUsage
+        expr: |
+          100 - (avg by(instance) (
+            rate(node_cpu_seconds_total{mode="idle"}[5m])
+          ) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is {{ printf \"%.1f\" $value }}% (threshold: 80%)"
+
+      - alert: HighMemoryUsage
+        expr: |
+          (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)
+          / node_memory_MemTotal_bytes * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory on {{ $labels.instance }}"
+          description: "Memory usage {{ printf \"%.1f\" $value }}%"
+
+      - alert: DiskSpaceLow
+        expr: |
+          node_filesystem_avail_bytes{mountpoint="/", fstype!="tmpfs"}
+          / node_filesystem_size_bytes{mountpoint="/", fstype!="tmpfs"}
+          * 100 < 20
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk space low on {{ $labels.instance }}"
+          description: "Disk {{ $labels.mountpoint }} has only {{ printf \"%.1f\" $value }}% free"
+
+      - alert: NodeDown
+        expr: up{job="node"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node is down: {{ $labels.instance }}"
+          description: "Node exporter on {{ $labels.instance }} is unreachable"
+
+      - alert: ServiceNotRunning
+        expr: node_systemd_unit_state{state="active", name=~"nginx.service|webserver.service"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Service {{ $labels.name }} is not active"
+EOF
+
+sudo chown prometheus:prometheus /etc/prometheus/alerts.yml
+
+# Validate rules
+promtool check rules /etc/prometheus/alerts.yml
+# Expected: "SUCCESS: 5 rules found"
+
+# Reload Prometheus to pick up the new rules
+sudo systemctl reload prometheus
+# Check: http://192.168.56.10:9090/alerts — should list all 5 alerts</code></pre>
+
+      <h3>Part E — Alertmanager Configuration</h3>
+      <pre><code>># Download and install Alertmanager
+cd /tmp
+wget https://github.com/prometheus/alertmanager/releases/download/v0.26.0/alertmanager-0.26.0.linux-amd64.tar.gz
+tar xvf alertmanager-0.26.0.linux-amd64.tar.gz
+sudo mv alertmanager-0.26.0.linux-amd64/alertmanager /usr/local/bin/
+sudo mv alertmanager-0.26.0.linux-amd64/amtool /usr/local/bin/
+
+sudo useradd --no-create-home --shell /bin/false alertmanager
+sudo mkdir -p /etc/alertmanager /var/lib/alertmanager
+sudo chown alertmanager:alertmanager /etc/alertmanager /var/lib/alertmanager
+
+# Configuration (using email — update with real SMTP if available)
+sudo tee /etc/alertmanager/alertmanager.yml &lt;&lt;'EOF'
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'alerts@lab.local'
+
+route:
+  group_by: ['alertname', 'instance']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  receiver: 'lab-notifications'
+  routes:
+    - matchers:
+        - severity = critical
+      receiver: 'critical-alerts'
+      repeat_interval: 1h
+
+receivers:
+  - name: 'lab-notifications'
+    email_configs:
+      - to: 'admin@lab.local'
+        send_resolved: true
+        html: '{{ template "email.default.html" . }}'
+
+  - name: 'critical-alerts'
+    email_configs:
+      - to: 'oncall@lab.local'
+        send_resolved: true
+
+inhibit_rules:
+  - source_matchers: [severity = critical]
+    target_matchers: [severity = warning]
+    equal: [alertname, instance]
+EOF
+
+sudo chown alertmanager:alertmanager /etc/alertmanager/alertmanager.yml
+
+# Systemd unit
+sudo tee /etc/systemd/system/alertmanager.service &lt;&lt;'EOF'
+[Unit]
+Description=Alertmanager
+After=network.target
+
+[Service]
+User=alertmanager
+Group=alertmanager
+Type=simple
+ExecStart=/usr/local/bin/alertmanager \
+    --config.file=/etc/alertmanager/alertmanager.yml \
+    --storage.path=/var/lib/alertmanager/
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now alertmanager
+sudo ufw allow 9093/tcp comment 'Alertmanager'
+# Access: http://192.168.56.10:9093</code></pre>
+
+      <h3>Part F — Loki &amp; Promtail for Log Aggregation</h3>
+      <pre><code>># Install Loki (log aggregation backend)
+cd /tmp
+wget https://github.com/grafana/loki/releases/download/v2.9.0/loki-linux-amd64.zip
+sudo apt install unzip -y
+unzip loki-linux-amd64.zip
+sudo mv loki-linux-amd64 /usr/local/bin/loki
+
+sudo mkdir -p /etc/loki /var/lib/loki
+sudo tee /etc/loki/loki-config.yml &lt;&lt;'EOF'
+auth_enabled: false
+server:
+  http_listen_port: 3100
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+schema_config:
+  configs:
+    - from: 2024-01-01
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /var/lib/loki/index
+    cache_location: /var/lib/loki/cache
+  filesystem:
+    directory: /var/lib/loki/chunks
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+EOF
+
+# Systemd unit for Loki
+sudo tee /etc/systemd/system/loki.service &lt;&lt;'EOF'
+[Unit]
+Description=Loki Log Aggregation
+After=network.target
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/loki --config.file=/etc/loki/loki-config.yml
+Restart=always
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now loki
+sudo ufw allow 3100/tcp comment 'Loki'</code></pre>
+
+      <pre><code>># Install Promtail (log shipper — runs on both servers)
+cd /tmp
+wget https://github.com/grafana/loki/releases/download/v2.9.0/promtail-linux-amd64.zip
+unzip promtail-linux-amd64.zip
+sudo mv promtail-linux-amd64 /usr/local/bin/promtail
+
+sudo mkdir -p /etc/promtail
+sudo tee /etc/promtail/promtail-config.yml &lt;&lt;'EOF'
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://192.168.56.10:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          host: server1
+          __path__: /var/log/*.log
+
+  - job_name: systemd-journal
+    journal:
+      max_age: 12h
+      labels:
+        job: systemd-journal
+        host: server1
+    relabel_configs:
+      - source_labels: [__journal__systemd_unit]
+        target_label: unit
+EOF
+
+# Systemd unit for Promtail
+sudo tee /etc/systemd/system/promtail.service &lt;&lt;'EOF'
+[Unit]
+Description=Promtail Log Shipper
+After=network.target
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/promtail --config.file=/etc/promtail/promtail-config.yml
+Restart=always
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now promtail
+
+# Add Loki as data source in Grafana:
+# Connections → Data sources → Add → Loki
+# URL: http://localhost:3100
+# Save &amp; test
+
+# Create a Logs panel in Grafana:
+# New Dashboard → Add panel → Select Loki data source
+# Query: {host="server1"} |= "error"
+# Panel type: Logs</code></pre>
+
+      <h3>Week 8 Checkpoint Verification</h3>
+      <pre><code>># All checks must pass:
+curl -s http://localhost:9090/api/v1/targets | python3 -m json.tool | grep '"health"' | head
+# Expected: all targets show "health":"up"
+
+curl -s http://localhost:9090/api/v1/rules | python3 -m json.tool | grep '"name"'
+# Expected: lists all 5 alert rules
+
+curl -s http://localhost:3000/api/health
+# Expected: {"commit":"...","database":"ok","version":"..."}
+
+curl -s http://localhost:9100/metrics | grep "node_load1"
+# Expected: node_load1 {number}
+
+# Prometheus web UI checks:
+# http://192.168.56.10:9090/targets          → all targets UP
+# http://192.168.56.10:9090/alerts           → all alerts listed
+# http://192.168.56.10:9093                  → Alertmanager running
+# http://192.168.56.10:3000                  → Grafana dashboard accessible</code></pre>
+    </div>
+  </div>
+
+</main>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Networking &amp; Sysadmin &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<style>
+.week-block.open .week-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+<script>
+function toggleWeek(id){const b=document.getElementById(id);b.classList.toggle('open');}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('w1')||document.getElementById('w5')||document.getElementById('w9');
+  if(w)w.classList.add('open');
+});
+</script>
+</body>
+</html>
+

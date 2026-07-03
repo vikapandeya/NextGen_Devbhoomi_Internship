@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps &amp; Cloud — Quizzes | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">⚙️ DevOps &amp; Cloud</div>
+      <div class="bc-file">❓ Quizzes</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 2 OF 9 &nbsp;·&nbsp; DEVOPS &amp; CLOUD ENGINEERING &nbsp;·&nbsp; QUIZZES (ALL LEVELS)
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concept Notes ↗</a>
+    <a href="quick_reference.html">Quick Reference ↗</a>
+    <a href="project_briefs.html">Projects ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">⚡</div>
+    <h1>Quizzes — DevOps &amp; Cloud Engineering</h1>
+    <p class="lh-sub">12 weekly quizzes covering Linux, Git, Docker, CI/CD, AWS, Terraform, Kubernetes, monitoring, security, and SRE. Your answers are saved locally. Retry anytime.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">12 Quizzes</span>
+      <span class="lh-pill">60 Questions Total</span>
+      <span class="lh-pill gold">Auto-Scored · Retryable</span>
+    </div>
+  </div>
+
+  <!-- ── WEEK 1 ── -->
+  <div class="sm-sec">Week 1 Quiz — Linux Command Line</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d2-w1" data-domain="devops_cloud" data-week="1">
+      <div class="quiz-week-head">
+        <h3>Week 1 — Linux Foundations</h3>
+        <span>5 Questions · Beginner</span>
+      </div>
+      <div class="quiz-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <p class="q-num">Question 1 of 5</p>
+          <p class="q-text">Which command shows your current directory in Linux?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w1-q0"> A) dir</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w1-q0"> B) pwd</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w1-q0"> C) where</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w1-q0"> D) location</div>
+          </div>
+          <div class="quiz-explanation"><strong>pwd</strong> = print working directory. It shows the full absolute path of where you are in the filesystem, e.g. <code>/home/ubuntu/projects</code>. Run it whenever you're lost in the terminal.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="c">
+          <p class="q-num">Question 2 of 5</p>
+          <p class="q-text">What permission does <code>chmod 755</code> give to the owner?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w1-q1"> A) Read only</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w1-q1"> B) Read + Write</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w1-q1"> C) Read + Write + Execute</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w1-q1"> D) No permission</div>
+          </div>
+          <div class="quiz-explanation"><strong>7 = 4+2+1 = rwx</strong> for the owner (full access). The second digit 5 = 4+0+1 = r-x for group, and the third 5 = r-x for others. So 755 means owner can do everything; everyone else can read and execute but not write.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="c">
+          <p class="q-num">Question 3 of 5</p>
+          <p class="q-text">Which command searches for text inside files?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w1-q2"> A) find</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w1-q2"> B) locate</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w1-q2"> C) grep</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w1-q2"> D) search</div>
+          </div>
+          <div class="quiz-explanation"><strong>grep</strong> searches file content with regex. <code>find</code> searches file names. Example: <code>grep "error" /var/log/syslog</code> — or pipe it: <code>cat access.log | grep "500"</code> to find all HTTP 500 errors.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="c">
+          <p class="q-num">Question 4 of 5</p>
+          <p class="q-text">What does <code>sudo</code> mean?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w1-q3"> A) Super User Desktop Operations</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w1-q3"> B) Switch User and Do</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w1-q3"> C) Run command as superuser/root</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w1-q3"> D) Secure Unix Directory Operations</div>
+          </div>
+          <div class="quiz-explanation"><strong>sudo</strong> (substitute user do) runs commands with elevated root privileges. Always use sparingly — <code>sudo rm -rf /</code> would delete your entire system. In production, avoid running applications as root.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="d">
+          <p class="q-num">Question 5 of 5</p>
+          <p class="q-text">Which command lists all running processes?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w1-q4"> A) list</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w1-q4"> B) jobs</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w1-q4"> C) ls -p</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w1-q4"> D) ps aux</div>
+          </div>
+          <div class="quiz-explanation"><strong>ps aux</strong> shows all processes with user, CPU%, memory%, PID, and command name. Pipe with grep to filter: <code>ps aux | grep nginx</code>. Use <code>kill -9 PID</code> to forcefully stop a process by its ID.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <div class="quiz-score"></div>
+          <button class="btn-submit">Submit Quiz</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 2 ── -->
+  <div class="sm-sec">Week 2 Quiz — Git &amp; Version Control</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d2-w2" data-domain="devops_cloud" data-week="2">
+      <div class="quiz-week-head">
+        <h3>Week 2 — Git Version Control</h3>
+        <span>5 Questions · Beginner</span>
+      </div>
+      <div class="quiz-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <p class="q-num">Question 1 of 5</p>
+          <p class="q-text">What is the correct Git workflow order?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w2-q0"> A) commit → add → push</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w2-q0"> B) add → commit → push</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w2-q0"> C) push → commit → add</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w2-q0"> D) commit → push → add</div>
+          </div>
+          <div class="quiz-explanation"><strong>Stage → Snapshot → Upload:</strong> <code>git add</code> stages changes (picks what to include), <code>git commit</code> snapshots them with a message, <code>git push</code> uploads to the remote. You cannot push before committing.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="b">
+          <p class="q-num">Question 2 of 5</p>
+          <p class="q-text">What does <code>git pull</code> do?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w2-q1"> A) Uploads your code</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w2-q1"> B) Downloads + merges latest changes from remote</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w2-q1"> C) Creates a new branch</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w2-q1"> D) Deletes a remote branch</div>
+          </div>
+          <div class="quiz-explanation"><strong>git pull</strong> = <code>git fetch</code> + <code>git merge</code>. It downloads the latest commits from the remote and merges them into your current branch. Always pull before starting new work to avoid merge conflicts.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <p class="q-num">Question 3 of 5</p>
+          <p class="q-text">What is a Pull Request (PR)?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w2-q2"> A) Downloading code from a repository</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w2-q2"> B) Requesting someone to review and merge your branch</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w2-q2"> C) Pulling the latest tags from remote</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w2-q2"> D) A type of Git conflict</div>
+          </div>
+          <div class="quiz-explanation">A <strong>Pull Request</strong> is a GitHub feature (not a Git command) where you ask teammates to review your branch before merging into main. This is the core of professional team collaboration — no one pushes directly to main.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="c">
+          <p class="q-num">Question 4 of 5</p>
+          <p class="q-text">Which file tells Git which files to ignore?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w2-q3"> A) .gitskip</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w2-q3"> B) .gitexclude</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w2-q3"> C) .gitignore</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w2-q3"> D) ignore.git</div>
+          </div>
+          <div class="quiz-explanation"><strong>.gitignore</strong> lists patterns of files/folders Git should never track. Every project needs one. Common entries: <code>node_modules/</code>, <code>.env</code>, <code>*.log</code>, <code>.DS_Store</code>. Create it before your first commit.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="c">
+          <p class="q-num">Question 5 of 5</p>
+          <p class="q-text">What happens if you commit a <code>.env</code> file with secrets to a public GitHub repo?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w2-q4"> A) Nothing — GitHub is private by default</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w2-q4"> B) Git refuses the commit</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w2-q4"> C) Your secrets are exposed publicly and must be immediately rotated</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w2-q4"> D) GitHub auto-encrypts them</div>
+          </div>
+          <div class="quiz-explanation"><strong>Exposed secrets are a real incident.</strong> Even if you delete the file and push again, the secrets remain in Git history. Bots scan GitHub within seconds of a push. Always add <code>.env</code> to .gitignore before your first commit, and use GitHub Secrets for CI/CD.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <div class="quiz-score"></div>
+          <button class="btn-submit">Submit Quiz</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 3 ── -->
+  <div class="sm-sec">Week 3 Quiz — Networking Fundamentals</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d2-w3" data-domain="devops_cloud" data-week="3">
+      <div class="quiz-week-head">
+        <h3>Week 3 — Networking for DevOps</h3>
+        <span>5 Questions · Beginner</span>
+      </div>
+      <div class="quiz-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="d">
+          <p class="q-num">Question 1 of 5</p>
+          <p class="q-text">What port does HTTPS use?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w3-q0"> A) 80</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w3-q0"> B) 8080</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w3-q0"> C) 21</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w3-q0"> D) 443</div>
+          </div>
+          <div class="quiz-explanation"><strong>Port 443</strong> = HTTPS (encrypted). Port 80 = HTTP (unencrypted). Port 22 = SSH. Port 21 = FTP. Port 3306 = MySQL. Memorise these — you'll configure them in AWS Security Groups constantly.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="b">
+          <p class="q-num">Question 2 of 5</p>
+          <p class="q-text">What does DNS do?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w3-q1"> A) Encrypts web traffic</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w3-q1"> B) Translates domain names to IP addresses</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w3-q1"> C) Assigns IP addresses to devices</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w3-q1"> D) Monitors network speed</div>
+          </div>
+          <div class="quiz-explanation"><strong>DNS</strong> = Domain Name System — the internet's phonebook. When you type <code>google.com</code>, DNS resolves it to an IP like <code>142.250.195.46</code>. DHCP assigns IPs; TLS/SSL encrypts traffic; DNS only resolves names.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="c">
+          <p class="q-num">Question 3 of 5</p>
+          <p class="q-text">Which is a private IP address range?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w3-q2"> A) 8.8.8.8</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w3-q2"> B) 142.250.x.x</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w3-q2"> C) 192.168.x.x</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w3-q2"> D) 1.1.1.1</div>
+          </div>
+          <div class="quiz-explanation"><strong>RFC 1918 private ranges:</strong> 192.168.x.x, 10.x.x.x, and 172.16–31.x.x. They are not routable on the public internet — your home router and AWS VPC both use these. 8.8.8.8 is Google's public DNS; 1.1.1.1 is Cloudflare's.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="a">
+          <p class="q-num">Question 4 of 5</p>
+          <p class="q-text">SSH uses which port by default?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w3-q3"> A) 22</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w3-q3"> B) 443</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w3-q3"> C) 3306</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w3-q3"> D) 8080</div>
+          </div>
+          <div class="quiz-explanation"><strong>Port 22</strong> is the default for SSH. In production, restrict SSH access in your Security Group to your own IP only — never open port 22 to 0.0.0.0/0 on a production server. Many teams also change it to a non-standard port.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="c">
+          <p class="q-num">Question 5 of 5</p>
+          <p class="q-text">What does a Security Group in AWS act as?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w3-q4"> A) User management system</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w3-q4"> B) Database firewall</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w3-q4"> C) Virtual stateful firewall for EC2 instances</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w3-q4"> D) Load balancer</div>
+          </div>
+          <div class="quiz-explanation">An AWS <strong>Security Group</strong> is a stateful virtual firewall. You define inbound and outbound rules by port, protocol, and source IP/CIDR. "Stateful" means if you allow inbound traffic, the return response is automatically allowed without a separate outbound rule.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <div class="quiz-score"></div>
+          <button class="btn-submit">Submit Quiz</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 4 ── -->
+  <div class="sm-sec">Week 4 Quiz — Cloud Computing Intro</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d2-w4" data-domain="devops_cloud" data-week="4">
+      <div class="quiz-week-head">
+        <h3>Week 4 — Cloud Concepts &amp; AWS Basics</h3>
+        <span>5 Questions · Beginner</span>
+      </div>
+      <div class="quiz-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="c">
+          <p class="q-num">Question 1 of 5</p>
+          <p class="q-text">What is IaaS?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w4-q0"> A) Software delivered via the internet</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w4-q0"> B) A platform for deploying apps</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w4-q0"> C) Raw infrastructure (VMs, storage, networking) you manage</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w4-q0"> D) Internet as a Service</div>
+          </div>
+          <div class="quiz-explanation"><strong>IaaS</strong> (Infrastructure as a Service) gives you raw compute, storage, and networking — you manage the OS up. <strong>PaaS</strong> handles the runtime too (e.g. Heroku). <strong>SaaS</strong> is the finished app (e.g. Gmail). AWS EC2 is IaaS.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="d">
+          <p class="q-num">Question 2 of 5</p>
+          <p class="q-text">Which AWS service stores static files like images, videos, and HTML?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w4-q1"> A) EC2</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w4-q1"> B) RDS</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w4-q1"> C) Lambda</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w4-q1"> D) S3</div>
+          </div>
+          <div class="quiz-explanation"><strong>S3</strong> (Simple Storage Service) stores objects (files) at 99.999999999% durability. EC2 is for virtual servers; RDS is managed databases; Lambda is serverless functions. S3 also hosts static websites directly.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <p class="q-num">Question 3 of 5</p>
+          <p class="q-text">What is the AWS region code for Mumbai, India?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w4-q2"> A) ap-southeast-1</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w4-q2"> B) ap-south-1</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w4-q2"> C) us-east-1</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w4-q2"> D) eu-west-1</div>
+          </div>
+          <div class="quiz-explanation"><strong>ap-south-1</strong> is AWS Mumbai — the lowest latency region for Indian users. ap-southeast-1 is Singapore. Always select ap-south-1 for Indian projects unless there's a specific reason (e.g. disaster recovery in a second region).</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="b">
+          <p class="q-num">Question 4 of 5</p>
+          <p class="q-text">What should you set immediately after creating a new AWS account?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w4-q3"> A) Disable MFA for convenience</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w4-q3"> B) A billing alarm</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w4-q3"> C) Delete the default VPC</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w4-q3"> D) Enable root user CLI access</div>
+          </div>
+          <div class="quiz-explanation">Set a <strong>billing alarm in CloudWatch</strong> immediately. This alerts you if spending exceeds your threshold (e.g. ₹500). AWS charges for everything — a forgotten EC2 instance can rack up thousands in a month. Also enable MFA on root.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="b">
+          <p class="q-num">Question 5 of 5</p>
+          <p class="q-text">What is the AWS Free Tier?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w4-q4"> A) Paid tier for enterprise accounts</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w4-q4"> B) Permanent free services + 12-month free tier for new accounts</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w4-q4"> C) Free for students only</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w4-q4"> D) Free forever for all services</div>
+          </div>
+          <div class="quiz-explanation">AWS Free Tier has three types: <strong>Always free</strong> (Lambda 1M requests/month, DynamoDB 25GB), <strong>12 months free</strong> after signup (EC2 t2.micro 750 hrs/month, S3 5GB), and <strong>trials</strong> (short-term free for specific services). Monitor usage carefully — it expires!</div>
+        </div>
+
+        <div class="quiz-actions">
+          <div class="quiz-score"></div>
+          <button class="btn-submit">Submit Quiz</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEK 5 ── -->
+  <div class="sm-sec">Week 5 Quiz — Docker &amp; Containers</div>
+  <div class="quiz-container">
+    <div class="quiz-week-block" data-quiz-id="d2-w5" data-domain="devops_cloud" data-week="5">
+      <div class="quiz-week-head">
+        <h3>Week 5 — Docker &amp; Containerisation</h3>
+        <span>5 Questions · Intermediate</span>
+      </div>
+      <div class="quiz-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <p class="q-num">Question 1 of 5</p>
+          <p class="q-text">What is a Docker image?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w5-q0"> A) A screenshot of a running container</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w5-q0"> B) A read-only template used to create containers</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w5-q0"> C) A type of virtual machine</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w5-q0"> D) Docker's version of a file</div>
+          </div>
+          <div class="quiz-explanation">A <strong>Docker image</strong> is a read-only layered template built from a Dockerfile. Running an image creates a <strong>container</strong> — a live, isolated process. Think of it as: image = recipe, container = the dish being cooked.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="c">
+          <p class="q-num">Question 2 of 5</p>
+          <p class="q-text">Which Dockerfile instruction sets the working directory inside the container?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w5-q1"> A) RUN</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w5-q1"> B) DIR</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w5-q1"> C) WORKDIR</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w5-q1"> D) SET</div>
+          </div>
+          <div class="quiz-explanation"><strong>WORKDIR /app</strong> sets the current directory for all subsequent RUN, COPY, CMD, and ENTRYPOINT instructions. If the directory doesn't exist, Docker creates it. Always use WORKDIR instead of <code>RUN cd /app</code>.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <p class="q-num">Question 3 of 5</p>
+          <p class="q-text">What does <code>docker-compose up</code> do?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w5-q2"> A) Updates Docker to the latest version</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w5-q2"> B) Builds and starts all services defined in docker-compose.yml</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w5-q2"> C) Uploads your image to Docker Hub</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w5-q2"> D) Updates all base images</div>
+          </div>
+          <div class="quiz-explanation"><strong>docker-compose up -d</strong> builds (if needed) and starts all services defined in your <code>docker-compose.yml</code> in detached mode. Use it to spin up your entire stack (API + database + cache) with one command.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="c">
+          <p class="q-num">Question 4 of 5</p>
+          <p class="q-text">Why use alpine-based images like <code>node:20-alpine</code>?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w5-q3"> A) They have more features</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w5-q3"> B) Better security certificates</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w5-q3"> C) Much smaller image size — faster deploys, less attack surface</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w5-q3"> D) Required for production environments</div>
+          </div>
+          <div class="quiz-explanation"><strong>Alpine Linux</strong> is ~5 MB vs Ubuntu's ~75 MB. Smaller images = faster CI/CD pulls, less ECR storage cost, and a reduced attack surface (fewer packages = fewer CVEs). Always prefer <code>-alpine</code> variants unless you need specific glibc tools.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="b">
+          <p class="q-num">Question 5 of 5</p>
+          <p class="q-text">What file should every Docker project include?</p>
+          <div class="quiz-options">
+            <div class="quiz-opt" data-value="a"><input type="radio" name="d2-w5-q4"> A) .dockerenv</div>
+            <div class="quiz-opt" data-value="b"><input type="radio" name="d2-w5-q4"> B) .dockerignore</div>
+            <div class="quiz-opt" data-value="c"><input type="radio" name="d2-w5-q4"> C) Containerfile</div>
+            <div class="quiz-opt" data-value="d"><input type="radio" name="d2-w5-q4"> D) docker.config</div>
+          </div>
+          <div class="quiz-explanation"><strong>.dockerignore</strong> prevents <code>node_modules/</code>, <code>.env</code>, <code>.git/</code>, and other unnecessary files from being copied into the image. Without it, a <code>COPY . .</code> instruction will bloat your image with hundreds of MB of dependencies you don't need.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <div class="quiz-score"></div>
+          <button class="btn-submit">Submit Quiz</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEEKS 6–12 LOCKED ── -->
+  <div class="sm-sec">Weeks 6–12 Quizzes</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px;">
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 6 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">CI/CD with GitHub Actions</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 6 to unlock</p>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 7 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">AWS EC2 &amp; VPC</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 7 to unlock</p>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 8 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">Terraform &amp; IaC</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 8 to unlock</p>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 9 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">Kubernetes Fundamentals</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 9 to unlock</p>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 10 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">Monitoring &amp; Observability</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 10 to unlock</p>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 11 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">DevSecOps</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 11 to unlock</p>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;">
+      <div style="font-size:24px;">🔒</div>
+      <h4 style="font-size:14px;margin:8px 0 4px;">Week 12 Quiz</h4>
+      <p style="font-size:12px;color:var(--gray);">SRE &amp; Security</p>
+      <p style="font-size:11px;color:var(--gold);margin-top:8px;">Complete Lab 12 to unlock</p>
+    </div>
+  </div>
+
+</div><!-- /.sm-page -->
+
+<footer class="sm-footer"><span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; DevOps &amp; Cloud &nbsp;·&nbsp; Quizzes &nbsp;·&nbsp; Batch 2026–27</footer>
+
+<script src="../shared/level_filter.js"></script>
+<script src="../shared/quiz_engine.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,491 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes — Mobile App Development | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+<style>
+.quiz-container{display:flex;flex-direction:column;gap:28px;}
+.quiz-week-block{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.quiz-week-header{padding:16px 22px;background:linear-gradient(90deg,#1B3A6B 0%,#2d5a9e 100%);color:#fff;display:flex;align-items:center;gap:12px;}
+.quiz-week-header h3{margin:0;font-size:1rem;font-weight:700;}
+.quiz-week-header .quiz-badge{background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.quiz-week-body{padding:20px 24px;}
+.quiz-q{margin-bottom:24px;border:1px solid #f1f5f9;border-radius:8px;overflow:hidden;}
+.quiz-question{padding:12px 16px;background:#f8fafc;font-weight:600;font-size:0.92rem;color:#1e293b;border-bottom:1px solid #e5e7eb;}
+.quiz-question .q-num{color:#6b7280;margin-right:6px;}
+.quiz-opts{padding:8px 16px 4px;}
+.quiz-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:0.9rem;color:#374151;margin-bottom:4px;transition:background .12s;border:2px solid transparent;}
+.quiz-opt:hover{background:#f1f5f9;}
+.quiz-opt.selected{border-color:#3b82f6;background:#eff6ff;}
+.quiz-opt.correct{border-color:#10b981;background:#f0fdf4;color:#166534;}
+.quiz-opt.incorrect{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.quiz-opt .opt-val{font-weight:700;min-width:20px;color:#1B3A6B;}
+.quiz-explanation{display:none;padding:10px 16px;background:#fefce8;border-top:1px solid #fde68a;font-size:0.85rem;color:#78350f;line-height:1.6;}
+.quiz-explanation.show{display:block;}
+.quiz-score{padding:10px 16px;background:#f8fafc;border-top:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;font-size:0.88rem;color:#374151;}
+.quiz-score .score-text{font-weight:700;}
+.quiz-actions{padding:12px 16px 16px;display:flex;gap:10px;}
+.btn-submit{background:#1B3A6B;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:0.88rem;font-weight:700;cursor:pointer;transition:background .15s;}
+.btn-submit:hover{background:#2d5a9e;}
+.btn-retry{background:#f1f5f9;color:#374151;border:1px solid #e5e7eb;border-radius:7px;padding:9px 20px;font-size:0.88rem;font-weight:700;cursor:pointer;transition:background .15s;}
+.btn-retry:hover{background:#e5e7eb;}
+.quiz-locked{background:#fff;border:2px dashed #e5e7eb;border-radius:12px;padding:32px;text-align:center;color:#9ca3af;}
+.quiz-lock-icon{font-size:32px;margin-bottom:8px;}
+.quiz-locked h4{font-size:1rem;font-weight:700;color:#6b7280;margin:0 0 6px;}
+.quiz-locked p{font-size:0.88rem;margin:0;}
+</style>
+</head>
+<body>
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org"><h1>NextGen <span>Devbhoomi</span> Foundation</h1><p>Building a Resilient Future · Batch 2026–27</p></div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">📱 Mobile App Development</div>
+      <div class="bc-file">🧩 Quizzes</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+<div class="sm-domain-bar">
+  DOMAIN 5 OF 9 &nbsp;·&nbsp; MOBILE APP DEVELOPMENT &nbsp;·&nbsp; QUIZZES
+  <div class="dbar-links">
+    <a href="concept_notes_beginner.html">Concepts ↗</a>
+    <a href="lab_guide_beginner.html">Labs ↗</a>
+    <a href="project_briefs.html">Projects ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+  <div class="level-hero int">
+    <div class="lh-icon">🧩</div>
+    <div class="lh-text">
+      <h2>Quizzes — Mobile App Development</h2>
+      <p>Test your knowledge week by week. Select an answer, then submit to see your score and explanations.</p>
+    </div>
+  </div>
+
+  <div class="quiz-container">
+
+    <!-- ══ QUIZ W1 ══ -->
+    <div class="quiz-week-block" data-quiz-id="d5-w1" data-domain="mobile_dev" data-week="1">
+      <div class="quiz-week-header">
+        <span class="quiz-badge">W1</span>
+        <h3>Mobile Dev Foundations</h3>
+      </div>
+      <div class="quiz-week-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q1.</span>Expo Go is used to:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Build production APKs</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Test React Native apps instantly on a physical device without building</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Submit apps to the App Store</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Write Android Java code</div>
+          </div>
+          <div class="quiz-explanation">Expo Go scans a QR code and loads your Expo project's JavaScript bundle instantly on your device — no native build required.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q2.</span>In React Native, the default <code>flexDirection</code> is:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> row</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> column</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> row-reverse</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> flex</div>
+          </div>
+          <div class="quiz-explanation">Unlike CSS where the default is <code>row</code>, React Native defaults to <code>column</code> flexDirection for all Views — content stacks vertically.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="c">
+          <div class="quiz-question"><span class="q-num">Q3.</span>Which component should be used for long scrollable lists in React Native?</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> ScrollView</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> ListView</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> FlatList</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Map</div>
+          </div>
+          <div class="quiz-explanation">FlatList renders only visible items (virtualization), making it memory-efficient for long lists. ScrollView renders all children at once, which is fine for short content.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q4.</span><code>StyleSheet.create()</code> is beneficial because:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> It validates CSS syntax</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> It sends styles to the native thread and enables caching</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> It imports external CSS</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> It auto-prefixes styles</div>
+          </div>
+          <div class="quiz-explanation"><code>StyleSheet.create()</code> sends styles to the native side once, reducing bridge communication and improving performance.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q5.</span><code>Platform.OS</code> returns:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Device model name</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> The string 'ios' or 'android'</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> OS version number</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Screen density</div>
+          </div>
+          <div class="quiz-explanation"><code>Platform.OS</code> returns the string <code>'ios'</code> or <code>'android'</code> and is used for platform-specific code branching.</div>
+        </div>
+
+        <div class="quiz-score"><span class="score-text">Score: —</span></div>
+        <div class="quiz-actions">
+          <button class="btn-submit">Submit Answers</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ QUIZ W2 ══ -->
+    <div class="quiz-week-block" data-quiz-id="d5-w2" data-domain="mobile_dev" data-week="2">
+      <div class="quiz-week-header">
+        <span class="quiz-badge">W2</span>
+        <h3>Core Components</h3>
+      </div>
+      <div class="quiz-week-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="c">
+          <div class="quiz-question"><span class="q-num">Q1.</span>Which prop handles text input changes in a controlled TextInput?</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> onChange</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> onInput</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> onChangeText</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> onValue</div>
+          </div>
+          <div class="quiz-explanation"><code>onChangeText</code> receives the new string value directly; use it with <code>useState</code> for controlled inputs.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q2.</span>KeyboardAvoidingView is used to:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Hide the keyboard on tap</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Move content up so the keyboard doesn't cover input fields</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Prevent the keyboard from opening</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Style keyboard buttons</div>
+          </div>
+          <div class="quiz-explanation">KeyboardAvoidingView adjusts its height or padding when the keyboard appears so that inputs remain visible and accessible.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q3.</span><code>flex: 1</code> on a View means:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> It has a 1px border</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> It takes up all available space in its parent</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> It renders first</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> It has 100% width</div>
+          </div>
+          <div class="quiz-explanation"><code>flex: 1</code> makes a component fill all remaining space, analogous to <code>flex-grow: 1</code> in CSS.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q4.</span>The Image component in React Native requires:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> A CSS background-image property</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> A source prop with <code>&#123;uri: '...'&#125;</code> or <code>require('./local.png')</code></div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> An img tag instead</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Base64 encoding only</div>
+          </div>
+          <div class="quiz-explanation">React Native's Image component accepts a <code>source</code> prop: use <code>&#123;uri&#125;</code> for network images and <code>require()</code> for local assets.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="a">
+          <div class="quiz-question"><span class="q-num">Q5.</span>Pressable differs from TouchableOpacity by:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> It supports more gesture states and style callbacks</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> It has a ripple effect by default</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> It doesn't support onPress</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> It only works on iOS</div>
+          </div>
+          <div class="quiz-explanation">Pressable provides an <code>isPressed</code> state in its style callback, giving more control over visual feedback than TouchableOpacity's fixed opacity.</div>
+        </div>
+
+        <div class="quiz-score"><span class="score-text">Score: —</span></div>
+        <div class="quiz-actions">
+          <button class="btn-submit">Submit Answers</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ QUIZ W3 ══ -->
+    <div class="quiz-week-block" data-quiz-id="d5-w3" data-domain="mobile_dev" data-week="3">
+      <div class="quiz-week-header">
+        <span class="quiz-badge">W3</span>
+        <h3>Navigation</h3>
+      </div>
+      <div class="quiz-week-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q1.</span><code>createNativeStackNavigator</code> provides:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> A tab bar at the bottom</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> A push/pop screen stack with headers</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Side drawer navigation</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Modal-only navigation</div>
+          </div>
+          <div class="quiz-explanation">createNativeStackNavigator creates a push/pop stack navigator — screens slide in from the right, with a back button in the header.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="c">
+          <div class="quiz-question"><span class="q-num">Q2.</span>How do you navigate to a screen named 'Profile' passing <code>&#123;userId: 42&#125;</code>?</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> <code>navigation.open('Profile', &#123;userId:42&#125;)</code></div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> <code>navigate.go('Profile', 42)</code></div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> <code>navigation.navigate('Profile', &#123;userId:42&#125;)</code></div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> <code>router.push('/Profile/42')</code></div>
+          </div>
+          <div class="quiz-explanation"><code>navigation.navigate('ScreenName', params)</code> is the standard React Navigation API. The params object is available as <code>route.params</code> in the destination.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q3.</span>To access params in the destination screen:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> <code>this.props.params</code></div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> <code>route.params</code></div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> <code>navigation.params</code></div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> <code>props.navigation.state.params</code></div>
+          </div>
+          <div class="quiz-explanation"><code>route.params</code> contains the parameters passed via <code>navigation.navigate()</code>. Destructure with: <code>const &#123; userId &#125; = route.params;</code></div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q4.</span>NavigationContainer must be placed:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Inside each screen component</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> As the root wrapper of the entire app</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Only in App.js screens array</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Inside SafeAreaView</div>
+          </div>
+          <div class="quiz-explanation">NavigationContainer manages the navigation state for the whole app and must wrap all navigators — typically placed in App.js as the outermost component.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="c">
+          <div class="quiz-question"><span class="q-num">Q5.</span><code>navigation.goBack()</code> will:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Exit the app</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Navigate to the Home screen</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Return to the previous screen in the stack</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Reload the current screen</div>
+          </div>
+          <div class="quiz-explanation"><code>navigation.goBack()</code> pops the current screen off the stack and returns to the previous one — the same as pressing the hardware back button on Android.</div>
+        </div>
+
+        <div class="quiz-score"><span class="score-text">Score: —</span></div>
+        <div class="quiz-actions">
+          <button class="btn-submit">Submit Answers</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ QUIZ W4 ══ -->
+    <div class="quiz-week-block" data-quiz-id="d5-w4" data-domain="mobile_dev" data-week="4">
+      <div class="quiz-week-header">
+        <span class="quiz-badge">W4</span>
+        <h3>State &amp; Persistence</h3>
+      </div>
+      <div class="quiz-week-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q1.</span>AsyncStorage stores data as:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> JSON objects directly</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Strings only — use JSON.stringify / JSON.parse</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Binary data</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Encrypted by default</div>
+          </div>
+          <div class="quiz-explanation">Always stringify objects before storing: <code>await AsyncStorage.setItem('key', JSON.stringify(obj))</code> and parse on retrieval.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q2.</span><code>useEffect</code> with an empty dependency array <code>[]</code> runs:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> On every render</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Only on mount (once)</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Only on unmount</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Every second</div>
+          </div>
+          <div class="quiz-explanation">An empty <code>[]</code> dependency array makes useEffect behave like componentDidMount — it runs exactly once after the component first renders.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q3.</span>Context API solves:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Performance bottlenecks</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Prop drilling — passing state through many component levels</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> AsyncStorage limitations</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Network requests</div>
+          </div>
+          <div class="quiz-explanation">Context allows you to share state globally without passing props down every level. Auth state, theme, and language preferences are common use cases.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="c">
+          <div class="quiz-question"><span class="q-num">Q4.</span><code>useReducer</code> is preferred over <code>useState</code> when:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> State is a single boolean</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> State is a string</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> State has multiple sub-values with complex transitions</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> You don't need re-renders</div>
+          </div>
+          <div class="quiz-explanation">useReducer is ideal when state updates depend on the previous state or when multiple related values update together — think cart, form with many fields, or todo list.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q5.</span>To load AsyncStorage data when the component mounts:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> <code>useLayoutEffect(() =&gt; loadData())</code></div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> <code>useEffect(() =&gt; &#123; loadData(); &#125;, [])</code></div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> <code>componentDidMount()</code></div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> <code>onMount=&#123;loadData&#125;</code></div>
+          </div>
+          <div class="quiz-explanation"><code>useEffect</code> with an empty array is the hooks equivalent of componentDidMount. Wrap async calls in an inner async IIFE or separate function.</div>
+        </div>
+
+        <div class="quiz-score"><span class="score-text">Score: —</span></div>
+        <div class="quiz-actions">
+          <button class="btn-submit">Submit Answers</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ QUIZ W5 ══ -->
+    <div class="quiz-week-block" data-quiz-id="d5-w5" data-domain="mobile_dev" data-week="5">
+      <div class="quiz-week-header">
+        <span class="quiz-badge">W5</span>
+        <h3>APIs &amp; Networking</h3>
+      </div>
+      <div class="quiz-week-body">
+
+        <div class="quiz-q" data-q-index="0" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q1.</span><code>fetch()</code> in React Native is:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> A third-party library</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> The same Web Fetch API, built into React Native</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Only available on iOS</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> A polyfill you must install</div>
+          </div>
+          <div class="quiz-explanation">React Native ships with the standard Fetch API built in. You can use it the same way as in a browser — no installation needed.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="1" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q2.</span>To send a JSON POST request with fetch:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> <code>fetch(url, &#123;type:'POST', data:body&#125;)</code></div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> <code>fetch(url, &#123;method:'POST', headers:&#123;'Content-Type':'application/json'&#125;, body:JSON.stringify(data)&#125;)</code></div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> <code>fetch.post(url, data)</code></div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> axios.post is required instead</div>
+          </div>
+          <div class="quiz-explanation">You must set <code>method:'POST'</code>, the <code>Content-Type</code> header, and <code>JSON.stringify</code> the body. Axios simplifies this but fetch works the same way.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="2" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q3.</span>ActivityIndicator is used for:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Tracking user activity</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Displaying a loading spinner</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Measuring app performance</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Checking network speed</div>
+          </div>
+          <div class="quiz-explanation">ActivityIndicator renders the platform's native loading spinner. Use it with a <code>loading</code> boolean state while waiting for API responses.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="3" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q4.</span>AbortController is used to:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Stop the app</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> Cancel a pending fetch request (typically on component unmount)</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> Block network access</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> Force re-render</div>
+          </div>
+          <div class="quiz-explanation">AbortController lets you cancel a fetch that's still in-flight. Return <code>() =&gt; controller.abort()</code> from useEffect to clean up on unmount.</div>
+        </div>
+
+        <div class="quiz-q" data-q-index="4" data-correct="b">
+          <div class="quiz-question"><span class="q-num">Q5.</span>React Query's <code>useQuery</code> returns:</div>
+          <div class="quiz-opts">
+            <div class="quiz-opt" data-value="a"><span class="opt-val">A</span> Just the data</div>
+            <div class="quiz-opt" data-value="b"><span class="opt-val">B</span> isLoading, isError, data, refetch, and more</div>
+            <div class="quiz-opt" data-value="c"><span class="opt-val">C</span> A Promise</div>
+            <div class="quiz-opt" data-value="d"><span class="opt-val">D</span> A callback</div>
+          </div>
+          <div class="quiz-explanation">useQuery returns a rich object with status flags (<code>isLoading</code>, <code>isError</code>, <code>isFetching</code>), the <code>data</code>, an <code>error</code> object, and a <code>refetch</code> function.</div>
+        </div>
+
+        <div class="quiz-score"><span class="score-text">Score: —</span></div>
+        <div class="quiz-actions">
+          <button class="btn-submit">Submit Answers</button>
+          <button class="btn-retry">Retry</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ LOCKED WEEKS ══ -->
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 6 Quiz — Device Features</h4>
+      <p>Complete the Week 6 lab to unlock (expo-location + camera)</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 7 Quiz — SQLite &amp; Offline</h4>
+      <p>Complete the Week 7 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 8 Quiz — Performance Optimization</h4>
+      <p>Complete the Week 8 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 9 Quiz — Testing Suite</h4>
+      <p>Complete the Week 9 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 10 Quiz — EAS Build &amp; CI</h4>
+      <p>Complete the Week 10 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 11 Quiz — Animations &amp; Reanimated</h4>
+      <p>Complete the Week 11 lab to unlock</p>
+    </div>
+
+    <div class="quiz-locked">
+      <div class="quiz-lock-icon">🔒</div>
+      <h4>Week 12 Quiz — Capstone Review</h4>
+      <p>Complete the Week 12 capstone to unlock</p>
+    </div>
+
+  </div><!-- /.quiz-container -->
+
+  <!-- Bottom navigation -->
+  <div class="sm-bottom-nav">
+    <a href="project_briefs.html" class="btn-nav-secondary">← Project Briefs</a>
+    <a href="career_roadmap.html" class="btn-nav-secondary">Career Roadmap →</a>
+    <a href="../index.html" class="btn-nav-primary">← Study Portal</a>
+  </div>
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Mobile App Development &nbsp;·&nbsp; Quizzes &nbsp;·&nbsp; Batch 2026–27
+</footer>
+
+<script src="../shared/level_filter.js"></script>
+<script src="../shared/quiz_engine.js"></script>
+</body>
+</html>
+

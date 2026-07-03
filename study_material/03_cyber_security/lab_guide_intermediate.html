@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security — Lab Guide (Intermediate) | NextGen Devbhoomi</title>
+<link rel="stylesheet" href="../shared/study_styles.css">
+</head>
+<body>
+
+<header class="sm-header">
+  <div class="sm-header-inner">
+    <div class="sm-logo">
+      <img src="../../logo.png" alt="NextGen Devbhoomi Foundation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="sm-logo-fb" style="display:none;">NDFI</div>
+    </div>
+    <div class="sm-org">
+      <h1>NextGen <span>Devbhoomi</span> Foundation</h1>
+      <p>Building a Resilient Future · Batch 2026–27</p>
+    </div>
+    <div class="sm-breadcrumb">
+      <div class="bc-domain">🔐 Cyber Security</div>
+      <div class="bc-file">🧪 Lab Guide — Intermediate</div>
+      <a href="../index.html" class="bc-back">← Study Portal</a>
+    </div>
+  </div>
+</header>
+
+<div class="sm-domain-bar">
+  DOMAIN 3 OF 9 &nbsp;·&nbsp; CYBER SECURITY &nbsp;·&nbsp; LAB GUIDE — INTERMEDIATE
+  <div class="dbar-links">
+    <a href="lab_guide_beginner.html">Beginner Labs ↗</a>
+    <a href="lab_guide_advanced.html">Advanced Labs ↗</a>
+    <a href="concept_notes_intermediate.html">Concept Notes ↗</a>
+  </div>
+</div>
+
+<div class="sm-page">
+
+  <div class="level-hero int">
+    <div class="lh-icon">🧪</div>
+    <h1>Intermediate Lab Guide — Cyber Security</h1>
+    <p class="lh-sub">4 labs on intentionally vulnerable applications: DVWA setup, web vulnerability testing, Burp Suite practice, and basic pen test report.</p>
+    <div class="lh-pills">
+      <span class="lh-pill">4 Labs</span>
+      <span class="lh-pill">Weeks 5–8</span>
+      <span class="lh-pill">DVWA · Burp Suite · Docker</span>
+      <span class="lh-pill gold">Intermediate Level</span>
+    </div>
+  </div>
+
+  <div style="background:#FFF3CD;border:1px solid #ffc107;border-left:4px solid #ffc107;border-radius:8px;padding:14px 18px;margin:16px 0;font-size:13px;">
+    <strong>⚠️ Legal Reminder:</strong> All labs in this section use intentionally vulnerable practice applications (DVWA). Never use these techniques on any system you do not own or have explicit written permission to test. Unauthorized testing is illegal under IT Act 2000 (India) and Computer Fraud and Abuse Act (USA).
+  </div>
+
+  <!-- LAB 5 -->
+  <div class="sm-sec">Lab 5 (Week 5) — DVWA Setup &amp; SQL Injection</div>
+
+  <div class="objectives">
+    <h4>Lab Objectives</h4>
+    <ul>
+      <li>Set up a vulnerable practice environment with Docker</li>
+      <li>Perform SQL injection on a low-security target</li>
+      <li>Understand why parameterized queries prevent injection</li>
+      <li>Compare vulnerable vs secure source code side by side</li>
+    </ul>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Install DVWA via Docker</h3>
+      <span>~10 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Ensure Docker Desktop is installed. Run the following command to start DVWA (Damn Vulnerable Web Application) — an intentionally vulnerable practice target:</p>
+      <pre>docker run --rm -it -p 80:80 vulnerables/web-dvwa</pre>
+      <p>Docker pulls the image and starts the container. DVWA is now available at <strong>http://localhost</strong> on your machine only.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Configure DVWA at Low Security</h3>
+      <span>~5 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Navigate to <strong>http://localhost</strong>. Login with <code>admin</code> / <code>password</code>. Go to <strong>Setup / Reset DB</strong> — click "Create / Reset Database". Then go to <strong>DVWA Security</strong> and set the security level to <strong>Low</strong>.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Perform SQL Injection at Low Security</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Navigate to <strong>SQL Injection</strong> in the left menu. Enter <code>1</code> in the User ID field — observe normal output (shows user details for ID 1).</p>
+      <p>Now enter the injection payload:</p>
+      <pre>1' OR '1'='1</pre>
+      <p>Observe: all user records are returned. The SQL query is now: <code>SELECT * FROM users WHERE id='1' OR '1'='1'</code> — the condition is always true.</p>
+      <p>Next, try a UNION-based injection to extract password hashes:</p>
+      <pre>1' UNION SELECT user, password FROM users-- -</pre>
+      <p>You should see all usernames and their MD5-hashed passwords in the output.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Compare Low vs High Security Source Code</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Switch the security level to <strong>High</strong>. Retry the same injection payloads. They are now blocked. Click <strong>View Source</strong> in DVWA — it shows you the PHP source code for both security levels side by side.</p>
+      <p>Key difference: Low uses direct string concatenation into SQL. High uses PDO with prepared statements — the user input is never part of the SQL command string.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Screenshot of successful injection on "Low" (showing all users/hashes) + screenshot of blocked injection on "High" + 2-sentence written explanation of what changed in the source code and why parameterized queries prevent the attack.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 6 -->
+  <div class="sm-sec">Lab 6 (Week 6) — Burp Suite: Intercepting &amp; Modifying Requests</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Set Up Burp Suite Community Edition</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Download <strong>Burp Suite Community Edition</strong> from <strong>portswigger.net/burp</strong> — it's free. Install and launch it. Click "Temporary project" → "Use Burp defaults" → "Start Burp".</p>
+      <p>Configure Firefox to use Burp as a proxy: Open Firefox → Settings → Network Settings → Manual proxy → HTTP Proxy: <code>127.0.0.1</code>, Port: <code>8080</code>. Install the Burp CA certificate in Firefox (visit http://burpsuite → download CA cert → import in Firefox certificate settings).</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Intercept a Login Request</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>In Burp Suite → <strong>Proxy → Intercept</strong> tab — ensure "Intercept is on". In Firefox, navigate to <strong>http://localhost</strong> and attempt to log in to DVWA. The login POST request will appear in Burp's Intercept tab before it reaches the server.</p>
+      <p>Examine the request: you can see the POST body including the username and password in plain text. This is exactly what a MITM attacker would see on HTTP traffic.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Use Burp Repeater for SQL Injection</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Navigate to DVWA → SQL Injection. Submit a normal user ID. In Burp Proxy, find that request. Right-click → <strong>Send to Repeater</strong>.</p>
+      <p>In the Repeater tab, modify the <code>id</code> parameter value to different SQL payloads and click "Send" for each. Observe the response in the right panel — no need to re-browse. This lets you test many payloads quickly and compare responses precisely.</p>
+      <div class="lab-tip">
+        <strong>Tip:</strong> Repeater is the most useful tool for manual web application testing. You can modify any part of the HTTP request — headers, cookies, body — and see exactly what the server responds.
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Use Burp Intruder for Login Brute Force (Practice Only)</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Intercept the DVWA login POST request. Right-click → <strong>Send to Intruder</strong>. In Intruder, select the <code>password</code> parameter value and click "Add §" to mark it as a payload position. In the Payloads tab, use a simple list of 10 common passwords (admin, password, 123456, letmein, etc.). Click "Start attack".</p>
+      <p>Sort results by response length — a different length typically indicates a successful login vs failed. Identify which password produces a different response.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Screenshot of Burp Repeater showing a successful SQL injection request and response + screenshot of Intruder attack results sorted by response length, with the successful entry highlighted.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 7 -->
+  <div class="sm-sec">Lab 7 (Week 7) — XSS and File Upload Vulnerabilities</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Reflected XSS at Low Security</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>DVWA → <strong>XSS (Reflected)</strong> at Low security. In the "What's your name?" field, enter:</p>
+      <pre>&lt;script&gt;alert('XSS by YOUR_NAME')&lt;/script&gt;</pre>
+      <p>If the alert popup appears with your name, reflected XSS is confirmed. The script executed because the server returned your input directly into the HTML page without encoding it. Take a screenshot of the alert.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Stored XSS — More Dangerous</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>DVWA → <strong>XSS (Stored)</strong> at Low security. In the message/comment field, post:</p>
+      <pre>&lt;script&gt;document.body.style.background='red'&lt;/script&gt;</pre>
+      <p>Reload the page. The background turns red for <em>every user</em> who visits this page — because the script is stored in the database and served to everyone. This demonstrates why stored XSS is far more dangerous than reflected: it persists and affects all users automatically.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>File Upload Vulnerability at Low Security</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>DVWA → <strong>File Upload</strong> at Low security. Create a text file named <code>test.php</code> containing:</p>
+      <pre>&lt;?php echo "Uploaded: " . $_SERVER['PHP_SELF']; ?&gt;</pre>
+      <p>Upload it. DVWA shows the path where it was saved. Navigate to that path in your browser — the PHP code executes on the server. This is a remote code execution vector — an attacker could upload a PHP web shell and control the server.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Test File Upload at Medium Security &amp; Bypass Attempt</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Switch to Medium security for File Upload. Rename your test.php to <code>evil.php.jpg</code> and try to upload. Note the result — Medium security checks the file extension more carefully. View the source code (DVWA "View Source" button) to see exactly what validation is happening and why the extension trick may or may not work at this level.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Research CSP Headers as Prevention</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Look up <strong>Content Security Policy (CSP)</strong> on MDN Web Docs (developer.mozilla.org/en-US/docs/Web/HTTP/CSP). Identify which CSP directives would prevent the XSS attacks you performed in steps 1 and 2. Write them down as HTTP response headers.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Screenshot of reflected XSS alert popup + screenshot of stored XSS red background effect + screenshot of file upload test on Medium security + written explanation (100 words) of which CSP directives would prevent the XSS attacks and how.
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 8 -->
+  <div class="sm-sec">Lab 8 (Week 8) — Writing a Basic Penetration Test Report</div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">1</div>
+      <h3>Write the Executive Summary</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Write 1 paragraph describing: the overall security posture of DVWA at Low security level, the most critical finding discovered, and the business risk it represents. Write this for a non-technical manager — avoid jargon, focus on risk and impact.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">2</div>
+      <h3>Define Scope and Methodology</h3>
+      <span>~15 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Document what was tested: application name (DVWA), URL tested (http://localhost), testing period (dates), tools used (Burp Suite Community Edition, browser DevTools), testing approach (grey box — source code available for comparison), and any scope limitations (did not test database server directly, no automated scanner used).</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">3</div>
+      <h3>Create the Findings Table</h3>
+      <span>~30 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Create a findings table with columns: ID | Vulnerability Name | Severity | CVSS 3.1 Score | Description | Evidence (screenshot reference) | Remediation. Include at minimum:</p>
+      <ul style="font-size:13px;color:var(--text-mid);padding-left:20px;line-height:2;">
+        <li><strong>VULN-001</strong>: SQL Injection — Critical — CVSS 9.8</li>
+        <li><strong>VULN-002</strong>: Stored Cross-Site Scripting — High — CVSS 8.0</li>
+        <li><strong>VULN-003</strong>: Unrestricted File Upload — High — CVSS 8.8</li>
+      </ul>
+      <p>Calculate CVSS scores at <strong>nvd.nist.gov/vuln-metrics/cvss/v3-calculator</strong> — select the appropriate impact metrics for each finding.</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">4</div>
+      <h3>Write Per-Finding Detailed Sections</h3>
+      <span>~30 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>For each finding, write a full section containing: description of the vulnerability, steps to reproduce (numbered, precise), screenshot evidence, and specific remediation recommendation (not generic — e.g. "Use PDO prepared statements in the <code>getUserData()</code> function on line 42" not just "use prepared statements").</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="lab-step-head">
+      <div class="lab-step-num">5</div>
+      <h3>Conclusion, Recommendations, and Appendix</h3>
+      <span>~20 min</span>
+    </div>
+    <div class="lab-step-body">
+      <p>Write a conclusion with a prioritized fix list (Critical first, then High), suggested re-test timeline (re-test Critical findings within 2 weeks of remediation), and overall security recommendation. Add an appendix with all screenshots referenced in the findings.</p>
+      <div class="lab-goal">
+        <strong>Deliverable:</strong> Professional pen test report in PDF or Word format (minimum 5 pages), submitted to mentor portal before end of Week 8. This document will be reviewed as if submitted to a real client.
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    <a href="lab_guide_beginner.html" style="color:var(--gray);text-decoration:none;font-size:13px;">← Beginner Labs</a>
+    <div style="display:flex;gap:12px;">
+      <a href="lab_guide_advanced.html" style="background:var(--purple);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Advanced Labs →</a>
+      <a href="project_briefs.html" style="background:var(--navy);color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;">Projects →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="sm-footer">
+  <span>NextGen Devbhoomi Foundation</span> &nbsp;·&nbsp; Cyber Security &nbsp;·&nbsp; Lab Guide — Intermediate &nbsp;·&nbsp; Batch 2026–27
+</footer>
+</body>
+</html>
